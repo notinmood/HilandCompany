@@ -12,7 +12,7 @@ using XQYC.Business.Enums;
 
 namespace XQYC.Business.DALCommon
 {
-    public class InsuranceFundCommonDAL<TTransaction, TConnection, TCommand, TDataReader, TParameter>
+    public class CostFormularCommonDAL<TTransaction, TConnection, TCommand, TDataReader, TParameter>
         : BaseDAL<CostFormularEntity, TTransaction, TConnection, TCommand, TDataReader, TParameter>
         where TConnection : class,IDbConnection, new()
         where TCommand : IDbCommand, new()

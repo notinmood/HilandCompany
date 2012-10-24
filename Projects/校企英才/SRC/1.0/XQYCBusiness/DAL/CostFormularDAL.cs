@@ -3,7 +3,7 @@ using XQYC.Business.DALCommon;
 
 namespace XQYC.Business.DAL
 {
-    public class CostFormularDAL : InsuranceFundCommonDAL<SqlTransaction, SqlConnection, SqlCommand, SqlDataReader, SqlParameter>
+    public class CostFormularDAL : CostFormularCommonDAL<SqlTransaction, SqlConnection, SqlCommand, SqlDataReader, SqlParameter>
     {
     }
 }
