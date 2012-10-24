@@ -1,0 +1,46 @@
+﻿@using HiLand.Utility.Entity.Status;
+@using HiLand.Utility.Enums;
+@model List<SystemStatusInfo>
+@{
+    ViewBag.Title = "操作结果";
+
+    string returnUrl = this.ViewData["returnUrl"].ToString();
+    
+    List<SystemStatusInfo> statusList = new List<SystemStatusInfo>();
+    if (Model != null)
+    {
+        statusList = Model;
+    }
+}
+
+<h2>操作结果</h2>
+
+@foreach (SystemStatusInfo currentItem in statusList)
+{
+    string cssClassName = "hl_Success";
+    string displayMessage = currentItem.Message;
+
+    switch (currentItem.SystemStatus)
+    {
+        case SystemStatuses.Failuer:
+            cssClassName = "hl_Failuer";
+            break;
+        case SystemStatuses.Tip:
+            cssClassName = "hl_Tip";
+            break;
+        case SystemStatuses.Warnning:
+            cssClassName = "hl_Warnning";
+            break;
+        case SystemStatuses.Success:
+        default:
+            cssClassName = "hl_Success";
+            break;
+    }
+    <div class="hl_Status @cssClassName"> @Html.Raw(displayMessage)</div>
+}
+
+@if (string.IsNullOrWhiteSpace(returnUrl)==false)
+{ 
+    <a href="@returnUrl" target="_self" title="返回">返回</a>
+}
+

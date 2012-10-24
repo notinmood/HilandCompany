@@ -1,0 +1,78 @@
+﻿@using HiLand.Utility4.MVC;
+@using HiLand.Framework.BusinessCore.BLL;
+@{
+    ViewBag.Title = "后台管理";
+    string currentUserName = string.Empty;
+    if (BusinessUserBLL.IsLogined)
+    {
+        currentUserName = BusinessUserBLL.CurrentUserName;
+    }
+
+    string frontMainUrl = Url.Action("Index", "Home", new { area = "" });
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/reset.css")" type="text/css" media="screen" />
+    @* <link rel="stylesheet" href="@Url.Content("~/Content/style.css")" type="text/css" media="screen" />*@
+    <link rel="stylesheet" href="@Url.Content("~/Content/adminStyle.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/notificationStyle.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/invalid.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/datePicker.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/Hiland.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/Hiland_clear.css")" type="text/css" media="screen" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/simpla.jquery.configuration.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/facebox.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.wysiwyg.js")"></script>
+    <script src="@Url.Content("~/Scripts/jQuery.hiland.general.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jQuery.form.3.15.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jQuery.tools.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jQuery.gbfSubmit.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/date.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.datePicker.min-2.1.2.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cascadingDropDown.js")" type="text/javascript"></script>
+</head>
+<body>
+    <div id="body-wrapper">
+        <!-- Wrapper for the radial gradient background -->
+        <div id="sidebar">
+            <div id="sidebar-wrapper">
+                <!-- Sidebar with logo and menu -->
+                <h1 id="sidebar-title">
+                    <a href="@frontMainUrl">校企英才</a></h1>
+                <!-- Logo (221px wide) -->
+                <img id="logo" style="margin-left:15px;" src="@Url.Content("~/Content/Images/logo.png")" alt="logo" />
+                <!-- Sidebar Profile links -->
+                <div id="profile-links">
+                    Hello, @currentUserName
+                    <br />
+                    <a href="@frontMainUrl" title="View the Site">View the Site</a> | <a href="@Url.Action("Logout", "Home", new { area = "UserCenter" })" title="Sign Out">Sign Out</a>
+                </div>
+                @RenderSection("mainAccordionMenu", false)
+            </div>
+        </div>
+        <!-- End #sidebar -->
+        <div id="main-content">
+            <!-- Page Head -->
+            <p style="text-align: right">
+                欢迎使用校企英才数据库管理信息系统控制台<a name="#top"></a>
+            </p>
+            <div class="clear"></div>
+            @RenderBody()
+            <div id="footer">
+                <small>&copy; Copyright @DateTime.Today.Year 青岛校企英才人力资源开发有限公司 | <a href="#top">Top</a> </small>
+            </div>
+        </div>
+    </div>
+    <!--[if IE 6]>
+        <script src="@Url.Content("~/Scripts/DD_belatedPNG_0.0.8a-min.js")></script>
+        <script type="text/javascript">
+            DD_belatedPNG.fix('div,ul,img,li,input,a');
+        </script>
+	<![endif]-->
+</body>
+</html>

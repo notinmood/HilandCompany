@@ -1,0 +1,13 @@
+﻿@using HiLand.General.BLL;
+@using HiLand.Utility.Enums;
+@{
+    ViewBag.Title = "BusinessTest";
+    this.Layout = null;
+    
+    Logics result1= LogBLL.Instance.GetLogStatus("aaa",new DateTime(2012,8,26));
+    Logics result2 = LogBLL.Instance.GetLogStatus("aaa", new DateTime(2012, 9, 26));
+}
+
+<h2>BusinessTest</h2>
+@result1 <br />
+@result2 <br />

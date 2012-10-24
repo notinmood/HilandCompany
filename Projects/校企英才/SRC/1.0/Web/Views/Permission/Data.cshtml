@@ -1,0 +1,102 @@
+﻿@using HiLand.Utility.Setting.SectionHandler;
+@using HiLand.Utility.Resources;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Utility.Enums;
+@using XQYC.Web.Models;
+@using HiLand.Utility.Enums.OP;
+@{
+    ViewBag.Title = "Index";
+    this.Layout = null;
+
+    string ownerGuid = this.ViewBag.OwnerGuid;
+    string ownerName = this.ViewBag.OwnerName;
+    ExecuterTypes ownerType = this.ViewBag.OwnerType;
+    PermissionModes permissionMode = PermissionModes.Allow;
+    string returnUrl = this.ViewBag.ReturnUrl;
+
+    Array array = Enum.GetValues(typeof(PermissionDataTypes));
+}
+@model PermissionDataConfig
+<style type="text/css">
+    form label {
+        display: inline;
+        padding: 0 0 10px;
+        font-weight: normal;
+    }
+</style>
+<h2>数据权限设置</h2>
+<div id="formContainer">
+    @using (Html.BeginForm())
+    {
+        foreach (KeyValuePair<Guid, PermissionDataApplication> kvpApp in Model.Applications)
+        {
+            PermissionDataApplication currentApp = kvpApp.Value;
+        <span>应用程序:</span> @currentApp.Name <br />
+    
+            int moduleNumber = 0;
+            foreach (KeyValuePair<Guid, PermissionDataModule> kvpModule in currentApp.Modules)
+            {
+                PermissionDataModule currentModule = kvpModule.Value;
+        <span>&nbsp;&nbsp;模块:</span> @currentModule.Name <br />
+    
+                foreach (KeyValuePair<Guid, PermissionDataSubModule> kvpSubModule in currentModule.SubModules)
+                {
+                    PermissionDataSubModule currentSubModule = kvpSubModule.Value;
+
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;子模块:</span> @currentSubModule.Name <br />
+                    string blankItemValue = SystemConst.PermissionItemValuePrefix + currentSubModule.Guid.ToString() + SystemConst.PermissionItemGuidValueSeperator + "0";
+                    string blankItem = string.Format("<input id=\"{0}\" type=\"hidden\" name=\"{0}\" value=\"{1}\" />", blankItemValue, "on");
+        <span>@Html.Raw(blankItem)</span>
+
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        Object currentEnumItemType = array.GetValue(i);
+
+                        string itemText = EnumItemDescriptionHelper.GetDisplayValue(currentEnumItemType, typeof(PermissionDataTypes)); ;
+                        string itemName = SystemConst.PermissionItemValuePrefix + currentSubModule.Guid.ToString() + SystemConst.PermissionItemGuidValueSeperator;
+                        string itemID = SystemConst.PermissionItemValuePrefix + currentSubModule.Guid.ToString() + SystemConst.PermissionItemGuidValueSeperator + ((int)currentEnumItemType).ToString();
+                        string itemValue = ((int)currentEnumItemType).ToString();
+
+                        string item = string.Empty;
+                        bool targetHasPermission = BusinessPermissionBLL.Instance.HasPermission(ownerGuid, permissionMode, currentSubModule.Guid, (int)currentEnumItemType);
+
+                        string disableString = string.Empty;
+
+
+                        string checkedString = string.Empty;
+                        if (targetHasPermission == true)
+                        {
+                            checkedString = "checked=\"true\"";
+                        }
+                        item = string.Format("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id=\"{0}\" type=\"radio\" {2} {3} name=\"{4}\" value=\"{5}\" /><label for=\"{0}\">{1}</label>", itemID, itemText, disableString, checkedString, itemName, itemValue);
+        <span>@Html.Raw(item)</span>
+                    }
+        
+        <br />
+                }
+                
+            moduleNumber++;
+            if(moduleNumber!=currentApp.Modules.Count)
+            {
+                <hr  style="border:1px dashed;"/>
+            }
+            }
+        }
+
+        <input type="hidden" name="ownerGuid" value="@ownerGuid" />
+        <input type="hidden" name="ownerType" value="@ownerType" />
+        <input type="hidden" name="permissionMode" value="@permissionMode" />
+
+        <hr class="" />
+        <input type="button" id="submitButton" value="保存" class="buttons" /><a class="overlayClose"></a>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form", '@returnUrl');
+        });
+    });
+</script>

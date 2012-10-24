@@ -1,0 +1,61 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Control;
+@model EnterpriseEntity
+@{
+    ViewBag.Title = "企业信息";
+    this.Layout = null;
+}
+<div id="formContainer">
+    @using (Html.BeginForm())
+    { 
+        <table>
+            <tr>
+                <td style="width: 120px;">企业名称:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.CompanyName)
+                </td>
+            </tr>
+            <tr>
+                <td>企业简称:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.CompanyNameShort)
+                </td>
+            </tr>
+            <tr>
+                <td>联系人信息:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.ContactPerson)
+                </td>
+            </tr>
+            <tr>
+                <td>企业地址:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.PrincipleAddress)
+                </td>
+            </tr>
+            <tr>
+                <td>企业状态:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.CanUsable, EnumEx.BuildSelectItemList<Logics>())
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" id="KeyGuid" value="@Model.EnterpriseGuid" />
+        <input type="button" id="submitButton" value="保存" class="buttons" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form", '@Url.Action("Index")');
+        });
+    });
+</script>
+

@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{022576C5-7CB4-42B2-8F4E-8ABE878F4068}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XQYC.Business</RootNamespace>
+    <AssemblyName>XQYC.Business</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HiLand.Framework">
+      <HintPath>..\..\..\..\..\..\HiLand\SRC\WebResourceCollection\bin\HiLand.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="HiLand.Framework4">
+      <HintPath>..\..\..\..\..\..\HiLand\SRC\WebResourceCollection\bin\HiLand.Framework4.dll</HintPath>
+    </Reference>
+    <Reference Include="HiLand.General">
+      <HintPath>..\..\..\..\..\..\HiLand\SRC\WebResourceCollection\bin\HiLand.General.dll</HintPath>
+    </Reference>
+    <Reference Include="HiLand.Utility">
+      <HintPath>..\..\..\..\..\..\HiLand\SRC\WebResourceCollection\bin\HiLand.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="HiLand.Utility4">
+      <HintPath>..\..\..\..\..\..\HiLand\SRC\WebResourceCollection\bin\HiLand.Utility4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BLL\CostFormularBLL.cs" />
+    <Compile Include="BLL\SalaryDetailsBLL.cs" />
+    <Compile Include="BLL\SalarySummaryBLL.cs" />
+    <Compile Include="BLL\LaborContractBLL.cs" />
+    <Compile Include="BLL\LaborBLL.cs" />
+    <Compile Include="BLL\EmployeeBLL.cs" />
+    <Compile Include="BLL\EnterpriseContractBLL.cs" />
+    <Compile Include="BLL\EnterpriseServiceBLL.cs" />
+    <Compile Include="BLL\InformationBrokerBLL.cs" />
+    <Compile Include="DALCommon\CostFormularCommonDAL.cs" />
+    <Compile Include="DALCommon\ILaborContractDAL.cs" />
+    <Compile Include="DALCommon\SalaryDetailsCommonDAL.cs" />
+    <Compile Include="DALCommon\SalarySummaryCommonDAL.cs" />
+    <Compile Include="DALCommon\LaborContractCommonDAL.cs" />
+    <Compile Include="DALCommon\LaborCommonDAL.cs" />
+    <Compile Include="DALCommon\EmployeeCommonDAL.cs" />
+    <Compile Include="DALCommon\EnterpriseContractCommonDAL.cs" />
+    <Compile Include="DALCommon\EnterpriseServiceCommonDAL.cs" />
+    <Compile Include="DALCommon\InformationBrokerCommonDAL.cs" />
+    <Compile Include="DAL\CostFormularDAL.cs" />
+    <Compile Include="DAL\SalaryDetailsDAL.cs" />
+    <Compile Include="DAL\SalarySummaryDAL.cs" />
+    <Compile Include="DAL\LaborContractDAL.cs" />
+    <Compile Include="DAL\LaborDAL.cs" />
+    <Compile Include="DAL\EmployeeDAL.cs" />
+    <Compile Include="DAL\EnterpriseContractDAL.cs" />
+    <Compile Include="DAL\EnterpriseServiceDAL.cs" />
+    <Compile Include="DAL\InformationBrokerDAL.cs" />
+    <Compile Include="Entity\BusinessUserEx.cs" />
+    <Compile Include="Entity\CostFormularEntity.cs" />
+    <Compile Include="Entity\SalaryDetailsEntity.cs" />
+    <Compile Include="Entity\SalarySummaryEntity.cs" />
+    <Compile Include="Entity\LaborContractEntity.cs" />
+    <Compile Include="Entity\LaborEntity.cs" />
+    <Compile Include="Entity\EmployeeEntity.cs" />
+    <Compile Include="Entity\EnterpriseContractEntity.cs" />
+    <Compile Include="Entity\EnterpriseServiceEntity.cs" />
+    <Compile Include="Entity\InformationBrokerEntity.cs" />
+    <Compile Include="Enums\HouseHoldTypes.cs" />
+    <Compile Include="Enums\CostKinds.cs" />
+    <Compile Include="Enums\LaborWorkStatuses.cs" />
+    <Compile Include="Enums\SalaryItemKinds.cs" />
+    <Compile Include="Enums\SalaryPayStatuses.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

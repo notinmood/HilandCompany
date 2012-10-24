@@ -1,0 +1,21 @@
+20121016修改
+1、添加表XQYCCostFormular，XQYCSalaryDetails，XQYCSalarySummary
+2、XQYCLaborContract表添加字段InsuranceFormularKey，ReserveFundFormularKey，ManageFeeFormularKey
+3、表XQYCLabor添加字段CurrentInsuranceFormularKey，CurrentReserveFundFormularKey，CurrentManageFeeFormularKey
+20121010修改
+1、添加存储过程usp_XQYC_SalarySummary_SelectPaging
+2、表XQYCLaborContract添加字段LaborCode
+3、将表XQYCLabor的字段HouseHoldType改成int类型,添加字段CurrentEnterpriseName便于查询
+
+--以下内容在校企英才服务器上修改完成--------------------------------------------------------------------
+20120929修改
+1、表CoreDepartment添加字段 DepartmentFullPath
+2、表CoreUser中添加字段UserFullPath
+3、表GeneralBasicSetting中，添加记录CountPerPage行
+20121002修改
+1、表XQYCLabor添加字段LaborCode
+2、表CorePermission添加字段PermissionKind
+20121004修改
+1、将各个存储过程参数@whereClause的长度改为 Nvarchar(4000)
+20121005修改
+1、表XQYCLabor添加了两个字段CurrentEnterpriseKey、CurrentContractKey

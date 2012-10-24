@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Internet/_InternetLayout.cshtml";
+}
+<article class="grid_10">
+    <div class="wrapper indent-bot">
+        <article class="grid_5 alpha">
+            <div class="indent-left2">
+                <figure class="p2"><img class="img-border" src="@Url.Content("~/Content/images/contact-support.png")" alt="商务联系" /></figure>
+                <h4 class="p1">商务联系</h4>
+                <ul>
+                    <li>联系人:莫小姐</li>
+                    <li>电话:0532-83747008</li>
+                    <li>QQ:80117219</li>
+                    <li>邮件:support@hilandsoft.com</li>
+                </ul>
+            </div>
+        </article>
+        <article class="grid_5 omega">
+            <div class="indent-left2">
+                <figure class="p2"><img class="img-border" src="@Url.Content("~/Content/images/contact-tech.png")" alt="技术支持" /></figure>
+                <h4 class="p1">技术支持</h4>
+                <ul>
+                    <li>联系人:解先生</li>
+                    <li>电话:13573290346（24小时）</li>
+                    <li>QQ:9727005</li>
+                    <li>MSN:develope@live.com</li>
+                    <li>邮件:tech@hilandsoft.com</li>
+                </ul>
+            </div>
+        </article>
+    </div>
+</article>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".menu #menuContactUs").addClass("active");
+        $(".vmenu #menuContact").addClass("active");
+    });
+</script>

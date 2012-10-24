@@ -1,0 +1,46 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Utility4.Data;
+@model BusinessRole
+@{
+    ViewBag.Title = "角色信息";
+    this.Layout = null;
+}
+<div id="formContainer">
+    @using (Html.BeginForm())
+    { 
+        <table>
+            <tr>
+                <td style="width: 150px;">
+                    角色名称:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.RoleName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    角色描述:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.RoleDescrition)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    是否可用:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.CanUsable, EnumEx.BuildSelectItemList<Logics>())
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" id="KeyGuid" value="@Model.RoleGuid" />
+        <input type="button" id="submitButton" value="保存" class="buttons" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form", '@Url.Action("Index")');
+        });
+    });
+</script>

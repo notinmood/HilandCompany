@@ -1,0 +1,106 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using HiLand.Utility.Web;
+
+@model List<SalaryDetailsEntity>
+@{
+    ViewBag.Title = "Index";
+    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+    string returnUrl = RequestHelper.GetValue("returnUrl");
+    string salarySummaryKey = RequestHelper.GetValue("itemKey");
+    if(string.IsNullOrWhiteSpace(returnUrl))
+    {
+        string enterpriseKey= RequestHelper.GetValue("enterpriseKey");
+        if(string.IsNullOrWhiteSpace( enterpriseKey)&& string.IsNullOrWhiteSpace(salarySummaryKey)==false)
+        {
+            enterpriseKey = XQYC.Business.BLL.SalarySummaryBLL.Instance.Get(salarySummaryKey).EnterpriseKey;
+        }
+        returnUrl = Url.Action("SalaryList", new { enterpriseGuid = enterpriseKey });
+    }
+}
+
+<h2>劳务人员薪资列表</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+        <a href="@returnUrl" title="返回列表页">返回</a> | @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("SalaryDetails", "Labor").Render(new { rel = "#EditDIV" })
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 60px">操作
+            </th>
+            <th style="width: 80px">工资项类型
+            </th>
+            <th style="width: 80px">工资项名称
+            </th>
+            <th style="width: 80px">数值
+            </th>
+            <th>状态
+            </th>
+        </tr>
+        @foreach (SalaryDetailsEntity entity in Model)
+        {
+            string entityGuid = entity.SalaryDetailsGuid.ToString();
+            decimal salaryValue = entity.SalaryItemValue;
+            <tr>
+                <td>
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("编辑").ACA("SalaryDetails", "Labor").Render(new { rel = "#EditDIV", itemKey = @entityGuid }) | 
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.SalaryItemKind)
+                </td>
+                <td>@entity.SalaryItemKey
+                </td>
+                <td>@salaryValue.ToString("0.00")
+                </td>
+                <td>
+                </td>
+            </tr>   
+        }
+    </table>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aLaborSection").click();
+            $("#aLaborSection").addClass("current");
+            $("#aSalaryList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                $(document).simulateKeyPress('27');
+                var currentItemGuid = $("#currentPopupItemGuid").val();
+                $(".modalInput").overlay().close();
+                $(".modalInput.edit." + currentItemGuid).overlay().close();
+            });
+
+            $("#newDisplayA").click(function () {
+                var itemKey = "";
+                var url = '@Url.Action("SalaryDetails")' + '?r=' + Math.random() + '&itemKey=' + itemKey + '&salarySummaryKey=@salarySummaryKey&returnUrl=@currentUrl';
+                $("#EditDIV").load(url);
+            });
+
+            $("a.edit").click(function () {
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("SalaryDetails")' + '?r=' + Math.random() + '&itemKey=' + itemKey + '&returnUrl=@currentUrl';
+                $("#EditDIV").load(url);
+            });
+        });
+    </script>
+</div>

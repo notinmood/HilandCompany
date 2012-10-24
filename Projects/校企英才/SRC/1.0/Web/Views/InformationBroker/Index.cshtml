@@ -1,0 +1,117 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using HiLand.Utility.Web;
+@using XQYC.Web.Models;
+
+@model PagedList<InformationBrokerEntity>
+@{
+    ViewBag.Title = "Index";
+    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+}
+
+<h2>信息员列表</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Employee").Render(new { rel = "#EditDIV" })
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 80px">操作
+            </th>
+            <th style="width: 80px">账号
+            </th>
+            <th style="width: 80px">人员名称
+            </th>
+            <th style="width: 80px">状态
+            </th>
+            <th style="width: 80px">信息提供人员
+            </th>
+            <th style="width: 80px">推荐人员
+            </th>
+            <th style="width: 80px">财务人员
+            </th>
+            <th>客服人员
+            </th>
+        </tr>
+        @foreach (InformationBrokerEntity entity in Model)
+        {
+            string entityGuid = entity.UserGuid.ToString();
+            <tr>
+                <td>
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("编辑").ACA("Item", "InformationBroker").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
+                    @Html.HiA().CssClassName("modalInput password "+ @entityGuid).Value("口令").ACA("Password", "InformationBroker").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN })
+                </td>
+                <td>@entity.UserName
+                </td>
+                <td>@entity.UserNameCN
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.UserStatus)
+                </td>
+                <td>@entity.ProviderUserName
+                </td>
+                <td>@entity.RecommendUserName
+                </td>
+                <td>@entity.FinanceUserName
+                </td>
+                <td>@entity.ServiceUserName
+                </td>
+            </tr>   
+        }
+    </table>
+    <div class="myPager"><span style="float:left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
+     &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@SystemConst.CountPerPage</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)</div>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aInformationBrokerManageSection").click();
+            $("#aInformationBrokerManageSection").addClass("current");
+            $("#aInformationBrokerList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                window.location.reload();
+            });
+
+            $("#newDisplayA").click(function () {
+                var url = '@Url.Action("Item")?r=' + Math.random() + '&itemKey=&returnUrl=' + encodeURIComponent("@currentUrl");
+                $("#EditDIV").load(url);
+            });
+
+            $("a.edit").click(function () {
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("Item")?r=' + Math.random() + '&itemKey=' + itemKey + "&returnUrl=" + encodeURIComponent("@currentUrl");  
+                $("#EditDIV").load(url);
+            });
+
+            $("a.password").click(function () {
+                var itemGuid = $(this).attr("itemGuid");
+                $("#currentPopupItemGuid").val(itemGuid);
+                var url = '@Url.Action("Password")?r=' + Math.random() + '&userGuid=' + itemGuid;
+                $("#EditDIV").load(url);
+            });
+        });
+    </script>
+</div>
+
+
+

@@ -1,0 +1,17 @@
+﻿/*Operate with Icon*/
+.operateEntry
+{
+    padding-left: 18px;
+    font-size: 12px;
+    font-style: normal;
+    cursor: pointer;
+}
+.addEntry
+{
+    background: url(Icon/AddEntry.ico) no-repeat;
+}
+
+.deleteEntry
+{
+    background: url(Icon/DeleteEntry.ico) no-repeat;
+}

@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "_BasicInformationLayout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<article class="grid_2">
+    <ul class="vmenu">
+        <li id="menuIndex"><a href="@Url.Action("Index", "IOT")" title="关于物联网">关于物联网</a></li>
+        <li id="menuSmartHotel"><a href="@Url.Action("SmartHotel", "IOT")" title="智能酒店">智能酒店</a></li>
+        <li id="menuSmartPort"><a href="@Url.Action("SmartPort", "IOT")" title="第四代港口物流">第四代港口物流</a></li>
+    </ul>
+</article>
+@RenderBody()
+

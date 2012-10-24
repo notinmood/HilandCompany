@@ -1,0 +1,17 @@
+﻿@using HiLand.Utility.Entity
+@model LogicStatusInfo
+@{
+    ViewBag.Title = "人员基本信息";
+}
+
+@{
+    Html.RenderAction("_MyProfile", "Home", new { area = "UserCenter" });
+    }
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#aSettingSection").click();
+        $("#aSettingSection").addClass("current");
+        $("#aMyProfile").addClass("current");
+    });
+</script>
+

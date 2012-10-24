@@ -1,0 +1,158 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Models;
+
+@model PagedList<EmployeeEntity>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>内部员工列表</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Employee").Render(new { rel = "#EditDIV" })
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 250px">操作
+            </th>
+            <th style="width: 120px">账号
+            </th>
+            <th style="width: 80px">人员名称
+            </th>
+            <th style="width: 80px">状态
+            </th>
+            <th>所属部门
+            </th>
+        </tr>
+        @foreach (EmployeeEntity entity in Model)
+        {
+            string entityGuid = entity.UserGuid.ToString();
+            <tr>
+                <td>
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("编辑").ACA("Item", "Employee").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
+                    @Html.HiA().CssClassName("modalInput password "+ @entityGuid).Value("口令").ACA("Password", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) | 
+                    @Html.HiA().CssClassName("modalInput role "+ @entityGuid).Value("角色").ACA("RoleSelector", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) | 
+                    @Html.HiA().CssClassName("modalInput permissionData "+ @entityGuid).Value("数据").ACA("PermissionData", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) | 
+                    @Html.HiA().CssClassName("modalInput permissionAllow "+ @entityGuid).Value("允许权限").ACA("PermissionAllow", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) | 
+                    @Html.HiA().CssClassName("modalInput permissionDeny "+ @entityGuid).Value("拒绝权限").ACA("PermissionDeny", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN })
+                </td>
+                <td>@entity.UserName
+                </td>
+                <td>@entity.UserNameCN
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.UserStatus)
+                </td>
+                <td>@entity.Department.DepartmentFullPath
+                </td>
+            </tr>   
+        }
+    </table>
+    <div class="myPager"><span style="float:left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
+     &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@SystemConst.CountPerPage</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)</div>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aEmployeeManageSection").click();
+            $("#aEmployeeManageSection").addClass("current");
+            $("#aEmployeeList").addClass("current");
+            var oldWidthOfModal = "350px";
+            var newWidthOfModal = "620px";
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                var currentItemGuid = $("#currentPopupItemGuid").val();
+                $(".modalInput").overlay().close();
+                $(".modalInput.edit." + currentItemGuid).overlay().close();
+                $(".modalInput.permissionData." + currentItemGuid).overlay().close();
+                $(".modalInput.permissionAllow." + currentItemGuid).overlay().close();
+                $(".modalInput.permissionDeny." + currentItemGuid).overlay().close();
+                $(".modalInput.password." + currentItemGuid).overlay().close();
+                $(".modalInput.role." + currentItemGuid).overlay().close();
+            });
+
+            $("#newDisplayA").click(function () {
+                $(".modal").width(newWidthOfModal);
+                var url = '@Url.Action("Item")' + '?keyGuid=&r=' + Math.random();
+                $("#EditDIV").load(url);
+            });
+
+            $("a.edit").click(function () {
+                $(".modal").width(newWidthOfModal);
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("Item")' + '?keyGuid=' + itemKey + '&r=' + Math.random();
+                $("#EditDIV").load(url);
+            });
+
+            $("a.permissionData").click(function () {
+                $(".modal").width(newWidthOfModal);
+                var itemGuid = $(this).attr("itemGuid");
+                var itemName = $(this).attr("itemName");
+                $("#currentPopupItemGuid").val(itemGuid);
+                var url = $.UrlUtil('@Url.Action("PermissionData")').concat("userGuid", itemGuid).concat("userName", itemName).show(true);
+                $("#EditDIV").load(url);
+            });
+            
+
+            $("a.permissionAllow").click(function () {
+                $(".modal").width(newWidthOfModal);
+                var itemGuid = $(this).attr("itemGuid");
+                var itemName = $(this).attr("itemName");
+                $("#currentPopupItemGuid").val(itemGuid);
+                var url = $.UrlUtil('@Url.Action("PermissionAllow")').concat("userGuid", itemGuid).concat("userName", itemName).show(true);
+                $("#EditDIV").load(url);
+            });
+
+            $("a.permissionDeny").click(function () {
+                $(".modal").width(newWidthOfModal);
+                var itemGuid = $(this).attr("itemGuid");
+                var itemName = $(this).attr("itemName");
+                $("#currentPopupItemGuid").val(itemGuid);
+                var url = $.UrlUtil('@Url.Action("PermissionDeny")').concat("userGuid", itemGuid).concat("userName", itemName).show(true);
+                $("#EditDIV").load(url);
+            });
+
+            $("a.password").click(function () {
+                $(".modal").width(oldWidthOfModal);
+                var itemGuid = $(this).attr("itemGuid");
+                var itemName = $(this).attr("itemName");
+                $("#currentPopupItemGuid").val(itemGuid);
+                var url = $.UrlUtil('@Url.Action("Password")').concat("userGuid", itemGuid).concat("userName", itemName).show(true);
+                $("#EditDIV").load(url);
+            });
+
+            $("a.role").click(function () {
+                $(".modal").width(oldWidthOfModal);
+                var itemGuid = $(this).attr("itemGuid");
+                var itemName = $(this).attr("itemName");
+                $("#currentPopupItemGuid").val(itemGuid);
+                var url = $.UrlUtil('@Url.Action("RoleSelector","Employee")').concat("userKey", itemGuid).concat("userName", itemName).show(true);
+                $("#EditDIV").load(url);
+            });
+        });
+    </script>
+</div>
+
+
+

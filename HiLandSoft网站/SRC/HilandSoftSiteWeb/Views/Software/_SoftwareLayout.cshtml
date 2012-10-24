@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "_BasicInformationLayout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<article class="grid_2">
+    <ul class="vmenu">
+        <li id="menuAbout"><a href="@Url.Action("Index", "Software")" title="关于软件">关于软件</a></li>
+        <li id="menuContact"><a href="@Url.Action("FullView", "Software")" title="全景软件">全景软件</a></li>
+        <li id="menuCulture"><a href="@Url.Action("AD", "Software")" title="广告软件">广告软件</a></li>
+    </ul>
+</article>
+@RenderBody()

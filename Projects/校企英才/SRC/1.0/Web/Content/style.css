@@ -1,0 +1,605 @@
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td
+{
+    padding: 0;
+    margin: 0;
+}
+div, ul, dl, h1, h2, h3, h4, blockquote, table, p
+{
+    position: relative;
+}
+table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+fieldset, img
+{
+    border: 0;
+    vertical-align: middle;
+}
+input, select
+{
+    vertical-align: middle;
+}
+address, caption, cite, code, dfn, em, th, var
+{
+    font-weight: normal;
+    font-style: normal;
+}
+abbr, span.abbr, acronym
+{
+    cursor: help;
+    border-bottom: 1px dashed #aaa;
+    letter-spacing: 0.1em;
+}
+var
+{
+    font-style: italic;
+}
+ul, li
+{
+    list-style: none;
+}
+
+body
+{
+    background: url(images/bg.jpg) repeat-x;
+}
+
+#top
+{
+    width: 983px;
+    height: 94px;
+    margin: 0 auto;
+    background: url(images/top-right-bg.jpg) top right no-repeat;
+}
+#top .logo
+{
+   /**/
+    width: 364px;
+    height: 94px;
+}
+
+#top .logo img
+{
+   margin-top:30px;
+   margin-bottom:5px;
+}
+
+#nav
+{
+    width: 983px;
+    height: 36px;
+    margin: 0 auto;
+    background: url(images/navbg.jpg) top left;
+}
+.menus
+{
+    width: auto;
+    height: 36px;
+    margin-left: 24px;
+}
+.menus .menuItme
+{
+    float: left;
+    background: url(images/nav-divid.png) center right no-repeat;
+    height: 36px;
+    padding-right: 18px;
+    padding-left: 18px;
+}
+.menus .menuItme .menuItemA
+{
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 14px;
+    color: #FFF;
+    text-decoration: none;
+    line-height: 32px;
+    height: 32px;
+    display: block;
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 7px 7px 0px 0px;
+    margin-top: 2px;
+    behavior: url(PIE.htc);
+}
+.menus .menuItme .menuItemA:hover
+{
+    margin-top: 4px;
+    color: #614e33;
+    background: url(images/btnbg.png) 0px 0px repeat-x;
+    z-index: 3;
+    position: relative;
+}
+.menus .menuItme .actived
+{
+    margin-top: 4px;
+    color: #614e33;
+    background: url(images/btnbg.png) 0px 0px repeat-x;
+    z-index: 3;
+    position: relative;
+}
+.menus .last
+{
+    background: none;
+}
+
+#homebanner
+{
+    width: 983px;
+    height: 265px;
+    margin: 0 auto;
+    background: url(images/homebannerbox.jpg) top right no-repeat;
+    margin-top: 10px;
+}
+#homebanner .slideshow
+{
+    width: 707px;
+    height: 260px;
+    float: left;
+}
+#homebanner ul.tickbox
+{
+    float: left;
+    top: 30px;
+    left: 25px;
+}
+#homebanner ul.tickbox li
+{
+    width: auto;
+    height: 27px;
+    background: url(images/tick.png) top left no-repeat;
+    padding-left: 40px;
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 20px;
+    color: #494d06;
+    line-height: 27px;
+    margin-bottom: 10px;
+}
+
+
+#homeboxcontainer
+{
+    width: 983px;
+    height: 319px;
+    margin: 0 auto;
+    margin-top: 6px;
+}
+.homebox
+{
+    width: 321px;
+    height: 319px;
+    float: left;
+    display: block;
+    background: url(images/homeboxbg.gif);
+    margin-right: 10px;
+}
+.homebox h1
+{
+    height: 44px;
+    padding-left: 30px;
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 20px;
+    color: #FFF;
+    line-height: 44px;
+    left: 10px;
+    font-weight: normal;
+}
+.homebox h1.box1hd
+{
+    background: url(images/box1icon.jpg) left center no-repeat;
+}
+.homebox h1.box2hd
+{
+    background: url(images/box2icon.jpg) left center no-repeat;
+    padding-left: 34px;
+}
+.homebox h1.box3hd
+{
+    background: url(images/box3icon.jpg) left center no-repeat;
+    padding-left: 39px;
+}
+.homebox .fimg
+{
+    width: 284px;
+    height: 87px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+.homebox h2
+{
+    width: 284px;
+    height: auto;
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 18px;
+    color: #a46610;
+    line-height: 22px;
+    font-weight: normal;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 5px;
+}
+.homebox ul.homeboxinfo
+{
+    width: 284px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+.homebox ul.homeboxinfo li
+{
+    background: url(images/arrow1.gif) left center no-repeat;
+    height: 13px;
+    padding-left: 10px;
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 13px;
+    color: #5b5b5b;
+    line-height: 13px;
+    margin-bottom: 8px;
+}
+.homebox ul.btns
+{
+    width: 284px;
+    height: 35px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+.homebox ul.btns li.btn1
+{
+    float: left;
+    margin-left: 8px;
+}
+.homebox ul.btns a
+{
+    width: 105px;
+    height: 35px;
+    background: url(images/greenbtn.gif) no-repeat;
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 15px;
+    color: #FFF;
+    line-height: 35px;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+}
+.homebox ul.btns a:hover
+{
+    color: #264107;
+}
+.homebox ul.btns li.btn2
+{
+    float: right;
+    margin-right: 8px;
+}
+
+
+#subheader
+{
+    width: 983px;
+    height: 130px;
+    background: url(images/subpage-header.jpg);
+    margin: 0 auto;
+    margin-top: 10px;
+}
+#subheader h1
+{
+    line-height: 130px;
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 50px;
+    color: #FFF;
+    font-weight: normal;
+    padding-left: 50px;
+}
+
+#main
+{
+    width: 983px;
+    height: auto;
+    margin: 0 auto;
+    min-height: 537px;
+    margin-top: 10px;
+}
+#process
+{
+    width: 321px;
+    height: 537px;
+    float: left;
+    display: block;
+    background: url(images/processbg.gif);
+    float: left;
+}
+#process h1
+{
+    height: 32px;
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 18px;
+    color: #FFF;
+    line-height: 32px;
+    left: 10px;
+    font-weight: normal;
+    background: url(images/box1icon.jpg) left center no-repeat;
+    padding-left: 32px;
+}
+#process h1.phoneicon
+{
+    background: url(images/phoneicon.jpg) left center no-repeat;
+}
+#process ul
+{
+    width: 297px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+#process ul li
+{
+    height: 45px;
+}
+#process ul li.activedprocess
+{
+    background: url(images/processactived.gif) top left no-repeat;
+    height: 51px;
+}
+#process ul li a
+{
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 16px;
+    color: #a46610;
+    line-height: 51px;
+    text-decoration: none;
+    padding-left: 20px;
+}
+#process ul li a:hover
+{
+    color: #73b328;
+}
+#process ul li a.activedprocesstxt
+{
+    padding-left: 58px;
+    color: #FFF;
+}
+#process ul li.contactdetials
+{
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 14px;
+    color: #a46610;
+    line-height: 28px;
+    height: 28px;
+    padding-left: 20px;
+}
+#process ul li.contactdetials a.con
+{
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 14px;
+    color: #a46610;
+    line-height: 28px;
+    text-decoration: none;
+}
+#process a.applybtn
+{
+    width: 285px;
+    height: 54px;
+    margin: 0 auto;
+    display: block;
+    background: url(images/applybtn.gif);
+    margin-top: 15px;
+}
+
+#content
+{
+    width: 632px;
+    height: auto;
+    float: left;
+    margin-left: 30px;
+    padding-top: 5px;
+}
+#content h1
+{
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 20px;
+    color: #a66c15;
+    line-height: 20px;
+    margin-bottom: 20px;
+    font-weight: normal;
+}
+#content p
+{
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 13px;
+    color: #5b5b5b;
+    line-height: 20px;
+}
+#content ul li
+{
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 13px;
+    color: #5b5b5b;
+    line-height: 20px;
+    list-style-position: inside;
+}
+#content a.brownlink
+{
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 13px;
+    color: #a66c15;
+    line-height: 20px;
+}
+#content .bottombtns
+{
+    width: 315px;
+    height: 35px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+#content table
+{
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 13px;
+    color: #5b5b5b;
+    line-height: 20px;
+}
+
+.bottombtns a.green2
+{
+    width: 105px;
+    height: 35px;
+    background: url(images/greenbtn.gif) no-repeat;
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 15px;
+    color: #FFF;
+    line-height: 35px;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+}
+.bottombtns a.green2:hover
+{
+    color: #264107;
+}
+
+span.browntxt
+{
+    font-size: 20px;
+    color: #a66c15;
+}
+
+#footer
+{
+    width: 983px;
+    height: 30px;
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    font-size: 11px;
+    color: #b6b6b6;
+    line-height: 11px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+
+/* 菜单项链接 */
+
+
+/* 二级菜单 */
+.children
+{
+    position: absolute;
+    top: 35px;
+    display: none; /* 初始化页面时不显示出来 */
+    padding: -20,20,20,20;
+    margin: -20;
+    margin: 0 0 0 0;
+    z-index: 3000;
+}
+/* 二级菜单的菜单项 */
+.children li
+{
+    border-top: solid 1px #FFFFFF;
+    float: none; /* 垂直排列 */
+    margin: 0;
+    padding: 0;
+    display: block; /* 显示为块 */
+    color: #FFFFFF; /* 文字颜色 */
+    background: #AC761E; /* 背景颜色 */
+    line-height: 35px;
+    margin: 0px;
+}
+/* 二级菜单的当前菜单项链接 */
+.children li a
+{
+    text-decoration: none; /* 没有下横线 */
+    color: #FFFFFF;
+    display: block;
+    padding: 0px 10px; /* 内边距 */
+    width: 130px; /* 对 IE6 来说十分很重要 */
+}
+
+.children li a:hover
+{
+    background-color: #FFFFFF;
+    color: #AC761E;
+}
+/*菜单导航结束*/
+
+#content p
+{
+    margin: 5 0 5 0;
+}
+
+#content p .strong
+{
+    display: block;
+    font-weight: bold;
+}
+
+.contentDigest
+{
+    border: 1px dashed #555555;
+    padding: 3px 5px 3px 5px;
+}
+
+.contentDetail
+{
+    margin-top: 20px;
+}
+.contentDetail table
+{
+    border-collapse: collapse;
+    width: 100%;
+}
+.contentDetail td, th
+{
+    border: 1px solid #777777;
+    padding-left: 5px;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.hlDiv .span
+{
+    width: 120px;
+    text-align: right;
+}
+
+.modal
+{
+    background-color: #fff;
+    display: none;
+    width: 350px;
+    padding: 15px;
+    text-align: left;
+    border: 2px solid #333;
+    opacity: 0.8;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-box-shadow: 0 0 50px #ccc;
+    -webkit-box-shadow: 0 0 50px #ccc;
+}
+
+.simpleFieldset
+{
+    display: block;
+    padding: 5px 10px 5px 10px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}
+.simpleFieldset legend
+{
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    padding: 3px;
+}
+
+.contentTitle
+{
+    margin-top:5px;
+    background: #f5f5f5;
+    border: 1px dashed #c0c0c0;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}

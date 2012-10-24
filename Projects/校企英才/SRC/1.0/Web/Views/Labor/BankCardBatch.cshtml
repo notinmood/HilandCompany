@@ -1,0 +1,69 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility4.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Control;
+
+@{
+    ViewBag.Title = "BatchEntering";
+}
+
+<h2>劳务人员银行卡批量开卡</h2>
+<style type="text/css">
+    #main-content ul,
+    #main-content ol {
+        padding: 0 0 0 18px;
+    }
+
+        #main-content ul li {
+            background: url() center left no-repeat;
+            padding: 0px;
+        }
+
+    #main-content ol {
+        padding: 0px;
+    }
+
+        #main-content ol li {
+            list-style: none;
+            padding: 0;
+        }
+</style>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{ 
+    <table>
+        <tr>
+            <td>银行名称:
+            </td>
+            <td class="fixClass">
+                <input type="text" name="BankName" />
+            </td>
+            <td>开户行信息</td>
+            <td class="fixClass">
+                <input type="text" name="Branch" />
+            </td>
+        </tr>
+        <tr>
+            <td>Excel标题行号:
+            </td>
+            <td class="fixClass">
+                <input type="text" name="headerRowNumber" value="3" />
+            </td>
+            <td>请选择Excel文件</td>
+            <td class="fixClass">
+                <input type="file" name="fileSelector" /></td>
+        </tr>
+    </table>
+    <input type="submit" value="导入" />
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#aLaborSection").click();
+        $("#aLaborSection").addClass("current");
+        $("#aBankCardBatch").addClass("current");
+    });
+</script>

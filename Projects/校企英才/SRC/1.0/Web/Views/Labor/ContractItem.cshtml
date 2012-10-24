@@ -1,0 +1,111 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility4.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Control;
+@using XQYC.Business.Enums;
+
+@model LaborContractEntity
+@{
+    ViewBag.Title = "劳务人员合同信息";
+    this.Layout = null;
+
+    string userKey = Model.LaborUserGuid.ToString();
+}
+<div id="formContainer">
+    <style type="text/css">
+        #formContainer table td {
+        }
+    </style>
+    @using (Html.BeginForm())
+    { 
+        <table>
+            <tr>
+                <td style="width: 150px;">合同内容:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.LaborContractDetails)
+                </td>
+            </tr>
+            <tr>
+                <td>企业:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLEnterprise(Html, "EnterpriseGuid", Model.EnterpriseGuid.ToString(), "LaborDispatch")
+                </td>
+            </tr>
+            <tr>
+                <td>企业合同名称:
+                </td>
+                <td>@HtmlHelperEx.XQYCCSDDLEnterpriseContract(Html, "EnterpriseContractGuid", Model.EnterpriseContractGuid.ToString(), "EnterpriseGuid")
+                </td>
+            </tr>
+            <tr>
+                <td>劳务人员工号:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.LaborCode)
+                </td>
+            </tr>
+            <tr>
+                <td>合同开始时间:
+                </td>
+                <td>@HtmlHelperEx.DateInput(Html, "LaborContractStartDate", Model.LaborContractStartDate.ToShortDateString())
+                </td>
+            </tr>
+            <tr>
+                <td>合同结束时间:
+                </td>
+                <td>@HtmlHelperEx.DateInput(Html, "LaborContractStopDate", Model.LaborContractStopDate.ToShortDateString())
+                </td>
+            </tr>
+            <tr>
+                <td>是否为当前执行合同:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.LaborContractIsCurrent, EnumEx.BuildSelectItemList<Logics>())
+                </td>
+            </tr>
+            <tr>
+                <td>合同状态:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.LaborContractStatus, EnumEx.BuildSelectItemList<LaborWorkStatuses>())
+                </td>
+            </tr>
+            <tr>
+                <td>保险类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLInsurance(Html,"InsuranceFormularKey",Model.InsuranceFormularKey)
+                </td>
+            </tr>
+            <tr>
+                <td>公积金类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLReserveFund(Html,"ReserveFundFormularKey",Model.ReserveFundFormularKey)
+                </td>
+            </tr>
+            <tr>
+                <td>管理费类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLManageFee(Html,"ManageFeeFormularKey",Model.ManageFeeFormularKey)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" id="UserKey" value="@userKey" />
+        <input type="hidden" id="ItemKey" value="@Model.LaborContractGuid" />
+        <input type="button" id="submitButton" value="保存" class="buttons" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form", '@Url.Action("ContractList", new { itemKey = userKey })');
+        });
+    });
+</script>
+

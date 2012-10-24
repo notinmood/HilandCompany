@@ -1,0 +1,83 @@
+﻿div.content {
+	border:1px solid #f0f0f0!important;
+	background-color:#fff!important;
+}
+
+button.white {
+	background-image: none!important;
+	border:1px solid #dddddd!important;
+	background-color:#f8f8f8!important;
+	filter:none!important;
+}
+button.pink {
+	background-image: none!important;
+	border:1px solid #444444!important;
+	filter:none!important;
+}
+
+button.blue {
+	background-image: none!important;
+	filter:none!important;
+}
+
+div.items {
+width:715px!important;
+}
+
+
+ul.nav li.tab.active {
+top:1px!important;
+position: relative!important;
+border-bottom:1px solid #ffffff!important;
+}
+
+
+.item-defualt {padding:20px 0 20px 0!important;}
+
+.menu {
+	padding-left:0!important;
+	margin-left:0!important;
+	margin-right:0!important;
+	padding-right:10!important;
+	width:170px!important;
+}
+
+ul.nav {
+margin-left:5px!important;
+margin-top:11px!important;
+}
+ul.nav li.tab {
+display: inline!important;
+}
+
+div.search form {
+	width:480px!important;
+}
+
+div.search form button {
+	width:43px!important;
+	top:-1px!important;
+	left:-3px!important;
+	position: relative!important;
+
+}
+
+.item-defualt .title {
+	height:27px!important;
+}
+
+.social{
+ display:none!important;
+}
+
+.tools {
+	padding:15px 6px 0 35px!important;
+	margin:0!important;
+	float: none!important;
+	display: inline-block!important;
+}
+
+#Badger.badger-outter{width:26px!important}
+.item-alert .manage .alertedit{padding-bottom:0px!important;}
+.item-alert .manage .alertdelete{padding-bottom:0px!important;}
+.page-item .item-details .summary .options .right .padding {display:block!important;margin-top:25px!important}

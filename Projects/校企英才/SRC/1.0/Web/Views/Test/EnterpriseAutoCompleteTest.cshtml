@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "EnterpriseAutoCompleteTest";
+}
+
+
+<h2>EnterpriseAutoCompleteTest</h2>
+<link rel="stylesheet" href="@Url.Content("~/Content/ui-lightness/jquery-ui-1.8.17.custom.css")" type="text/css" media="screen" />
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.17.custom.min.js")"></script>
+@XQYC.Web.Control.HtmlHelperEx.XQYCAutoCompleteEnterprise(Html,"myAutoEnterprise")
+
+<script type="text/javascript">
+    function getAutoCompleteExtraParam() {
+        return "ssss";
+    }
+</script>

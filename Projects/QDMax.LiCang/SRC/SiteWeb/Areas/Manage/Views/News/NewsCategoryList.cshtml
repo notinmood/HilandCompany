@@ -1,0 +1,36 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@model PagedList<NewsCategoryEntity>
+@{
+    ViewBag.Title = "NewsCategoryList";
+}
+<h2>
+    新闻类别管理</h2>
+<div id="dvOrders">
+    <table width="98%" class="grid">
+        <tr>
+            <th>
+                编号
+            </th>
+            <th>
+                名称
+            </th>
+            <th>
+                是否可用
+            </th>
+        </tr>
+        @foreach (NewsCategoryEntity od in Model)
+        {     
+            <tr>
+              
+                <td>@od.NewsCategoryCode
+                </td>
+                <td>@od.NewsCategoryName
+                </td>
+                <td>@od.CanUsable
+                </td>
+            </tr>   
+        }
+    </table>
+    @Html.AjaxPager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }, new AjaxOptions { UpdateTargetId = "dvOrders" })
+</div>

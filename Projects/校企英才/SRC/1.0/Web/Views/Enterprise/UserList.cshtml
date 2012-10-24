@@ -1,0 +1,110 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@model List<BusinessUser>
+@{
+    ViewBag.Title = "Index";
+
+    string enterpriseKey = this.ViewBag.EnterpriseKey;
+    string enterpriseName = this.ViewBag.EnterpriseName;
+}
+
+<h2>企业登录用户列表(@enterpriseName)</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("UserItem", "Enterprise").Render(new { rel = "#EditDIV" })
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 150px">操作
+            </th>
+            <th style="width: 80px">登录名称
+            </th>
+            <th style="width: 100px">人员名称
+            </th>
+            <th style="width: 50px">状态
+            </th>
+            <th>联系方式
+            </th>
+            
+        </tr>
+        @foreach (BusinessUser entity in Model)
+        {
+            string entityGuid = entity.UserGuid.ToString();
+            <tr>
+                <td>
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("编辑").ACA("UserItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
+                    @Html.HiA().CssClassName("modalInput password "+ @entityGuid).Value("口令").ACA("UserPassword", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid, itemName = @entity.UserNameCN })
+
+                    @*@Html.HiA().CssClassName("modalInput user").Value("用户").ACA("UserList", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseGuid,itemName= @entity.CompanyName }) | 
+                    @Html.HiA().CssClassName("modalInput contract").Value("合同").ACA("ContractList", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseGuid ,itemName= @entity.CompanyName}) | *@
+                </td>
+                <td>@entity.UserName
+                </td>
+                <td>@entity.UserNameCN
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.UserStatus)
+                </td>
+                <td>@entity.UserMobileNO
+                </td>
+            </tr>   
+        }
+    </table>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aEnterpriseSection").click();
+            $("#aEnterpriseSection").addClass("current");
+            $("#aEnterpriseList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                var currentItemGuid = $("#currentPopupItemGuid").val();
+                $(".modalInput").overlay().close();
+                $(".modalInput.edit." + currentItemGuid).overlay().close(); 
+                $(".modalInput.password." + currentItemGuid).overlay().close();
+            });
+
+            $("#newDisplayA").click(function () {
+                var url = $.UrlUtil('@Url.Action("UserItem")').concat("itemKey", "").concat("enterpriseKey", "@enterpriseKey").show(true);
+                $("#EditDIV").load(url);
+            });
+
+            $("a.edit").click(function () {
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = $.UrlUtil('@Url.Action("UserItem")').concat("itemKey", itemKey).concat("enterpriseKey", "@enterpriseKey").show(true);
+                $("#EditDIV").load(url);
+            });
+
+            $("a.password").click(function () {
+                var itemKey = $(this).attr("itemKey");
+                var itemName = $(this).attr("itemName");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = $.UrlUtil('@Url.Action("UserPassword")').concat("userGuid", itemKey).concat("userName", itemName).show(true);
+                $("#EditDIV").load(url);
+            });
+        });
+    </script>
+</div>
+
+
+

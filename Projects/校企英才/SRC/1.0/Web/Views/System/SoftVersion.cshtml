@@ -1,0 +1,28 @@
+﻿@using HiLand.Utility.Entity
+@model Dictionary<string, string>
+@{
+    ViewBag.Title = "软件版本信息";
+
+}
+<h2>
+    软件版本信息
+</h2>
+<table>
+    @foreach (KeyValuePair<string, string> currentItem in Model)
+    {
+        <tr>
+            <td style="width: 150px;">
+                @currentItem.Key:
+            </td>
+            <td>@Html.Raw( currentItem.Value)
+            </td>
+        </tr>
+    }
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#aSettingSection").click();
+        $("#aSettingSection").addClass("current");
+        $("#aSoftVersion").addClass("current");
+    });
+</script>

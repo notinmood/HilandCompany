@@ -1,0 +1,90 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility4.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Control;
+@{
+    ViewBag.Title = "BatchEntering";
+}
+
+<h2>劳务人员基础信息批量导入</h2>
+<style type="text/css">
+    #main-content ul,
+    #main-content ol {
+        padding: 0 0 0 18px;
+    }
+
+        #main-content ul li {
+            background: url() center left no-repeat;
+            padding: 0px;
+        }
+
+    #main-content ol {
+        padding: 0px;
+    }
+
+        #main-content ol li {
+            list-style: none;
+            padding: 0;
+        }
+</style>
+@using (Html.BeginForm(null,null, FormMethod.Post,new { enctype = "multipart/form-data" }))
+{ 
+    <table>
+        <tr>
+            <td>信息提供人员:
+            </td>
+            <td class="fixClass">
+                @HtmlHelperEx.XQYCEmployeeChooser(Html, "ProviderUser", string.Empty, string.Empty)
+            </td>
+            <td>推荐人员:
+            </td>
+            <td class="fixClass">
+                @HtmlHelperEx.XQYCEmployeeChooser(Html, "RecommendUser", string.Empty, string.Empty)
+            </td>
+        </tr>
+        <tr>
+            <td>财务人员:
+            </td>
+            <td class="fixClass">
+                @HtmlHelperEx.XQYCEmployeeChooser(Html, "FinanceUser", string.Empty, string.Empty)
+            </td>
+            <td>客服人员:
+            </td>
+            <td class="fixClass">
+                @HtmlHelperEx.XQYCEmployeeChooser(Html, "ServiceUser", string.Empty, string.Empty)
+            </td>
+        </tr>
+        <tr>
+            <td>信息员:
+            </td>
+            <td class="fixClass">
+                @HtmlHelperEx.XQYCDDLInformationBroker(Html, "InformationBrokerUserGuid", string.Empty)
+            </td>
+            <td></td>
+            <td class="fixClass"></td>
+        </tr>
+        <tr>
+            <td>Excel标题行号:
+            </td>
+            <td class="fixClass">
+                <input type="text" name="headerRowNumber" value="1" />
+            </td>
+            <td>请选择Excel文件</td>
+            <td class="fixClass">
+                <input type="file" name="fileSelector" /></td>
+        </tr>
+    </table>
+    <input type="submit" value="导入" />
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#aLaborSection").click();
+        $("#aLaborSection").addClass("current");
+        $("#aBatchEntering").addClass("current");
+    });
+</script>

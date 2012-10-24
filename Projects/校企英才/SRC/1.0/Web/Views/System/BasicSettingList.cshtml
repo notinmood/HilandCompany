@@ -1,0 +1,81 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility.Data;
+
+@model List<BasicSettingEntity>
+@{
+    ViewBag.Title = "Basic Setting";
+
+}
+<h2>
+    基础参数设置
+</h2>
+<div id="ItemListDIV">
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 80px">
+                操作
+            </th>
+            <th style="width: 250px">
+                参数名称
+            </th>
+            <th style="width: 80px">
+                 参数值
+            </th>
+            <th>
+               状态
+            </th>
+        </tr>
+        @foreach (BasicSettingEntity entity in Model)
+        {
+            string entityGuid = entity.SettingID.ToString();
+            <tr>
+                <td>
+                    <a href="#"  class="modalInput edit "+ @entityGuid rel="#EditDIV" itemKey="@entity.SettingID" >编辑</a>
+                </td>
+                <td>@entity.DisplayName
+                </td>
+                <td>@entity.SettingValue
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
+                </td>
+            </tr>   
+        }
+    </table>
+     <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aSettingSection").click();
+            $("#aSettingSection").addClass("current");
+            $("#aSystemSetting").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                var currentItemGuid = $("#currentPopupItemGuid").val();
+                $(".modalInput").overlay().close();
+                $(".modalInput.edit." + currentItemGuid).overlay().close();
+            });
+
+            $("a.edit").click(function () {
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("BasicSetting")' + '?settingID=' + itemKey + '&r=' + Math.random();
+                $("#EditDIV").load(url);
+            });
+
+        });
+    </script>
+</div>

@@ -1,0 +1,118 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<article class="grid_8">
+    <h3>欢迎访问! 为什么选择我们?</h3>
+    <em class="text-1 margin-bot">青岛海澜网络科技有限公司是一家新锐型的技术提供商，目前涉足以下领域：虚拟实景模拟软件，企业信息化技术提供以及物联网应用。</em>
+    <div class="wrapper p4">
+        <article class="grid_4 alpha">
+            <div class="wrapper p1">
+                <figure class="img-indent4"><img src="@Url.Content("~/Content/images/main-soft.png")" alt="" /></figure>
+                <div class="extra-wrap">
+                    <div class="indent-top">
+                        <h4>软件<em>Software</em></h4>
+                    </div>
+                </div>
+            </div>
+            <p class="prev-indent-bot">应用软件创造客户价值。</p>
+            <a class="link-1" href="#">Know More</a>
+        </article>
+        <article class="grid_4 omega">
+            <div class="wrapper p1">
+                <figure class="img-indent4"><img src="@Url.Content("~/Content/images/main-internet.png")" alt="" /></figure>
+                <div class="extra-wrap">
+                    <div class="indent-top">
+                        <h4>互联网<em>Internet</em></h4>
+                    </div>
+                </div>
+            </div>
+            <p class="prev-indent-bot">基于（移动）互联网的应用，为客户异地<br />办公、移动办公提供了可能。</p>
+            <a class="link-1" href="#">Know More</a>
+        </article>
+    </div>
+    <div class="wrapper">
+        <article class="grid_4 alpha">
+            <div class="wrapper p1">
+                <figure class="img-indent4"><img src="@Url.Content("~/Content/images/main-iot.png")" alt="" /></figure>
+                <div class="extra-wrap">
+                    <div class="indent-top">
+                        <h4>物联网<em>IOT</em></h4>
+                    </div>
+                </div>
+            </div>
+            <p class="prev-indent-bot">以人的体验为核心，同时融入理念<br />和科技的创新，这才是物联网的灵魂所在。</p>
+            <a class="link-1" href="#">Know More</a>
+        </article>
+        <article class="grid_4 omega">
+            <div class="wrapper p1">
+                <figure class="img-indent4"><img src="@Url.Content("~/Content/images/main-fullview.png")" alt="" /></figure>
+                <div class="extra-wrap">
+                    <div class="indent-top">
+                        <h4>全景软件<em>Exploit your ideas</em></h4>
+                    </div>
+                </div>
+            </div>
+            <p class="prev-indent-bot">足不出户就可以让人们真实体验目标地的<br/>具体场景，而且是周遭360度的完全场景。</p>
+            <a class="link-1" href="#">Know More</a>
+        </article>
+    </div>
+</article>
+<article class="grid_4">
+    <h3>我们的特色</h3>
+    <div class="wrapper p1">
+        <figure><img class="img-border" src="@Url.Content("~/Content/images/main-zhuanye.png")" alt="专业" /></figure>
+        <div class="extra-wrap">
+            <h4  class="p1">专业</h4>
+            <p class="prev-indent-bot">十余年行业的实践让我深刻理解并细微洞悉业界的脉搏。</p>
+        </div>
+    </div>
+    <div class="wrapper p1">
+        <figure><img class="img-border" src="@Url.Content("~/Content/images/main-jingye.png")" alt="敬业" /></figure>
+        <div class="extra-wrap">
+            <h4 class="p1">敬业</h4>
+            <p class="prev-indent-bot">我们凭借专业的技能和敏锐的洞察力，帮助客户共同实现软件的价值；并且我们愿意在服务的过程中与客户共同成长。</p>
+        </div>
+    </div>
+        <div class="wrapper p1">
+        <figure><img class="img-border" src="@Url.Content("~/Content/images/main-xinrui.png")" alt="新锐" /></figure>
+        <div class="extra-wrap">
+            <h4 class="p1">新锐</h4>
+            <p class="prev-indent-bot">领先的IT技术，朝气蓬勃的团队，互助的气氛，一切都在蒸蒸日上。</p>
+        </div>
+    </div>
+</article>
+
+@section mainFlash{
+    <div class="carousel-container">
+        <div id="carousel">
+            <div class="carousel-feature">
+                <a href="#">
+                    <img class="carousel-image" alt="" src="@Url.Content("~/Content/images/gallery-img1.png")" /></a>
+            </div>
+            <div class="carousel-feature">
+                <a href="#">
+                    <img class="carousel-image" alt="" src="@Url.Content("~/Content/images/gallery-img3.png")" /></a>
+            </div>
+            <div class="carousel-feature">
+                <a href="#">
+                    <img class="carousel-image" alt="" src="@Url.Content("~/Content/images/gallery-img2.png")" /></a>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#carousel").featureCarousel({
+                autoPlay: 7000,
+                trackerIndividual: false,
+                trackerSummation: false,
+                topPadding: 50,
+                smallFeatureWidth: .9,
+                smallFeatureHeight: .9,
+                sidePadding: 0,
+                smallFeatureOffset: 0
+            });
+
+            $(".menu #menuIndex").addClass("active");
+        });
+    </script>
+}

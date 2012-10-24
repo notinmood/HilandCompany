@@ -1,0 +1,142 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Models;
+@using HiLand.Utility.Web;
+
+@model PagedList<SalarySummaryEntity>
+@{
+    ViewBag.Title = "Index";
+    string currentUrl = RequestHelper.CurrentFullUrl;
+    string enterpriseKey= RequestHelper.GetValue("enterpriseGuid");
+
+    List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员名称", ConditionFieldName = "LaborName", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "工号", ConditionFieldName = "LaborCode", ConditionType = typeof(string) });
+}
+
+<h2>劳务人员薪资列表</h2>
+<div id="ItemListDIV">
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.HiQuery("LaborQuery").QueryConditionList(queryItemList).Render()
+        }
+    </div>
+    <div class="OperateArea" id="OperateAreaContainer">
+        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("SalaryItem", "Labor").Render(new { rel = "#EditDIV" })
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 60px">操作
+            </th>
+            <th style="width: 60px">账期
+            </th>
+            <th style="width: 60px">状态
+            </th>
+            <th style="width: 80px">工号
+            </th>
+            <th style="width: 80px">姓名
+            </th>
+            <th style="width: 80px">扣税(费)前工资
+            </th>
+            <th style="width: 80px">各种扣税(费)
+            </th>
+            <th style="width: 80px">保险(实收)
+            </th>
+            <th style="width: 80px">保险(计算)
+            </th>
+            <th style="width: 80px">公积金(实收)
+            </th>
+            <th style="width: 80px">公积金(计算)
+            </th>
+            <th style="width: 80px">管理费(实收)
+            </th>
+            <th style="width: 80px">管理费(计算)
+            </th>
+        </tr>
+        @foreach (SalarySummaryEntity entity in Model)
+        {
+            string entityGuid = entity.SalarySummaryGuid.ToString();
+            decimal salaryGrossPay = entity.SalaryGrossPay;
+            decimal salaryrebate = entity.SalaryRebate;
+            <tr>
+                <td>
+                    @Html.HiA().CssClassName("salaryDetailsList").Value("详情").ACA("SalaryDetailsList", "Labor").RouteValue(new { itemKey = entity.SalarySummaryGuid, returnUrl = currentUrl }).Render()
+                </td>
+                <td>
+                    @entity.SalaryDate.ToString("yyyyMM")
+                </td>
+                <td>
+                    @EnumHelper.GetDisplayValue(entity.SalaryPayStatus)
+                </td>
+                <td>
+                    @entity.LaborCode
+                </td>
+                <td>@entity.LaborName
+                </td>
+                <td>@salaryGrossPay.ToString("0.00")
+                </td>
+                <td>@salaryrebate.ToString("0.00")
+                </td>
+                <td>@entity.InsuranceReal.ToString("0.00")
+                </td>
+                <td>@entity.InsuranceCalculated.ToString("0.00")
+                </td>
+                <td>@entity.ReserveFundReal.ToString("0.00")
+                </td>
+                <td>@entity.ReserveFundCalculated.ToString("0.00")
+                </td>
+                <td>@entity.ManageFeeReal.ToString("0.00")
+                </td>
+                <td>@entity.ManageFeeCalculated.ToString("0.00")
+                </td>
+            </tr>   
+        }
+    </table>
+    <div class="myPager">
+        <span style="float: left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
+        &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@SystemConst.CountPerPage</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)
+    </div>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aLaborSection").click();
+            $("#aLaborSection").addClass("current");
+            $("#aSalaryList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                $(document).simulateKeyPress('27');
+                var currentItemGuid = $("#currentPopupItemGuid").val();
+                $(".modalInput").overlay().close();
+                $(".modalInput.edit." + currentItemGuid).overlay().close();
+                $(".modalInput.password." + currentItemGuid).overlay().close();
+            });
+
+            $("#newDisplayA").click(function () {
+                var enterpriseKey = "@enterpriseKey";
+                var url = '@Url.Action("SalaryItem")' + '?r=' + Math.random() + '&enterpriseKey=' + enterpriseKey;
+                $("#EditDIV").load(url);
+            });
+        });
+    </script>
+</div>

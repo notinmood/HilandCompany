@@ -1,0 +1,131 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using HiLand.General.BLL;
+@model List<BasicSettingEntity>
+@{
+    ViewBag.Title = "Index";
+
+    string enterpriseKey = this.ViewBag.EnterpriseKey;
+    string enterpriseName = this.ViewBag.EnterpriseName;
+    if (string.IsNullOrWhiteSpace(enterpriseName))
+    {
+        enterpriseName= EnterpriseBLL.Instance.Get(enterpriseKey).CompanyName;
+    }
+
+    List<EnterpriseServiceEntity> selectedServiceList = this.ViewBag.SelectedServiceList;
+    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl; 
+}
+
+<h2>企业选用服务列表(@enterpriseName)</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 150px">操作
+            </th>
+            <th style="width: 80px">登录名称
+            </th>
+            <th style="width: 50px">状态
+            </th>
+            <th style="width: 80px">信息提供人员
+            </th>
+            <th style="width: 80px">推荐人员
+            </th>
+            <th style="width: 80px">财务人员
+            </th>
+            <th>客服人员
+            </th>
+        </tr>
+        @foreach (BasicSettingEntity entity in Model)
+        {
+            bool isExistCurrentService = false;
+            bool isEffect = false;
+            int currentServiceType = Converter.ChangeType<int>(entity.SettingValue);
+            EnterpriseServiceEntity currentSelectService = EnterpriseServiceEntity.Empty;
+            for (int i = 0; i < selectedServiceList.Count; i++)
+            {
+                if (selectedServiceList[i].EnterpriseServiceType == currentServiceType)
+                {
+                    isExistCurrentService = true;
+                    currentSelectService = selectedServiceList[i];
+
+                    if (currentSelectService.EnterpriseServiceStatus == HiLand.Utility.Enums.Logics.True)
+                    {
+                        isEffect = true;
+                    }
+                }
+            }
+
+            string effectString = "无效";
+            if (isEffect == true)
+            {
+                effectString = "有效";
+            }
+
+            string operateString = "启用";
+            if (isExistCurrentService)
+            {
+                operateString = "编辑";
+            }
+            string entityGuid = currentSelectService.EnterpriseServiceGuid.ToString();
+            <tr>
+                <td>
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value(operateString).ACA("ServiceItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @currentSelectService.EnterpriseServiceGuid,itemTypeNumber=@entity.SettingValue,itemTypeName=@entity.DisplayName }) 
+                </td>
+                <td>@entity.DisplayName
+                </td>
+                <td>@effectString
+                </td>
+                <td>@currentSelectService.ProviderUserName</td>
+                <td>@currentSelectService.RecommendUserName</td>
+                <td>@currentSelectService.FinanceUserName</td>
+                <td>@currentSelectService.ServiceUserName</td>
+            </tr>   
+        }
+    </table>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aEnterpriseSection").click();
+            $("#aEnterpriseSection").addClass("current");
+            $("#aEnterpriseList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                window.location.reload();
+            });
+
+            $("a.edit").click(function () {
+                var itemKey = $(this).attr("itemKey");
+                var itemTypeNumber = $(this).attr("itemTypeNumber");
+                var itemTypeName = $(this).attr("itemTypeName");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("ServiceItem")?r=' + Math.random() + '&enterpriseKey=@enterpriseKey&itemKey=' + itemKey + '&itemTypeNumber=' + itemTypeNumber + '&itemTypeName=' + itemTypeName + '&returnUrl=' + encodeURIComponent('@currentUrl');
+                $("#EditDIV").load(url);
+            });
+        });
+    </script>
+</div>
+
+
+

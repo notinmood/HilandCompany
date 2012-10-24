@@ -1,0 +1,168 @@
+﻿@using HiLand.Project.SiteWeb.Models;
+@{
+    ViewBag.Title = "Home Page";
+}
+<article class="grid_8">
+    <h3>欢迎访问! 为什么选择我们?</h3>
+    <em class="text-1 margin-bot">@ConfigConst.CompanyName 是一家新锐型的商务咨询与管理提供商，目前主要的服务包括："企业注册咨询与代理"和"企业运营财务管理与咨询"两个部分。</em>
+    <div class="wrapper p4">
+        <article class="grid_4 alpha">
+            <div class="wrapper p1">
+                <figure class="img-indent4">
+                    <img src="@Url.Content("~/Content/images/main-gszc.png")" alt="" />
+                </figure>
+                <div class="extra-wrap">
+                    <div class="indent-top">
+                        <h4>公司注册<em>Company register</em></h4>
+                    </div>
+                </div>
+            </div>
+            <p class="prev-indent-bot">
+                好的注册代理公司会根据投资者所需注册公司的类型,用合理的费用在较短的时间内注册好公司,并使公司运营后,花很少的时间与精力维护公司运营。
+            </p>
+            <a class="link-1" href="@Url.Action("DomesticCapitalRegister","Company")">Know More</a>
+        </article>
+        <article class="grid_4 omega">
+            <div class="wrapper p1">
+                <figure class="img-indent4">
+                    <img src="@Url.Content("~/Content/images/main-qybg.png")" alt="" />
+                </figure>
+                <div class="extra-wrap">
+                    <div class="indent-top">
+                        <h4>企业变更<em>Company changes</em></h4>
+                    </div>
+                </div>
+            </div>
+            <p class="prev-indent-bot">
+               企业变更是指企业成立后，企业组织形式、企业登记事项的变化。引起企业变更的原因有以下三种：企业合并、企业分立和公司组织变更。 
+            </p>
+            <a class="link-1" href="@Url.Action("CompanyChanges", "Company")">Know More</a>
+        </article>
+    </div>
+    <div class="wrapper p4">
+        <article class="grid_4 alpha">
+            <div class="wrapper p1">
+                <figure class="img-indent4">
+                    <img src="@Url.Content("~/Content/images/main-dljz.png")" alt="" />
+                </figure>
+                <div class="extra-wrap">
+                    <div class="indent-top">
+                        <h4>财务代理<em>Finance management</em></h4>
+                    </div>
+                </div>
+            </div>
+            <p class="prev-indent-bot">财务代理，通常指财务方面的专业人士以代理的名义，完成他人委托的财务相关事项。</p>
+            <a class="link-1" href="@Url.Action("FinanceManagement","Finance")">Know More</a>
+        </article>
+        <article class="grid_4 omega">
+            <div class="wrapper p1">
+                <figure class="img-indent4">
+                    <img src="@Url.Content("~/Content/images/main-sbzc.png")" alt="" />
+                </figure>
+                <div class="extra-wrap">
+                    <div class="indent-top">
+                        <h4>商标注册<em>Marker register</em></h4>
+                    </div>
+                </div>
+            </div>
+            <p class="prev-indent-bot">商标注册是商标使用人取得商标专用权的前提和条件，只有经核准注册的商标，才受法律保护。</p>
+            <a class="link-1" href="@Url.Action("MarkerRegister", "Company")">Know More</a>
+        </article>
+    </div>
+
+    <div class="wrapper p4">
+        <article class="grid_4 alpha">
+            <div class="wrapper p1">
+                <figure class="img-indent4">
+                    <img src="@Url.Content("~/Content/images/main-fullview.png")" alt="" />
+                </figure>
+                <div class="extra-wrap">
+                    <div class="indent-top">
+                        <h4>独立内审<em>Internal audit</em></h4>
+                    </div>
+                </div>
+            </div>
+            <p class="prev-indent-bot">：对组织中各类业务和控制进行独立评价，以确定是否遵循公认的方针和程序，是否符合规定和标准，是否有效和经济的使用了资源，是否在实现组织目标。</p>
+            <a class="link-1" href="@Url.Action("InternalAudit","Finance")">Know More</a>
+        </article>
+        <article class="grid_4 omega">
+            <div class="wrapper p1">
+                <figure class="img-indent4">
+                    <img src="@Url.Content("~/Content/images/main-wmts.png")" alt="" />
+                </figure>
+                <div class="extra-wrap">
+                    <div class="indent-top">
+                        <h4>外贸退税<em>Export tax rebate</em></h4>
+                    </div>
+                </div>
+            </div>
+            <p class="prev-indent-bot">出口退税是指对出口货物在国内已征收的增值税和消费税进行退还的政策。</p>
+            <a class="link-1" href="@Url.Action("ExportTaxRebate","Finance")">Know More</a>
+        </article>
+    </div>
+</article>
+<article class="grid_4">
+    <h3>我们的特色</h3>
+    <div class="wrapper p1">
+        <div>
+            <img class="img-border" src="@Url.Content("~/Content/images/main-zhuanye.png")" alt="专业" />
+        </div>
+        <div class="extra-wrap">
+            <h4 class="p1">专业</h4>
+            <p class="prev-indent-bot">数年行业的实践让我深刻理解并细微洞悉业界的脉搏。</p>
+        </div>
+    </div>
+    <div class="wrapper p1">
+        <div>
+            <img class="img-border" src="@Url.Content("~/Content/images/main-jingye.png")" alt="敬业" />
+        </div>
+        <div class="extra-wrap">
+            <h4 class="p1">敬业</h4>
+            <p class="prev-indent-bot">我们凭借专业的技能和敏锐的洞察力，帮助客户共同实现企业的价值；并且我们愿意在服务的过程中与客户共同成长。</p>
+        </div>
+    </div>
+    <div class="wrapper p1">
+        <div>
+            <img class="img-border" src="@Url.Content("~/Content/images/main-xinrui.png")" alt="新锐" />
+        </div>
+        <div class="extra-wrap">
+            <h4 class="p1">新锐</h4>
+            <p class="prev-indent-bot">领先的管理技术，朝气蓬勃的团队，互助的气氛，一切都在蒸蒸日上。</p>
+        </div>
+    </div>
+</article>
+
+@section mainFlash{
+    <div class="carousel-container mypng">
+        <div id="carousel">
+            <div class="carousel-feature">
+                <a href="#">
+                    <img class="carousel-image" alt="" src="@Url.Content("~/Content/images/gallery-img1.png")" /></a>
+            </div>
+            <div class="carousel-feature">
+                <a href="#">
+                    <img class="carousel-image" alt="" src="@Url.Content("~/Content/images/gallery-img3.png")" /></a>
+            </div>
+            <div class="carousel-feature">
+                <a href="#">
+                    <img class="carousel-image" alt="" src="@Url.Content("~/Content/images/gallery-img2.png")" /></a>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#carousel").featureCarousel({
+                autoPlay: 7000,
+                trackerIndividual: false,
+                trackerSummation: false,
+                topPadding: 50,
+                smallFeatureWidth: .9,
+                smallFeatureHeight: .9,
+                sidePadding: 0,
+                smallFeatureOffset: 0
+            });
+
+            $(".menu #menuIndex").addClass("active");
+        });
+    </script>
+}

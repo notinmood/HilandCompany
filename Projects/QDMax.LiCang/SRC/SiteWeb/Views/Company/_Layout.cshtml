@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "公司注册";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<article class="grid_2">
+    <ul class="vmenu">
+        <li id="menuDomesticCapitalRegister"><a href="@Url.Action("DomesticCapitalRegister","Company")" title="内资公司注册">内资公司注册</a></li>
+        <li id="menuForeignCapitalRegister"><a href="@Url.Action("ForeignCapitalRegister", "Company")" title="外资公司注册 ">外资公司注册 </a></li>
+        <li id="menuCompanyChanges"><a href="@Url.Action("CompanyChanges", "Company")" title="企业变更">企业变更</a></li>
+        <li id="menuCompanyDestroy"><a href="@Url.Action("CompanyDestroy", "Company")" title="企业注销">企业注销 </a></li>
+        <li id="menuBranchRegister"><a href="@Url.Action("BranchRegister", "Company")" title="代表处注册">代表处注册</a></li>
+        <li id="menuMarkerRegister"><a href="@Url.Action("MarkerRegister", "Company")" title="商标注册代理">商标注册代理</a></li>
+    </ul>
+</article>
+@RenderBody()

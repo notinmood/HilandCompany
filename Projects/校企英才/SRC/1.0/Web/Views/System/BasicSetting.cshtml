@@ -1,0 +1,24 @@
+﻿@using HiLand.General.Entity;
+@model BasicSettingEntity
+@{
+    ViewBag.Title = "Basic Setting";
+    this.Layout = null;
+}
+<div id="formContainer">
+    @using (Html.BeginForm())
+    { 
+        <span>Display Name:@Model.DisplayName</span>
+        <br />
+        <span>Setting Value:</span>
+        <input type="text" name="SettingValue" value="@Model.SettingValue" />
+        <input  type="hidden" name="SettingID" value="@Model.SettingID"/>
+        <input type="button" id="submitButton" value="Save" class="buttons" /><a id="overlayClose" class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form", '@Url.Action("BasicSettingList")');
+        });
+    });
+</script>

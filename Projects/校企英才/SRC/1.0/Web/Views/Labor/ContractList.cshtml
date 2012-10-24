@@ -1,0 +1,106 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using HiLand.General.BLL;
+@using HiLand.Framework.BusinessCore.BLL;
+@model List<LaborContractEntity>
+@{
+    ViewBag.Title = "Index";
+
+    string itemKey = this.ViewBag.ItemKey;
+    Guid itemGuid = GuidHelper.TryConvert(itemKey);
+    string itemName = BusinessUserBLL.Get(itemGuid).UserNameCN;
+}
+<h2>劳务人员合同列表(@itemName)</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("ContractItem", "Labor").Render(new { rel = "#EditDIV" })
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 80px">操作
+            </th>
+            <th style="width: 150px">企业名称
+            </th>
+            <th style="width: 150px">合同名称
+            </th>
+            <th style="width: 50px">当前合同
+            </th>
+            <th style="width: 50px">状态
+            </th>
+            <th style="width: 80px">合同开始时间
+            </th>
+            <th>合同结束时间
+            </th>
+        </tr>
+        @foreach (LaborContractEntity entity in Model)
+        {
+            string entityGuid = entity.LaborContractGuid.ToString();
+            <tr>
+                <td>
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("编辑").ACA("ContractItem", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.LaborContractGuid }) | 
+                </td>
+                <td>@entity.Enterprise.CompanyNameShort
+                </td>
+                <td>@entity.EnterpriseContract.ContractTitle
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.LaborContractIsCurrent)
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.LaborContractStatus)
+                </td>
+                <td>@entity.LaborContractStartDate.ToShortDateString()
+                </td>
+                <td>@entity.LaborContractStopDate.ToShortDateString()
+                </td>
+            </tr>   
+        }
+    </table>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aLaborSection").click();
+            $("#aLaborSection").addClass("current");
+            $("#aLaborList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                var currentItemGuid = $("#currentPopupItemGuid").val();
+                $(".modalInput").overlay().close();
+                $(".modalInput.edit." + currentItemGuid).overlay().close();
+            });
+
+            $("#newDisplayA").click(function () {
+                var url = $.UrlUtil('@Url.Action("ContractItem")').concat("itemKey", "").concat("userKey", "@itemKey").show(true);
+                $("#EditDIV").load(url);
+            });
+
+            $("a.edit").click(function () {
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = $.UrlUtil('@Url.Action("ContractItem")').concat("itemKey", itemKey).concat("userKey", "@itemKey").show(true);
+                $("#EditDIV").load(url);
+            });
+        });
+    </script>
+</div>
+
+
+

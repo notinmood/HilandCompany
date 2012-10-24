@@ -1,0 +1,95 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility4.Data;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Control;
+@model EmployeeEntity
+@{
+    ViewBag.Title = "人员信息";
+    this.Layout = null;
+}
+<div id="formContainer">
+<style type="text/css">
+    #formContainer table td
+    {
+        
+        }
+</style>
+    @using (Html.BeginForm())
+    { 
+        <table>
+            <tr>
+                <td style="width: 150px;">
+                    员工名称:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserNameCN)
+                </td>
+                <td style="width: 150px;">
+                    员工账号:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    所属部门:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.DepartmentGuid,  HtmlHelperEx.XQYCItemsDepartment())
+                </td>
+                <td>
+                   性别:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.UserSex,  EnumEx.BuildSelectItemList<Sexes>())
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   职别信息:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.DepartmentUserType,  EnumEx.BuildSelectItemList<DepartmentUserTypes>())
+                </td>
+                <td>
+                    职位信息:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserTitle)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    员工Email:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserEmail)
+                </td>
+                <td>
+                    生日:
+                </td>
+                <td>@HtmlHelperEx.DateInput(Html,"UserBirthDay",Model.UserBirthDay.ToShortDateString())
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    用户状态:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.UserStatus, EnumEx.BuildSelectItemList<UserStatuses>())
+                </td>
+                <td>
+                    其他:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.Foo)
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" id="KeyGuid" value="@Model.UserGuid" />
+        <input type="button" id="submitButton" value="保存" class="buttons" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form", '@Url.Action("Index")');
+        });
+    });
+</script>
+

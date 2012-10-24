@@ -1,0 +1,36 @@
+﻿@using HiLand.Utility4.MVC;
+@using HiLand.Framework.BusinessCore.BLL;
+@{
+    ViewBag.Title = "后台管理";
+    this.Layout = "~/Views/Shared/_LayoutAbstract.cshtml";
+}
+
+@RenderBody()
+
+
+
+@section mainAccordionMenu{
+    <ul id="main-nav">
+        <!-- Accordion Menu -->
+        <li><a id="aDashboardSection" href="@Url.Action("Index", "Home")" class="nav-top-item no-submenu">
+            <!-- Add the class "no-submenu" to menu items with no sub menu -->
+            仪表盘 </a>
+        </li>
+        <li><a id="aEnterpriseSection" href="#" class="nav-top-item">企业信息管理</a>
+            <ul>
+                <li><a id="aEnterpriseList" href="@Url.Action("Index", "Enterprise")">企业客户基本信息</a></li>
+            </ul>
+        </li>
+        <li><a id="aUnSecuredLoanSection" href="#" class="nav-top-item">劳务人员管理</a>
+            <ul>
+                <li><a id="aUnSecuredLoanList" href="@Url.Action("UnSecuredLoanList", "UnSecured")">劳务人员基本信息</a></li>
+            </ul>
+        </li>
+        <li><a id="aSettingSection" href="#" class="nav-top-item">设置</a>
+            <ul>
+                <li><a id="aMyProfile" href="@Url.Action("MyProfile", "Account")">个人基本信息</a></li>
+                <li><a id="aChangePassword" href="@Url.Action("ChangePassword", "Account")">修改口令</a></li>
+            </ul>
+        </li>
+    </ul>
+}

@@ -1,0 +1,69 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility4.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Control;
+@using XQYC.Business.Enums;
+@using HiLand.General.Entity;
+
+@model EnterpriseEntity
+@{
+    ViewBag.Title = "劳务人员合同信息";
+    this.Layout = null;
+    string laborAutoCompleteUrl = Url.Action("LaborAutoCompleteData", "Labor");
+}
+<link rel="stylesheet" href="@Url.Content("~/Content/ui-lightness/jquery-ui-1.8.17.custom.css")" type="text/css" media="screen" />
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.17.custom.min.js")"></script>
+<div id="formContainer">
+    <style type="text/css">
+        #formContainer table td {
+        }
+    </style>
+    @using (Html.BeginForm())
+    { 
+        <table>
+            <tr>
+                <td style="width: 150px;">企业名称:
+                </td>
+                <td><input type="text" readonly="readonly" name="enterpriseName" value="@Model.CompanyName" />
+                    <input type="hidden" id="enterpriseGuid" name="enterpriseGuid" value="@Model.EnterpriseGuid" />
+                </td>
+            </tr>
+            <tr>
+                <td>人员信息:
+                </td>
+                <td>@Html.HiTextBox("UserNameCN").DynamicLoadDataUrl(laborAutoCompleteUrl).Render()
+                </td>
+            </tr>
+            <tr>
+                <td>薪资月份:
+                </td>
+                <td>@HtmlHelperEx.DateInput(Html, "SalaryMonth", string.Empty, "yyyy/mm")
+                </td>
+            </tr>
+        </table>
+        <input type="submit" id="submitButton" value="保存" class="buttons" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+    }
+</div>
+<script type="text/javascript">
+    function getAutoCompleteExtraParam() {
+            return $("#enterpriseGuid").val();
+        }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            var userGuid = $("#UserNameCN_Value").val();
+            var salaryMonth = $("#SalaryMonth").val();
+            if (userGuid == "" || salaryMonth=="") {
+                alert("请先输入并选择人员信息和薪资月份信息！");
+                return false;
+            }
+        });
+    });
+</script>
+
+

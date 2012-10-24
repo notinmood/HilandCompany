@@ -1,0 +1,598 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C939C12F-31FA-4481-8CA4-4A55EFA8B360}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XQYC.Web</RootNamespace>
+    <AssemblyName>XQYC.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\CommonLibs\quartz.net\Framework2.0\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="HiLand.Framework">
+      <HintPath>..\..\..\..\..\..\HiLand\SRC\WebResourceCollection\bin\HiLand.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="HiLand.Framework4">
+      <HintPath>..\..\..\..\..\..\HiLand\SRC\WebResourceCollection\bin\HiLand.Framework4.dll</HintPath>
+    </Reference>
+    <Reference Include="HiLand.General">
+      <HintPath>..\..\..\..\..\..\HiLand\SRC\WebResourceCollection\bin\HiLand.General.dll</HintPath>
+    </Reference>
+    <Reference Include="HiLand.Utility">
+      <HintPath>..\..\..\..\..\..\HiLand\SRC\WebResourceCollection\bin\HiLand.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="HiLand.Utility4">
+      <HintPath>..\..\..\..\..\..\HiLand\SRC\WebResourceCollection\bin\HiLand.Utility4.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcPager">
+      <HintPath>..\..\..\..\..\..\HiLand\SRC\WebResourceCollection\bin\MvcPager.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Net20">
+      <HintPath>..\..\..\..\..\..\HiLand\SRC\WebResourceCollection\bin\Newtonsoft.Json.Net20.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\..\..\..\..\..\HiLand\SRC\WebResourceCollection\bin\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz, Version=2.0.1.100, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\CommonLibs\quartz.net\Framework2.0\Quartz.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\CommonLibs\sqlite64\System.Data.SQLite.DLL</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages" />
+    <Reference Include="System.Web.Helpers" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Areas\EnterpriseConsole\Controllers\AccountController.cs" />
+    <Compile Include="Areas\EnterpriseConsole\Controllers\EnterpriseController.cs" />
+    <Compile Include="Areas\EnterpriseConsole\Controllers\LaborController.cs" />
+    <Compile Include="Areas\InformationBrokerConsole\Controllers\AccountController.cs" />
+    <Compile Include="Areas\InformationBrokerConsole\Controllers\LaborController.cs" />
+    <Compile Include="Areas\LaborConsole\Controllers\AccountController.cs" />
+    <Compile Include="Areas\UserCenter\AccountAreaRegistration.cs" />
+    <Compile Include="Areas\UserCenter\Controllers\HomeController.cs" />
+    <Compile Include="Areas\EnterpriseConsole\Controllers\HomeController.cs" />
+    <Compile Include="Areas\EnterpriseConsole\EnterpriseAreaRegistration.cs" />
+    <Compile Include="Areas\InformationBrokerConsole\Controllers\HomeController.cs" />
+    <Compile Include="Areas\InformationBrokerConsole\InformationBrokerAreaRegistration.cs" />
+    <Compile Include="Areas\LaborConsole\Controllers\HomeController.cs" />
+    <Compile Include="Areas\LaborConsole\LaborAreaRegistration.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\EnterpriseController.cs" />
+    <Compile Include="Controllers\FreePermissionController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InformationBrokerController.cs" />
+    <Compile Include="Controllers\CostFormularController.cs" />
+    <Compile Include="Controllers\LaborController.cs" />
+    <Compile Include="Controllers\PermissionController.cs" />
+    <Compile Include="Controllers\RemindController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\SystemController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Control\HtmlHelperEx.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\JobContainer.cs" />
+    <Compile Include="Models\Jobs\BirthdayRemindJob.cs" />
+    <Compile Include="Models\Jobs\BirthdayRemindJobOfEmployee.cs" />
+    <Compile Include="Models\Jobs\LaborContractRemindJob.cs" />
+    <Compile Include="Models\Jobs\EnterpriseContractRemindJob.cs" />
+    <Compile Include="Models\Jobs\JobConst.cs" />
+    <Compile Include="Models\Jobs\RemindJob.cs" />
+    <Compile Include="Models\SystemConst.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\adminStyle.css" />
+    <Content Include="Content\DateInputImages\next.gif" />
+    <Content Include="Content\DateInputImages\prev.gif" />
+    <Content Include="Content\datePicker.css" />
+    <Content Include="Content\Hiland.css" />
+    <Content Include="Content\Hiland_clear.css" />
+    <Content Include="Content\HlImages\hl_status_alert_256.png" />
+    <Content Include="Content\HlImages\hl_status_alert_48.png" />
+    <Content Include="Content\HlImages\hl_status_cancel_256.png" />
+    <Content Include="Content\HlImages\hl_status_cancel_48.png" />
+    <Content Include="Content\HlImages\hl_status_info_256.png" />
+    <Content Include="Content\HlImages\hl_status_info_48.png" />
+    <Content Include="Content\HlImages\hl_status_ok_256.png" />
+    <Content Include="Content\HlImages\hl_status_ok_48.png" />
+    <Content Include="Content\HlImages\hl_status_tip_256.png" />
+    <Content Include="Content\HlImages\hl_status_tip_48.png" />
+    <Content Include="Content\ie6.css" />
+    <Content Include="Content\ie7.css" />
+    <Content Include="Content\Images\ajaxLoader.gif" />
+    <Content Include="Content\Images\alert-create-bg.gif" />
+    <Content Include="Content\Images\background.gif" />
+    <Content Include="Content\Images\button-overlay.png" />
+    <Content Include="Content\Images\calendar.png" />
+    <Content Include="Content\Images\close.png" />
+    <Content Include="Content\Images\holiday-hero.gif" />
+    <Content Include="Content\Images\Logo.png" />
+    <Content Include="Content\Images\next-horizontal.png" />
+    <Content Include="Content\Images\NoImage_180_135.jpg" />
+    <Content Include="Content\Images\NoImage_200_150.jpg" />
+    <Content Include="Content\Images\NoImage_340_255.jpg" />
+    <Content Include="Content\Images\prev-horizontal.png" />
+    <Content Include="Content\Images\price-refresh-large.gif" />
+    <Content Include="Content\Images\price-refresh.gif" />
+    <Content Include="Content\Images\shopping-woman.jpg" />
+    <Content Include="Content\Images\sprite.gif" />
+    <Content Include="Content\invalid.css" />
+    <Content Include="Content\jcarouselSkins\ie7\credits.txt" />
+    <Content Include="Content\jcarouselSkins\ie7\loading-small.gif" />
+    <Content Include="Content\jcarouselSkins\ie7\loading.gif" />
+    <Content Include="Content\jcarouselSkins\ie7\loading_small.gif" />
+    <Content Include="Content\jcarouselSkins\ie7\next-horizontal.gif" />
+    <Content Include="Content\jcarouselSkins\ie7\prev-horizontal.gif" />
+    <Content Include="Content\jcarouselSkins\ie7\skin.css" />
+    <Content Include="Content\jcarouselSkins\tango\credits.txt" />
+    <Content Include="Content\jcarouselSkins\tango\next-horizontal.png" />
+    <Content Include="Content\jcarouselSkins\tango\next-vertical.png" />
+    <Content Include="Content\jcarouselSkins\tango\prev-horizontal.png" />
+    <Content Include="Content\jcarouselSkins\tango\prev-vertical.png" />
+    <Content Include="Content\jcarouselSkins\tango\skin.css" />
+    <Content Include="Content\jQuery.tools.dateinput.css" />
+    <Content Include="Content\main.css" />
+    <Content Include="Content\manageImages\b.png" />
+    <Content Include="Content\manageImages\bg-body.gif" />
+    <Content Include="Content\manageImages\bg-button-green.gif" />
+    <Content Include="Content\manageImages\bg-content-box.gif" />
+    <Content Include="Content\manageImages\bg-form-field.gif" />
+    <Content Include="Content\manageImages\bg-login-top.png" />
+    <Content Include="Content\manageImages\bg-login.gif" />
+    <Content Include="Content\manageImages\bg-menu-item-current.gif" />
+    <Content Include="Content\manageImages\bg-menu-item-green.gif" />
+    <Content Include="Content\manageImages\bg-radial-gradient.gif" />
+    <Content Include="Content\manageImages\bg-sidebar.gif" />
+    <Content Include="Content\manageImages\bl.png" />
+    <Content Include="Content\manageImages\br.png" />
+    <Content Include="Content\manageImages\icons\bullet_black.png" />
+    <Content Include="Content\manageImages\icons\clock_48.png" />
+    <Content Include="Content\manageImages\icons\comment_48.png" />
+    <Content Include="Content\manageImages\icons\cross.png" />
+    <Content Include="Content\manageImages\icons\cross_circle.png" />
+    <Content Include="Content\manageImages\icons\cross_grey_small.png" />
+    <Content Include="Content\manageImages\icons\exclamation.png" />
+    <Content Include="Content\manageImages\icons\hammer_screwdriver.png" />
+    <Content Include="Content\manageImages\icons\image_add_48.png" />
+    <Content Include="Content\manageImages\icons\information.png" />
+    <Content Include="Content\manageImages\icons\jquery.wysiwyg.gif" />
+    <Content Include="Content\manageImages\icons\paper_content_pencil_48.png" />
+    <Content Include="Content\manageImages\icons\pencil.png" />
+    <Content Include="Content\manageImages\icons\pencil_48.png" />
+    <Content Include="Content\manageImages\icons\tick_circle.png" />
+    <Content Include="Content\manageImages\logo.png" />
+    <Content Include="Content\manageImages\menu-current-arrow.gif" />
+    <Content Include="Content\manageImages\shortcut-button-bg.gif" />
+    <Content Include="Content\manageImages\tl.png" />
+    <Content Include="Content\manageImages\tr.png" />
+    <Content Include="Content\NotificationImages\bullet_black.png" />
+    <Content Include="Content\NotificationImages\clock_48.png" />
+    <Content Include="Content\NotificationImages\comment_48.png" />
+    <Content Include="Content\NotificationImages\cross.png" />
+    <Content Include="Content\NotificationImages\cross_circle.png" />
+    <Content Include="Content\NotificationImages\cross_grey_small.png" />
+    <Content Include="Content\NotificationImages\exclamation.png" />
+    <Content Include="Content\NotificationImages\hammer_screwdriver.png" />
+    <Content Include="Content\NotificationImages\image_add_48.png" />
+    <Content Include="Content\NotificationImages\information.png" />
+    <Content Include="Content\NotificationImages\jquery.wysiwyg.gif" />
+    <Content Include="Content\NotificationImages\paper_content_pencil_48.png" />
+    <Content Include="Content\NotificationImages\pencil.png" />
+    <Content Include="Content\NotificationImages\pencil_48.png" />
+    <Content Include="Content\NotificationImages\tick_circle.png" />
+    <Content Include="Content\notificationStyle.css" />
+    <Content Include="Content\reset.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\ui-lightness\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Content\ui-lightness\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Content\ui-lightness\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Content\ui-lightness\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Content\ui-lightness\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Content\ui-lightness\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\ui-lightness\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Content\ui-lightness\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Content\ui-lightness\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Content\ui-lightness\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\ui-lightness\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Content\ui-lightness\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Content\ui-lightness\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Content\ui-lightness\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\ui-lightness\jquery-ui-1.8.17.custom.css" />
+    <Content Include="Content\ztree\css\demo.css" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\1_close.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\1_open.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\2.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\3.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\4.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\5.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\6.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\7.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\8.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\9.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\line_conn.gif" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\loading.gif" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\zTreeStandard.gif" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\zTreeStandard.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\zTreeStyle.css" />
+    <Content Include="Content\ztree\js\jquery.ztree.all-3.3.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.all-3.3.min.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.core-3.3.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.core-3.3.min.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.excheck-3.3.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.excheck-3.3.min.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.exedit-3.3.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.exedit-3.3.min.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.exhide-3.3.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.exhide-3.3.min.js" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\date.js" />
+    <Content Include="Scripts\DD_belatedPNG_0.0.8a-min.js" />
+    <Content Include="Scripts\DD_belatedPNG_0.0.8a.js" />
+    <Content Include="Scripts\facebox.js" />
+    <Content Include="Scripts\jquery-ui-1.8.17.custom.min.js" />
+    <Content Include="Scripts\jquery.cascadingDropDown.js" />
+    <Content Include="Scripts\jquery.datePicker.min-2.1.2.js" />
+    <Content Include="Scripts\jQuery.form.2.84.js" />
+    <Content Include="Scripts\jQuery.form.3.15.js" />
+    <Content Include="Scripts\jQuery.gbfSubmit.js" />
+    <Content Include="Scripts\jQuery.hiland.general.js" />
+    <Content Include="Scripts\jquery.jcarousel.js" />
+    <Content Include="Scripts\jquery.jcarousel.min.js" />
+    <Content Include="Scripts\jQuery.tools.min.js" />
+    <Content Include="Scripts\jquery.wysiwyg.js" />
+    <Content Include="Scripts\simpla.jquery.configuration.js" />
+    <Content Include="SettingList.txt" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\jquery-1.4.4.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
+    <Content Include="Scripts\jquery-1.4.4-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\EnterpriseConsole\Models\" />
+    <Folder Include="Areas\InformationBrokerConsole\Models\" />
+    <Folder Include="Areas\LaborConsole\Models\" />
+    <Folder Include="Areas\UserCenter\Models\" />
+    <Folder Include="Areas\UserCenter\Views\Shared\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Employee\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\System\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\System\CacheInfo.cshtml" />
+    <Content Include="Views\System\SoftVersion.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\MyProfile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\System\BasicSetting.cshtml" />
+    <Content Include="Views\System\BasicSettingList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Permission\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\System\OperationResult.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Department\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Department\Item.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XQYCBusiness\XQYCBusiness.csproj">
+      <Project>{022576c5-7cb4-42b2-8f4e-8abe878f4068}</Project>
+      <Name>XQYCBusiness</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Employee\Item.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\ChangePasswordForManage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\InformationBroker\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\InformationBroker\Item.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\OnlyTest.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Role\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Role\Item.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Enterprise\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Enterprise\Item.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Enterprise\ContractItem.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Enterprise\ContractList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Enterprise\UserList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Enterprise\UserItem.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\InformationBrokerConsole\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\EnterpriseConsole\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\LaborConsole\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\EnterpriseConsole\Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\InformationBrokerConsole\Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\LaborConsole\Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\UserCenter\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\UserCenter\Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\UserCenter\Views\Home\_ChangePasswordForSelf.cshtml" />
+    <Content Include="Areas\UserCenter\Views\Home\_MyProfile.cshtml" />
+    <Content Include="Areas\UserCenter\Views\Home\_ChangePasswordForManage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\EnterpriseConsole\Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\EnterpriseConsole\Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_LayoutAbstract.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\EnterpriseConsole\Views\Account\ChangePassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\EnterpriseConsole\Views\Account\MyProfile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\InformationBrokerConsole\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\InformationBrokerConsole\Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\LaborConsole\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\LaborConsole\Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\InformationBrokerConsole\Views\Account\ChangePassword.cshtml" />
+    <Content Include="Areas\InformationBrokerConsole\Views\Account\MyProfile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\LaborConsole\Views\Account\ChangePassword.cshtml" />
+    <Content Include="Areas\LaborConsole\Views\Account\MyProfile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Enterprise\ServiceList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Enterprise\ServiceItem.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Labor\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Labor\Item.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Labor\BatchEntering.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Labor\ContractList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Labor\ContractItem.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\ControlTest.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\BusinessTest.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Test\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Test\SystemTaskTest.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Remind\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\InformationBrokerConsole\Views\Labor\Index.cshtml" />
+    <Content Include="Areas\EnterpriseConsole\Views\Labor\Index.cshtml" />
+    <Content Include="Areas\EnterpriseConsole\Views\Enterprise\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\profile1.pubxml" />
+    <Content Include="Views\Permission\Data.cshtml" />
+    <Content Include="Views\FreePermission\RoleSelector.cshtml" />
+    <Content Include="Views\Labor\SalaryBatch.cshtml" />
+    <Content Include="Views\Labor\SalaryList.cshtml" />
+    <Content Include="Views\Labor\SalaryDetailsList.cshtml" />
+    <Content Include="Views\CostFormular\Index.cshtml" />
+    <Content Include="Views\CostFormular\Item.cshtml" />
+    <Content Include="Views\Test\EnterpriseAutoCompleteTest.cshtml" />
+    <Content Include="Views\Labor\SalaryListPreSelector.cshtml" />
+    <Content Include="Views\Labor\BankCardBatch.cshtml" />
+    <Content Include="Views\Labor\SalaryItem.cshtml" />
+    <Content Include="Views\Labor\SalaryDetails.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>58731</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/databaseManage</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

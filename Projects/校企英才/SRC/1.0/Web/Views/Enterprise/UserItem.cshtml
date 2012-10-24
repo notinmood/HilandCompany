@@ -1,0 +1,77 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility4.Data;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Control;
+@model BusinessUser
+@{
+    ViewBag.Title = "人员信息";
+    this.Layout = null;
+    
+    string enterpriseKey= this.ViewBag.EnterpriseKey;
+    if(Model.IsEmpty==false)
+    {
+        enterpriseKey = Model.EnterpriseKey;
+    }
+}
+<div id="formContainer">
+<style type="text/css">
+    #formContainer table td
+    {
+        
+        }
+</style>
+    @using (Html.BeginForm())
+    { 
+        <table>
+            <tr>
+                <td style="width: 150px;">
+                    人员名称:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserNameCN)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    人员账号:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    人员联系方式:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserMobileNO)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    人员性别:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.UserSex,  EnumEx.BuildSelectItemList<Sexes>())
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    用户状态:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.UserStatus, EnumEx.BuildSelectItemList<UserStatuses>())
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" id="EnterpriseKey" value="@enterpriseKey" />
+        <input type="hidden" id="ItemKey" value="@Model.UserGuid" />
+        <input type="button" id="submitButton" value="保存" class="buttons" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form", '@Url.Action("UserList", new { itemKey= enterpriseKey })');
+        });
+    });
+</script>
+

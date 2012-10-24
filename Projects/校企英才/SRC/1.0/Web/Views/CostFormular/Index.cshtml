@@ -1,0 +1,115 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+
+@model List<CostFormularEntity>
+@{
+    ViewBag.Title = "保险公积金管理费公式信息";
+}
+
+<h2>保险公积金信息</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item","CostFormular").Render(new { rel = "#EditDIV" })
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 80px">操作
+            </th>
+            <th style="width: 80px">类别
+            </th>
+            <th  style="width: 50px">状态
+            </th>
+            <th style="width: 120px">名称
+            </th>
+            <th>配置信息
+            </th>
+        </tr>
+        @foreach (CostFormularEntity entity in Model)
+        {
+            string entityGuid = entity.CostFormularGuid.ToString();
+            <tr>
+                <td>
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("编辑").ACA("Item", "CostFormular").Render(new { rel = "#EditDIV", itemKey = @entityGuid }) 
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.CostKind)
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
+                </td>
+                <td>@entity.CostFormularName
+                </td>
+                <td>@entity.CostFormularValue
+                </td>
+            </tr>   
+        }
+    </table>
+    <pre>
+        公式内的数据项目约定：
+        1、可以执行加减乘除等算术运算
+        2、各参与运算的数据项（除常数外）必须放入大括号内（“{}”）
+        3、目前支持的数据项为：（如果添加新的数据项，需要在表中GeneralBasicSetting设置）
+            {NeedPaySalary}：应付工资
+           @* {RealPaySalary}：实付工资*@
+            --（以下费用项目定义在GeneralBasicSetting中，如果要添加新的费用项，请联系管理员）--------
+            {StandardSalaryUrban}：市区最低标准工资
+            {PensionEnterprise}：养老保险(企业负责部分)
+            {PensionPerson}：养老保险(个人负责部分)
+            {MedicalEnterprise}：医疗保险(企业负责部分)
+            {MedicalPerson}：医疗保险(个人负责部分)
+            {JoblessEnterprise}:失业保险(企业负责部分)
+            {JoblessPerson}:失业保险(个人负责部分)
+            {AccidentEnterprise}:工伤保险(企业负责部分)
+            {AccidentPerson}:工伤保险(个人负责部分)
+            {MaternityEnterprise}:生育保险(企业负责部分)
+            {MaternityPerson}:生育保险(个人负责部分)
+
+            {HousingFundEnterprise}:住房公积金(企业负责部分)
+            {HousingFundPerson}:住房公积金(个人负责部分)
+    </pre>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aSettingSection").click();
+            $("#aSettingSection").addClass("current");
+            $("#aCostFormularList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                var currentItemGuid = $("#currentPopupItemGuid").val();
+                $(".modalInput").overlay().close();
+                $(".modalInput.edit." + currentItemGuid).overlay().close();
+            });
+
+            $("#newDisplayA").click(function () {
+                $(".modal").width("350px");
+                var url = '@Url.Action("Item")' + '?KeyGuid=&r=' + Math.random();
+                $("#EditDIV").load(url);
+            });
+
+            $("a.edit").click(function () {
+                $(".modal").width("350px");
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("Item")' + '?KeyGuid=' + itemKey + '&r=' + Math.random();
+                $("#EditDIV").load(url);
+            });
+        });
+    </script>
+</div>

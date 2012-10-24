@@ -1,0 +1,23 @@
+﻿@using HiLand.Utility.Entity
+@model int
+@{
+    ViewBag.Title = "系统缓存信息";
+
+}
+<h2>
+    系统缓存信息
+</h2>
+缓存的作用是将系统中经常使用的业务信息，在内存中进行缓冲，其目的是为了提高系统的响应速度和综合性能。其内的某些数据会按照一定的策略定时失效。<br />
+当前系统中缓存的对象数量为 @Model 个
+<br /><br />
+@using (Html.BeginForm())
+{
+    <input class="buttons" type="submit" value="立即清空所有缓存" />
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#aSettingSection").click();
+        $("#aSettingSection").addClass("current");
+        $("#aCacheInfo").addClass("current");
+    });
+</script>

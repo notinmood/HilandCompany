@@ -1,0 +1,51 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@model PagedList<NewsEntity>
+@{
+    ViewBag.Title = "澳凯利后台管理";
+}
+<h2>
+    新闻信息管理</h2>
+<div class="operateRegion">
+    <a href="@Url.Action("CreateNews", "News")">添加</a>
+</div>
+<div id="dvOrders">
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 80px">
+                操作
+            </th>
+            <th style="width: 30px">
+                编号
+            </th>
+            <th style="width: 50px">
+                是否可用
+            </th>
+            <th style="width: 60px">
+                类别
+            </th>
+            <th>
+                名称
+            </th>
+        </tr>
+        @foreach (NewsEntity newsEntity in Model)
+        {     
+            <tr>
+                <td>
+                    @Html.Link("修改", @Url.Action("UpdateNews", "News", new { newsGUID = newsEntity.NewsGuid }), null)
+                    @Html.Link("删除", @Url.Action("DeleteNews", "News", new { newsGUID = newsEntity.NewsGuid }), null)
+                </td>
+                <td>@newsEntity.NewsID
+                </td>
+                <td>@newsEntity.CanUsable
+                </td>
+                <td>@newsEntity.NewsCategoryName
+                </td>
+                <td>@newsEntity.NewsTitle
+                </td>
+            </tr>   
+        }
+    </table>
+    @Html.AjaxPager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }, new AjaxOptions { UpdateTargetId = "dvOrders" })
+</div>

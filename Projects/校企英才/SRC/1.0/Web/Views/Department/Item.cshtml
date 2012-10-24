@@ -1,0 +1,62 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Utility4.Data;
+
+@model BusinessDepartment
+@{
+    ViewBag.Title = "部门信息";
+    string parentKey= this.ViewBag.ParentKey;
+    this.Layout = null;
+}
+<div id="formContainer">
+<style type="text/css">
+    #formContainer table td
+    {
+        
+        }
+</style>
+    @using (Html.BeginForm())
+    { 
+        <table>
+            <tr>
+                <td style="width: 150px;">
+                    部门名称:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.DepartmentName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    部门简称:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.DepartmentNameShort)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    部门类型:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.DepartmentType, EnumEx.BuildSelectItemList<DepartmentTypes>())
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    是否可用:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.CanUsable, EnumEx.BuildSelectItemList<Logics>())
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" id="KeyGuid" value="@Model.DepartmentGuid" />
+        <input type="hidden" id="ParentKey" value="@parentKey" />
+        <input type="button" id="submitButton" value="保存" class="buttons" /><a id="overlayClose" class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form", '@Url.Action("Index")');
+        });
+    });
+</script>

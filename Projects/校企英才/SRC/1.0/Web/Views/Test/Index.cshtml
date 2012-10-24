@@ -1,0 +1,28 @@
+﻿@using HiLand.Utility.Setting;
+@using HiLand.Utility.Setting.SectionHandler;
+
+@{
+    
+    ViewBag.Title = "Index";
+    this.Layout = null;
+    
+    SystemTaskSectionConfig sectionConfig = Config.GetSection<SystemTaskSectionConfig>("systemTaskSection");
+    int i = 9;
+    
+    
+}
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jQuery.tools.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/date.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.datePicker.min-2.1.2.js")" type="text/javascript"></script>
+<link rel="stylesheet" href="@Url.Content("~/Content/jQuery.tools.dateinput.css")" type="text/css" media="screen" />
+<h2>Index</h2>
+
+@XQYC.Web.Control.HtmlHelperEx.DateInput(Html, "myDateInput", "","yyyy/mm")
+
+@XQYC.Web.Control.HtmlHelperEx.XQYCDDLInsurance(Html,"myInsurance","")
+
+@XQYC.Web.Control.HtmlHelperEx.XQYCDDLManageFee(Html,"myManageFee","")
+
+@XQYC.Web.Control.HtmlHelperEx.XQYCDDLReserveFund(Html,"myReserveFund","")

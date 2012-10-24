@@ -1,0 +1,67 @@
+﻿@using HiLand.Utility4.MVC.SectionHandler;
+@using HiLand.Utility.Resources;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Utility.Enums;
+@using XQYC.Web.Models;
+@{
+    ViewBag.Title = "Index";
+    this.Layout = null;
+
+    string userKey = this.ViewBag.UserKey;
+    List<BusinessRole> userRoleList = this.ViewBag.UserRoleList;
+}
+@model List<BusinessRole>
+<style type="text/css">
+    form label {
+        display: inline;
+        padding: 0 0 10px;
+        font-weight: normal;
+    }
+</style>
+<h2>角色设置</h2>
+<div id="formContainer">
+    @using (Html.BeginForm())
+    {
+        foreach (BusinessRole currentRole in Model)
+        {
+            string itemText = currentRole.RoleName;
+            string itemValue = string.Format("{0}{1}{2}", SystemConst.RoleItemValuePrefix, SystemConst.RoleItemValueSeperator, currentRole.RoleGuid);
+
+            string item = string.Empty;
+            bool targetHasRole = false;
+
+            for (int i = 0; i < userRoleList.Count; i++)
+            {
+                if (userRoleList[i].RoleGuid == currentRole.RoleGuid)
+                {
+                    targetHasRole = true;
+                    break;
+                }
+            }
+
+            string disableString = string.Empty;
+
+
+            string checkedString = string.Empty;
+            if (targetHasRole == true)
+            {
+                checkedString = "checked=\"true\"";
+            }
+            item = string.Format("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id=\"{0}\" type=\"checkbox\" {2} {3} name=\"{0}\" /> <label for=\"{0}\">{1}</label>", itemValue, itemText, disableString, checkedString);
+        <span>@Html.Raw(item)</span>
+        }
+
+        <input type="hidden" name="userKey" value="@userKey" />
+        <hr class="" />
+        <input type="button" id="submitButton" value="保存" class="buttons" /><a id="overlayClose" class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form");
+        });
+    });
+</script>

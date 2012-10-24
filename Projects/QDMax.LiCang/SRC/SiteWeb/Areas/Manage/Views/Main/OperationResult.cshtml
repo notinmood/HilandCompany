@@ -1,0 +1,33 @@
+﻿@using HiLand.Utility.Entity.Status;
+@using HiLand.Utility.Enums;
+@model SystemStatusInfo
+@{
+    ViewBag.Title = "操作结果";
+    
+    string cssClassName= "hl_Success";
+    string displayMessage= Model.Message;
+    
+    switch (Model.SystemStatus)
+	{
+        case SystemStatuses.Failuer:
+            cssClassName= "hl_Failuer";
+            break;
+        case SystemStatuses.Tip:
+            cssClassName= "hl_Tip";
+            break;
+        case SystemStatuses.Warnning:
+            cssClassName= "hl_Warnning";
+            break;
+        case SystemStatuses.Success:
+		default:
+            cssClassName= "hl_Success";
+            break;
+	}
+}
+
+
+
+<h2>操作结果</h2>
+
+<div class="hl_Status @cssClassName">@displayMessage</div>
+

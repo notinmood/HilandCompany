@@ -1,0 +1,158 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Models;
+
+@model PagedList<LaborEntity>
+@{
+    ViewBag.Title = "Index";
+    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+
+    List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业", ConditionFieldName = "CurrentEnterpriseName", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员名称", ConditionFieldName = "UserNameCN", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员性别", ConditionFieldName = "UserSex", ConditionType = typeof(HiLand.Utility.Enums.Sexes) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "工作技能", ConditionFieldName = "WorkSkill", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "工作状态", ConditionFieldName = "LaborWorkStatus", ConditionType = typeof(XQYC.Business.Enums.LaborWorkStatuses) });
+}
+
+<h2>劳务人员列表</h2>
+<div id="ItemListDIV">
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.HiQuery("LaborQuery").QueryConditionList(queryItemList).Render()
+        }
+    </div>
+    <div class="OperateArea" id="OperateAreaContainer">
+        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Labor").Render(new { rel = "#EditDIV" })
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 120px">操作
+            </th>
+            <th style="width: 80px">身份证
+            </th>
+            <th style="width: 80px">人员名称
+            </th>
+            <th style="width: 80px">人员状态
+            </th>
+            <th style="width: 80px">工作状态
+            </th>
+            <th style="width: 80px">信息提供人员
+            </th>
+            <th style="width: 80px">推荐人员
+            </th>
+            <th style="width: 80px">财务人员
+            </th>
+            <th>客服人员
+            </th>
+        </tr>
+        @foreach (LaborEntity entity in Model)
+        {
+            string entityGuid = entity.UserGuid.ToString();
+            <tr>
+                <td>
+                    @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
+                    @Html.HiA().CssClassName("modalInput password " + @entityGuid).Value("口令").ACA("Password", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) |
+                    @Html.HiA().CssClassName("contract").Value("合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid }).Render()
+                </td>
+                <td>@entity.UserCardID
+                </td>
+                <td>@entity.UserNameCN
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.UserStatus)
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.LaborWorkStatus)
+                </td>
+                <td>@entity.ProviderUserName
+                </td>
+                <td>@entity.RecommendUserName
+                </td>
+                <td>@entity.FinanceUserName
+                </td>
+                <td>@entity.ServiceUserName
+                </td>
+            </tr>   
+        }
+    </table>
+    <div class="myPager"><span style="float:left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
+     &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@SystemConst.CountPerPage</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)</div>
+    
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aLaborSection").click();
+            $("#aLaborSection").addClass("current");
+            $("#aLaborList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                window.location.reload();
+            });
+
+            $("#newDisplayA").click(function () {
+                $(".modal").width("650px");
+                var itemKey = "";
+                var url = '@Url.Action("Item")' + '?r=' + Math.random() + '&itemKey=' + itemKey + '&returnUrl=@currentUrl';
+                $("#EditDIV").load(url);
+            });
+
+            $("a.edit").click(function () {
+                $(".modal").width("650px");
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("Item")' + '?r=' + Math.random() + '&itemKey=' + itemKey + '&returnUrl=@currentUrl';
+                $("#EditDIV").load(url);
+            });
+
+            $("a.password").click(function () {
+                $(".modal").width("350px");
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("Password")' + '?r=' + Math.random() + '&itemKey=' + itemKey;
+                $("#EditDIV").load(url);
+            });
+
+
+
+            //$(".queryButton").toggle(
+            //    function () {
+            //        var trObject = $(this).parents("tr");
+            //        trObject.siblings().hide();
+            //        trObject.find(".queryStatus").val("closed");
+            //        $(this).text("展开查询");
+            //    },
+            //    function () {
+            //        var trObject = $(this).parents("tr");
+            //        trObject.siblings().show();
+            //        trObject.find(".queryStatus").val("open");
+            //        $(this).text("收起查询");
+            //    }
+            //);
+
+
+        });
+    </script>
+</div>
+
+
+

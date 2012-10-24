@@ -1,0 +1,67 @@
+﻿@using HiLand.Utility4.MVC;
+@using HiLand.Framework.BusinessCore.BLL;
+@{
+    ViewBag.Title = "后台管理";
+    this.Layout = "~/Views/Shared/_LayoutAbstract.cshtml";
+
+    string currentUserName = string.Empty;
+    if (BusinessUserBLL.IsLogined)
+    {
+        currentUserName = BusinessUserBLL.CurrentUserName;
+    }
+
+    string frontMainUrl = Url.Action("Index", "Home", new { area = "" });
+}
+
+@RenderBody()
+
+@section mainAccordionMenu{
+    <ul id="main-nav">
+        <!-- Accordion Menu -->
+        <li><a id="aDashboardSection" href="@Url.Action("Index", "Home")" class="nav-top-item no-submenu">
+            <!-- Add the class "no-submenu" to menu items with no sub menu -->
+            仪表盘 </a></li>
+        <li><a id="aRemindSection" href="@Url.Action("Index", "Remind")" class="nav-top-item no-submenu">
+            <!-- Add the class "no-submenu" to menu items with no sub menu -->
+            提醒管理 </a></li>
+        <li><a id="aEmployeeManageSection" href="#" class="nav-top-item">
+            <!-- Add the class "current" to current menu item -->
+            员工管理</a>
+            <ul>
+                <li><a  id="aDepartmentList"  href="@Url.Action("Index", "Department")">部门基本信息</a></li>
+                <li><a  id="aEmployeeList"  href="@Url.Action("Index", "Employee")">员工基本信息</a></li>
+            </ul>
+        </li>
+        <li><a id="aLaborSection" href="#" class="nav-top-item">劳务人员管理</a>
+            <ul>
+                <li><a id="aLaborList" href="@Url.Action("Index", "Labor")">劳务人员基本信息</a></li>
+                <li><a id="aBatchEntering" href="@Url.Action("BatchEntering", "Labor")">劳务人员信息批量录入</a></li>
+                <li><a id="aSalaryList" href="@Url.Action("SalaryListPreSelector", "Labor")">劳务人员薪资信息</a></li>
+                <li><a id="aSalaryBatch" href="@Url.Action("SalaryBatch", "Labor")">劳务人员薪资批量录入</a></li>
+                <li><a id="aBankCardBatch" href="@Url.Action("BankCardBatch", "Labor")">银行卡批量开卡</a></li>
+                <li><a id="aSalaryToBank" href="@Url.Action("SalaryToBank", "Labor")">薪资银行报盘</a></li>
+            </ul>
+        </li>
+        <li><a id="aEnterpriseSection" href="#" class="nav-top-item">企业客户管理</a>
+            <ul>
+                <li><a id="aEnterpriseList" href="@Url.Action("Index", "Enterprise")">企业客户基本信息</a></li>
+            </ul>
+        </li>
+        <li><a id="aInformationBrokerManageSection" href="#" class="nav-top-item">信息员管理</a>
+            <ul>
+                <li><a id="aInformationBrokerList" href="@Url.Action("Index", "InformationBroker")">信息员基本信息</a></li>
+            </ul>
+        </li>
+        <li><a id="aSettingSection" href="#" class="nav-top-item">设置</a>
+            <ul>
+                <li><a id="aMyProfile" href="@Url.Action("MyProfile", "Account")">个人基本信息</a></li>
+                <li><a id="aChangePassword" href="@Url.Action("ChangePassword", "Account")">修改口令</a></li>
+                <li><a  id="aRoleList"  href="@Url.Action("Index", "Role")">角色管理</a></li>
+                <li><a  id="aCostFormularList"  href="@Url.Action("Index", "CostFormular")">费用公式配置</a></li>
+                <li><a id="aSystemSetting" href="@Url.Action("BasicSettingList", "System")">系统配置</a></li>
+                <li><a id="aCacheInfo" href="@Url.Action("CacheInfo", "System")">系统缓存</a></li>
+                <li><a id="aSoftVersion" href="@Url.Action("SoftVersion", "System")">系统版本</a></li>
+            </ul>
+        </li>
+    </ul>
+}

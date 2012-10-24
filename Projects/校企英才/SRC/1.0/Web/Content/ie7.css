@@ -1,0 +1,61 @@
+﻿div.content {
+	border:1px solid #f0f0f0!important;
+	background-color:#fff!important;
+}
+
+button.white {
+	background-image: none!important;
+	border:1px solid #dddddd!important;
+	background-color:#f8f8f8!important;
+	filter:none!important;
+}
+button.pink {
+	background-image: none!important;
+	border:1px solid #444444!important;
+	filter:none!important;
+}
+
+button.blue {
+	background-image: none!important;
+	filter:none!important;
+}
+
+
+.item-defualt {padding:20px 0 20px 0!important;}
+
+ul.nav {
+margin-left:7px!important;
+}
+
+div.search form button {
+	top:-1px!important;
+	position: relative!important;
+}
+
+ul.nav {
+margin-top:11px!important;
+}
+
+ul.nav li.tab {
+display: inline!important;
+}
+
+.item-defualt .title {
+	height:27px!important;
+}
+
+.social{
+	display:none!important;
+}
+
+.tools {
+	padding:15px 6px 0 46px!important;
+	margin:0!important;
+	float: none!important;
+	display: inline-block!important;
+}
+
+#Badger.badger-outter{width:26px!important}
+.item-alert .manage .alertedit{padding-bottom:0px!important;}
+.item-alert .manage .alertdelete{padding-bottom:0px!important;}
+.page-item .item-details .summary .options .right .padding {display:block!important;margin-top:25px!important}

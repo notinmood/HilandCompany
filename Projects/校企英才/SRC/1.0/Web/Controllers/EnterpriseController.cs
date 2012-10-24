@@ -1,0 +1,439 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+using HiLand.Framework.BusinessCore;
+using HiLand.Framework.BusinessCore.BLL;
+using HiLand.Framework4.Permission.Attributes;
+using HiLand.General.BLL;
+using HiLand.General.Entity;
+using HiLand.Utility.Data;
+using HiLand.Utility.Entity;
+using HiLand.Utility.Enums;
+using HiLand.Utility.Paging;
+using HiLand.Utility.Web;
+using Webdiyer.WebControls.Mvc;
+using XQYC.Business.BLL;
+using XQYC.Business.Entity;
+using XQYC.Web.Models;
+
+namespace XQYC.Web.Controllers
+{
+    [PermissionAuthorize]
+    public class EnterpriseController : Controller
+    {
+        #region 企业基本信息
+        public ActionResult Index(int id = 1)
+        {
+            int pageIndex = id;
+            int pageSize = SystemConst.CountPerPage;
+            int startIndex = (pageIndex - 1) * pageSize + 1;
+            string whereClause = " 1=1 ";
+            string orderClause = "EnterpriseID DESC";
+
+            PagedEntityCollection<EnterpriseEntity> entityList = EnterpriseBLL.Instance.GetPagedCollection(startIndex, pageSize, whereClause, orderClause);
+            PagedList<EnterpriseEntity> pagedExList = new PagedList<EnterpriseEntity>(entityList.Records, entityList.PageIndex, entityList.PageSize, entityList.TotalCount);
+
+            return View(pagedExList);
+        }
+
+        /// <summary>
+        /// 对单条记录进行添加（或者修改）
+        /// </summary>
+        /// <param name="keyGuid"></param>
+        /// <returns></returns>
+        public ActionResult Item(string keyGuid)
+        {
+            EnterpriseEntity department = EnterpriseEntity.Empty;
+            if (string.IsNullOrWhiteSpace(keyGuid) == false)
+            {
+                department = EnterpriseBLL.Instance.Get(keyGuid);
+            }
+
+            return View(department);
+        }
+
+        /// <summary>
+        /// 对单条记录进行添加（或者修改）
+        /// </summary>
+        /// <param name="keyGuid"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Item(string keyGuid, EnterpriseEntity entity, bool isOnlyPlaceHolder = true)
+        {
+            bool isSuccessful = false;
+            string displayMessage = string.Empty;
+
+            EnterpriseEntity targetEntity = null;
+            if (GuidHelper.IsInvalidOrEmpty(keyGuid))
+            {
+                targetEntity = new EnterpriseEntity();
+                SetTargetEntityValue(entity, ref targetEntity);
+                targetEntity.EstablishedTime = DateTime.Now;
+                isSuccessful = EnterpriseBLL.Instance.Create(targetEntity);
+            }
+            else
+            {
+                targetEntity = EnterpriseBLL.Instance.Get(keyGuid);
+                SetTargetEntityValue(entity, ref targetEntity);
+
+                isSuccessful = EnterpriseBLL.Instance.Update(targetEntity);
+            }
+
+
+            if (isSuccessful == true)
+            {
+                displayMessage = "数据保存成功";
+            }
+            else
+            {
+                displayMessage = "数据保存失败";
+            }
+
+            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+        }
+
+        /// <summary>
+        /// 通过一个实体给另外一个实体赋值
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="targetEntity"></param>
+        private static void SetTargetEntityValue(EnterpriseEntity originalEntity, ref EnterpriseEntity targetEntity)
+        {
+            targetEntity.CanUsable = originalEntity.CanUsable;
+            targetEntity.CompanyName = originalEntity.CompanyName;
+            targetEntity.ContactPerson = originalEntity.ContactPerson;
+            targetEntity.CompanyNameShort = originalEntity.CompanyNameShort;
+            targetEntity.PrincipleAddress = originalEntity.PrincipleAddress;
+        }
+
+        /// <summary>
+        /// 企业自动完成的数据
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AutoCompleteData()
+        {
+            string userValueInputted = RequestHelper.GetValue("term");
+            List<AutoCompleteEntity> itemList = new List<AutoCompleteEntity>();
+            string whereClause = string.Format(" ( CompanyName like '{0}%' OR CompanyNameShort like '{0}%' ) AND  CanUsable={1}", userValueInputted, (int)Logics.True);
+            List<EnterpriseEntity> userList = EnterpriseBLL.Instance.GetList(whereClause);
+
+            foreach (EnterpriseEntity currentLabor in userList)
+            {
+                AutoCompleteEntity item = new AutoCompleteEntity();
+                item.details = "nothing";
+                item.key = currentLabor.EnterpriseGuid.ToString();
+                item.label = string.Format("{0}({1})", currentLabor.CompanyName, currentLabor.CompanyNameShort);
+                item.value = currentLabor.CompanyName;
+
+                itemList.Add(item);
+            }
+
+            return Json(itemList, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region 企业合同管理
+        public ActionResult ContractList(string itemKey, string itemName = StringHelper.Empty)
+        {
+            List<EnterpriseContractEntity> userList = null;
+
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                Guid itemGuid = GuidHelper.TryConvert(itemKey);
+                string whereClause = string.Format("EnterpriseGuid='{0}'", itemGuid.ToString());
+                userList = EnterpriseContractBLL.Instance.GetList(whereClause);
+            }
+
+            if (string.IsNullOrWhiteSpace(itemName))
+            {
+                itemName = EnterpriseBLL.Instance.Get(itemKey).CompanyName;
+            }
+
+            this.ViewBag.EnterpriseKey = itemKey;
+            this.ViewBag.EnterpriseName = itemName;
+            return View(userList);
+        }
+
+        public ActionResult ContractItem(string enterpriseKey, string itemKey = StringHelper.Empty)
+        {
+            EnterpriseContractEntity entity = EnterpriseContractEntity.Empty;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                entity = EnterpriseContractBLL.Instance.Get(itemKey);
+            }
+
+            this.ViewBag.EnterpriseKey = enterpriseKey;
+
+            return View(entity);
+        }
+
+        [HttpPost]
+        public ActionResult ContractItem(string enterpriseKey, string itemKey, EnterpriseContractEntity originalEntity)
+        {
+            bool isSuccessful = false;
+            string displayMessage = string.Empty;
+            EnterpriseContractEntity targetEntity = null;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == true)
+            {
+                targetEntity = new EnterpriseContractEntity();
+
+                targetEntity.EnterpriseGuid = Converter.ChangeType<Guid>(enterpriseKey);
+                targetEntity.EnterpriseInfo = EnterpriseBLL.Instance.Get(targetEntity.EnterpriseGuid).CompanyName;
+                targetEntity.ContractCreateDate = DateTime.Now;
+                targetEntity.ContractCreateUserKey = BusinessUserBLL.CurrentUser.UserGuid.ToString();
+
+                SetTargetContractEntityValue(originalEntity, ref  targetEntity);
+
+
+                isSuccessful = EnterpriseContractBLL.Instance.Create(targetEntity);
+
+            }
+            else
+            {
+                targetEntity = EnterpriseContractBLL.Instance.Get(itemKey);
+
+                SetTargetContractEntityValue(originalEntity, ref  targetEntity);
+                isSuccessful = EnterpriseContractBLL.Instance.Update(targetEntity);
+            }
+
+            if (isSuccessful == true)
+            {
+                displayMessage = "数据保存成功";
+            }
+            else
+            {
+                displayMessage = "数据保存失败";
+            }
+
+            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+        }
+
+        private void SetTargetContractEntityValue(EnterpriseContractEntity originalEntity, ref EnterpriseContractEntity targetEntity)
+        {
+            targetEntity.ContractDetails = originalEntity.ContractDetails;
+            targetEntity.ContractLaborAddon = originalEntity.ContractLaborAddon;
+            targetEntity.ContractLaborCount = originalEntity.ContractLaborCount;
+            targetEntity.ContractStartDate = originalEntity.ContractStartDate;
+            targetEntity.ContractStopDate = originalEntity.ContractStopDate;
+            targetEntity.ContractTitle = originalEntity.ContractTitle;
+            targetEntity.ContractStatus = originalEntity.ContractStatus;
+        }
+
+        #endregion
+
+        #region 企业登录用户的管理
+        public ActionResult UserList(string itemKey, string itemName = StringHelper.Empty)
+        {
+            List<BusinessUser> userList = null;
+
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                Guid itemGuid = GuidHelper.TryConvert(itemKey);
+                string whereClause = string.Format("EnterpriseKey='{0}'", itemGuid.ToString());
+                userList = BusinessUserBLL.GetList(whereClause);
+            }
+
+            this.ViewBag.EnterpriseKey = itemKey;
+            this.ViewBag.EnterpriseName = itemName;
+            return View(userList);
+        }
+
+        public ActionResult UserItem(string enterpriseKey, string itemKey = StringHelper.Empty)
+        {
+            BusinessUser user = BusinessUser.Empty;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                user = BusinessUserBLL.Get(new Guid(itemKey));
+            }
+
+            this.ViewBag.EnterpriseKey = enterpriseKey;
+
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult UserItem(string enterpriseKey, string itemKey, BusinessUser originalEntity)
+        {
+            bool isSuccessful = false;
+            string displayMessage = string.Empty;
+            BusinessUser targetUser = null;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == true)
+            {
+                targetUser = new BusinessUser();
+
+                targetUser.EnterpriseKey = enterpriseKey;
+                targetUser.UserType = UserTypes.EnterpriseUser;
+                targetUser.Password = SystemConst.InitialUserPassword;
+
+                SetTargetUserEntityValue(originalEntity, ref  targetUser);
+
+                CreateUserRoleStatuses createStatus = CreateUserRoleStatuses.Successful;
+                BusinessUserBLL.CreateUser(targetUser, out createStatus);
+                if (createStatus == CreateUserRoleStatuses.Successful)
+                {
+                    isSuccessful = true;
+                }
+            }
+            else
+            {
+                targetUser = BusinessUserBLL.Get(new Guid(itemKey));
+
+                SetTargetUserEntityValue(originalEntity, ref  targetUser);
+                isSuccessful = BusinessUserBLL.UpdateUser(targetUser);
+            }
+
+            if (isSuccessful == true)
+            {
+                displayMessage = "数据保存成功";
+            }
+            else
+            {
+                displayMessage = "数据保存失败";
+            }
+
+            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+        }
+
+        private void SetTargetUserEntityValue(BusinessUser originalEntity, ref BusinessUser targetEntity)
+        {
+            targetEntity.UserName = originalEntity.UserName;
+            targetEntity.UserNameCN = originalEntity.UserNameCN;
+            targetEntity.UserSex = originalEntity.UserSex;
+            targetEntity.UserMobileNO = originalEntity.UserMobileNO;
+            targetEntity.UserStatus = originalEntity.UserStatus;
+        }
+
+        /// <summary>
+        /// 管理员为企业登录用户进行口令修改
+        /// </summary>
+        /// <param name="userGuid"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public ActionResult UserPassword(string userGuid, string userName = "")
+        {
+            if (string.IsNullOrWhiteSpace(userName))
+            {
+                userName = BusinessUserBLL.Get(new Guid(userGuid)).UserName;
+            }
+
+            string returnUrl = RequestHelper.CurrentRequest.AppRelativeCurrentExecutionFilePath;
+            return RedirectToAction("_ChangePasswordForManage", "Home", new { area = "UserCenter", userGuid = userGuid, userName = userName, returenUrl = returnUrl });
+        }
+        #endregion
+
+        #region 企业合作方式
+        /// <summary>
+        /// 企业选用的服务列表
+        /// </summary>
+        /// <param name="itemKey">企业Guid字符串</param>
+        /// <returns></returns>
+        public ActionResult ServiceList(string itemKey, string itemName = StringHelper.Empty)
+        {
+            List<BasicSettingEntity> allServiceList = BasicSettingBLL.Instance.GetListByCategory("EnterpriseServiceType");
+            List<EnterpriseServiceEntity> selectedServiceList = new List<EnterpriseServiceEntity>();
+
+            Guid itemGuid = GuidHelper.TryConvert(itemKey);
+            if (itemGuid != Guid.Empty)
+            {
+                selectedServiceList = EnterpriseServiceBLL.Instance.GetListByEnterprise(itemGuid);
+            }
+
+            this.ViewBag.EnterpriseKey = itemKey;
+            this.ViewBag.EnterpriseName = itemName;
+            this.ViewBag.SelectedServiceList = selectedServiceList;
+            return View(allServiceList);
+        }
+
+        /// <summary>
+        /// 企业选用的服务
+        /// </summary>
+        /// <param name="itemKey"></param>
+        /// <param name="enterpriseKey"></param>
+        /// <param name="itemTypeNumber"></param>
+        /// <param name="itemTypeName"></param>
+        /// <returns></returns>
+        public ActionResult ServiceItem(string itemKey, string enterpriseKey, string itemTypeNumber, string itemTypeName = StringHelper.Empty)
+        {
+            this.ViewBag.ItemTypeName = itemTypeName;
+            string returnUrl = RequestHelper.GetValue("returnUrl");
+            this.ViewBag.ReturnUrl = returnUrl;
+
+            EnterpriseServiceEntity serviceEntity = EnterpriseServiceEntity.Empty;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                serviceEntity = EnterpriseServiceBLL.Instance.Get(itemKey);
+            }
+
+            serviceEntity.EnterpriseGuid = GuidHelper.TryConvert(enterpriseKey);
+            serviceEntity.EnterpriseInfo = EnterpriseBLL.Instance.Get(serviceEntity.EnterpriseGuid).CompanyName;
+            serviceEntity.EnterpriseServiceType = Converter.ChangeType<int>(itemTypeNumber);
+
+            return View(serviceEntity);
+        }
+
+        [HttpPost]
+        public ActionResult ServiceItem(string itemKey, EnterpriseServiceEntity entity)
+        {
+            bool isSuccessful = false;
+            string displayMessage = string.Empty;
+            string returnUrl = RequestHelper.GetValue("returnUrl");
+            if (string.IsNullOrWhiteSpace(returnUrl))
+            {
+                returnUrl = Url.Action("ServiceList");
+            }
+
+            returnUrl = returnUrl.Replace("&amp;", "&");
+
+            EnterpriseServiceEntity targetEntity = null;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey))
+            {
+                targetEntity = new EnterpriseServiceEntity();
+                SetTargetServiceEntityValue(entity, ref targetEntity);
+                targetEntity.EnterpriseServiceCreateDate = DateTime.Now;
+                targetEntity.EnterpriseServiceCreateUserKey = BusinessUserBLL.CurrentUser.UserGuid.ToString();
+                isSuccessful = EnterpriseServiceBLL.Instance.Create(targetEntity);
+            }
+            else
+            {
+                targetEntity = EnterpriseServiceBLL.Instance.Get(itemKey);
+                SetTargetServiceEntityValue(entity, ref targetEntity);
+
+                isSuccessful = EnterpriseServiceBLL.Instance.Update(targetEntity);
+            }
+
+
+            if (isSuccessful == true)
+            {
+                displayMessage = "数据保存成功";
+            }
+            else
+            {
+                displayMessage = "数据保存失败";
+            }
+
+            return Redirect(returnUrl);
+        }
+
+        /// <summary>
+        /// 通过一个实体给另外一个实体赋值
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="targetEntity"></param>
+        private static void SetTargetServiceEntityValue(EnterpriseServiceEntity originalEntity, ref EnterpriseServiceEntity targetEntity)
+        {
+            targetEntity.EnterpriseServiceStatus = originalEntity.EnterpriseServiceStatus;
+            targetEntity.EnterpriseServiceType = originalEntity.EnterpriseServiceType;
+            targetEntity.EnterpriseInfo = originalEntity.EnterpriseInfo;
+            targetEntity.EnterpriseGuid = originalEntity.EnterpriseGuid;
+            targetEntity.FinanceUserName = RequestHelper.GetValue("FinanceUser");
+            targetEntity.FinanceUserGuid = RequestHelper.GetValue<Guid>("FinanceUser_Value");
+            targetEntity.ProviderUserName = RequestHelper.GetValue("ProviderUser");
+            targetEntity.ProviderUserGuid = RequestHelper.GetValue<Guid>("ProviderUser_Value");
+            targetEntity.RecommendUserName = RequestHelper.GetValue("RecommendUser");
+            targetEntity.RecommendUserGuid = RequestHelper.GetValue<Guid>("RecommendUser_Value");
+            targetEntity.ServiceUserName = RequestHelper.GetValue("ServiceUser");
+            targetEntity.ServiceUserGuid = RequestHelper.GetValue<Guid>("ServiceUser_Value");
+        }
+        #endregion
+    }
+}

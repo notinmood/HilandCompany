@@ -1,0 +1,19 @@
+﻿@using XQYC.Web.Control;
+@{
+    ViewBag.Title = "ControlTest";
+    this.Layout = null;
+}
+
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.cascadingDropDown.js")" type="text/javascript"></script>
+<h2>ControlTest</h2>
+
+@HtmlHelperEx.XQYCDDLEnterprise(Html,"dllEnterprise","","OnlineService") 
+@HtmlHelperEx.XQYCCSDDLEnterpriseContract(Html,"dllEnterpriseContract","","dllEnterprise")
+
+<br />
+@HtmlHelperEx.DateInput(Html,"dateInput",HiLand.Utility.Data.DateTimeHelper.Min.ToShortDateString())
+@HtmlHelperEx.DateInput(Html,"dateInput2",HiLand.Utility.Data.DateTimeHelper.Min.ToShortDateString())
+
+@HtmlHelperEx.XQYCDDLInformationBroker(Html,"InformationBroker","")

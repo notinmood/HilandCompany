@@ -1,0 +1,232 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility4.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Control;
+@model LaborEntity
+@{
+    ViewBag.Title = "信息员信息";
+    this.Layout = null;
+
+    string laborAutoCompleteUrl = string.Empty;
+    //如果是新加则使用自动完成服务（修改则不提供自动完成服务）
+    if (Model.IsEmpty == true)
+    {
+        laborAutoCompleteUrl = Url.Action("LaborAutoCompleteData", "Labor");
+    }
+
+    string userBirthday = string.Empty;
+    if (Model.UserBirthDay > HiLand.Utility.Data.DateTimeHelper.Min)
+    {
+        userBirthday = Model.UserBirthDay.ToShortDateString();
+    }
+}
+<link rel="stylesheet" href="@Url.Content("~/Content/ui-lightness/jquery-ui-1.8.17.custom.css")" type="text/css" media="screen" />
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.17.custom.min.js")"></script>
+<div id="formContainer">
+    @* TODO:xieran 以下内容主要是为了修复弹出选择器的bug,有可能对页面其他的地方有影响 *@
+    <style type="text/css">
+        #main-content ul,
+        #main-content ol {
+            padding: 0 0 0 18px;
+        }
+
+            #main-content ul li {
+                background: url() center left no-repeat;
+                padding: 0px;
+            }
+
+        #main-content ol {
+            padding: 0px;
+        }
+
+            #main-content ol li {
+                list-style: none;
+                padding: 0;
+            }
+    </style>
+    @using (Html.BeginForm())
+    { 
+        <table>
+            <tr>
+                <td style="width: 120px;">姓名:
+                </td>
+                <td>@Html.HiTextBox("UserNameCN").Value(Model.UserNameCN).DynamicLoadDataUrl(laborAutoCompleteUrl).Render()
+                </td>
+                <td style="width: 120px;">用户状态:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.UserStatus, EnumEx.BuildSelectItemList<UserStatuses>())
+                </td>
+            </tr>
+            <tr>
+                <td>性别:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.UserSex, EnumEx.BuildSelectItemList<Sexes>())
+                </td>
+                <td>出生日期:
+                </td>
+                <td>@HtmlHelperEx.DateInput(Html, "UserBirthDay", userBirthday)
+                </td>
+            </tr>
+            <tr>
+                <td>身份证号:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserCardID)
+                </td>
+                <td>身份证地址:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.IDCardPlace)
+                </td>
+            </tr>
+            <tr>
+                <td>身高:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserHeight)
+                </td>
+                <td>学历:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.UserEducationalBackground, EnumEx.BuildSelectItemList<EducationalBackgrounds>())
+                </td>
+            </tr>
+            <tr>
+                <td>民族:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserNation)
+                </td>
+                <td>籍贯:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.NativePlace)
+                </td>
+            </tr>
+            <tr>
+                <td>联系电话:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserMobileNO)
+                </td>
+                <td>家庭电话:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.HomeTelephone)
+                </td>
+            </tr>
+            <tr>
+                <td>工作技能:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.WorkSkill)
+                </td>
+                <td>所持证件:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.WorkSkillPaper)
+                </td>
+            </tr>
+            <tr>
+                <td>工作状况:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.WorkSituation)
+                </td>
+                <td>上份工作:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.PreWorkSituation)
+                </td>
+            </tr>
+            <tr>
+                <td>希望从事工作:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.HopeWorkSituation)
+                </td>
+                <td>希望工资待遇:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.HopeWorkSalary)
+                </td>
+            </tr>
+            <tr>
+                <td>婚姻状况:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.MaritalStatus, EnumEx.BuildSelectItemList<MaritalStatuses>())
+                </td>
+                <td>紧急联系人:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UrgentLinkMan)
+                </td>
+            </tr>
+            <tr>
+                <td>紧急联系人电话:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UrgentTelephone)
+                </td>
+                <td>紧急联系人关系:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UrgentRelationship)
+                </td>
+            </tr>
+            <tr>
+                <td>备注1:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.Memo1)
+                </td>
+                <td>备注2:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.Memo2)
+                </td>
+            </tr>
+            <tr>
+                <td>备注3:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.Memo3)
+                </td>
+                <td>备注4:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.Memo4)
+                </td>
+            </tr>
+            <tr>
+                <td>备注5:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.Memo5)
+                </td>
+                <td>信息员:
+                </td>
+                <td>
+                    @HtmlHelperEx.XQYCDDLInformationBroker(Html, "InformationBrokerUserGuid", Model.InformationBrokerUserGuid.ToString())
+                </td>
+            </tr>
+            <tr>
+                <td>信息提供人员:
+                </td>
+                <td class="fixClass">
+                    @HtmlHelperEx.XQYCEmployeeChooser(Html, "ProviderUser", Model.ProviderUserName, Model.ProviderUserGuid.ToString())
+                </td>
+                <td>推荐人员:
+                </td>
+                <td class="fixClass">
+                    @HtmlHelperEx.XQYCEmployeeChooser(Html, "RecommendUser", Model.RecommendUserName, Model.RecommendUserGuid.ToString())
+                </td>
+            </tr>
+            <tr>
+                <td>财务人员:
+                </td>
+                <td class="fixClass">
+                    @HtmlHelperEx.XQYCEmployeeChooser(Html, "FinanceUser", Model.FinanceUserName, Model.FinanceUserGuid.ToString())
+                </td>
+                <td>客服人员:
+                </td>
+                <td class="fixClass">
+                    @HtmlHelperEx.XQYCEmployeeChooser(Html, "ServiceUser", Model.ServiceUserName, Model.ServiceUserGuid.ToString())
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" id="ItemKey" value="@Model.UserGuid" />
+        <input type="submit" id="submitButton" value="保存" class="buttons" /><a class="overlayClose" title="请暂时使用敲击键盘'ESC'键关闭本弹窗"></a>
+    }
+    <script type="text/javascript">
+        function autoCompleteSelectedCallback(item) {
+            $("#currentPopupItemGuid").val(item.key);
+            var url = '@Url.Action("Item")' + '?r=' + Math.random() + '&itemKey=' + item.key;
+            $("#EditDIV").load(url);
+        }
+    </script>
+</div>
+
+

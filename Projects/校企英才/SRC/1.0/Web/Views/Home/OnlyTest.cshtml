@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "OnlyTest";
+    this.Layout = null;
+}
+<script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jQuery.form.3.15.js")"></script>
+<script src="@Url.Content("~/Scripts/jQuery.gbfSubmit.js")"></script>
+<h2>OnlyTest</h2>
+<div id="formContainer">
+    @using (Html.BeginForm())
+    { 
+        @XQYC.Web.Control.HtmlHelperEx.XQYCEmployeeChooser(Html,"oooooo","ttttt","ssssss")
+        <input type="text" value="something" />
+        <input type="submit" value="提交" />
+        <input type="button" id="submitButton" value="AJAX保存" class="buttons" />
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form");
+        });
+    });
+</script>
+
+
+

@@ -1,0 +1,102 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Models;
+
+@model PagedList<EnterpriseEntity>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>企业列表</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV" })
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 180px">操作
+            </th>
+            <th style="width: 250px">企业名称
+            </th>
+            <th style="width: 80px">联系人员名称
+            </th>
+            <th style="width: 30px">状态
+            </th>
+            <th>联系地址
+            </th>
+
+        </tr>
+        @foreach (EnterpriseEntity entity in Model)
+        {
+            string entityGuid = entity.EnterpriseGuid.ToString();
+            <tr>
+                <td>
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("编辑").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseGuid }) | 
+                    @Html.HiA().CssClassName("user").Value("用户").ACA("UserList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName }).Render() | 
+                    @Html.HiA().CssClassName("contract").Value("合同").ACA("ContractList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName }).Render() | 
+                    @Html.HiA().CssClassName("service").Value("合作方式").ACA("ServiceList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName }).Render() 
+                    @*@Html.HiA().CssClassName("modalInput contract").Value("合同").ACA("ContractList", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseGuid ,itemName= @entity.CompanyName}) | *@
+                </td>
+                <td>@entity.CompanyName
+                </td>
+                <td>@entity.ContactPerson
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
+                </td>
+                <td>@entity.PrincipleAddress
+                </td>
+            </tr>   
+        }
+    </table>
+    <div class="myPager"><span style="float:left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
+     &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@SystemConst.CountPerPage</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)</div>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aEnterpriseSection").click();
+            $("#aEnterpriseSection").addClass("current");
+            $("#aEnterpriseList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                var currentItemGuid = $("#currentPopupItemGuid").val();
+                $(".modalInput").overlay().close();
+                $(".modalInput.edit." + currentItemGuid).overlay().close();
+            });
+
+            $("#newDisplayA").click(function () {
+                var url = '@Url.Action("Item")' + '?keyGuid=&r=' + Math.random();
+                $("#EditDIV").load(url);
+            });
+
+            $("a.edit").click(function () {
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("Item")' + '?keyGuid=' + itemKey + '&r=' + Math.random();
+                $("#EditDIV").load(url);
+            });
+        });
+    </script>
+</div>
+
+
+

@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "财务代理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<article class="grid_2">
+    <ul class="vmenu">
+        <li id="menuFinanceManagement"><a href="@Url.Action("FinanceManagement","Finance")" title="财务代理">财务代理</a></li>
+        <li id="menuInternalAudit"><a href="@Url.Action("InternalAudit","Finance")" title="独立内审">独立内审</a></li>
+        <li id="menuExportTaxRebate"><a href="@Url.Action("ExportTaxRebate","Finance")" title="外贸退税">外贸退税</a></li>
+        <li id="menuSpecialAudit"><a href="@Url.Action("SpecialAudit","Finance")" title="行业特殊资质审批代理">行业特殊资质审批代理</a></li>
+    </ul>
+</article>
+@RenderBody()

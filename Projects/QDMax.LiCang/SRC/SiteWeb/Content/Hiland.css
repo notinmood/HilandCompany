@@ -1,0 +1,91 @@
+﻿/*0.以下内容为框架的应用样式*/
+
+
+/*1.以下内容为元素的应用样式*/
+.hl_abstract
+{
+    margin: 10px 0;
+    padding: 5px;
+    border: dotted 2px #999;
+    color: #999;
+    font-family: 'Microsoft Yahei';
+    border-radius: 4px;
+}
+
+.hl_firstTitle
+{
+    margin: 10px 0;
+    font-family: 'Microsoft Yahei';
+    text-align: left;
+    padding: 6px 20px;
+    color: #fff;
+    background: #55895B;
+    font-size: 20px;
+    border-radius: 4px;
+    clear: both;
+}
+
+
+.hl_secondTitle
+{
+    margin: 10px 0;
+    font-family: 'Microsoft Yahei';
+    padding: 6px 20px;
+    background: #93C8A2;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 4px;
+    clear: both;
+}
+
+
+.hl_thirdTitle
+{
+    margin: 10px 0;
+    padding: 6px 20px;
+    font-family: 'Microsoft Yahei';
+    margin: 15px 0;
+    font-size: 16px;
+    color: fff;
+    background: #C6EFD2;
+    color: #999;
+    border-radius: 4px;
+    clear: both;
+}
+.hl_noteInfo
+{
+    margin: 10px 0;
+    padding: 15px 20px 15px 60px;
+    background: #FCFAA9 url('hlimages/yellow-pin.png') no-repeat 20px 0;
+    font-size: 15px;
+    font-family: 'Microsoft Yahei';
+    box-shadow: 0 0 8px #aaa;
+    clear: both;
+}
+
+.hl_demo
+{
+    text-align: left;
+    padding: 6px 20px;
+    overflow: auto;
+    border-radius: 4px;
+    background: orange;
+    color: #fff;
+    font-size: 16px;
+    clear: both;
+}
+
+.hl_centerContainer
+{
+  margin-left: auto;
+  margin-right: auto;
+  *zoom: 1;
+}
+.hl_centerContent
+{
+  margin-left: auto;
+  margin-right: auto;
+  text-align:center;
+  *zoom: 1;
+}
+

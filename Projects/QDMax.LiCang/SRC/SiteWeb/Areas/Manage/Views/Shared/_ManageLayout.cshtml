@@ -1,0 +1,95 @@
+﻿@using HiLand.Utility4.MVC;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Project.SiteWeb.Models;
+
+@{
+    ViewBag.Title = "后台管理";
+    string currentUserName = BusinessUserBLL.CurrentUserName;
+
+    string frontMainUrl = Url.Action("Index", "Home", new { area = "" });
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/reset.css")" type="text/css" media="screen" />
+@*    <link rel="stylesheet" href="@Url.Content("~/Content/style.css")" type="text/css" media="screen" />*@
+    <link rel="stylesheet" href="@Url.Content("~/Content/adminStyle.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/notificationStyle.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/invalid.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/datePicker.css")" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/simpla.jquery.configuration.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/facebox.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.wysiwyg.js")"></script>
+    <script src="@Url.Content("~/Scripts/jQuery.hiland.general.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jQuery.form.2.84.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jQuery.tools.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jQuery.gbfSubmit.js")" type="text/javascript"></script>
+    
+    <script src="@Url.Content("~/Scripts/date.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.datePicker.min-2.1.2.js")" type="text/javascript"></script>
+
+</head>
+<body>
+    <div id="body-wrapper">
+        <!-- Wrapper for the radial gradient background -->
+        <div id="sidebar">
+            <div id="sidebar-wrapper">
+                <!-- Sidebar with logo and menu -->
+                <h1 id="sidebar-title">
+                    <a href="@frontMainUrl">@ConfigConst.CompanyNameShort</a></h1>
+                <!-- Logo (221px wide) -->
+                <img id="logo" style="margin-left:2px;" src="@Url.Content("~/Content/Images/logo_min.png")" alt="logo" />
+                <!-- Sidebar Profile links -->
+                <div id="profile-links">
+                    Hello, @currentUserName
+                    <br />
+                    <a href="@frontMainUrl" title="查看前台">查看前台</a> | <a href="@Url.Action("Logout", "Account", new { area = "" })" title="退出">
+                        退出</a>
+                </div>
+                <ul id="main-nav">
+                    <!-- Accordion Menu -->
+                    <li><a id="aDashboardSection" href="@Url.Action("Index", "Main")" class="nav-top-item no-submenu">
+                        <!-- Add the class "no-submenu" to menu items with no sub menu -->
+                        仪表盘 </a></li>
+                    <li><a id="aNewsSection" href="#" class="nav-top-item">
+                        <!-- Add the class "current" to current menu item -->
+                        新闻管理</a>
+                        <ul>
+                            <li><a  id="aNewsList"  href="@Url.Action("NewsList", "News")">
+                                新闻列表</a></li>
+                            <li><a id="aNewsCategoryList" href="@Url.Action("NewsCategoryList", "News")">
+                                新闻类别</a></li>
+                        </ul>
+                    </li>
+                    <li><a id="aSettingSection" href="#" class="nav-top-item">设置</a>
+                        <ul>
+                            <li><a id="aChangePassword" href="@Url.Action("ChangePassword", "Account")">修改口令</a></li>
+                            <li><a id="aSystemSetting" href="@Url.Action("BasicSettingList", "Main")">基础配置</a></li>
+                            <li><a id="aCacheInfo" href="@Url.Action("CacheInfo", "Main")">系统缓存</a></li>
+                            <li><a id="aSoftVersion" href="@Url.Action("SoftVersion", "Main")">软件版本</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- End #sidebar -->
+        <div id="main-content">
+            <!-- Page Head -->
+            <p style="text-align: right">
+                欢迎使用 @ConfigConst.CompanyName 管理控制台 <a name="#top"></a>
+            </p>
+            <div class="clear">
+            </div>
+            @RenderBody()
+            <div id="footer">
+                <small>&copy; Copyright 2011 @ConfigConst.CompanyNameShort | <a href="#top">Top</a> </small>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

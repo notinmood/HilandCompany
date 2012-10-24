@@ -1,0 +1,105 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using HiLand.General.BLL;
+@model List<EnterpriseContractEntity>
+@{
+    ViewBag.Title = "Index";
+
+    string enterpriseKey = this.ViewBag.EnterpriseKey;
+    string enterpriseName = this.ViewBag.EnterpriseName;
+    if(string.IsNullOrWhiteSpace( enterpriseName))
+    {
+        enterpriseName= EnterpriseBLL.Instance.Get(enterpriseKey).CompanyName;
+    }
+}
+
+<h2>企业登录用户列表(@enterpriseName)</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("ContractItem", "Enterprise").Render(new { rel = "#EditDIV" })
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 150px">操作
+            </th>
+            <th style="width: 80px">合同名称
+            </th>
+            <th style="width: 100px">人员需求
+            </th>
+            <th style="width: 50px">人员数量
+            </th>
+            <th>合同开始时间
+            </th>
+            <th>合同结束时间
+            </th>
+        </tr>
+        @foreach (EnterpriseContractEntity entity in Model)
+        {
+            string entityGuid = entity.ContractGuid.ToString();
+            <tr>
+                <td>
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("编辑").ACA("ContractItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.ContractGuid }) | 
+                </td>
+                <td>@entity.ContractTitle
+                </td>
+                <td>@entity.ContractLaborAddon
+                </td>
+                <td>@entity.ContractLaborCount
+                </td>
+                <td>@entity.ContractStartDate.ToShortDateString()
+                </td>
+                <td>@entity.ContractStopDate.ToShortDateString()
+                </td>
+            </tr>   
+        }
+    </table>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aEnterpriseSection").click();
+            $("#aEnterpriseSection").addClass("current");
+            $("#aEnterpriseList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                var currentItemGuid = $("#currentPopupItemGuid").val();
+                $(".modalInput").overlay().close();
+                $(".modalInput.edit." + currentItemGuid).overlay().close();
+            });
+
+            $("#newDisplayA").click(function () {
+                var url = '@Url.Action("ContractItem")?r=' + Math.random() + '&itemKey=&enterpriseKey=@enterpriseKey';
+                $("#EditDIV").load(url);
+            });
+
+            $("a.edit").click(function () {
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("ContractItem")?r=' + Math.random() + '&itemKey=' + itemKey + '&enterpriseKey=@enterpriseKey';
+                $("#EditDIV").load(url);
+            });
+        });
+    </script>
+</div>
+
+
+

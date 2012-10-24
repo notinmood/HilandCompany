@@ -1,0 +1,115 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@model List<BusinessDepartment>
+@{
+    ViewBag.Title = "部门基本信息";
+}
+
+<h2>部门基本信息</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Department").Render(new { rel = "#EditDIV" })
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 150px">操作
+            </th>
+            <th style="width: 120px">部门名称
+            </th>
+            <th style="width: 80px">部门简称
+            </th>
+            <th style="width: 80px">部门类型
+            </th>
+            <th  style="width: 30px">状态
+            </th>
+            <th>部门全路径
+            </th>
+        </tr>
+        @foreach (BusinessDepartment entity in Model)
+        {
+            string entityGuid = entity.DepartmentGuid.ToString();
+            <tr>
+                <td>
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("编辑").ACA("Item", "Department").Render(new { rel = "#EditDIV", itemKey = @entity.DepartmentGuid }) | 
+                    @Html.HiA().CssClassName("modalInput newSub "+ @entityGuid).Value("子部门").ACA("Item", "Department").Render(new { rel = "#EditDIV", parentKey = @entity.DepartmentGuid }) | 
+                    @Html.HiA().CssClassName("modalInput permission "+ @entityGuid).Value("权限").ACA("Permission", "Department").Render(new { rel = "#EditDIV", itemGuid = @entity.DepartmentGuid, itemName = @entity.DepartmentName })
+                </td>
+                <td>@Html.Raw(StringHelper.Repeate(">", entity.DepartmentLevel) + entity.DepartmentName)
+                </td>
+                <td>@entity.DepartmentNameShort
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.DepartmentType)
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
+                </td>
+                <td>@entity.DepartmentFullPath
+                </td>
+            </tr>   
+        }
+    </table>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aEmployeeManageSection").click();
+            $("#aEmployeeManageSection").addClass("current");
+            $("#aDepartmentList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                var currentItemGuid = $("#currentPopupItemGuid").val();
+                $(".modalInput").overlay().close();
+                $(".modalInput.edit." + currentItemGuid).overlay().close();
+                $(".modalInput.newSub." + currentItemGuid).overlay().close();
+                $(".modalInput.permission." + currentItemGuid).overlay().close();
+            });
+
+            $("#newDisplayA").click(function () {
+                $(".modal").width("350px");
+                var url = '@Url.Action("Item")' + '?KeyGuid=&r=' + Math.random();
+                $("#EditDIV").load(url);
+            });
+
+            $("a.edit").click(function () {
+                $(".modal").width("350px");
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("Item")' + '?KeyGuid=' + itemKey + '&r=' + Math.random();
+                $("#EditDIV").load(url);
+            });
+
+            $("a.newSub").click(function () {
+                $(".modal").width("350px");
+                var parentKey = $(this).attr("parentKey");
+                $("#currentPopupItemGuid").val(parentKey);
+                var url = '@Url.Action("Item")' + '?ParentKey=' + parentKey + '&r=' + Math.random();
+                $("#EditDIV").load(url);
+            });
+
+            $("a.permission").click(function () {
+                $(".modal").width("620px");
+                var itemGuid = $(this).attr("itemGuid");
+                var itemName = $(this).attr("itemName");
+                $("#currentPopupItemGuid").val(itemGuid);
+                var url = $.UrlUtil('@Url.Action("Permission")').concat("departmentGuid", itemGuid).concat("departmentName", itemName).show(true);
+                $("#EditDIV").load(url);
+            });
+        });
+    </script>
+</div>

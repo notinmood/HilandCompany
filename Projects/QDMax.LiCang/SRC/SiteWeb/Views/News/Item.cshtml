@@ -1,0 +1,37 @@
+﻿@using HiLand.General.Entity;
+@model NewsEntity
+@{
+    ViewBag.Title = "新闻信息";
+    Layout = "~/Views/News/_Layout.cshtml";
+
+    string categoryCode = Model.NewsCategoryCode;
+    string menuNameSelected = "menuAll";
+    if (string.IsNullOrWhiteSpace(categoryCode))
+    {
+        menuNameSelected = "menuAll";
+    }
+    else
+    {
+        if (categoryCode.ToLower() == "hy")
+        {
+            menuNameSelected = "menuField";
+        }
+        else
+        {
+            menuNameSelected = "menuCompany";
+        }
+    }
+}
+<article class="grid_10">
+    <h3>@Model.NewsTitle</h3>
+    <p>
+        @Html.Raw(Model.NewsBody)
+    </p>
+</article>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".menu #menuNews").addClass("active");
+        $(".vmenu #@menuNameSelected").addClass("active");
+    });
+</script>

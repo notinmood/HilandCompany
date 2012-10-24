@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "新闻资讯";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<article class="grid_2">
+    <ul class="vmenu">
+        <li id="menuAll"><a href="@Url.Action("Index","News")" title="全部信息">全部信息</a></li>
+        <li id="menuField"><a href="@Url.Action("Index", "News", new {code="HY" })" title="行业资讯">行业资讯</a></li>
+        <li id="menuCompany"><a href="@Url.Action("Index", "News", new {code="QY" })" title="企业新闻">企业新闻</a></li>
+    </ul>
+</article>
+@RenderBody()

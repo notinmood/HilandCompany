@@ -1,0 +1,55 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@model PagedList<NewsEntity>
+@{
+    ViewBag.Title = "新闻列表";
+    Layout = "~/Views/News/_Layout.cshtml";
+
+    string categoryCode = this.ViewBag.CategoryCode;
+    string menuNameSelected = "menuAll";
+    if (string.IsNullOrWhiteSpace(categoryCode))
+    {
+        menuNameSelected = "menuAll";
+    }
+    else
+    {
+        if (categoryCode.ToLower() == "hy")
+        {
+            menuNameSelected = "menuField";
+        }
+        else
+        {
+            menuNameSelected = "menuCompany";
+        }
+    }
+}
+<article class="grid_10">
+    <h2>新闻列表</h2>
+    <div id="dvOrders">
+        <table width="98%" class="grid">
+            @foreach (NewsEntity newsEntity in Model)
+            {     
+                <tr>
+                    <td style="width: 80px">
+                        @newsEntity.NewsDate.ToString("yyyy/MM/dd")
+                    </td>
+                    <td><a href="@Url.Action("Index", new { code = newsEntity.NewsCategoryCode })">[@newsEntity.NewsCategoryName]</a>   <a href="@Url.Action("Item", new { itemKey = newsEntity.NewsGuid })" >@newsEntity.NewsTitle</a>
+                    </td>
+
+                </tr>   
+            }
+        </table>
+        @Html.AjaxPager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }, new AjaxOptions { UpdateTargetId = "dvOrders" })
+    </div>
+</article>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".menu #menuNews").addClass("active");
+        $(".vmenu #@menuNameSelected").addClass("active");
+    });
+</script>
