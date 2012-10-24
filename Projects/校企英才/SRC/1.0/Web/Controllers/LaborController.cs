@@ -625,8 +625,8 @@ namespace XQYC.Web.Controllers
             foreach (SalarySummaryEntity item in salarySummaryList)
             {
                 DataRow row = salaryTable.NewRow();
-                //TODO:xieran20121024 添加获取某用户银行首要账户的方法
-                row[BankCardNumber] = "998766555456778888";
+                //获取某用户银行首要账户
+                row[BankCardNumber] = BankBLL.Instance.GetPrimary(Converter.TryToGuid(item.LaborKey)).AccountNumber;
                 row[columnUserNameCN] = item.LaborName;
                 row[SalaryValue] = item.SalaryNeedPay;
                 row[SalaryMemo] = string.Format("{0}-{1}-工资", enterprise.CompanyNameShort, salaryMonth.ToString("yyyyMM"));
