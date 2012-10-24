@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using HiLand.Framework.BusinessCore;
@@ -16,6 +17,7 @@ using HiLand.Utility.Data;
 using HiLand.Utility.Entity;
 using HiLand.Utility.Entity.Status;
 using HiLand.Utility.Enums;
+using HiLand.Utility.IO;
 using HiLand.Utility.Mathes.StringParse;
 using HiLand.Utility.Office;
 using HiLand.Utility.Paging;
@@ -538,6 +540,103 @@ namespace XQYC.Web.Controllers
 
         #region 工资管理
         /// <summary>
+        /// 薪资银行报盘预选取器
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SalaryToBank()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 薪资银行报盘预选取器
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SalaryToBank(bool isOnlyPlaceHolder = true)
+        {
+            List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
+            string returnUrl = RequestHelper.CurrentFullUrl;
+
+            string enterpriseGuid = ControlHelper.GetRealValue("EnterpriseName", string.Empty);
+            EnterpriseEntity enterpriseEntity = EnterpriseEntity.Empty;
+            string salaryMonth = RequestHelper.GetValue("salaryMonth");
+            DateTime salaryDate = DateTimeHelper.Min;
+
+            if (string.IsNullOrWhiteSpace(salaryMonth))
+            {
+                SystemStatusInfo itemError = new SystemStatusInfo();
+                itemError.SystemStatus = SystemStatuses.Warnning;
+                itemError.Message = "你没有选定薪资月份，请选择。";
+                infoList.Add(itemError);
+                this.TempData.Add("OperationResultData", infoList);
+                return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+            }
+            else
+            {
+                salaryMonth = salaryMonth + "/1";
+                salaryDate = DateTimeHelper.Parse(salaryMonth, DateFormats.YMD);
+            }
+
+            if (GuidHelper.IsInvalidOrEmpty(enterpriseGuid))
+            {
+                SystemStatusInfo itemError = new SystemStatusInfo();
+                itemError.SystemStatus = SystemStatuses.Warnning;
+                itemError.Message = "你没有选定企业的名称信息，请选择。";
+                infoList.Add(itemError);
+
+                this.TempData.Add("OperationResultData", infoList);
+                return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+            }
+            else
+            {
+                enterpriseEntity = EnterpriseBLL.Instance.Get(enterpriseGuid);
+            }
+
+            DataTable salaryTable = GenerateSalaryDataTabel(enterpriseEntity, salaryDate);
+            Stream salaryStream = ExcelHelper.WriteExcel(salaryTable, false);
+
+            string fileDownloadName = string.Format("{0}-{1}", enterpriseEntity.CompanyName, salaryDate.ToString("yyyyMM"));
+            return File(salaryStream, ContentTypes.GetContentType("xls"), fileDownloadName);
+        }
+
+        /// <summary>
+        /// 生成某企业某薪资月份的薪资报盘数据
+        /// </summary>
+        /// <param name="enterpriseGuid"></param>
+        /// <param name="salaryMonth"></param>
+        /// <returns></returns>
+        private static DataTable GenerateSalaryDataTabel(EnterpriseEntity enterprise, DateTime salaryMonth)
+        {
+            DataTable salaryTable = new DataTable();
+
+            //1.创建表头
+            DataColumn BankCardNumber = new DataColumn("BankCardNumber", typeof(String));
+            salaryTable.Columns.Add(BankCardNumber);
+            DataColumn columnUserNameCN = new DataColumn("UserNameCN", typeof(String));
+            salaryTable.Columns.Add(columnUserNameCN);
+            DataColumn SalaryValue = new DataColumn("SalaryValue", typeof(decimal));
+            salaryTable.Columns.Add(SalaryValue);
+            DataColumn SalaryMemo = new DataColumn("SalaryMemo", typeof(String));
+            salaryTable.Columns.Add(SalaryMemo);
+
+            //2.添加表数据
+            List<SalarySummaryEntity> salarySummaryList = SalarySummaryBLL.Instance.GetList(enterprise.EnterpriseGuid.ToString(), salaryMonth);
+            foreach (SalarySummaryEntity item in salarySummaryList)
+            {
+                DataRow row = salaryTable.NewRow();
+                //TODO:xieran20121024 添加获取某用户银行首要账户的方法
+                row[BankCardNumber] = "998766555456778888";
+                row[columnUserNameCN] = item.LaborName;
+                row[SalaryValue] = item.SalaryNeedPay;
+                row[SalaryMemo] = string.Format("{0}-{1}-工资", enterprise.CompanyNameShort, salaryMonth.ToString("yyyyMM"));
+                salaryTable.Rows.Add(row);
+            }
+
+            return salaryTable;
+        }
+
+        /// <summary>
         /// 薪资信息查询预选取器
         /// </summary>
         /// <returns></returns>
@@ -755,12 +854,12 @@ namespace XQYC.Web.Controllers
             }
             else
             {
-                orignalEntity = SalaryDetailsBLL.Instance.Get(entity.SalaryDetailsGuid,true);
+                orignalEntity = SalaryDetailsBLL.Instance.Get(entity.SalaryDetailsGuid, true);
                 isSuccessful = SalaryDetailsBLL.Instance.Update(entity);
             }
 
             //同时需要修改salarySummary里面对应项的值
-            if (isSuccessful == true && string.IsNullOrWhiteSpace( entity.SalarySummaryKey)==false)
+            if (isSuccessful == true && string.IsNullOrWhiteSpace(entity.SalarySummaryKey) == false)
             {
                 SalarySummaryEntity salarySummaryEntity = SalarySummaryBLL.Instance.Get(entity.SalarySummaryKey);
 
@@ -794,7 +893,7 @@ namespace XQYC.Web.Controllers
                 SalarySummaryBLL.Instance.Update(salarySummaryEntity);
             }
 
-            return RedirectToAction("SalaryDetailsList", new { itemKey= entity.SalarySummaryKey });
+            return RedirectToAction("SalaryDetailsList", new { itemKey = entity.SalarySummaryKey });
         }
 
         /// <summary>
