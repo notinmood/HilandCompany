@@ -39,6 +39,22 @@
                 </td>
             </tr>
             <tr>
+                <td>所在地区:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLArea(Html, "AreaCode", Model.AreaCode)
+                </td>
+                <td>联系人信息:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.ContactPerson)
+                </td>
+            </tr>
+            <tr>
+                <td>企业地址:
+                </td>
+                <td colspan="3">@Html.TextBoxFor(entity => entity.PrincipleAddress)
+                </td>
+            </tr>
+            <tr>
                 <td style="width: 120px;">电话:
                 </td>
                 <td>@Html.TextBoxFor(entity => entity.Telephone)
@@ -49,7 +65,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="width: 120px;">Emai:
+                <td style="width: 120px;">Email:
                 </td>
                 <td>@Html.TextBoxFor(entity => entity.Email)
                 </td>
@@ -68,17 +84,6 @@
                 <td>@Html.DropDownListFor(entity => entity.StaffScope, EnumEx.BuildSelectItemList<StaffScopes>("staffCount"))
                 </td>
             </tr>
-            <tr>
-                <td>联系人信息:
-                </td>
-                <td>@Html.TextBoxFor(entity => entity.ContactPerson)
-                </td>
-                <td>企业地址:
-                </td>
-                <td>@Html.TextBoxFor(entity => entity.PrincipleAddress)
-                </td>
-            </tr>
-
             <tr>
                 <td>合作意向:
                 </td>

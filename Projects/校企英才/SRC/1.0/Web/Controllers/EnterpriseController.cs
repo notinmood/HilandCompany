@@ -11,6 +11,7 @@ using HiLand.Utility.Entity;
 using HiLand.Utility.Enums;
 using HiLand.Utility.Paging;
 using HiLand.Utility.Web;
+using HiLand.Utility4.MVC.Controls;
 using Webdiyer.WebControls.Mvc;
 using XQYC.Business.BLL;
 using XQYC.Business.Entity;
@@ -24,11 +25,21 @@ namespace XQYC.Web.Controllers
         #region 企业基本信息
         public ActionResult Index(int id = 1)
         {
+            //1.如果是点击查询控件的查询按钮，那么将查询条件作为QueryString附加在地址后面（为了在客户端保存查询条件的状体），重新发起一次请求。
+            if (this.Request.HttpMethod.ToLower().Contains("post"))
+            {
+                string targetUrlWithoutParam = Url.Action("Index", new { id = 1 });
+                string targetUrl = QueryControlHelper.GetNewQueryUrl("QueryControl", targetUrlWithoutParam);
+                return Redirect(targetUrl);
+            }
+
+            //2.通常情形下走get查询
             int pageIndex = id;
             int pageSize = SystemConst.CountPerPage;
             int startIndex = (pageIndex - 1) * pageSize + 1;
             string whereClause = " 1=1 ";
             string orderClause = "EnterpriseID DESC";
+            whereClause += " AND " + QueryControlHelper.GetQueryCondition("QueryControl");
 
             PagedEntityCollection<EnterpriseEntity> entityList = EnterpriseBLL.Instance.GetPagedCollection(startIndex, pageSize, whereClause, orderClause);
             PagedList<EnterpriseEntity> pagedExList = new PagedList<EnterpriseEntity>(entityList.Records, entityList.PageIndex, entityList.PageSize, entityList.TotalCount);
@@ -115,6 +126,7 @@ namespace XQYC.Web.Controllers
             targetEntity.PostCode = originalEntity.PostCode;
             targetEntity.StaffScope = originalEntity.StaffScope;
             targetEntity.Telephone = originalEntity.Telephone;
+            targetEntity.AreaCode = originalEntity.AreaCode;
         }
 
         /// <summary>

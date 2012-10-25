@@ -394,6 +394,35 @@ namespace XQYC.Web.Control
 
             return html.DropDownList(name, itemList);
         }
+
+        /// <summary>
+        /// 地区选择下拉列表
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="name"></param>
+        /// <param name="selectedValue"></param>
+        /// <returns></returns>
+        /// <remarks>目前仅提供青岛各辖区信息</remarks>
+        public static IHtmlString XQYCDDLArea(System.Web.Mvc.HtmlHelper html, string name, string selectedValue = StringHelper.Empty)
+        {
+            List<SelectListItem> itemList = new List<SelectListItem>();
+            List<AreaEntity> industryTypeList = AreaBLL.Instance.GetListByParentCode("3702");
+            for (int i = 0; i < industryTypeList.Count; i++)
+            {
+                AreaEntity industryTypeItem = industryTypeList[i];
+                SelectListItem listItem = new SelectListItem();
+                listItem.Text = industryTypeItem.AreaName;
+                listItem.Value = industryTypeItem.AreaCode;
+                if (industryTypeItem.AreaCode == selectedValue)
+                {
+                    listItem.Selected = true;
+                }
+
+                itemList.Add(listItem);
+            }
+
+            return html.DropDownList(name, itemList);
+        }
         #endregion
     }
 }

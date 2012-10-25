@@ -9,14 +9,28 @@
 @using HiLand.Utility.Data;
 @using XQYC.Business.Entity;
 @using XQYC.Web.Models;
+@using HiLand.Utility.Enums;
 
 @model PagedList<EnterpriseEntity>
 @{
     ViewBag.Title = "Index";
+
+    List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业名称", ConditionFieldName = "CompanyName", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合作意向", ConditionFieldName = "EnterpriseLevel", ConditionType = typeof(CommonLevels) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业性质", ConditionFieldName = "BusinessType", ConditionType = typeof(EnterpriseTypes) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合作意向", ConditionFieldName = "UserNameCN", ConditionType = typeof(string) });
+
 }
 
 <h2>企业列表</h2>
 <div id="ItemListDIV">
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.HiQuery("QueryControl").QueryConditionList(queryItemList).Render()
+        }
+    </div>
     <div class="OperateArea" id="OperateAreaContainer">
         @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV" })
     </div>
