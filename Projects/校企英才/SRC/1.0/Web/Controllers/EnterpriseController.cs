@@ -104,6 +104,17 @@ namespace XQYC.Web.Controllers
             targetEntity.ContactPerson = originalEntity.ContactPerson;
             targetEntity.CompanyNameShort = originalEntity.CompanyNameShort;
             targetEntity.PrincipleAddress = originalEntity.PrincipleAddress;
+            targetEntity.EnterpriseWWW = originalEntity.EnterpriseWWW;
+            targetEntity.BusinessType = originalEntity.BusinessType;
+            targetEntity.Email = originalEntity.Email;
+            targetEntity.EnterpriseLevel = originalEntity.EnterpriseLevel;
+            targetEntity.EnterpriseMemo = originalEntity.EnterpriseMemo;
+            targetEntity.EnterpriseDescription = originalEntity.EnterpriseDescription;
+            targetEntity.Fax = originalEntity.Fax;
+            targetEntity.IndustryKey = originalEntity.IndustryKey;
+            targetEntity.PostCode = originalEntity.PostCode;
+            targetEntity.StaffScope = originalEntity.StaffScope;
+            targetEntity.Telephone = originalEntity.Telephone;
         }
 
         /// <summary>

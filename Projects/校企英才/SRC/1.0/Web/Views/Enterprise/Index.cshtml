@@ -84,11 +84,13 @@
             });
 
             $("#newDisplayA").click(function () {
+                $(".modal").width("650px");
                 var url = '@Url.Action("Item")' + '?keyGuid=&r=' + Math.random();
                 $("#EditDIV").load(url);
             });
 
             $("a.edit").click(function () {
+                $(".modal").width("650px");
                 var itemKey = $(this).attr("itemKey");
                 $("#currentPopupItemGuid").val(itemKey);
                 var url = '@Url.Action("Item")' + '?keyGuid=' + itemKey + '&r=' + Math.random();

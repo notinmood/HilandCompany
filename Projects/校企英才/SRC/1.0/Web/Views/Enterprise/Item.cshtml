@@ -7,6 +7,8 @@
 @using HiLand.Utility4.MVC.Controls;
 @using XQYC.Business.Entity;
 @using XQYC.Web.Control;
+@using HiLand.General;
+
 @model EnterpriseEntity
 @{
     ViewBag.Title = "企业信息";
@@ -21,11 +23,49 @@
                 </td>
                 <td>@Html.TextBoxFor(entity => entity.CompanyName)
                 </td>
-            </tr>
-            <tr>
-                <td>企业简称:
+                <td style="width: 120px;">企业简称:
                 </td>
                 <td>@Html.TextBoxFor(entity => entity.CompanyNameShort)
+                </td>
+            </tr>
+            <tr>
+                <td>所属行业:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLEnterpriseType(Html, "IndustryKey", Model.IndustryKey)
+                </td>
+                <td>企业性质:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.BusinessType, EnumEx.BuildSelectItemList<EnterpriseTypes>())
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 120px;">电话:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.Telephone)
+                </td>
+                <td>传真:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.Fax)
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 120px;">Emai:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.Email)
+                </td>
+                <td>网站:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.EnterpriseWWW)
+                </td>
+            </tr>
+            <tr>
+                <td>邮政编码:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.PostCode)
+                </td>
+                <td>人员规模:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.StaffScope, EnumEx.BuildSelectItemList<StaffScopes>("staffCount"))
                 </td>
             </tr>
             <tr>
@@ -33,14 +73,17 @@
                 </td>
                 <td>@Html.TextBoxFor(entity => entity.ContactPerson)
                 </td>
-            </tr>
-            <tr>
                 <td>企业地址:
                 </td>
                 <td>@Html.TextBoxFor(entity => entity.PrincipleAddress)
                 </td>
             </tr>
+
             <tr>
+                <td>合作意向:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.EnterpriseLevel, EnumEx.BuildSelectItemList<CommonLevels>("star"))
+                </td>
                 <td>企业状态:
                 </td>
                 <td>@Html.DropDownListFor(entity => entity.CanUsable, EnumEx.BuildSelectItemList<Logics>())

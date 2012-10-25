@@ -365,5 +365,35 @@ namespace XQYC.Web.Control
             return result;
         }
         #endregion
+
+        #region 各种常用业务控件
+        /// <summary>
+        /// 企业行业类型选择下拉列表
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="name"></param>
+        /// <param name="selectedValue"></param>
+        /// <returns></returns>
+        public static IHtmlString XQYCDDLEnterpriseType(System.Web.Mvc.HtmlHelper html, string name, string selectedValue = StringHelper.Empty)
+        {
+            List<SelectListItem> itemList = new List<SelectListItem>();
+            List<BasicSettingEntity> industryTypeList = BasicSettingBLL.Instance.GetListOfIndustryType();
+            for (int i = 0; i < industryTypeList.Count; i++)
+            {
+                BasicSettingEntity industryTypeItem = industryTypeList[i];
+                SelectListItem listItem = new SelectListItem();
+                listItem.Text = industryTypeItem.DisplayName;
+                listItem.Value = industryTypeItem.SettingKey;
+                if (industryTypeItem.SettingKey == selectedValue)
+                {
+                    listItem.Selected = true;
+                }
+
+                itemList.Add(listItem);
+            }
+
+            return html.DropDownList(name, itemList);
+        }
+        #endregion
     }
 }
