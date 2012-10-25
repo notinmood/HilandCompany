@@ -14,6 +14,12 @@
     this.Layout = null;
 
     string userKey = Model.LaborUserGuid.ToString();
+    
+    LaborContractEntity laborContractEntity= LaborContractEntity.Empty;
+    if(Model!=null)
+    {
+        laborContractEntity= Model;
+    }
 }
 <div id="formContainer">
     <style type="text/css">
@@ -32,13 +38,7 @@
             <tr>
                 <td>企业:
                 </td>
-                <td>@HtmlHelperEx.XQYCDDLEnterprise(Html, "EnterpriseGuid", Model.EnterpriseGuid.ToString(), "LaborDispatch")
-                </td>
-            </tr>
-            <tr>
-                <td>企业合同名称:
-                </td>
-                <td>@HtmlHelperEx.XQYCCSDDLEnterpriseContract(Html, "EnterpriseContractGuid", Model.EnterpriseContractGuid.ToString(), "EnterpriseGuid")
+                <td>@HtmlHelperEx.XQYCAutoCompleteEnterprise(Html, "EnterpriseName",laborContractEntity.Enterprise.CompanyName,laborContractEntity.EnterpriseGuid.ToString())
                 </td>
             </tr>
             <tr>

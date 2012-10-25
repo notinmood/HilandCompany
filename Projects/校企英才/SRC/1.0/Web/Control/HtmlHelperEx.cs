@@ -232,10 +232,10 @@ namespace XQYC.Web.Control
             return html.HiCascadingDropDownList(name).ParentSelectControlSelector("#" + enterpriseControlID).DynamicSelectItemsLoadUrl(dynamicItemsLoadUrl).Value(selectedValue).Render();
         }
 
-        public static IHtmlString XQYCAutoCompleteEnterprise(System.Web.Mvc.HtmlHelper html, string name)
+        public static IHtmlString XQYCAutoCompleteEnterprise(System.Web.Mvc.HtmlHelper html, string name, string value = StringHelper.Empty, string realValue = StringHelper.Empty)
         {
             string autoCompleteUrl = UrlHelperEx.UrlHelper.Action("AutoCompleteData", "Enterprise");
-            return html.HiTextBox(name).DynamicLoadDataUrl(autoCompleteUrl).Render();
+            return html.HiTextBox(name).DynamicLoadDataUrl(autoCompleteUrl).Value(value).HiddenFieldValue(realValue).Render();
         }
         #endregion
 

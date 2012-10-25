@@ -522,7 +522,9 @@ namespace XQYC.Web.Controllers
 
         private void SetTargetContractEntityValue(LaborContractEntity originalEntity, ref LaborContractEntity targetEntity)
         {
-            targetEntity.EnterpriseGuid = originalEntity.EnterpriseGuid;
+            targetEntity.EnterpriseGuid = ControlHelper.GetRealValue<Guid>("EnterpriseName");
+
+            //targetEntity.EnterpriseGuid = originalEntity.EnterpriseGuid;
             targetEntity.LaborContractDetails = originalEntity.LaborContractDetails;
             targetEntity.EnterpriseContractGuid = originalEntity.EnterpriseContractGuid;
             targetEntity.LaborContractStartDate = originalEntity.LaborContractStartDate;
