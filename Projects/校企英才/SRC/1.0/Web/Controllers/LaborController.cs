@@ -994,9 +994,9 @@ namespace XQYC.Web.Controllers
             }
             #endregion
 
-            List<LaborEntity> laborsOfCurrentEnterprise = LaborBLL.Instance.GetLaborsByEnterprise(enterpriseGuid, LaborWorkStatuses.Worked);
-            //已经完成付款的劳务人员guid集合
-            List<Guid> laborGuidsPaid = new List<Guid>();
+            //List<LaborEntity> laborsOfCurrentEnterprise = LaborBLL.Instance.GetLaborsByEnterprise(enterpriseGuid, LaborWorkStatuses.Worked);
+            ////已经完成付款的劳务人员guid集合
+            //List<Guid> laborGuidsPaid = new List<Guid>();
 
             try
             {
@@ -1103,30 +1103,43 @@ namespace XQYC.Web.Controllers
                         {
                             //根据人员姓名和工号，确认劳务人员的UserGuid
                             bool isMatchedLabor = false;
-                            for (int p = 0; p < laborsOfCurrentEnterprise.Count; p++)
+                            LaborEntity laborEntity= LaborBLL.Instance.Get(LaborUserNameCNForSalarySummary, LaborUserCodeForSalarySummary,enterpriseGuid.ToString());
+                            if (laborEntity.IsEmpty)
                             {
-                                LaborEntity currentLabor = laborsOfCurrentEnterprise[p];
-                                if (currentLabor.UserNameCN == LaborUserNameCNForSalarySummary && currentLabor.LaborCode == LaborUserCodeForSalarySummary)
-                                {
-                                    salarySummaryEntity.LaborKey = currentLabor.UserGuid.ToString();
-                                    salarySummaryEntity.LaborCode = LaborUserCodeForSalarySummary;
-                                    salarySummaryEntity.LaborName = LaborUserNameCNForSalarySummary;
-                                    //计算某劳务人员各种应付费用（保险，公积金，管理费等）
-                                    CalculateNeedCost(currentLabor, salarySummaryEntity);
-                                    isMatchedLabor = true;
-                                    break;
-                                }
+                                isMatchedLabor = false;
+                            }
+                            else
+                            {
+                                isMatchedLabor = true;
                             }
 
                             if (isMatchedLabor == true)
                             {
-
-                                bool isSuccessful = SalarySummaryBLL.Instance.Create(salarySummaryEntity);
+                                bool isSuccessful = true;
+                                SalarySummaryEntity salarySummaryEntityConfirm = SalarySummaryBLL.Instance.Get(laborEntity.UserGuid.ToString(), salaryDate);
+                                if (salarySummaryEntityConfirm.IsEmpty)
+                                {
+                                    salarySummaryEntity.LaborKey = laborEntity.UserGuid.ToString();
+                                    salarySummaryEntity.LaborCode = LaborUserCodeForSalarySummary;
+                                    salarySummaryEntity.LaborName = LaborUserNameCNForSalarySummary;
+                                    //计算某劳务人员各种应付费用（保险，公积金，管理费等）
+                                    CalculateNeedCost(laborEntity, salarySummaryEntity);
+                                    isSuccessful = SalarySummaryBLL.Instance.Create(salarySummaryEntity);
+                                }
+                                else
+                                {
+                                    salarySummaryEntityConfirm.InsuranceReal += salarySummaryEntity.InsuranceReal;
+                                    salarySummaryEntityConfirm.ManageFeeReal += salarySummaryEntity.ManageFeeReal;
+                                    salarySummaryEntityConfirm.ReserveFundReal += salarySummaryEntity.ReserveFundReal;
+                                    salarySummaryEntityConfirm.SalaryGrossPay += salarySummaryEntity.SalaryGrossPay;
+                                    salarySummaryEntityConfirm.SalaryRebate += salarySummaryEntity.SalaryRebate;
+                                    isSuccessful = SalarySummaryBLL.Instance.Update(salarySummaryEntityConfirm);
+                                }
 
                                 if (isSuccessful == true)
                                 {
                                     userCountSuccessful++;
-                                    laborGuidsPaid.Add(new Guid(salarySummaryEntity.LaborKey));
+                                    //laborGuidsPaid.Add(new Guid(salarySummaryEntity.LaborKey));
                                 }
                                 else
                                 {
@@ -1151,37 +1164,37 @@ namespace XQYC.Web.Controllers
                 }
                 #endregion
 
-                #region 应付而未付的用户逻辑
-                if (laborsOfCurrentEnterprise.Count - laborGuidsPaid.Count > 0)
-                {
-                    for (int w = 0; w < laborGuidsPaid.Count; w++)
-                    {
-                        LaborEntity laborEntity = laborsOfCurrentEnterprise.Find(e => e.UserGuid == laborGuidsPaid[w]);
-                        if (laborEntity != null)
-                        {
-                            laborsOfCurrentEnterprise.Remove(laborEntity);
-                        }
-                    }
+                //#region 应付而未付的用户逻辑
+                //if (laborsOfCurrentEnterprise.Count - laborGuidsPaid.Count > 0)
+                //{
+                //    for (int w = 0; w < laborGuidsPaid.Count; w++)
+                //    {
+                //        LaborEntity laborEntity = laborsOfCurrentEnterprise.Find(e => e.UserGuid == laborGuidsPaid[w]);
+                //        if (laborEntity != null)
+                //        {
+                //            laborsOfCurrentEnterprise.Remove(laborEntity);
+                //        }
+                //    }
 
-                    for (int w = 0; w < laborsOfCurrentEnterprise.Count; w++)
-                    {
-                        LaborEntity laborEntity = laborsOfCurrentEnterprise[w];
+                //    for (int w = 0; w < laborsOfCurrentEnterprise.Count; w++)
+                //    {
+                //        LaborEntity laborEntity = laborsOfCurrentEnterprise[w];
 
-                        SalarySummaryEntity salarySummaryEntity = new SalarySummaryEntity();
-                        salarySummaryEntity.LaborName = laborEntity.UserNameCN;
-                        salarySummaryEntity.LaborCode = laborEntity.LaborCode;
-                        salarySummaryEntity.LaborKey = laborEntity.UserGuid.ToString();
-                        salarySummaryEntity.CreateDate = DateTime.Today;
-                        salarySummaryEntity.CreateUserKey = BusinessUserBLL.CurrentUserGuid.ToString();
-                        salarySummaryEntity.EnterpriseKey = enterpriseGuid.ToString();
-                        salarySummaryEntity.SalaryDate = salaryDate;
-                        //用待付标识，此劳务人员的薪资应付但未付
-                        salarySummaryEntity.SalaryPayStatus = SalaryPayStatuses.NeedPay;
-                        CalculateNeedCost(laborEntity, salarySummaryEntity);
-                        bool isSuccessful = SalarySummaryBLL.Instance.Create(salarySummaryEntity);
-                    }
-                }
-                #endregion
+                //        SalarySummaryEntity salarySummaryEntity = new SalarySummaryEntity();
+                //        salarySummaryEntity.LaborName = laborEntity.UserNameCN;
+                //        salarySummaryEntity.LaborCode = laborEntity.LaborCode;
+                //        salarySummaryEntity.LaborKey = laborEntity.UserGuid.ToString();
+                //        salarySummaryEntity.CreateDate = DateTime.Today;
+                //        salarySummaryEntity.CreateUserKey = BusinessUserBLL.CurrentUserGuid.ToString();
+                //        salarySummaryEntity.EnterpriseKey = enterpriseGuid.ToString();
+                //        salarySummaryEntity.SalaryDate = salaryDate;
+                //        //用待付标识，此劳务人员的薪资应付但未付
+                //        salarySummaryEntity.SalaryPayStatus = SalaryPayStatuses.NeedPay;
+                //        CalculateNeedCost(laborEntity, salarySummaryEntity);
+                //        bool isSuccessful = SalarySummaryBLL.Instance.Create(salarySummaryEntity);
+                //    }
+                //}
+                //#endregion
 
                 #region 操作结果展示
                 //A.1、操作结果（导入成功的人员信息）
@@ -1190,20 +1203,20 @@ namespace XQYC.Web.Controllers
                 itemSuccessful.Message = string.Format("共有{0}人导入成功。", userCountSuccessful);
                 infoList.Add(itemSuccessful);
 
-                //A.2、操作结果（需要导入数据但是未导入数据的人员信息）
-                int userCountWarnning = laborsOfCurrentEnterprise.Count;
-                if (userCountWarnning > 0)
-                {
-                    SystemStatusInfo itemError = new SystemStatusInfo();
-                    itemError.SystemStatus = SystemStatuses.Warnning;
-                    itemError.Message = string.Format("共有{0}人本次未有工资信息导入。人员分别为：", userCountWarnning);
-                    foreach (LaborEntity item in laborsOfCurrentEnterprise)
-                    {
-                        itemError.Message += string.Format("{0}({1}), <br />", item.UserNameCN, item.LaborCode);
-                    }
+                ////A.2、操作结果（需要导入数据但是未导入数据的人员信息）
+                //int userCountWarnning = laborsOfCurrentEnterprise.Count;
+                //if (userCountWarnning > 0)
+                //{
+                //    SystemStatusInfo itemError = new SystemStatusInfo();
+                //    itemError.SystemStatus = SystemStatuses.Warnning;
+                //    itemError.Message = string.Format("共有{0}人本次未有工资信息导入。人员分别为：", userCountWarnning);
+                //    foreach (LaborEntity item in laborsOfCurrentEnterprise)
+                //    {
+                //        itemError.Message += string.Format("{0}({1}), <br />", item.UserNameCN, item.LaborCode);
+                //    }
 
-                    infoList.Add(itemError);
-                }
+                //    infoList.Add(itemError);
+                //}
 
                 //A.3、操作结果（导入失败的人员信息）
                 if (userCountFailure > 0)

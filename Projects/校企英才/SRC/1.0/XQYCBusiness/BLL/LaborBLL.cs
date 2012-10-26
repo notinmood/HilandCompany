@@ -76,6 +76,28 @@ namespace XQYC.Business.BLL
         }
 
         /// <summary>
+        /// 根据人员姓名，劳工编号，企业Guid信息获取劳工信息
+        /// </summary>
+        /// <param name="laborName">人员姓名</param>
+        /// <param name="laborCode">劳工编号</param>
+        /// <param name="enterpriseKey">企业Guid信息</param>
+        /// <returns></returns>
+        public LaborEntity Get(string laborName,string laborCode,string enterpriseKey)
+        {
+            string whereClause = string.Format(" UserNameCN='{0}' AND LaborCode='{1}' AND CurrentEnterpriseKey='{2}' ", laborName,laborCode,enterpriseKey);
+            List < LaborEntity > list= this.GetList(whereClause);
+
+            if (list == null || list.Count == 0)
+            {
+                return LaborEntity.Empty;
+            }
+            else
+            {
+                return list[0];
+            }
+        }
+
+        /// <summary>
         /// 获取列表（参数paras暂时不支持）
         /// </summary>
         /// <param name="whereClause"></param>
