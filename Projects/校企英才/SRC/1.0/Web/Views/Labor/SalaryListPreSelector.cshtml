@@ -36,7 +36,7 @@
     { 
         <table>
             <tr>
-                <td>企业名称(*):
+                <td>企业名称:
                 </td>
                 <td class="fixClass">
                     @HtmlHelperEx.XQYCAutoCompleteEnterprise(Html, "EnterpriseName") 
@@ -60,7 +60,13 @@
         $("#submitButton").click(function () {
             var enterpriseGuid = $("#EnterpriseName_Value").val();
             if (enterpriseGuid == "") {
-                alert("请先通过企业名称输入企业部分信息，然后在下拉列表中选择具体企业！");
+                alert("请先通过企业名称输入企业部分信息，然后在下拉列表中选择具体企业，谢谢！");
+                return false;
+            }
+
+            var salaryMonth = $("#SalaryMonth").val();
+            if (salaryMonth == "") {
+                alert("请先选定薪资月份，谢谢！");
                 return false;
             }
         });

@@ -655,13 +655,16 @@ namespace XQYC.Web.Controllers
         [HttpPost]
         public ActionResult SalaryListPreSelector(bool isOnlyPlaceHolder = true)
         {
-            string enterpriseGuid = ControlHelper.GetRealValue("EnterpriseName", string.Empty);
+            string enterpriseKey = ControlHelper.GetRealValue("EnterpriseName", string.Empty);
             string salaryMonth = RequestHelper.GetValue("salaryMonth");
-            return RedirectToActionPermanent("SalaryList", new { enterpriseGuid = enterpriseGuid, salaryMonth = salaryMonth });
+            return RedirectToActionPermanent("SalaryList", new { enterpriseKey = enterpriseKey, salaryMonth = salaryMonth });
         }
 
         public ActionResult SalaryList(int id = 1)
         {
+            List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
+            string returnUrl = Url.Action("SalaryListPreSelector");
+
             int pageIndex = id;
             int pageSize = SystemConst.CountPerPage;
             int startIndex = (pageIndex - 1) * pageSize + 1;
@@ -669,14 +672,32 @@ namespace XQYC.Web.Controllers
             string orderClause = "SalarySummaryID DESC";
 
             //1.加入对预选择条件的过滤
-            string enterpriseGuid = RequestHelper.GetValue("enterpriseGuid");
+            string enterpriseKey = RequestHelper.GetValue("enterpriseKey");
             string salaryMonth = RequestHelper.GetValue("salaryMonth");
-            if (string.IsNullOrWhiteSpace(enterpriseGuid) == false)
+            if (string.IsNullOrWhiteSpace(enterpriseKey))
             {
-                whereClause += string.Format(" AND EnterpriseKey='{0}' ", enterpriseGuid);
+                SystemStatusInfo itemError = new SystemStatusInfo();
+                itemError.SystemStatus = SystemStatuses.Warnning;
+                itemError.Message = "你没有选定企业信息，请选择。";
+                infoList.Add(itemError);
+                this.TempData.Add("OperationResultData", infoList);
+                return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+            }
+            else
+            {
+                whereClause += string.Format(" AND EnterpriseKey='{0}' ", enterpriseKey);
             }
 
-            if (string.IsNullOrWhiteSpace(salaryMonth) == false)
+            if (string.IsNullOrWhiteSpace(salaryMonth))
+            {
+                SystemStatusInfo itemError = new SystemStatusInfo();
+                itemError.SystemStatus = SystemStatuses.Warnning;
+                itemError.Message = "你没有选定薪资月份，请选择。";
+                infoList.Add(itemError);
+                this.TempData.Add("OperationResultData", infoList);
+                return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+            }
+            else
             {
                 string salaryDateString = salaryMonth + "/1";
                 DateTime salaryDateFirstDay = DateTimeHelper.Parse(salaryDateString, DateFormats.YMD);
@@ -688,7 +709,7 @@ namespace XQYC.Web.Controllers
             //2.1、如果是点击查询控件的查询按钮，那么将查询条件作为QueryString附加在地址后面（为了在客户端保存查询条件的状体），重新发起一次请求。
             if (this.Request.HttpMethod.ToLower().Contains("post"))
             {
-                string targetUrlWithoutParam = Url.Action("SalaryList", new { id = 1, enterpriseGuid = enterpriseGuid, salaryMonth = salaryMonth });
+                string targetUrlWithoutParam = Url.Action("SalaryList", new { id = 1, enterpriseKey = enterpriseKey, salaryMonth = salaryMonth });
                 string targetUrl = QueryControlHelper.GetNewQueryUrl("LaborQuery", targetUrlWithoutParam);
                 return Redirect(targetUrl);
             }
@@ -714,6 +735,9 @@ namespace XQYC.Web.Controllers
             {
                 enterpriseEntity = EnterpriseBLL.Instance.Get(enterpriseKey);
             }
+            string salaryMonth = RequestHelper.GetValue("salaryMonth");
+            this.ViewData["salaryMonth"] = salaryMonth;
+
             return View(enterpriseEntity);
         }
 
@@ -781,20 +805,27 @@ namespace XQYC.Web.Controllers
                 salaryMonthDate = DateTimeHelper.GetFirstDateOfMonth(DateTime.Today);
             }
 
-            SalarySummaryEntity salarySummaryEntity = new SalarySummaryEntity();
-            salarySummaryEntity.SalarySummaryGuid = GuidHelper.NewGuid();
-            salarySummaryEntity.CreateDate = DateTime.Now;
-            salarySummaryEntity.CreateUserKey = BusinessUserBLL.CurrentUserGuid.ToString();
-            salarySummaryEntity.EnterpriseKey = enterpriseKey;
-            salarySummaryEntity.SalaryDate = salaryMonthDate;
-            salarySummaryEntity.LaborCode = labor.LaborCode;
-            salarySummaryEntity.LaborKey = labor.UserGuid.ToString();
-            salarySummaryEntity.LaborName = labor.UserNameCN;
+            //判断某人某月是否已经有薪资记录。1、如果有就直接使用，2、如果没有就创建新的薪资数据;(以此保证人员某月薪资数据的唯一)
+            bool isSuccessful = true;
+            SalarySummaryEntity salarySummaryEntity = SalarySummaryBLL.Instance.Get(labor.UserGuid.ToString(), salaryMonthDate);
 
-            //计算应付各种费用
-            CalculateNeedCost(labor, salarySummaryEntity);
+            if (salarySummaryEntity.IsEmpty)
+            {
+                salarySummaryEntity.SalarySummaryGuid = GuidHelper.NewGuid();
+                salarySummaryEntity.CreateDate = DateTime.Now;
+                salarySummaryEntity.CreateUserKey = BusinessUserBLL.CurrentUserGuid.ToString();
+                salarySummaryEntity.EnterpriseKey = enterpriseKey;
+                salarySummaryEntity.SalaryDate = salaryMonthDate;
+                salarySummaryEntity.LaborCode = labor.LaborCode;
+                salarySummaryEntity.LaborKey = labor.UserGuid.ToString();
+                salarySummaryEntity.LaborName = labor.UserNameCN;
 
-            bool isSuccessful = SalarySummaryBLL.Instance.Create(salarySummaryEntity);
+                //计算应付各种费用
+                CalculateNeedCost(labor, salarySummaryEntity);
+
+                isSuccessful = SalarySummaryBLL.Instance.Create(salarySummaryEntity);
+            }
+            
             if (isSuccessful == true)
             {
                 return RedirectToAction("SalaryDetailsList", new { itemKey = salarySummaryEntity.SalarySummaryGuid, enterpriseKey = enterpriseKey });

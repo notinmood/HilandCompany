@@ -15,7 +15,8 @@
 @{
     ViewBag.Title = "Index";
     string currentUrl = RequestHelper.CurrentFullUrl;
-    string enterpriseKey= RequestHelper.GetValue("enterpriseGuid");
+    string enterpriseKey = RequestHelper.GetValue("enterpriseKey");
+    string salaryMonth = RequestHelper.GetValue("SalaryMonth"); 
 
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员名称", ConditionFieldName = "LaborName", ConditionType = typeof(string) });
@@ -134,7 +135,8 @@
 
             $("#newDisplayA").click(function () {
                 var enterpriseKey = "@enterpriseKey";
-                var url = '@Url.Action("SalaryItem")' + '?r=' + Math.random() + '&enterpriseKey=' + enterpriseKey;
+                var salaryMonth = "@salaryMonth";
+                var url = '@Url.Action("SalaryItem")' + '?r=' + Math.random() + '&enterpriseKey=' + enterpriseKey + '&salaryMonth=' + salaryMonth;
                 $("#EditDIV").load(url);
             });
         });
