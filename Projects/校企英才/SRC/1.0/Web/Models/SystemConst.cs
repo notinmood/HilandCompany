@@ -20,12 +20,6 @@ namespace XQYC.Web.Models
             {
                 countPerPage = Converter.ChangeType(args.NewData.SettingValue, 10);
             }
-
-            //如果某个费用项被修改了，那么则清空所有的费用项集合（费用项集合使用的时候，让其自动从新从数据库获取）
-            if (args.NewData.SettingCategory == "CostItem")
-            {
-                costList = null;
-            }
         }
 
         public const string PermissionItemValuePrefix = "SubModuleGuid::";
@@ -56,22 +50,22 @@ namespace XQYC.Web.Models
             }
         }
 
-        private static List<BasicSettingEntity> costList = null;
-        /// <summary>
-        /// 配置表中，费用项列表
-        /// </summary>
-        public static List<BasicSettingEntity> CostList
-        {
-            get
-            {
-                if (costList == null)
-                {
-                    costList = BasicSettingBLL.Instance.GetListByCategory("CostItem");
-                }
+        //private static List<BasicSettingEntity> costList = null;
+        ///// <summary>
+        ///// 配置表中，费用项列表
+        ///// </summary>
+        //public static List<BasicSettingEntity> CostList
+        //{
+        //    get
+        //    {
+        //        if (costList == null)
+        //        {
+        //            costList = BasicSettingBLL.Instance.GetListByCategory("CostItem");
+        //        }
 
-                return costList;
-            }
-        }
+        //        return costList;
+        //    }
+        //}
 
         private static string initialUserPassword = string.Empty;
         /// <summary>

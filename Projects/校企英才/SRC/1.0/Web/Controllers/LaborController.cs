@@ -699,6 +699,7 @@ namespace XQYC.Web.Controllers
             }
             else
             {
+                salaryMonth = HttpUtility.UrlDecode(salaryMonth);
                 string salaryDateString = salaryMonth + "/1";
                 DateTime salaryDateFirstDay = DateTimeHelper.Parse(salaryDateString, DateFormats.YMD);
                 DateTime salaryDateLastDay = DateTimeHelper.GetFirstDateOfMonth(salaryDateFirstDay.AddMonths(1));
@@ -819,9 +820,6 @@ namespace XQYC.Web.Controllers
                 salarySummaryEntity.LaborCode = labor.LaborCode;
                 salarySummaryEntity.LaborKey = labor.UserGuid.ToString();
                 salarySummaryEntity.LaborName = labor.UserNameCN;
-
-                //计算应付各种费用
-                CalculateNeedCost(labor, salarySummaryEntity);
 
                 isSuccessful = SalarySummaryBLL.Instance.Create(salarySummaryEntity);
             }
@@ -949,7 +947,7 @@ namespace XQYC.Web.Controllers
             List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
             string returnUrl = RequestHelper.CurrentFullUrl;
 
-            Guid enterpriseGuid = RequestHelper.GetValue<Guid>("EnterpriseGuid");
+            Guid enterpriseGuid = ControlHelper.GetRealValue<Guid>("EnterpriseName");
             int headerRowNumber = RequestHelper.GetValue<int>("headerRowNumber", 1);
             string salaryDateString = RequestHelper.GetValue("SalaryMonth");
             DateTime salaryDate = DateTimeHelper.Min;
@@ -1122,8 +1120,7 @@ namespace XQYC.Web.Controllers
                                     salarySummaryEntity.LaborKey = laborEntity.UserGuid.ToString();
                                     salarySummaryEntity.LaborCode = LaborUserCodeForSalarySummary;
                                     salarySummaryEntity.LaborName = LaborUserNameCNForSalarySummary;
-                                    //计算某劳务人员各种应付费用（保险，公积金，管理费等）
-                                    CalculateNeedCost(laborEntity, salarySummaryEntity);
+
                                     isSuccessful = SalarySummaryBLL.Instance.Create(salarySummaryEntity);
                                 }
                                 else
@@ -1257,91 +1254,91 @@ namespace XQYC.Web.Controllers
             return SalaryDetailsBLL.Instance.Create(salaryDetailsEntity);
         }
 
-        /// <summary>
-        /// 计算某劳务人员各种应付费用（保险，公积金，管理费等）
-        /// </summary>
-        /// <param name="labor"></param>
-        /// <param name="salarySummary"></param>
-        private static SalarySummaryEntity CalculateNeedCost(LaborEntity labor, SalarySummaryEntity salarySummary)
-        {
-            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentInsuranceFormularKey) == false)
-            {
-                salarySummary.InsuranceCalculated = CalculateCostDetails(new Guid(labor.CurrentInsuranceFormularKey), salarySummary);
-            }
+        ///// <summary>
+        ///// 计算某劳务人员各种应付费用（保险，公积金，管理费等）
+        ///// </summary>
+        ///// <param name="labor"></param>
+        ///// <param name="salarySummary"></param>
+        //private static SalarySummaryEntity CalculateNeedCost(LaborEntity labor, SalarySummaryEntity salarySummary)
+        //{
+        //    if (GuidHelper.IsInvalidOrEmpty(labor.CurrentInsuranceFormularKey) == false)
+        //    {
+        //        salarySummary.InsuranceCalculated = CalculateCostDetails(new Guid(labor.CurrentInsuranceFormularKey), salarySummary);
+        //    }
 
-            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentReserveFundFormularKey) == false)
-            {
-                salarySummary.ReserveFundCalculated = CalculateCostDetails(new Guid(labor.CurrentReserveFundFormularKey), salarySummary);
-            }
+        //    if (GuidHelper.IsInvalidOrEmpty(labor.CurrentReserveFundFormularKey) == false)
+        //    {
+        //        salarySummary.ReserveFundCalculated = CalculateCostDetails(new Guid(labor.CurrentReserveFundFormularKey), salarySummary);
+        //    }
 
-            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentManageFeeFormularKey) == false)
-            {
-                salarySummary.ManageFeeCalculated = CalculateCostDetails(new Guid(labor.CurrentManageFeeFormularKey), salarySummary);
-            }
-            return salarySummary;
-        }
+        //    if (GuidHelper.IsInvalidOrEmpty(labor.CurrentManageFeeFormularKey) == false)
+        //    {
+        //        salarySummary.ManageFeeCalculated = CalculateCostDetails(new Guid(labor.CurrentManageFeeFormularKey), salarySummary);
+        //    }
+        //    return salarySummary;
+        //}
 
-        /// <summary>
-        /// 计算具体的费用
-        /// </summary>
-        /// <param name="costFormularKey"></param>
-        /// <param name="salarySummary"></param>
-        /// <returns></returns>
-        private static decimal CalculateCostDetails(Guid costFormularKey, SalarySummaryEntity salarySummary)
-        {
-            decimal result = 0M;
-            CostFormularEntity formularEntity = CostFormularBLL.Instance.Get(costFormularKey);
-            if (formularEntity == null)
-            {
-                return 0M;
-            }
+        ///// <summary>
+        ///// 计算具体的费用
+        ///// </summary>
+        ///// <param name="costFormularKey"></param>
+        ///// <param name="salarySummary"></param>
+        ///// <returns></returns>
+        //private static decimal CalculateCostDetails(Guid costFormularKey, SalarySummaryEntity salarySummary)
+        //{
+        //    decimal result = 0M;
+        //    CostFormularEntity formularEntity = CostFormularBLL.Instance.Get(costFormularKey);
+        //    if (formularEntity == null)
+        //    {
+        //        return 0M;
+        //    }
 
-            string formularValue = formularEntity.CostFormularValue;
-            if (string.IsNullOrWhiteSpace(formularValue) == false)
-            {
-                List<string> costElementList = StringHelper.GetPlaceHolderList(formularValue, "{", "}");
-                foreach (string costElement in costElementList)
-                {
-                    string placeHolderContent = string.Empty;
-                    switch (costElement)
-                    {
-                        case "NeedPaySalary":
-                            placeHolderContent = salarySummary.SalaryNeedPay.ToString();
-                            break;
-                        case "RealPaySalary":
-                            //TODO:xieran20121019暂时未考虑实付工资的情形
-                            break;
-                        default:
-                            {
-                                BasicSettingEntity basicSettingEntity = SystemConst.CostList.Find(w => w.SettingKey == costElement);
-                                if (basicSettingEntity != null)
-                                {
-                                    placeHolderContent = basicSettingEntity.SettingValue;
-                                }
-                                break;
-                            }
-                    }
+        //    string formularValue = formularEntity.CostFormularValue;
+        //    if (string.IsNullOrWhiteSpace(formularValue) == false)
+        //    {
+        //        List<string> costElementList = StringHelper.GetPlaceHolderList(formularValue, "{", "}");
+        //        foreach (string costElement in costElementList)
+        //        {
+        //            string placeHolderContent = string.Empty;
+        //            switch (costElement)
+        //            {
+        //                case "NeedPaySalary":
+        //                    placeHolderContent = salarySummary.SalaryNeedPay.ToString();
+        //                    break;
+        //                case "RealPaySalary":
+        //                    //TODO:xieran20121019暂时未考虑实付工资的情形
+        //                    break;
+        //                default:
+        //                    {
+        //                        BasicSettingEntity basicSettingEntity = SystemConst.CostList.Find(w => w.SettingKey == costElement);
+        //                        if (basicSettingEntity != null)
+        //                        {
+        //                            placeHolderContent = basicSettingEntity.SettingValue;
+        //                        }
+        //                        break;
+        //                    }
+        //            }
 
-                    string placeHolder = "{" + costElement + "}";
-                    formularValue = formularValue.Replace(placeHolder, placeHolderContent);
-                }
+        //            string placeHolder = "{" + costElement + "}";
+        //            formularValue = formularValue.Replace(placeHolder, placeHolderContent);
+        //        }
 
-                try
-                {
-                    RPN rpn = new RPN();
-                    if (rpn.Parse(formularValue))
-                    {
-                        result = Convert.ToDecimal(rpn.Evaluate());
-                    }
-                }
-                catch
-                {
-                    result = 0;
-                }
-            }
+        //        try
+        //        {
+        //            RPN rpn = new RPN();
+        //            if (rpn.Parse(formularValue))
+        //            {
+        //                result = Convert.ToDecimal(rpn.Evaluate());
+        //            }
+        //        }
+        //        catch
+        //        {
+        //            result = 0;
+        //        }
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
         #endregion
 
         #region 银行卡
