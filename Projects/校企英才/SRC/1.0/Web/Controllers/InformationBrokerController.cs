@@ -240,5 +240,30 @@ namespace XQYC.Web.Controllers
             string returnUrl = RequestHelper.CurrentRequest.AppRelativeCurrentExecutionFilePath;
             return RedirectToAction("_ChangePasswordForManage", "Home", new { area = "UserCenter", userGuid = userGuid, userName = userName, returenUrl = returnUrl });
         }
+
+        /// <summary>
+        /// 信息员自动完成的数据
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AutoCompleteData()
+        {
+            string userValueInputted = RequestHelper.GetValue("term");
+            List<AutoCompleteEntity> itemList = new List<AutoCompleteEntity>();
+            string whereClause = string.Format(" ( InformationBrokerName like '{0}%' OR InformationBrokerNameShort like '{0}%' ) AND  CanUsable={1}", userValueInputted, (int)Logics.True);
+            List<InformationBrokerEntity> userList = InformationBrokerBLL.Instance.GetList(whereClause);
+
+            foreach (InformationBrokerEntity currentLabor in userList)
+            {
+                AutoCompleteEntity item = new AutoCompleteEntity();
+                item.details = "nothing";
+                item.key = currentLabor.InformationBrokerGuid.ToString();
+                item.label = string.Format("{0}({1})", currentLabor.InformationBrokerName, currentLabor.InformationBrokerNameShort);
+                item.value = currentLabor.InformationBrokerName;
+
+                itemList.Add(item);
+            }
+
+            return Json(itemList, JsonRequestBehavior.AllowGet);
+        }
     }
 }

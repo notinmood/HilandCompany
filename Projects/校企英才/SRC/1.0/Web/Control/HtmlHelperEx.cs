@@ -240,10 +240,31 @@ namespace XQYC.Web.Control
         #endregion
 
         #region 信息员控件
+        /// <summary>
+        /// 信息员自动完成控件
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <param name="realValue"></param>
+        /// <returns></returns>
+        public static IHtmlString XQYCAutoCompleteInformationBroker(System.Web.Mvc.HtmlHelper html, string name, string value = StringHelper.Empty, string realValue = StringHelper.Empty, string callbackFunctionName = "autoCompleteSelectedCallback")
+        {
+            string autoCompleteUrl = UrlHelperEx.UrlHelper.Action("AutoCompleteData", "InformationBroker");
+            return html.HiTextBox(name).DynamicLoadDataUrl(autoCompleteUrl).Value(value).HiddenFieldValue(realValue).SelectedCallbackFunctionName(callbackFunctionName).Render();
+        }
+
+        /// <summary>
+        /// 信息员下拉列表控件
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static IHtmlString XQYCDDLInformationBroker(System.Web.Mvc.HtmlHelper html, string name, string value)
         {
             List<SelectListItem> itemList = new List<SelectListItem>();
-            List<InformationBrokerEntity> brokerList = InformationBrokerBLL.Instance.GetList(string.Format("InformationBrokerStatus={0}", (int)UserStatuses.Normal));
+            List<InformationBrokerEntity> brokerList = InformationBrokerBLL.Instance.GetList(string.Format("CanUsable={0}", (int)Logics.True));
             foreach (InformationBrokerEntity currentItem in brokerList)
             {
                 SelectListItem listItem = new SelectListItem();

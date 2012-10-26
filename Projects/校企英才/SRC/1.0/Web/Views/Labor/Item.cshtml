@@ -6,6 +6,8 @@
 @using HiLand.Utility4.MVC.Controls;
 @using XQYC.Business.Entity;
 @using XQYC.Web.Control;
+@using XQYC.Business.BLL;
+
 @model LaborEntity
 @{
     ViewBag.Title = "信息员信息";
@@ -22,6 +24,12 @@
     if (Model.UserBirthDay > HiLand.Utility.Data.DateTimeHelper.Min)
     {
         userBirthday = Model.UserBirthDay.ToShortDateString();
+    }
+    
+    InformationBrokerEntity informationBrokerEntity= InformationBrokerBLL.Instance.Get( Model.InformationBrokerUserGuid);
+    if(informationBrokerEntity==null)
+    {
+        informationBrokerEntity= InformationBrokerEntity.Empty;
     }
 }
 <link rel="stylesheet" href="@Url.Content("~/Content/ui-lightness/jquery-ui-1.8.17.custom.css")" type="text/css" media="screen" />
@@ -189,7 +197,7 @@
                 <td>信息员:
                 </td>
                 <td>
-                    @HtmlHelperEx.XQYCDDLInformationBroker(Html, "InformationBrokerUserGuid", Model.InformationBrokerUserGuid.ToString())
+                    @HtmlHelperEx.XQYCAutoCompleteInformationBroker(Html,"InformationBroker",informationBrokerEntity.InformationBrokerName,informationBrokerEntity.InformationBrokerGuid.ToString(),string.Empty)
                 </td>
             </tr>
             <tr>

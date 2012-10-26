@@ -172,8 +172,8 @@ namespace XQYC.Web.Controllers
             targetEntity.Memo4 = originalEntity.Memo4;
             targetEntity.Memo5 = originalEntity.Memo5;
 
-            targetEntity.InformationBrokerUserGuid = originalEntity.InformationBrokerUserGuid;
-            targetEntity.InformationBrokerUserName = RequestHelper.GetValue("InformationBrokerUserGuid_Text");
+            targetEntity.InformationBrokerUserGuid = ControlHelper.GetRealValue<Guid>("InformationBroker");
+            targetEntity.InformationBrokerUserName = RequestHelper.GetValue("InformationBroker");
             targetEntity.FinanceUserName = RequestHelper.GetValue("FinanceUser");
             targetEntity.FinanceUserGuid = RequestHelper.GetValue<Guid>("FinanceUser_Value");
             targetEntity.ProviderUserName = RequestHelper.GetValue("ProviderUser");
