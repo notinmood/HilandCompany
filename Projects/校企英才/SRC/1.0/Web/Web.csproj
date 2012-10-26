@@ -547,6 +547,9 @@
     <Content Include="Areas\InformationBrokerConsole\Views\Labor\Index.cshtml" />
     <Content Include="Areas\EnterpriseConsole\Views\Labor\Index.cshtml" />
     <Content Include="Areas\EnterpriseConsole\Views\Enterprise\Index.cshtml" />
+    <Content Include="DownFiles\Templet\劳务人员批量导入模板.xls" />
+    <Content Include="DownFiles\Templet\劳务人员工资导入模板.xls" />
+    <Content Include="DownFiles\Templet\银行开卡数据导入模板.xls" />
     <None Include="Properties\PublishProfiles\profile1.pubxml" />
     <Content Include="Views\Permission\Data.cshtml" />
     <Content Include="Views\FreePermission\RoleSelector.cshtml" />
@@ -563,6 +566,7 @@
     <Content Include="Views\Labor\SalaryToBank.cshtml" />
     <Content Include="Views\InformationBroker\UserItem.cshtml" />
     <Content Include="Views\InformationBroker\UserList.cshtml" />
+    <Content Include="Views\System\TempletList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

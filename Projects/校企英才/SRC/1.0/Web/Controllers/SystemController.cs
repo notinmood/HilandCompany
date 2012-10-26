@@ -156,5 +156,14 @@ namespace XQYC.Web.Controllers
             this.ViewData["returnUrl"] = returnUrl;
             return View("OperationResult", statusInfos);
         }
+
+        /// <summary>
+        /// 常用模板下载
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult TempletList()
+        {
+            return View();
+        }
     }
 }

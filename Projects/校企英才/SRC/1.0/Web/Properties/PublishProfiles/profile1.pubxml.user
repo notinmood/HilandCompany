@@ -98,19 +98,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/24/2009 16:44:54</publishTime>
     </File>
     <File Include="bin/HiLand.Framework.dll">
-      <publishTime>10/15/2012 17:22:07</publishTime>
+      <publishTime>10/26/2012 15:57:34</publishTime>
     </File>
     <File Include="bin/HiLand.Framework4.dll">
-      <publishTime>10/15/2012 17:25:11</publishTime>
+      <publishTime>10/26/2012 15:57:41</publishTime>
     </File>
     <File Include="bin/HiLand.General.dll">
-      <publishTime>10/15/2012 17:22:10</publishTime>
+      <publishTime>10/26/2012 15:57:40</publishTime>
     </File>
     <File Include="bin/HiLand.Utility.dll">
-      <publishTime>10/15/2012 17:21:35</publishTime>
+      <publishTime>10/26/2012 15:57:20</publishTime>
     </File>
     <File Include="bin/HiLand.Utility4.dll">
-      <publishTime>10/15/2012 17:25:10</publishTime>
+      <publishTime>10/26/2012 15:57:29</publishTime>
     </File>
     <File Include="bin/Ionic.Zip.dll">
       <publishTime>02/15/2012 21:59:34</publishTime>
@@ -131,10 +131,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/28/2009 09:37:16</publishTime>
     </File>
     <File Include="bin/XQYC.Business.dll">
-      <publishTime>10/16/2012 08:54:20</publishTime>
+      <publishTime>10/26/2012 17:21:37</publishTime>
     </File>
     <File Include="bin/XQYC.Web.dll">
-      <publishTime>10/16/2012 08:54:24</publishTime>
+      <publishTime>10/26/2012 17:21:40</publishTime>
     </File>
     <File Include="Content/adminStyle.css">
       <publishTime>10/12/2012 16:15:52</publishTime>
@@ -727,14 +727,20 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Account/MyProfile.cshtml">
       <publishTime>09/15/2012 09:17:43</publishTime>
     </File>
+    <File Include="Views/CostFormular/Index.cshtml">
+      <publishTime>10/19/2012 18:13:53</publishTime>
+    </File>
+    <File Include="Views/CostFormular/Item.cshtml">
+      <publishTime>10/16/2012 16:38:57</publishTime>
+    </File>
     <File Include="Views/Department/Index.cshtml">
-      <publishTime>10/11/2012 11:40:02</publishTime>
+      <publishTime>10/18/2012 08:54:49</publishTime>
     </File>
     <File Include="Views/Department/Item.cshtml">
       <publishTime>10/02/2012 14:18:14</publishTime>
     </File>
     <File Include="Views/Employee/Index.cshtml">
-      <publishTime>10/08/2012 21:56:49</publishTime>
+      <publishTime>10/18/2012 08:51:23</publishTime>
     </File>
     <File Include="Views/Employee/Item.cshtml">
       <publishTime>10/11/2012 11:15:54</publishTime>
@@ -746,10 +752,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/04/2012 14:58:48</publishTime>
     </File>
     <File Include="Views/Enterprise/Index.cshtml">
-      <publishTime>10/04/2012 14:58:01</publishTime>
+      <publishTime>10/26/2012 09:46:24</publishTime>
     </File>
     <File Include="Views/Enterprise/Item.cshtml">
-      <publishTime>10/02/2012 09:35:57</publishTime>
+      <publishTime>10/25/2012 17:35:53</publishTime>
     </File>
     <File Include="Views/Enterprise/ServiceItem.cshtml">
       <publishTime>10/09/2012 11:48:24</publishTime>
@@ -761,7 +767,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/02/2012 09:35:57</publishTime>
     </File>
     <File Include="Views/Enterprise/UserList.cshtml">
-      <publishTime>10/15/2012 17:42:56</publishTime>
+      <publishTime>10/26/2012 11:37:33</publishTime>
     </File>
     <File Include="Views/FreePermission/RoleSelector.cshtml">
       <publishTime>10/06/2012 12:36:46</publishTime>
@@ -782,34 +788,55 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/24/2012 10:47:33</publishTime>
     </File>
     <File Include="Views/InformationBroker/Index.cshtml">
-      <publishTime>10/15/2012 17:41:37</publishTime>
+      <publishTime>10/26/2012 11:12:27</publishTime>
     </File>
     <File Include="Views/InformationBroker/Item.cshtml">
-      <publishTime>10/09/2012 11:47:57</publishTime>
+      <publishTime>10/26/2012 10:36:12</publishTime>
+    </File>
+    <File Include="Views/InformationBroker/UserItem.cshtml">
+      <publishTime>10/26/2012 11:18:34</publishTime>
+    </File>
+    <File Include="Views/InformationBroker/UserList.cshtml">
+      <publishTime>10/26/2012 11:24:38</publishTime>
+    </File>
+    <File Include="Views/Labor/BankCardBatch.cshtml">
+      <publishTime>10/22/2012 17:07:18</publishTime>
     </File>
     <File Include="Views/Labor/BatchEntering.cshtml">
       <publishTime>10/09/2012 17:09:44</publishTime>
     </File>
     <File Include="Views/Labor/ContractItem.cshtml">
-      <publishTime>10/05/2012 14:47:49</publishTime>
+      <publishTime>10/25/2012 09:53:01</publishTime>
     </File>
     <File Include="Views/Labor/ContractList.cshtml">
       <publishTime>10/09/2012 14:18:30</publishTime>
     </File>
     <File Include="Views/Labor/Index.cshtml">
-      <publishTime>10/15/2012 17:40:31</publishTime>
+      <publishTime>10/22/2012 11:30:52</publishTime>
     </File>
     <File Include="Views/Labor/Item.cshtml">
-      <publishTime>10/09/2012 15:34:53</publishTime>
+      <publishTime>10/26/2012 13:19:26</publishTime>
     </File>
     <File Include="Views/Labor/SalaryBatch.cshtml">
-      <publishTime>10/10/2012 10:52:42</publishTime>
+      <publishTime>10/26/2012 17:05:24</publishTime>
+    </File>
+    <File Include="Views/Labor/SalaryDetails.cshtml">
+      <publishTime>10/24/2012 10:27:08</publishTime>
     </File>
     <File Include="Views/Labor/SalaryDetailsList.cshtml">
-      <publishTime>10/10/2012 11:48:48</publishTime>
+      <publishTime>10/26/2012 17:05:24</publishTime>
+    </File>
+    <File Include="Views/Labor/SalaryItem.cshtml">
+      <publishTime>10/26/2012 17:05:24</publishTime>
     </File>
     <File Include="Views/Labor/SalaryList.cshtml">
-      <publishTime>10/10/2012 11:37:51</publishTime>
+      <publishTime>10/26/2012 17:05:24</publishTime>
+    </File>
+    <File Include="Views/Labor/SalaryListPreSelector.cshtml">
+      <publishTime>10/26/2012 17:05:24</publishTime>
+    </File>
+    <File Include="Views/Labor/SalaryToBank.cshtml">
+      <publishTime>10/24/2012 16:25:12</publishTime>
     </File>
     <File Include="Views/Permission/Data.cshtml">
       <publishTime>10/08/2012 22:12:13</publishTime>
@@ -818,7 +845,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/06/2012 12:45:20</publishTime>
     </File>
     <File Include="Views/Remind/Index.cshtml">
-      <publishTime>09/27/2012 16:59:59</publishTime>
+      <publishTime>10/18/2012 08:51:59</publishTime>
     </File>
     <File Include="Views/Role/Index.cshtml">
       <publishTime>10/04/2012 14:59:23</publishTime>
@@ -833,10 +860,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>10/10/2012 10:46:42</publishTime>
+      <publishTime>10/24/2012 16:23:20</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutAbstract.cshtml">
-      <publishTime>10/12/2012 16:22:34</publishTime>
+      <publishTime>10/25/2012 09:56:33</publishTime>
     </File>
     <File Include="Views/Shared/_LogOnPartial.cshtml">
       <publishTime>08/06/2012 16:58:53</publishTime>
@@ -845,7 +872,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/04/2012 14:39:50</publishTime>
     </File>
     <File Include="Views/System/BasicSettingList.cshtml">
-      <publishTime>10/04/2012 15:21:58</publishTime>
+      <publishTime>10/19/2012 16:52:45</publishTime>
     </File>
     <File Include="Views/System/CacheInfo.cshtml">
       <publishTime>08/29/2012 10:39:00</publishTime>
@@ -854,13 +881,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/10/2012 11:14:21</publishTime>
     </File>
     <File Include="Views/System/OperationResult.cshtml">
-      <publishTime>10/08/2012 11:20:07</publishTime>
+      <publishTime>10/18/2012 17:41:20</publishTime>
     </File>
     <File Include="Views/System/SoftVersion.cshtml">
       <publishTime>08/14/2012 11:10:01</publishTime>
     </File>
+    <File Include="Views/Test/EnterpriseAutoCompleteTest.cshtml">
+      <publishTime>10/23/2012 14:04:29</publishTime>
+    </File>
     <File Include="Views/Test/Index.cshtml">
-      <publishTime>10/10/2012 09:01:36</publishTime>
+      <publishTime>10/18/2012 11:33:12</publishTime>
     </File>
     <File Include="Views/Test/SystemTaskTest.cshtml">
       <publishTime>09/27/2012 08:48:21</publishTime>
@@ -872,7 +902,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/16/2012 08:54:36</publishTime>
+      <publishTime>10/26/2012 17:21:47</publishTime>
     </File>
   </ItemGroup>
 </Project>
