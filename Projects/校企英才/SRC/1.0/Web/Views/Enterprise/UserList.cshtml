@@ -8,12 +8,17 @@
 @using HiLand.Framework4.Permission.Controls;
 @using HiLand.Utility.Data;
 @using XQYC.Business.Entity;
+@using HiLand.General.BLL;
 @model List<BusinessUser>
 @{
     ViewBag.Title = "Index";
 
     string enterpriseKey = this.ViewBag.EnterpriseKey;
     string enterpriseName = this.ViewBag.EnterpriseName;
+    if (string.IsNullOrWhiteSpace(enterpriseName))
+    {
+        enterpriseName = EnterpriseBLL.Instance.Get(enterpriseKey).CompanyName;
+    }
 }
 
 <h2>企业登录用户列表(@enterpriseName)</h2>
