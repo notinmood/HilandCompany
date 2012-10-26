@@ -561,6 +561,8 @@
     <Content Include="Views\Labor\SalaryItem.cshtml" />
     <Content Include="Views\Labor\SalaryDetails.cshtml" />
     <Content Include="Views\Labor\SalaryToBank.cshtml" />
+    <Content Include="Views\InformationBroker\UserItem.cshtml" />
+    <Content Include="Views\InformationBroker\UserList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

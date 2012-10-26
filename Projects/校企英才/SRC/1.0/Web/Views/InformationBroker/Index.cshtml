@@ -65,6 +65,7 @@
             <tr>
                 <td>
                     @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("编辑").ACA("Item", "InformationBroker").Render(new { rel = "#EditDIV", itemKey = @entity.InformationBrokerGuid }) | 
+                    @Html.HiA().CssClassName("modalInput user " + @entityGuid).Value("用户").ACA("UserList", "InformationBroker").RouteValue(new { itemKey = @entity.InformationBrokerGuid }).Render() 
                 </td>
                 <td>@entity.InformationBrokerName
                 </td>

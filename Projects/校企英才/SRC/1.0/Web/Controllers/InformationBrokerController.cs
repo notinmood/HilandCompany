@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using HiLand.Framework.BusinessCore;
 using HiLand.Framework.BusinessCore.BLL;
 using HiLand.Framework4.Permission;
 using HiLand.Framework4.Permission.Attributes;
+using HiLand.Utility.Data;
+using HiLand.Utility.Entity;
 using HiLand.Utility.Enums;
 using HiLand.Utility.Paging;
 using HiLand.Utility.Web;
@@ -143,6 +147,87 @@ namespace XQYC.Web.Controllers
             targetEntity.RecommendUserGuid = RequestHelper.GetValue<Guid>("RecommendUser_Value");
             targetEntity.ServiceUserName = RequestHelper.GetValue("ServiceUser");
             targetEntity.ServiceUserGuid = RequestHelper.GetValue<Guid>("ServiceUser_Value");
+        }
+
+        public ActionResult UserList(string itemKey, string itemName = StringHelper.Empty)
+        {
+            List<BusinessUser> userList = null;
+
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                Guid itemGuid = GuidHelper.TryConvert(itemKey);
+                string whereClause = string.Format("EnterpriseKey='{0}'", itemGuid.ToString());
+                userList = BusinessUserBLL.GetList(whereClause);
+            }
+
+            this.ViewBag.EnterpriseKey = itemKey;
+            this.ViewBag.EnterpriseName = itemName;
+            return View(userList);
+        }
+
+        public ActionResult UserItem(string enterpriseKey, string itemKey = StringHelper.Empty)
+        {
+            BusinessUser user = BusinessUser.Empty;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                user = BusinessUserBLL.Get(new Guid(itemKey));
+            }
+
+            this.ViewBag.EnterpriseKey = enterpriseKey;
+
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult UserItem(string enterpriseKey, string itemKey, BusinessUser originalEntity)
+        {
+            bool isSuccessful = false;
+            string displayMessage = string.Empty;
+            BusinessUser targetUser = null;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == true)
+            {
+                targetUser = new BusinessUser();
+
+                targetUser.EnterpriseKey = enterpriseKey;
+                targetUser.UserType = UserTypes.EnterpriseUser;
+                targetUser.Password = SystemConst.InitialUserPassword;
+
+                SetTargetUserEntityValue(originalEntity, ref  targetUser);
+
+                CreateUserRoleStatuses createStatus = CreateUserRoleStatuses.Successful;
+                BusinessUserBLL.CreateUser(targetUser, out createStatus);
+                if (createStatus == CreateUserRoleStatuses.Successful)
+                {
+                    isSuccessful = true;
+                }
+            }
+            else
+            {
+                targetUser = BusinessUserBLL.Get(new Guid(itemKey));
+
+                SetTargetUserEntityValue(originalEntity, ref  targetUser);
+                isSuccessful = BusinessUserBLL.UpdateUser(targetUser);
+            }
+
+            if (isSuccessful == true)
+            {
+                displayMessage = "数据保存成功";
+            }
+            else
+            {
+                displayMessage = "数据保存失败";
+            }
+
+            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+        }
+
+        private void SetTargetUserEntityValue(BusinessUser originalEntity, ref BusinessUser targetEntity)
+        {
+            targetEntity.UserName = originalEntity.UserName;
+            targetEntity.UserNameCN = originalEntity.UserNameCN;
+            targetEntity.UserSex = originalEntity.UserSex;
+            targetEntity.UserMobileNO = originalEntity.UserMobileNO;
+            targetEntity.UserStatus = originalEntity.UserStatus;
         }
 
         public ActionResult Password(string userGuid, string userName = "")
