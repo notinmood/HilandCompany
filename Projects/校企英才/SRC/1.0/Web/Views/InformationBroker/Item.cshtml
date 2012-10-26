@@ -6,6 +6,8 @@
 @using HiLand.Utility4.MVC.Controls;
 @using XQYC.Business.Entity;
 @using XQYC.Web.Control;
+@using XQYC.Business.Enums;
+
 @model InformationBrokerEntity
 @{
     ViewBag.Title = "信息员信息";
@@ -19,19 +21,19 @@
             padding: 0 0 0 18px;
         }
 
-        #main-content ul li {
-            background: url() center left no-repeat;
-            padding: 0px;
-        }
+            #main-content ul li {
+                background: url() center left no-repeat;
+                padding: 0px;
+            }
 
         #main-content ol {
             padding: 0px;
         }
 
-        #main-content ol li {
-            list-style: none;
-            padding: 0;
-        }
+            #main-content ol li {
+                list-style: none;
+                padding: 0;
+            }
     </style>
     @using (Html.BeginForm())
     { 
@@ -39,31 +41,77 @@
             <tr>
                 <td style="width: 120px;">信息员名称:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.UserNameCN)
+                <td>@Html.TextBoxFor(entity => entity.InformationBrokerName)
+                </td>
+                <td style="width: 120px;">信息员简称:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.InformationBrokerNameShort)
                 </td>
             </tr>
             <tr>
-                <td>信息员账号:
+                <td>所属行业:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.UserName)
+                <td>@HtmlHelperEx.XQYCDDLEnterpriseType(Html, "IndustryKey", Model.IndustryKey)
                 </td>
-            </tr>
-            <tr>
-                <td>信息员Email:
+                <td>企业性质:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.UserEmail)
+                <td>@Html.TextBoxFor(entity => entity.InformationBrokerKind)
                 </td>
             </tr>
             <tr>
-                <td>信息员性别:
+                <td>所在地区:
                 </td>
-                <td>@Html.DropDownListFor(entity => entity.UserSex, EnumEx.BuildSelectItemList<Sexes>())
+                <td>@HtmlHelperEx.XQYCDDLArea(Html, "AreaCode", Model.AreaCode)
+                </td>
+                <td>联系人信息:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.ContactPerson)
                 </td>
             </tr>
             <tr>
-                <td>用户状态:
+                <td>企业地址:
                 </td>
-                <td>@Html.DropDownListFor(entity => entity.UserStatus, EnumEx.BuildSelectItemList<UserStatuses>())
+                <td colspan="3">@Html.TextBoxFor(entity => entity.PrincipleAddress)
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 120px;">电话:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.Telephone)
+                </td>
+                <td>传真:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.Fax)
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 120px;">Email:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.Email)
+                </td>
+                <td>网站:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.InformationBrokerWWW)
+                </td>
+            </tr>
+            <tr>
+                <td>邮政编码:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.PostCode)
+                </td>
+                <td>信息员类型:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.InformationBrokerType, EnumEx.BuildSelectItemList<InformationBrokerTypes>())
+                </td>
+            </tr>
+            <tr>
+                <td>合作意向:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.InformationBrokerLevel, EnumEx.BuildSelectItemList<CommonLevels>("star"))
+                </td>
+                <td>状态:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.CanUsable, EnumEx.BuildSelectItemList<Logics>())
                 </td>
             </tr>
             <tr>
@@ -95,7 +143,7 @@
                 </td>
             </tr>
         </table>
-        <input type="hidden" id="ItemKey" value="@Model.UserGuid" />
+        <input type="hidden" id="ItemKey" value="@Model.InformationBrokerGuid" />
         <input type="submit" id="submitButton" value="保存" class="buttons" /><a class="overlayClose" title="请暂时使用敲击键盘'ESC'键关闭本弹窗"></a>
     }
 </div>
@@ -106,4 +154,3 @@
         });
     });
 </script>*@
-

@@ -95,6 +95,7 @@
     <Compile Include="Entity\InformationBrokerEntity.cs" />
     <Compile Include="Enums\HouseHoldTypes.cs" />
     <Compile Include="Enums\CostKinds.cs" />
+    <Compile Include="Enums\InformationBrokerTypes.cs" />
     <Compile Include="Enums\LaborWorkStatuses.cs" />
     <Compile Include="Enums\SalaryItemKinds.cs" />
     <Compile Include="Enums\SalaryPayStatuses.cs" />

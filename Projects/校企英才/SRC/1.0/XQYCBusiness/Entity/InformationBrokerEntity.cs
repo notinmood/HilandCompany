@@ -1,15 +1,23 @@
 ﻿using System;
+using HiLand.Framework.FoundationLayer;
+using HiLand.General;
+using HiLand.Utility.Data;
 using HiLand.Utility.Enums;
+using XQYC.Business.Enums;
 
 namespace XQYC.Business.Entity
 {
     /// <summary>
     /// 信息员实体
     /// </summary>
-    public class InformationBrokerEntity : BusinessUserEx<InformationBrokerEntity>
+    public class InformationBrokerEntity : BaseModel<InformationBrokerEntity>
     {
-        #region 基本信息
+        public override string[] BusinessKeyNames
+        {
+            get { return new string[] { "InformationBrokerGuid" }; }
+        }
 
+        #region 基本信息
         private int informationBrokerID;
         public int InformationBrokerID
         {
@@ -17,15 +25,147 @@ namespace XQYC.Business.Entity
             set { informationBrokerID = value; }
         }
 
-
-        private UserStatuses informationBrokerStatus;
-        /// <summary>
-        /// （跟UserStatus记录相同的值，此处仅仅为了方便查询）
-        /// </summary>
-        public UserStatuses InformationBrokerStatus
+        private Guid informationBrokerGuid = Guid.Empty;
+        public Guid InformationBrokerGuid
         {
-            get { return informationBrokerStatus; }
-            set { informationBrokerStatus = value; }
+            get { return informationBrokerGuid; }
+            set { informationBrokerGuid = value; }
+        }
+
+        private string informationBrokerName = String.Empty;
+        public string InformationBrokerName
+        {
+            get { return informationBrokerName; }
+            set { informationBrokerName = value; }
+        }
+
+        private string informationBrokerNameShort = String.Empty;
+        public string InformationBrokerNameShort
+        {
+            get { return informationBrokerNameShort; }
+            set { informationBrokerNameShort = value; }
+        }
+
+        private Logics canUsable = Logics.True;
+        public Logics CanUsable
+        {
+            get { return canUsable; }
+            set { canUsable = value; }
+        }
+
+        private string areaCode = String.Empty;
+        public string AreaCode
+        {
+            get { return areaCode; }
+            set { areaCode = value; }
+        }
+
+        private string industryKey = String.Empty;
+        public string IndustryKey
+        {
+            get { return industryKey; }
+            set { industryKey = value; }
+        }
+
+        private IndustryTypes industryType;
+        public IndustryTypes IndustryType
+        {
+            get { return industryType; }
+            set { industryType = value; }
+        }
+
+        private InformationBrokerTypes informationBrokerType;
+        public InformationBrokerTypes InformationBrokerType
+        {
+            get { return informationBrokerType; }
+            set { informationBrokerType = value; }
+        }
+
+        private string informationBrokerKind = String.Empty;
+        /// <summary>
+        /// 信息员的性质（比如国办学校，私立学校等）
+        /// </summary>
+        public string InformationBrokerKind
+        {
+            get { return informationBrokerKind; }
+            set { informationBrokerKind = value; }
+        }
+
+        private string principleAddress = String.Empty;
+        public string PrincipleAddress
+        {
+            get { return principleAddress; }
+            set { principleAddress = value; }
+        }
+
+        private string contactPerson = String.Empty;
+        public string ContactPerson
+        {
+            get { return contactPerson; }
+            set { contactPerson = value; }
+        }
+
+        private string postCode = String.Empty;
+        public string PostCode
+        {
+            get { return postCode; }
+            set { postCode = value; }
+        }
+
+        private string telephone = String.Empty;
+        public string Telephone
+        {
+            get { return telephone; }
+            set { telephone = value; }
+        }
+
+        private string fax = String.Empty;
+        public string Fax
+        {
+            get { return fax; }
+            set { fax = value; }
+        }
+
+        private string email = String.Empty;
+        public string Email
+        {
+            get { return email; }
+            set { email = value; }
+        }
+
+        private string informationBrokerWWW = String.Empty;
+        public string InformationBrokerWWW
+        {
+            get { return informationBrokerWWW; }
+            set { informationBrokerWWW = value; }
+        }
+
+        private int informationBrokerLevel;
+        public int InformationBrokerLevel
+        {
+            get { return informationBrokerLevel; }
+            set { informationBrokerLevel = value; }
+        }
+
+        private string informationBrokerRank = String.Empty;
+        public string InformationBrokerRank
+        {
+            get { return informationBrokerRank; }
+            set { informationBrokerRank = value; }
+        }
+
+        private string informationBrokerDescription = String.Empty;
+        public string InformationBrokerDescription
+        {
+            get { return informationBrokerDescription; }
+            set { informationBrokerDescription = value; }
+        }
+
+        private string informationBrokerMemo = String.Empty;
+        public string InformationBrokerMemo
+        {
+            get { return informationBrokerMemo; }
+            set { informationBrokerMemo = value; }
         }
 
         private Guid providerUserGuid = Guid.Empty;
@@ -96,6 +236,19 @@ namespace XQYC.Business.Entity
             set { financeUserName = value; }
         }
 
+        private string createUserKey = String.Empty;
+        public string CreateUserKey
+        {
+            get { return createUserKey; }
+            set { createUserKey = value; }
+        }
+
+        private DateTime createDate = DateTimeHelper.Min;
+        public DateTime CreateDate
+        {
+            get { return createDate; }
+            set { createDate = value; }
+        }
         #endregion
     }
 }

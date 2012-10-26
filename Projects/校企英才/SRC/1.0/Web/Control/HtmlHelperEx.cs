@@ -247,9 +247,10 @@ namespace XQYC.Web.Control
             foreach (InformationBrokerEntity currentItem in brokerList)
             {
                 SelectListItem listItem = new SelectListItem();
-                listItem.Text = currentItem.UserNameCN;
-                listItem.Value = currentItem.UserGuid.ToString();
-                if (currentItem.UserGuid.ToString() == value)
+
+                listItem.Text = currentItem.InformationBrokerName;
+                listItem.Value = currentItem.InformationBrokerGuid.ToString();
+                if (currentItem.InformationBrokerGuid.ToString() == value)
                 {
                     listItem.Selected = true;
                 }
