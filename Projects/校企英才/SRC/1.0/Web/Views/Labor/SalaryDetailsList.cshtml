@@ -9,6 +9,7 @@
 @using HiLand.Utility.Data;
 @using XQYC.Business.Entity;
 @using HiLand.Utility.Web;
+@using XQYC.Business.BLL;
 
 @model List<SalaryDetailsEntity>
 @{
@@ -16,14 +17,15 @@
     string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
     string returnUrl = RequestHelper.GetValue("returnUrl");
     string salarySummaryKey = RequestHelper.GetValue("itemKey");
+    
     if(string.IsNullOrWhiteSpace(returnUrl))
     {
-        string enterpriseKey= RequestHelper.GetValue("enterpriseKey");
-        if(string.IsNullOrWhiteSpace( enterpriseKey)&& string.IsNullOrWhiteSpace(salarySummaryKey)==false)
-        {
-            enterpriseKey = XQYC.Business.BLL.SalarySummaryBLL.Instance.Get(salarySummaryKey).EnterpriseKey;
-        }
-        returnUrl = Url.Action("SalaryList", new { enterpriseGuid = enterpriseKey });
+        SalarySummaryEntity salarySummaryEntity= SalarySummaryBLL.Instance.Get(salarySummaryKey);
+       
+        string enterpriseKey=    salarySummaryEntity.EnterpriseKey;
+        string salaryMonth = salarySummaryEntity.SalaryDate.ToString("yyyy/MM");
+
+        returnUrl = Url.Action("SalaryList", new { enterpriseKey = enterpriseKey, salaryMonth = salaryMonth });
     }
 }
 
