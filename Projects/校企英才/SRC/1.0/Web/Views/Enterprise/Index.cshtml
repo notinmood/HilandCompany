@@ -17,7 +17,7 @@
 
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业名称", ConditionFieldName = "CompanyName", ConditionType = typeof(string) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合作意向", ConditionFieldName = "EnterpriseLevel", ConditionType = typeof(CommonLevels) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合作意向", ConditionFieldName = "EnterpriseLevel", ConditionType = typeof(CommonLevels), AddonData = "enumDisplayCategory:star" });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业性质", ConditionFieldName = "BusinessType", ConditionType = typeof(EnterpriseTypes) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合作意向", ConditionFieldName = "UserNameCN", ConditionType = typeof(string) });
 
