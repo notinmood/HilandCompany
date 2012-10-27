@@ -428,10 +428,17 @@ namespace XQYC.Web.Control
         public static IHtmlString XQYCDDLArea(System.Web.Mvc.HtmlHelper html, string name, string selectedValue = StringHelper.Empty)
         {
             List<SelectListItem> itemList = new List<SelectListItem>();
-            List<AreaEntity> industryTypeList = AreaBLL.Instance.GetListByParentCode("3702");
-            for (int i = 0; i < industryTypeList.Count; i++)
+            List<AreaEntity> entityList = AreaBLL.Instance.GetListByParentCode("3702");
+            
+            //添加一个“其他”地区
+            AreaEntity areaEntity = new AreaEntity();
+            areaEntity.AreaCode = "QT";
+            areaEntity.AreaName = "其他";
+            entityList.Add(areaEntity);
+
+            for (int i = 0; i < entityList.Count; i++)
             {
-                AreaEntity industryTypeItem = industryTypeList[i];
+                AreaEntity industryTypeItem = entityList[i];
                 SelectListItem listItem = new SelectListItem();
                 listItem.Text = industryTypeItem.AreaName;
                 listItem.Value = industryTypeItem.AreaCode;
