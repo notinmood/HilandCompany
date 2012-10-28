@@ -69,5 +69,10 @@ namespace XQYC.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult InformationBrokerAutoCompleteTest()
+        {
+            return View();
+        }
     }
 }

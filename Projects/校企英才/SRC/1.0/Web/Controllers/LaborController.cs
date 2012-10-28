@@ -211,8 +211,12 @@ namespace XQYC.Web.Controllers
             string financeUserName = RequestHelper.GetValue("FinanceUser");
             Guid serviceUserGuid = ControlHelper.GetRealValue<Guid>("ServiceUser");
             string serviceUserName = RequestHelper.GetValue("ServiceUser");
-            Guid informationBrokerUserGuid = RequestHelper.GetValue<Guid>("InformationBrokerUserGuid");
-            string informationBrokerUserName = RequestHelper.GetValue("InformationBrokerUserGuid_Text");
+
+
+            Guid informationBrokerUserGuid = ControlHelper.GetRealValue<Guid>("InformationBroker");
+            string informationBrokerUserName = RequestHelper.GetValue("InformationBroker");
+            //Guid informationBrokerUserGuid = RequestHelper.GetValue<Guid>("InformationBrokerUserGuid");
+            //string informationBrokerUserName = RequestHelper.GetValue("InformationBrokerUserGuid_Text");
 
             int headerRowNumber = RequestHelper.GetValue<int>("headerRowNumber", 1);
 

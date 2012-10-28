@@ -1,0 +1,13 @@
+﻿@using XQYC.Web.Control;
+
+@{
+    ViewBag.Title = "InformationBrokerAutoCompleteTest";
+}
+
+<h2>InformationBrokerAutoCompleteTest</h2>
+<link rel="stylesheet" href="@Url.Content("~/Content/ui-lightness/jquery-ui-1.8.17.custom.css")" type="text/css" media="screen" />
+
+@HtmlHelperEx.XQYCEmployeeChooser(Html, "ServiceUser", string.Empty, string.Empty)
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.17.custom.min.js")"></script>
+@HtmlHelperEx.XQYCAutoCompleteInformationBroker(Html,"myInformationBroker")

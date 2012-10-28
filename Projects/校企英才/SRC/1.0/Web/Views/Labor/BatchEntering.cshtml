@@ -31,7 +31,7 @@
             padding: 0;
         }
 </style>
-@using (Html.BeginForm(null,null, FormMethod.Post,new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 { 
     <table>
         <tr>
@@ -62,7 +62,8 @@
             <td>信息员:
             </td>
             <td class="fixClass">
-                @HtmlHelperEx.XQYCDDLInformationBroker(Html, "InformationBrokerUserGuid", string.Empty)
+                <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.17.custom.min.js")"></script>
+                @HtmlHelperEx.XQYCAutoCompleteInformationBroker(Html, "InformationBroker")
             </td>
             <td></td>
             <td class="fixClass"></td>

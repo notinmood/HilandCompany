@@ -567,6 +567,7 @@
     <Content Include="Views\InformationBroker\UserItem.cshtml" />
     <Content Include="Views\InformationBroker\UserList.cshtml" />
     <Content Include="Views\System\TempletList.cshtml" />
+    <Content Include="Views\Test\InformationBrokerAutoCompleteTest.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
