@@ -86,7 +86,7 @@ namespace XQYC.Web.Controllers
             Dictionary<string,string> dic= new Dictionary<string,string>();
             dic["UserNameCN"]= "人员名称";
             dic["UserCardID"]= "身份证号码";
-            Stream excelStream = ExcelEx.GetModelListExcelStream(laborList, dic);
+            Stream excelStream = ExcelHelper.WriteExcel(laborList, dic);
             return File(excelStream, ContentTypes.GetContentType("xls"), "劳务人员信息.xls");
         }
 
