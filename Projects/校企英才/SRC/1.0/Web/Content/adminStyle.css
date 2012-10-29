@@ -804,3 +804,8 @@ div.wysiwyg iframe { border: 0; margin: 5px 0 0 0; clear: left; width: 97.5% !im
     width:35px;
 }
 
+.dataContainer {
+    overflow-x:auto; 
+    width:98%;
+}
+

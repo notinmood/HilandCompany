@@ -32,7 +32,8 @@
         }
     </div>
     <div class="OperateArea" id="OperateAreaContainer">
-        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Labor").Render(new { rel = "#EditDIV" })
+        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Labor").Render(new { rel = "#EditDIV" }) | 
+        @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)
     </div>
     <table width="98%" class="grid">
         <tr>

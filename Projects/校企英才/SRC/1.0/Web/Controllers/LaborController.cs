@@ -70,7 +70,24 @@ namespace XQYC.Web.Controllers
             PagedEntityCollection<LaborEntity> entityList = LaborBLL.Instance.GetPagedCollection(startIndex, pageSize, whereClause, orderClause);
             PagedList<LaborEntity> pagedExList = new PagedList<LaborEntity>(entityList.Records, entityList.PageIndex, entityList.PageSize, entityList.TotalCount);
 
-            return View(pagedExList);
+            bool isExportExcel = RequestHelper.GetValue("exportExcel", false);
+            if (isExportExcel == true)
+            {
+                return GetLaborExcelFile(entityList.Records);
+            }
+            else
+            {
+                return View(pagedExList);
+            }
+        }
+
+        private ActionResult GetLaborExcelFile(IList<LaborEntity> laborList)
+        {
+            Dictionary<string,string> dic= new Dictionary<string,string>();
+            dic["UserNameCN"]= "人员名称";
+            dic["UserCardID"]= "身份证号码";
+            Stream excelStream = ExcelEx.GetModelListExcelStream(laborList, dic);
+            return File(excelStream, ContentTypes.GetContentType("xls"), "劳务人员信息.xls");
         }
 
         public ActionResult Item(string itemKey)

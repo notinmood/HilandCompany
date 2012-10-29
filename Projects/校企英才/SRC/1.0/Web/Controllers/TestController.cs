@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -7,6 +9,10 @@ using HiLand.Framework.BusinessCore;
 using HiLand.Framework.BusinessCore.BLL;
 using HiLand.Utility.Data;
 using HiLand.Utility.Entity.Status;
+using HiLand.Utility.Event;
+using HiLand.Utility.IO;
+using HiLand.Utility.Office;
+using HiLand.Utility.Web;
 using XQYC.Web.Models;
 
 namespace XQYC.Web.Controllers
@@ -73,6 +79,54 @@ namespace XQYC.Web.Controllers
         public ActionResult InformationBrokerAutoCompleteTest()
         {
             return View();
+        }
+
+        public ActionResult AsynTest()
+        {
+            List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
+            SystemStatusInfo item4 = new SystemStatusInfo();
+            item4.SystemStatus = HiLand.Utility.Enums.SystemStatuses.Tip;
+            item4.Message = "数据准备中，其完成后会自动下载，请等待。。。";
+            infoList.Add(item4);
+            this.TempData.Add("OperationResultData", infoList);
+
+            Funcs<ActionResult> commonHandle = new Funcs<ActionResult>(Foo);
+            this.TempData["AsynMethod"]= commonHandle;
+
+            
+            commonHandle.BeginInvoke(null,null);
+            return RedirectToAction("OperationResults", "System", new { });
+        }
+
+        private ActionResult Foo()
+        {
+            System.Threading.Thread.Sleep(3000);
+
+            DataTable salaryTable = new DataTable();
+
+            //1.创建表头
+            DataColumn BankCardNumber = new DataColumn("BankCardNumber", typeof(String));
+            salaryTable.Columns.Add(BankCardNumber);
+            DataColumn columnUserNameCN = new DataColumn("UserNameCN", typeof(String));
+            salaryTable.Columns.Add(columnUserNameCN);
+            DataColumn SalaryValue = new DataColumn("SalaryValue", typeof(decimal));
+            salaryTable.Columns.Add(SalaryValue);
+            DataColumn SalaryMemo = new DataColumn("SalaryMemo", typeof(String));
+            salaryTable.Columns.Add(SalaryMemo);
+
+            //2. 创建数据
+            DataRow row = salaryTable.NewRow();
+            row[BankCardNumber] = "bbbbbbbbbbbbbbbb";
+            row[columnUserNameCN] = "nnnnnnnnnnnnnnnn";
+            row[SalaryValue] = 12.5M;
+            row[SalaryMemo] = "ccccccccccccccc";
+            salaryTable.Rows.Add(row);
+
+            Stream salaryStream = ExcelHelper.WriteExcel(salaryTable, false);
+            string fileDownloadName = string.Format("{0}-{1}", "测试文件", DateTime.Now.ToString("yyyyMM"));
+            
+            return File(salaryStream, ContentTypes.GetContentType("xls"), fileDownloadName);
+            //DownloadHelper.Down(salaryStream,"xls", fileDownloadName);
         }
     }
 }

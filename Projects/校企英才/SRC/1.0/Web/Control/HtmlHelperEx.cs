@@ -10,6 +10,7 @@ using HiLand.General.Entity;
 using HiLand.Utility.Data;
 using HiLand.Utility.Entity;
 using HiLand.Utility.Enums;
+using HiLand.Utility.Web;
 using HiLand.Utility4.MVC;
 using HiLand.Utility4.MVC.Controls;
 using XQYC.Business.BLL;
@@ -39,6 +40,17 @@ namespace XQYC.Web.Control
                 value = string.Empty;
             }
             return html.HiDateTime(name).Value(value).StyleSheetFiles(cssFiles).JavaScriptFiles(javaScriptFiles).DateInputOptions(dateTimeOptions).Render();
+        }
+
+        /// <summary>
+        /// 导出Excel的按钮
+        /// </summary>
+        /// <returns></returns>
+        public static IHtmlString ExportExcel(System.Web.Mvc.HtmlHelper html)
+        {
+            string currentUrlWithExportExcelFunction = RequestHelper.AddOrModifyQueryString(RequestHelper.CurrentRequest, "exportExcel", "true");
+            string result = string.Format("<a href=\"{0}\">导出</a>", currentUrlWithExportExcelFunction);
+            return new MvcHtmlString(result);
         }
         #endregion
 
@@ -429,7 +441,7 @@ namespace XQYC.Web.Control
         {
             List<SelectListItem> itemList = new List<SelectListItem>();
             List<AreaEntity> entityList = AreaBLL.Instance.GetListByParentCode("3702");
-            
+
             //添加一个“其他”地区
             AreaEntity areaEntity = new AreaEntity();
             areaEntity.AreaCode = "QT";
