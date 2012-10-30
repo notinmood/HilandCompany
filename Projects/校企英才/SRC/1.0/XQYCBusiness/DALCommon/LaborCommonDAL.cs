@@ -72,6 +72,10 @@ namespace XQYC.Business.DALCommon
 			        [ServiceUserName],
 			        [FinanceUserGuid],
 			        [FinanceUserName],
+			        [BusinessUserGuid],
+			        [BusinessUserName],
+			        [SettleUserGuid],
+			        [SettleUserName],
                     [InformationBrokerUserGuid],
 			        [InformationBrokerUserName],
 			        [InsureType],
@@ -118,6 +122,10 @@ namespace XQYC.Business.DALCommon
 			        {0}ServiceUserName,
 			        {0}FinanceUserGuid,
 			        {0}FinanceUserName,
+			        {0}BusinessUserGuid,
+			        {0}BusinessUserName,
+			        {0}SettleUserGuid,
+			        {0}SettleUserName,
                     {0}InformationBrokerUserGuid,
 			        {0}InformationBrokerUserName,
 			        {0}InsureType,
@@ -173,6 +181,10 @@ namespace XQYC.Business.DALCommon
 					[ServiceUserName] = {0}ServiceUserName,
 					[FinanceUserGuid] = {0}FinanceUserGuid,
 					[FinanceUserName] = {0}FinanceUserName,
+                    [BusinessUserGuid] = {0}BusinessUserGuid,
+				    [BusinessUserName] = {0}BusinessUserName,
+                    [SettleUserGuid] = {0}SettleUserGuid,
+				    [SettleUserName] = {0}SettleUserName,                   
                     [InformationBrokerUserGuid] = {0}InformationBrokerUserGuid,
                     [InformationBrokerUserName] = {0}InformationBrokerUserName,
 					[InsureType] = {0}InsureType,
@@ -233,6 +245,10 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("ServiceUserName",entity.ServiceUserName?? String.Empty),
 			    GenerateParameter("FinanceUserGuid",entity.FinanceUserGuid),
 			    GenerateParameter("FinanceUserName",entity.FinanceUserName?? String.Empty),
+                GenerateParameter("BusinessUserGuid",entity.BusinessUserGuid),
+			    GenerateParameter("BusinessUserName",entity.BusinessUserName?? String.Empty),
+                GenerateParameter("SettleUserGuid",entity.SettleUserGuid),
+			    GenerateParameter("SettleUserName",entity.SettleUserName?? String.Empty),
                 GenerateParameter("InformationBrokerUserGuid",entity.InformationBrokerUserGuid),
 			    GenerateParameter("InformationBrokerUserName",entity.InformationBrokerUserName?? String.Empty),
 			    GenerateParameter("InsureType",entity.InsureType),
@@ -280,7 +296,7 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.LaborCode = reader.GetString(reader.GetOrdinal("LaborCode"));
                 }
-                
+
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "NativePlace"))
                 {
                     entity.NativePlace = reader.GetString(reader.GetOrdinal("NativePlace"));
@@ -369,6 +385,22 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.FinanceUserName = reader.GetString(reader.GetOrdinal("FinanceUserName"));
                 }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "BusinessUserGuid"))
+                {
+                    entity.BusinessUserGuid = reader.GetGuid(reader.GetOrdinal("BusinessUserGuid"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "BusinessUserName"))
+                {
+                    entity.BusinessUserName = reader.GetString(reader.GetOrdinal("BusinessUserName"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SettleUserGuid"))
+                {
+                    entity.SettleUserGuid = reader.GetGuid(reader.GetOrdinal("SettleUserGuid"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SettleUserName"))
+                {
+                    entity.SettleUserName = reader.GetString(reader.GetOrdinal("SettleUserName"));
+                }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "InformationBrokerUserGuid"))
                 {
                     entity.InformationBrokerUserGuid = reader.GetGuid(reader.GetOrdinal("InformationBrokerUserGuid"));
@@ -406,7 +438,7 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.CurrentEnterpriseName = reader.GetString(reader.GetOrdinal("CurrentEnterpriseName"));
                 }
-                
+
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CurrentContractKey"))
                 {
                     entity.CurrentContractKey = reader.GetString(reader.GetOrdinal("CurrentContractKey"));

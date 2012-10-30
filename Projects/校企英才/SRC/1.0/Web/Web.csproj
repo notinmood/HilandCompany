@@ -137,7 +137,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\ExcelEx.cs" />
     <Compile Include="Models\JobContainer.cs" />
     <Compile Include="Models\Jobs\BirthdayRemindJob.cs" />
     <Compile Include="Models\Jobs\BirthdayRemindJobOfEmployee.cs" />

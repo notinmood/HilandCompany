@@ -224,6 +224,18 @@
                     @HtmlHelperEx.XQYCEmployeeChooser(Html, "ServiceUser", Model.ServiceUserName, Model.ServiceUserGuid.ToString())
                 </td>
             </tr>
+            <tr>
+                <td>业务人员:
+                </td>
+                <td class="fixClass">
+                    @HtmlHelperEx.XQYCEmployeeChooser(Html, "BusinessUser", Model.BusinessUserName, Model.BusinessUserGuid.ToString())
+                </td>
+                <td>安置人员:
+                </td>
+                <td class="fixClass">
+                    @HtmlHelperEx.XQYCEmployeeChooser(Html, "SettleUser", Model.SettleUserName, Model.SettleUserGuid.ToString())
+                </td>
+            </tr>
         </table>
         <input type="hidden" id="ItemKey" value="@Model.UserGuid" />
         <input type="submit" id="submitButton" value="保存" class="buttons" /><a class="overlayClose" title="请暂时使用敲击键盘'ESC'键关闭本弹窗"></a>

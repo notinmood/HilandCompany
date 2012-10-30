@@ -72,6 +72,10 @@ namespace XQYC.Business.DALCommon
 			    [ServiceUserName],
 			    [FinanceUserGuid],
 			    [FinanceUserName],
+			    [BusinessUserGuid],
+			    [BusinessUserName],
+			    [SettleUserGuid],
+			    [SettleUserName],
 			    [PropertyNames],
 			    [PropertyValues]
             ) 
@@ -93,6 +97,10 @@ namespace XQYC.Business.DALCommon
 			    {0}ServiceUserName,
 			    {0}FinanceUserGuid,
 			    {0}FinanceUserName,
+			    {0}BusinessUserGuid,
+			    {0}BusinessUserName,
+			    {0}SettleUserGuid,
+			    {0}SettleUserName,
 			    {0}PropertyNames,
 			    {0}PropertyValues
             )", ParameterNamePrefix);
@@ -123,6 +131,10 @@ namespace XQYC.Business.DALCommon
 					[ServiceUserName] = {0}ServiceUserName,
 					[FinanceUserGuid] = {0}FinanceUserGuid,
 					[FinanceUserName] = {0}FinanceUserName,
+                    [BusinessUserGuid] = {0}BusinessUserGuid,
+				    [BusinessUserName] = {0}BusinessUserName,
+                    [SettleUserGuid] = {0}SettleUserGuid,
+				    [SettleUserName] = {0}SettleUserName,
 					[PropertyNames] = {0}PropertyNames,
 					[PropertyValues] = {0}PropertyValues
              Where [EnterpriseServiceID] = {0}EnterpriseServiceID", ParameterNamePrefix);
@@ -157,7 +169,11 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("RecommendUserName",entity.RecommendUserName?? String.Empty),
 			    GenerateParameter("ServiceUserGuid",entity.ServiceUserGuid),
 			    GenerateParameter("ServiceUserName",entity.ServiceUserName?? String.Empty),
-			    GenerateParameter("FinanceUserGuid",entity.FinanceUserGuid),
+                GenerateParameter("BusinessUserGuid",entity.BusinessUserGuid),
+			    GenerateParameter("BusinessUserName",entity.BusinessUserName?? String.Empty),
+			    GenerateParameter("SettleUserGuid",entity.SettleUserGuid),
+			    GenerateParameter("SettleUserName",entity.SettleUserName?? String.Empty),
+                GenerateParameter("FinanceUserGuid",entity.FinanceUserGuid),
 			    GenerateParameter("FinanceUserName",entity.FinanceUserName?? String.Empty)
             };
 
@@ -244,6 +260,22 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "FinanceUserName"))
                 {
                     entity.FinanceUserName = reader.GetString(reader.GetOrdinal("FinanceUserName"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "BusinessUserGuid"))
+                {
+                    entity.BusinessUserGuid = reader.GetGuid(reader.GetOrdinal("BusinessUserGuid"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "BusinessUserName"))
+                {
+                    entity.BusinessUserName = reader.GetString(reader.GetOrdinal("BusinessUserName"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SettleUserGuid"))
+                {
+                    entity.SettleUserGuid = reader.GetGuid(reader.GetOrdinal("SettleUserGuid"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SettleUserName"))
+                {
+                    entity.SettleUserName = reader.GetString(reader.GetOrdinal("SettleUserName"));
                 }
             }
         }

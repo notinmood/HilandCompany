@@ -120,8 +120,6 @@
                 <td class="fixClass">
                     @HtmlHelperEx.XQYCEmployeeChooser(Html, "ProviderUser", Model.ProviderUserName, Model.ProviderUserGuid.ToString())
                 </td>
-            </tr>
-            <tr>
                 <td>推荐人员:
                 </td>
                 <td class="fixClass">
@@ -134,12 +132,22 @@
                 <td class="fixClass">
                     @HtmlHelperEx.XQYCEmployeeChooser(Html, "FinanceUser", Model.FinanceUserName, Model.FinanceUserGuid.ToString())
                 </td>
-            </tr>
-            <tr>
                 <td>客服人员:
                 </td>
                 <td class="fixClass">
                     @HtmlHelperEx.XQYCEmployeeChooser(Html, "ServiceUser", Model.ServiceUserName, Model.ServiceUserGuid.ToString())
+                </td>
+            </tr>
+            <tr>
+                <td>业务人员:
+                </td>
+                <td class="fixClass">
+                    @HtmlHelperEx.XQYCEmployeeChooser(Html, "BusinessUser", Model.BusinessUserName, Model.BusinessUserGuid.ToString())
+                </td>
+                <td>安置人员:
+                </td>
+                <td class="fixClass">
+                    @HtmlHelperEx.XQYCEmployeeChooser(Html, "SettleUser", Model.SettleUserName, Model.SettleUserGuid.ToString())
                 </td>
             </tr>
         </table>

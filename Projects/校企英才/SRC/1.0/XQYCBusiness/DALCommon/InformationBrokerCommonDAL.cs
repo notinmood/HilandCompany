@@ -83,6 +83,10 @@ namespace XQYC.Business.DALCommon
 			    [ServiceUserName],
 			    [FinanceUserGuid],
 			    [FinanceUserName],
+			    [BusinessUserGuid],
+			    [BusinessUserName],
+			    [SettleUserGuid],
+			    [SettleUserName],
 			    [CreateUserKey],
 			    [CreateDate],
 			    [PropertyNames],
@@ -117,6 +121,10 @@ namespace XQYC.Business.DALCommon
 			    {0}ServiceUserName,
 			    {0}FinanceUserGuid,
 			    {0}FinanceUserName,
+			    {0}BusinessUserGuid,
+			    {0}BusinessUserName,
+			    {0}SettleUserGuid,
+			    {0}SettleUserName,
 			    {0}CreateUserKey,
 			    {0}CreateDate,
 			    {0}PropertyNames,
@@ -160,6 +168,10 @@ namespace XQYC.Business.DALCommon
 				    [ServiceUserName] = {0}ServiceUserName,
 				    [FinanceUserGuid] = {0}FinanceUserGuid,
 				    [FinanceUserName] = {0}FinanceUserName,
+                    [BusinessUserGuid] = {0}BusinessUserGuid,
+				    [BusinessUserName] = {0}BusinessUserName,
+                    [SettleUserGuid] = {0}SettleUserGuid,
+				    [SettleUserName] = {0}SettleUserName,
 				    [CreateUserKey] = {0}CreateUserKey,
 				    [CreateDate] = {0}CreateDate,
 				    [PropertyNames] = {0}PropertyNames,
@@ -208,6 +220,10 @@ namespace XQYC.Business.DALCommon
 			        GenerateParameter("ServiceUserName",entity.ServiceUserName?? String.Empty),
 			        GenerateParameter("FinanceUserGuid",entity.FinanceUserGuid),
 			        GenerateParameter("FinanceUserName",entity.FinanceUserName?? String.Empty),
+                    GenerateParameter("BusinessUserGuid",entity.BusinessUserGuid),
+			        GenerateParameter("BusinessUserName",entity.BusinessUserName?? String.Empty),
+                    GenerateParameter("SettleUserGuid",entity.SettleUserGuid),
+			        GenerateParameter("SettleUserName",entity.SettleUserName?? String.Empty),
 			        GenerateParameter("CreateUserKey",entity.CreateUserKey?? String.Empty),
 			        GenerateParameter("CreateDate",entity.CreateDate),
 			        GenerateParameter("PropertyNames",entity.PropertyNames?? String.Empty),
@@ -338,6 +354,22 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "FinanceUserName"))
                 {
                     entity.FinanceUserName = reader.GetString(reader.GetOrdinal("FinanceUserName"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "BusinessUserGuid"))
+                {
+                    entity.BusinessUserGuid = reader.GetGuid(reader.GetOrdinal("BusinessUserGuid"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "BusinessUserName"))
+                {
+                    entity.BusinessUserName = reader.GetString(reader.GetOrdinal("BusinessUserName"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SettleUserGuid"))
+                {
+                    entity.SettleUserGuid = reader.GetGuid(reader.GetOrdinal("SettleUserGuid"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SettleUserName"))
+                {
+                    entity.SettleUserName = reader.GetString(reader.GetOrdinal("SettleUserName"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CreateUserKey"))
                 {

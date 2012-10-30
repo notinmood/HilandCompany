@@ -236,6 +236,34 @@ namespace XQYC.Business.Entity
             set { financeUserName = value; }
         }
 
+        private Guid businessUserGuid = Guid.Empty;
+        public Guid BusinessUserGuid
+        {
+            get { return businessUserGuid; }
+            set { businessUserGuid = value; }
+        }
+
+        private string businessUserName = String.Empty;
+        public string BusinessUserName
+        {
+            get { return businessUserName; }
+            set { businessUserName = value; }
+        }
+
+        private Guid settleUserGuid = Guid.Empty;
+        public Guid SettleUserGuid
+        {
+            get { return settleUserGuid; }
+            set { settleUserGuid = value; }
+        }
+
+        private string settleUserName = String.Empty;
+        public string SettleUserName
+        {
+            get { return settleUserName; }
+            set { settleUserName = value; }
+        }
+
         private string createUserKey = String.Empty;
         public string CreateUserKey
         {

@@ -199,6 +199,10 @@ namespace XQYC.Web.Controllers
             targetEntity.RecommendUserGuid = RequestHelper.GetValue<Guid>("RecommendUser_Value");
             targetEntity.ServiceUserName = RequestHelper.GetValue("ServiceUser");
             targetEntity.ServiceUserGuid = RequestHelper.GetValue<Guid>("ServiceUser_Value");
+            targetEntity.BusinessUserName = RequestHelper.GetValue("BusinessUser");
+            targetEntity.BusinessUserGuid = RequestHelper.GetValue<Guid>("BusinessUser_Value");
+            targetEntity.SettleUserName = RequestHelper.GetValue("SettleUser");
+            targetEntity.SettleUserGuid = RequestHelper.GetValue<Guid>("SettleUser_Value");
         }
 
         /// <summary>
