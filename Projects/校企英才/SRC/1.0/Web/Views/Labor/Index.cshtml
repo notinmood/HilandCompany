@@ -37,7 +37,7 @@
     </div>
     <table width="98%" class="grid">
         <tr>
-            <th style="width: 120px">操作
+            <th style="width: 150px">操作
             </th>
             <th style="width: 80px">身份证
             </th>
@@ -63,7 +63,8 @@
                 <td>
                     @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
                     @Html.HiA().CssClassName("modalInput password " + @entityGuid).Value("口令").ACA("Password", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) |
-                    @Html.HiA().CssClassName("contract").Value("合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid }).Render()
+                    @Html.HiA().CssClassName("contract").Value("合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid }).Render() |
+                    @Html.HiA().CssClassName("bankCard").Value("银行账户").ACA("BankCardList", "Labor").RouteValue(new { itemKey = @entity.UserGuid }).Render()
                 </td>
                 <td>@entity.UserCardID
                 </td>

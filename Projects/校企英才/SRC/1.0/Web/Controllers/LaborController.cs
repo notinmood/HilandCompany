@@ -482,7 +482,7 @@ namespace XQYC.Web.Controllers
         #region 合同
         public ActionResult ContractList(string itemKey)
         {
-            List<LaborContractEntity> userList = null;
+            List<LaborContractEntity> userList = new List<LaborContractEntity>();
 
             if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
             {
@@ -1367,6 +1367,86 @@ namespace XQYC.Web.Controllers
         #endregion
 
         #region 银行卡
+        /// <summary>
+        /// 劳务人员银行卡列表
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="itemKey">劳务人员标识</param>
+        public ActionResult BankCardList(string itemKey)
+        {
+            List<BankEntity> entityList = new List<BankEntity>();
+
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                string whereClause = string.Format(" UserGuid='{0}' ", itemKey);
+                string orderbyClause = string.Format("BankID DESC");
+                entityList = BankBLL.Instance.GetList(whereClause, orderbyClause);
+            }
+
+            this.ViewBag.ItemKey = itemKey;
+            return View(entityList);
+        }
+
+
+        public ActionResult BankCardItem(string userKey, string itemKey= StringHelper.Empty)
+        {
+            BankEntity entity = BankEntity.Empty;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                entity = BankBLL.Instance.Get(itemKey);
+            }
+
+            entity.UserGuid = GuidHelper.TryConvert(userKey);
+            return View(entity);
+        }
+
+        [HttpPost]
+        public ActionResult BankCardItem(string itemKey, BankEntity originalEntity)
+        {
+            bool isSuccessful = false;
+            string displayMessage = string.Empty;
+            BankEntity targetEntity = null;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == true)
+            {
+                targetEntity = new BankEntity();
+                targetEntity.UserGuid = RequestHelper.GetValue<Guid>("UserKey");
+
+                SetBankCardEntityValue(originalEntity, ref  targetEntity);
+
+                isSuccessful = BankBLL.Instance.Create(targetEntity);
+            }
+            else
+            {
+                targetEntity = BankBLL.Instance.Get(itemKey);
+
+                SetBankCardEntityValue(originalEntity, ref  targetEntity);
+                isSuccessful = BankBLL.Instance.Update(targetEntity);
+            }
+
+            if (isSuccessful == true)
+            {
+                displayMessage = "数据保存成功";
+            }
+            else
+            {
+                displayMessage = "数据保存失败";
+            }
+
+            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+        }
+
+        private void SetBankCardEntityValue(BankEntity originalEntity, ref BankEntity targetEntity)
+        {
+            targetEntity.AccountName = originalEntity.AccountName;
+            targetEntity.AccountNumber = originalEntity.AccountNumber;
+            targetEntity.AccountStatus = originalEntity.AccountStatus;
+            targetEntity.BankAddress = originalEntity.BankAddress;
+            targetEntity.BankGuid = originalEntity.BankGuid;
+            targetEntity.BankName = originalEntity.BankName;
+            targetEntity.CanUsable = originalEntity.CanUsable;
+            targetEntity.IsPrimary = originalEntity.IsPrimary;
+        }
+
         /// <summary>
         /// 批量开卡
         /// </summary>

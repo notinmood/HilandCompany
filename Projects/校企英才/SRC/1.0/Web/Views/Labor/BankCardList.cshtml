@@ -1,0 +1,98 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using HiLand.General.BLL;
+@using HiLand.Framework.BusinessCore.BLL;
+@model List<BankEntity>
+@{
+    ViewBag.Title = "Index";
+
+    string itemKey = this.ViewBag.ItemKey;
+    Guid itemGuid = GuidHelper.TryConvert(itemKey);
+    string itemName = BusinessUserBLL.Get(itemGuid).UserNameCN;
+}
+<h2>劳务人员银行卡信息列表(@itemName)</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("BankCardItem", "Labor").Render(new { rel = "#EditDIV" })
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 80px">操作
+            </th>
+            <th style="width: 150px">企业名称
+            </th>
+            <th style="width: 150px">账户名称
+            </th>
+            <th style="width: 150px">账户账号
+            </th>
+            <th style="width: 50px">最近银行卡
+            </th>
+        </tr>
+        @foreach (BankEntity entity in Model)
+        {
+            string entityGuid = entity.BankGuid.ToString();
+            <tr>
+                <td>
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("编辑").ACA("BankCardItem", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.BankGuid }) | 
+                </td>
+                <td>@entity.BankAddress
+                </td>
+                <td>@entity.AccountName
+                </td>
+                 <td>@entity.AccountNumber
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.IsPrimary)
+                </td>
+            </tr>   
+        }
+    </table>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aLaborSection").click();
+            $("#aLaborSection").addClass("current");
+            $("#aLaborList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                var currentItemGuid = $("#currentPopupItemGuid").val();
+                $(".modalInput").overlay().close();
+                $(".modalInput.edit." + currentItemGuid).overlay().close();
+            });
+
+            $("#newDisplayA").click(function () {
+                var url = $.UrlUtil('@Url.Action("BankCardItem")').concat("itemKey", "").concat("userKey", "@itemKey").show(true);
+                $("#EditDIV").load(url);
+            });
+
+            $("a.edit").click(function () {
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = $.UrlUtil('@Url.Action("BankCardItem")').concat("itemKey", itemKey).concat("userKey", "@itemKey").show(true);
+                $("#EditDIV").load(url);
+            });
+        });
+    </script>
+</div>
+
+
+

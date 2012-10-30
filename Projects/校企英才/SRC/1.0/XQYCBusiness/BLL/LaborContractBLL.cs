@@ -76,6 +76,9 @@ namespace XQYC.Business.BLL
             laborEntity.CurrentContractStopDate = contractEntity.LaborContractStopDate;
             laborEntity.CurrentContractDesc = contractEntity.EnterpriseContract.ContractTitle;
 
+            laborEntity.CurrentContractDiscontinueDate = contractEntity.LaborContractDiscontinueDate;
+            laborEntity.CurrentContractDiscontinueDesc = contractEntity.LaborContractDiscontinueDesc;
+
             laborEntity.LaborWorkStatus = contractEntity.LaborContractStatus;
             laborEntity.LaborCode = contractEntity.LaborCode;
 

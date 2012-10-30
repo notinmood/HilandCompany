@@ -346,6 +346,20 @@ namespace XQYC.Business.Entity
             set { currentContractDesc = value; }
         }
 
+        private DateTime currentContractDiscontinueDate = DateTimeHelper.Min;
+        public DateTime CurrentContractDiscontinueDate
+        {
+            get { return currentContractDiscontinueDate; }
+            set { currentContractDiscontinueDate = value; }
+        }
+
+        private string currentContractDiscontinueDesc = String.Empty;
+        public string CurrentContractDiscontinueDesc
+        {
+            get { return currentContractDiscontinueDesc; }
+            set { currentContractDiscontinueDesc = value; }
+        }
+
         private string currentInsuranceFormularKey = String.Empty;
         public string CurrentInsuranceFormularKey
         {

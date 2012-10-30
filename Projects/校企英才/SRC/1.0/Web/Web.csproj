@@ -568,6 +568,8 @@
     <Content Include="Views\InformationBroker\UserList.cshtml" />
     <Content Include="Views\System\TempletList.cshtml" />
     <Content Include="Views\Test\InformationBrokerAutoCompleteTest.cshtml" />
+    <Content Include="Views\Labor\BankCardList.cshtml" />
+    <Content Include="Views\Labor\BankCardItem.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

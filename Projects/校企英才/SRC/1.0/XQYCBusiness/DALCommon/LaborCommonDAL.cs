@@ -83,6 +83,8 @@ namespace XQYC.Business.DALCommon
                     [CurrentContractStartDate],
                     [CurrentContractStopDate],
                     [CurrentContractDesc],
+			        [CurrentContractDiscontinueDate],
+			        [CurrentContractDiscontinueDesc],
                     [CurrentEnterpriseKey],
                     [CurrentEnterpriseName],
                     [CurrentContractKey],
@@ -133,6 +135,8 @@ namespace XQYC.Business.DALCommon
                     {0}CurrentContractStartDate,
                     {0}CurrentContractStopDate,
                     {0}CurrentContractDesc,
+			        {0}CurrentContractDiscontinueDate,
+			        {0}CurrentContractDiscontinueDesc,
                     {0}CurrentEnterpriseKey,
                     {0}CurrentEnterpriseName,
                     {0}CurrentContractKey,
@@ -192,6 +196,8 @@ namespace XQYC.Business.DALCommon
                     [CurrentContractStartDate] = {0}CurrentContractStartDate,
                     [CurrentContractStopDate] = {0}CurrentContractStopDate,
                     [CurrentContractDesc] = {0}CurrentContractDesc,
+				    [CurrentContractDiscontinueDate] = {0}CurrentContractDiscontinueDate,
+				    [CurrentContractDiscontinueDesc] = {0}CurrentContractDiscontinueDesc,
                     [CurrentEnterpriseKey] = {0}CurrentEnterpriseKey,
                     [CurrentEnterpriseName]= {0}CurrentEnterpriseName,
                     [CurrentContractKey] = {0}CurrentContractKey,
@@ -256,6 +262,8 @@ namespace XQYC.Business.DALCommon
                 GenerateParameter("CurrentContractStartDate",entity.CurrentContractStartDate),
                 GenerateParameter("CurrentContractStopDate",entity.CurrentContractStopDate),
                 GenerateParameter("CurrentContractDesc",entity.CurrentContractDesc??String.Empty),
+                GenerateParameter("CurrentContractDiscontinueDate",entity.CurrentContractDiscontinueDate),
+			    GenerateParameter("CurrentContractDiscontinueDesc",entity.CurrentContractDiscontinueDesc?? String.Empty),
                 GenerateParameter("CurrentEnterpriseKey",entity.CurrentEnterpriseKey??String.Empty),
                 GenerateParameter("CurrentEnterpriseName",entity.CurrentEnterpriseName??String.Empty),
                 GenerateParameter("CurrentContractKey",entity.CurrentContractKey??String.Empty),
@@ -429,7 +437,14 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.CurrentContractDesc = reader.GetString(reader.GetOrdinal("CurrentContractDesc"));
                 }
-
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CurrentContractDiscontinueDate"))
+                {
+                    entity.CurrentContractDiscontinueDate = reader.GetDateTime(reader.GetOrdinal("CurrentContractDiscontinueDate"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CurrentContractDiscontinueDesc"))
+                {
+                    entity.CurrentContractDiscontinueDesc = reader.GetString(reader.GetOrdinal("CurrentContractDiscontinueDesc"));
+                }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CurrentEnterpriseKey"))
                 {
                     entity.CurrentEnterpriseKey = reader.GetString(reader.GetOrdinal("CurrentEnterpriseKey"));

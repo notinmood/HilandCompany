@@ -1,0 +1,70 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility4.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Control;
+@using XQYC.Business.Enums;
+@using HiLand.General.Entity;
+
+@model BankEntity
+@{
+    ViewBag.Title = "劳务人员银行卡信息";
+    this.Layout = null;
+
+    string userKey = Model.UserGuid.ToString();
+    
+    BankEntity laborContractEntity= BankEntity.Empty;
+    if(Model!=null)
+    {
+        laborContractEntity= Model;
+    }
+}
+<div id="formContainer">
+    <style type="text/css">
+        #formContainer table td {
+        }
+    </style>
+    @using (Html.BeginForm())
+    { 
+        <table>
+            <tr>
+                <td style="width: 150px;">账户名称:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.AccountName)
+                </td>
+            </tr>
+             <tr>
+                <td style="width: 150px;">账户账号:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.AccountNumber)
+                </td>
+            </tr>
+            <tr>
+                <td>企业:
+                </td>
+                <td>@Html.TextBoxFor(entity=> entity.BankAddress)
+                </td>
+            </tr>
+            <tr>
+                <td>是否为最近使用的银行卡:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.IsPrimary, EnumEx.BuildSelectItemList<Logics>())
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" id="UserKey" value="@userKey" />
+        <input type="hidden" id="ItemKey" value="@Model.BankGuid" />
+        <input type="button" id="submitButton" value="保存" class="buttons" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form", '@Url.Action("BankCardList", new { itemKey = userKey })');
+        });
+    });
+</script>
+
