@@ -18,7 +18,6 @@ using HiLand.Utility.Entity;
 using HiLand.Utility.Entity.Status;
 using HiLand.Utility.Enums;
 using HiLand.Utility.IO;
-using HiLand.Utility.Mathes.StringParse;
 using HiLand.Utility.Office;
 using HiLand.Utility.Paging;
 using HiLand.Utility.Reflection;
@@ -60,6 +59,8 @@ namespace XQYC.Web.Controllers
             whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ProviderUserGuid"));
             whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("RecommendUserGuid"));
             whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ServiceUserGuid"));
+            whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("BusinessUserGuid"));
+            whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("SettleUserGuid"));
             whereClause += " ) ";
             //--end--------------------------------------------------------------------------
 
@@ -562,6 +563,9 @@ namespace XQYC.Web.Controllers
             targetEntity.InsuranceFormularKey = originalEntity.InsuranceFormularKey;
             targetEntity.ManageFeeFormularKey = originalEntity.ManageFeeFormularKey;
             targetEntity.ReserveFundFormularKey = originalEntity.ReserveFundFormularKey;
+
+            targetEntity.LaborContractDiscontinueDate = originalEntity.LaborContractDiscontinueDate;
+            targetEntity.LaborContractDiscontinueDesc = originalEntity.LaborContractDiscontinueDesc;
         }
         #endregion
 
