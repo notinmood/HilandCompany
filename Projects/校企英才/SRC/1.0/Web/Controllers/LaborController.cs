@@ -1644,5 +1644,17 @@ namespace XQYC.Web.Controllers
             return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
         }
         #endregion
+
+        #region 批量派工
+        /// <summary>
+        /// 批量派工
+        /// </summary>
+        /// <param name="itemKey">劳务人员标识</param>
+        /// <returns></returns>
+        public ActionResult BatchSettleWork(string itemKey)
+        {
+            return View(itemKey);
+        }
+        #endregion
     }
 }

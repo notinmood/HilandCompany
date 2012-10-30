@@ -307,6 +307,9 @@
     <Content Include="Scripts\jquery.jcarousel.min.js" />
     <Content Include="Scripts\jQuery.tools.min.js" />
     <Content Include="Scripts\jquery.wysiwyg.js" />
+    <Content Include="Scripts\JSON\Json2.js" />
+    <Content Include="Scripts\JSON\Json2.min.js" />
+    <Content Include="Scripts\JSON\Json2.txt" />
     <Content Include="Scripts\simpla.jquery.configuration.js" />
     <Content Include="SettingList.txt" />
     <Content Include="Web.config">
@@ -570,6 +573,7 @@
     <Content Include="Views\Test\InformationBrokerAutoCompleteTest.cshtml" />
     <Content Include="Views\Labor\BankCardList.cshtml" />
     <Content Include="Views\Labor\BankCardItem.cshtml" />
+    <Content Include="Views\Labor\BatchSettleWork.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

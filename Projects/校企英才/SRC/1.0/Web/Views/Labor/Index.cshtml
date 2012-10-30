@@ -34,12 +34,12 @@
     </div>
     <div class="OperateArea" id="OperateAreaContainer">
         @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Labor").Render(new { rel = "#EditDIV" }) | 
-        @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)
+        @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html) | @Html.HiA("batchSettleWork").CssClassName("modalInput").Value("批量派工").ACA("BatchSettleWork", "Labor").Render(new { rel = "#EditDIV" })
     </div>
     <div class="dataContainer">
-        <table style="width: 1914px" class="grid">
+        <table style="width: 2012px" class="grid">
             <tr>
-                <th style="width: 150px">操作
+                <th style="width: 180px"><input type="checkbox" class="allCcheckboxSelector"  />操作
                 </th>
                 <th style="width: 80px">身份证
                 </th>
@@ -83,7 +83,8 @@
                 string entityGuid = entity.UserGuid.ToString();
                 <tr>
                     <td>
-                        @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
+                    <input type="checkbox" name="itemCheckboxSelector" class="checkboxSelector" value="@entityGuid"   />
+                    @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
                     @Html.HiA().CssClassName("modalInput password " + @entityGuid).Value("口令").ACA("Password", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) |
                     @Html.HiA().CssClassName("contract").Value("合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid }).Render() |
                     @Html.HiA().CssClassName("bankCard").Value("银行账户").ACA("BankCardList", "Labor").RouteValue(new { itemKey = @entity.UserGuid }).Render()
@@ -163,6 +164,14 @@
                 $("#EditDIV").load(url);
             });
 
+            $("#batchSettleWork").click(function () {
+                $(".modal").width("350px");
+                var itemKey = "";
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("BatchSettleWork")' + '?r=' + Math.random() + '&itemKey=' + itemKey;
+                $("#EditDIV").load(url);
+            });
+
             $("a.edit").click(function () {
                 $(".modal").width("650px");
                 var itemKey = $(this).attr("itemKey");
@@ -179,24 +188,10 @@
                 $("#EditDIV").load(url);
             });
 
-
-
-            //$(".queryButton").toggle(
-            //    function () {
-            //        var trObject = $(this).parents("tr");
-            //        trObject.siblings().hide();
-            //        trObject.find(".queryStatus").val("closed");
-            //        $(this).text("展开查询");
-            //    },
-            //    function () {
-            //        var trObject = $(this).parents("tr");
-            //        trObject.siblings().show();
-            //        trObject.find(".queryStatus").val("open");
-            //        $(this).text("收起查询");
-            //    }
-            //);
-
-
+            $(".allCcheckboxSelector").click(function () {
+                var selectedStatus = $(this).attr("checked");
+                $(":checkbox", $(this).parents("div")).attr("checked", selectedStatus);
+            });
         });
     </script>
 </div>
