@@ -21,6 +21,7 @@
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员性别", ConditionFieldName = "UserSex", ConditionType = typeof(HiLand.Utility.Enums.Sexes) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "工作技能", ConditionFieldName = "WorkSkill", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "工作状态", ConditionFieldName = "LaborWorkStatus", ConditionType = typeof(XQYC.Business.Enums.LaborWorkStatuses) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "离职时间", ConditionFieldName = "CurrentContractDiscontinueDate", ConditionType = typeof(DateTime) });
 }
 
 <h2>劳务人员列表</h2>
@@ -35,59 +36,103 @@
         @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Labor").Render(new { rel = "#EditDIV" }) | 
         @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)
     </div>
-    <table width="98%" class="grid">
-        <tr>
-            <th style="width: 150px">操作
-            </th>
-            <th style="width: 80px">身份证
-            </th>
-            <th style="width: 80px">人员名称
-            </th>
-            <th style="width: 80px">人员状态
-            </th>
-            <th style="width: 80px">工作状态
-            </th>
-            <th style="width: 80px">信息提供人员
-            </th>
-            <th style="width: 80px">推荐人员
-            </th>
-            <th style="width: 80px">财务人员
-            </th>
-            <th>客服人员
-            </th>
-        </tr>
-        @foreach (LaborEntity entity in Model)
-        {
-            string entityGuid = entity.UserGuid.ToString();
+    <div class="dataContainer">
+        <table style="width: 1914px" class="grid">
             <tr>
-                <td>
-                    @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
+                <th style="width: 150px">操作
+                </th>
+                <th style="width: 80px">身份证
+                </th>
+                <th style="width: 80px">人员名称
+                </th>
+                <th style="width: 80px">人员状态
+                </th>
+                <th style="width: 80px">工作状态
+                </th>
+                <th style="width: 180px">务工企业
+                </th>
+                <th style="width: 80px">职工编号
+                </th>
+                <th style="width: 50px">性别
+                </th>
+                <th style="width: 50px">年龄
+                </th>
+                <th style="width: 80px">出生日期
+                </th>
+                <th style="width: 80px">联系电话
+                </th>
+                <th style="width: 80px">紧急联系电话
+                </th>
+                <th style="width: 80px">最近合同开始时间
+                </th>
+                <th style="width: 80px">最近合同到期时间
+                </th>
+                <th style="width: 80px">最近离职时间
+                </th>
+                <th style="width: 80px">信息提供人员
+                </th>
+                <th style="width: 80px">推荐人员
+                </th>
+                <th style="width: 80px">财务人员
+                </th>
+                <th>客服人员
+                </th>
+            </tr>
+            @foreach (LaborEntity entity in Model)
+            {
+                string entityGuid = entity.UserGuid.ToString();
+                <tr>
+                    <td>
+                        @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
                     @Html.HiA().CssClassName("modalInput password " + @entityGuid).Value("口令").ACA("Password", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) |
                     @Html.HiA().CssClassName("contract").Value("合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid }).Render() |
                     @Html.HiA().CssClassName("bankCard").Value("银行账户").ACA("BankCardList", "Labor").RouteValue(new { itemKey = @entity.UserGuid }).Render()
-                </td>
-                <td>@entity.UserCardID
-                </td>
-                <td>@entity.UserNameCN
-                </td>
-                <td>@EnumHelper.GetDisplayValue(entity.UserStatus)
-                </td>
-                <td>@EnumHelper.GetDisplayValue(entity.LaborWorkStatus)
-                </td>
-                <td>@entity.ProviderUserName
-                </td>
-                <td>@entity.RecommendUserName
-                </td>
-                <td>@entity.FinanceUserName
-                </td>
-                <td>@entity.ServiceUserName
-                </td>
-            </tr>   
-        }
-    </table>
-    <div class="myPager"><span style="float:left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
-     &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@SystemConst.CountPerPage</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)</div>
-    
+                    </td>
+                    <td>@entity.UserCardID
+                    </td>
+                    <td>@entity.UserNameCN
+                    </td>
+                    <td>@EnumHelper.GetDisplayValue(entity.UserStatus)
+                    </td>
+                    <td>@EnumHelper.GetDisplayValue(entity.LaborWorkStatus)
+                    </td>
+                    <td>@entity.CurrentEnterpriseName
+                    </td>
+                    <td>@entity.LaborCode
+                    </td>
+                    <td>@EnumHelper.GetDisplayValue(entity.UserSex)
+                    </td>
+                    <td>@entity.UserAge
+                    </td>
+                    <td>@DateTimeHelper.ToSaftShortDateString(entity.UserBirthDay)
+                    </td>
+                    <td>@entity.UserMobileNO
+                    </td>
+                    <td>@entity.UrgentTelephone
+                    </td>
+                    <td>@DateTimeHelper.ToSaftShortDateString(entity.CurrentContractStartDate)
+                    </td>
+                    <td>@DateTimeHelper.ToSaftShortDateString(entity.CurrentContractStopDate)
+                    </td>
+                    <td>@DateTimeHelper.ToSaftShortDateString(entity.CurrentContractDiscontinueDate)
+                    </td>
+                    <td>@entity.ProviderUserName
+                    </td>
+                    <td>@entity.RecommendUserName
+                    </td>
+                    <td>@entity.FinanceUserName
+                    </td>
+                    <td>@entity.ServiceUserName
+                    </td>
+                </tr>   
+            }
+        </table>
+    </div>
+    <div class="myPager">
+        <span style="float: left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
+        &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@SystemConst.CountPerPage</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)
+    </div>
+
     <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
     <div class="modal modalFix" id="EditDIV">
     </div>
