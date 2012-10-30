@@ -443,10 +443,13 @@ namespace XQYC.Web.Control
             List<AreaEntity> entityList = AreaBLL.Instance.GetListByParentCode("3702");
 
             //添加一个“其他”地区
-            AreaEntity areaEntity = new AreaEntity();
-            areaEntity.AreaCode = "QT";
-            areaEntity.AreaName = "其他";
-            entityList.Add(areaEntity);
+            if (entityList.Exists(m => m.AreaCode == "QT") == false)
+            {
+                AreaEntity areaEntity = new AreaEntity();
+                areaEntity.AreaCode = "QT";
+                areaEntity.AreaName = "其他";
+                entityList.Add(areaEntity);
+            }
 
             for (int i = 0; i < entityList.Count; i++)
             {

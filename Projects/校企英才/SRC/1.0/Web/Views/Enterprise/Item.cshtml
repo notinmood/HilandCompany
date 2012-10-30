@@ -94,6 +94,12 @@
                 <td>@Html.DropDownListFor(entity => entity.CanUsable, EnumEx.BuildSelectItemList<Logics>())
                 </td>
             </tr>
+            <tr>
+                <td>备注:
+                </td>
+                <td colspan="3">@Html.TextAreaFor(entity => entity.EnterpriseMemo)
+                </td>
+            </tr>
         </table>
         <input type="hidden" id="KeyGuid" value="@Model.EnterpriseGuid" />
         <input type="button" id="submitButton" value="保存" class="buttons" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>

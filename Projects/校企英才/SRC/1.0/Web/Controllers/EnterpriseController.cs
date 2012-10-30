@@ -127,6 +127,7 @@ namespace XQYC.Web.Controllers
             targetEntity.StaffScope = originalEntity.StaffScope;
             targetEntity.Telephone = originalEntity.Telephone;
             targetEntity.AreaCode = originalEntity.AreaCode;
+            targetEntity.EnterpriseMemo = originalEntity.EnterpriseMemo;
         }
 
         /// <summary>
