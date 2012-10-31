@@ -549,8 +549,6 @@ namespace XQYC.Web.Controllers
         private void SetTargetContractEntityValue(LaborContractEntity originalEntity, ref LaborContractEntity targetEntity)
         {
             targetEntity.EnterpriseGuid = ControlHelper.GetRealValue<Guid>("EnterpriseName");
-
-            //targetEntity.EnterpriseGuid = originalEntity.EnterpriseGuid;
             targetEntity.LaborContractDetails = originalEntity.LaborContractDetails;
             targetEntity.EnterpriseContractGuid = originalEntity.EnterpriseContractGuid;
             targetEntity.LaborContractStartDate = originalEntity.LaborContractStartDate;
@@ -1651,9 +1649,63 @@ namespace XQYC.Web.Controllers
         /// </summary>
         /// <param name="itemKey">劳务人员标识</param>
         /// <returns></returns>
-        public ActionResult BatchSettleWork(string itemKey)
+        public ActionResult BatchSettleWork(string itemKeys)
         {
-            return View(itemKey);
+            LaborContractEntity laborContractEntity = LaborContractEntity.Empty;
+            this.ViewData["itemKeys"] = itemKeys;
+            return View(laborContractEntity);
+        }
+
+        /// <summary>
+        /// 批量派工
+        /// </summary>
+        /// <param name="itemKeys">劳务人员标识</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult BatchSettleWork(string itemKeys, LaborContractEntity originalEntity)
+        {
+            bool isSuccessful = false;
+            string displayMessage = string.Empty;
+            LaborContractEntity targetEntity = null;
+            if (string.IsNullOrWhiteSpace(itemKeys)==true)
+            {
+                isSuccessful = false;
+                displayMessage = "请先选择至少一个劳务人员，然后在为其派工，谢谢！";
+            }
+            else
+            {
+                targetEntity = new LaborContractEntity();
+                SetTargetContractEntityValue(originalEntity, ref  targetEntity);
+                targetEntity.OperateDate = DateTime.Now;
+                targetEntity.OperateUserGuid = BusinessUserBLL.CurrentUser.UserGuid;
+
+                try
+                {
+                    List<string> laborGuidList = JsonHelper.DeSerialize<List<string>>(itemKeys);
+                    foreach (string item in laborGuidList)
+                    {
+                        Guid laborGuid= Converter.ChangeType<Guid>(item);
+                        if (laborGuid != Guid.Empty)
+                        {
+                            targetEntity.LaborUserGuid = laborGuid;
+                            isSuccessful = LaborContractBLL.Instance.Create(targetEntity);
+                        }
+                    }
+                }
+                catch 
+                { }
+            }
+
+            if (isSuccessful == true)
+            {
+                displayMessage = "数据保存成功";
+            }
+            else
+            {
+                displayMessage = "数据保存失败";
+            }
+
+            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
         }
         #endregion
     }

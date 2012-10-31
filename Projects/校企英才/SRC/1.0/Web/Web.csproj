@@ -121,6 +121,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\APIs\APIsAreaRegistration.cs" />
     <Compile Include="Areas\EnterpriseConsole\Controllers\AccountController.cs" />
     <Compile Include="Areas\EnterpriseConsole\Controllers\EnterpriseController.cs" />
     <Compile Include="Areas\EnterpriseConsole\Controllers\LaborController.cs" />
@@ -381,6 +382,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\APIs\Controllers\" />
+    <Folder Include="Areas\APIs\Models\" />
+    <Folder Include="Areas\APIs\Views\Shared\" />
     <Folder Include="Areas\EnterpriseConsole\Models\" />
     <Folder Include="Areas\InformationBrokerConsole\Models\" />
     <Folder Include="Areas\LaborConsole\Models\" />
@@ -570,6 +574,7 @@
     <Content Include="DownFiles\Templet\劳务人员批量导入模板.xls" />
     <Content Include="DownFiles\Templet\劳务人员工资导入模板.xls" />
     <Content Include="DownFiles\Templet\银行开卡数据导入模板.xls" />
+    <Content Include="Areas\APIs\Views\Web.config" />
     <None Include="Properties\PublishProfiles\profile1.pubxml" />
     <Content Include="Views\Permission\Data.cshtml" />
     <Content Include="Views\FreePermission\RoleSelector.cshtml" />

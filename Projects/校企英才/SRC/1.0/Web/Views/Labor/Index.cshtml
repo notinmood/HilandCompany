@@ -166,9 +166,9 @@
 
             $("#batchSettleWork").click(function () {
                 $(".modal").width("350px");
-                var itemKey = "";
-                $("#currentPopupItemGuid").val(itemKey);
-                var url = '@Url.Action("BatchSettleWork")' + '?r=' + Math.random() + '&itemKey=' + itemKey;
+                var itemKeys = JSON.stringify($("input:checked").map(function () { return $(this).val(); }).get(), null, null);
+                $("#currentPopupItemGuid").val(itemKeys);
+                var url = '@Url.Action("BatchSettleWork")' + '?r=' + Math.random() + '&itemKeys=' + itemKeys;
                 $("#EditDIV").load(url);
             });
 
@@ -190,7 +190,7 @@
 
             $(".allCcheckboxSelector").click(function () {
                 var selectedStatus = $(this).attr("checked");
-                $(":checkbox", $(this).parents("div")).attr("checked", selectedStatus);
+                $(":checkbox", $(this).parents("table")).attr("checked", selectedStatus);
             });
         });
     </script>

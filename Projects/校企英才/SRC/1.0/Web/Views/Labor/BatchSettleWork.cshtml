@@ -1,10 +1,4 @@
-﻿批量派工
-@{
-    ViewBag.Title = "劳务人员合同信息";
-    this.Layout = null;
-}
-
-@*@using HiLand.Utility.Enums;
+﻿@using HiLand.Utility.Enums;
 @using HiLand.Framework.BusinessCore;
 @using HiLand.Framework.BusinessCore.Enum;
 @using HiLand.Framework.BusinessCore.BLL;
@@ -16,11 +10,17 @@
 
 @model LaborContractEntity
 @{
-    ViewBag.Title = "劳务人员合同信息";
+    ViewBag.Title = "劳务人员批量派工";
     this.Layout = null;
 
-    string userKey = Model.LaborUserGuid.ToString();
-
+    object itemKeysObject= this.ViewData["itemKeys"];
+    
+    string itemKeys = string.Empty;
+    if(itemKeysObject!=null)
+    {
+        itemKeys = itemKeysObject.ToString();
+    }
+    
     LaborContractEntity laborContractEntity = LaborContractEntity.Empty;
     if (Model != null)
     {
@@ -45,12 +45,6 @@
                 <td>企业:
                 </td>
                 <td>@HtmlHelperEx.XQYCAutoCompleteEnterprise(Html, "EnterpriseName", laborContractEntity.Enterprise.CompanyName, laborContractEntity.EnterpriseGuid.ToString())
-                </td>
-            </tr>
-            <tr>
-                <td>劳务人员工号:
-                </td>
-                <td>@Html.TextBoxFor(entity => entity.LaborCode)
                 </td>
             </tr>
             <tr>
@@ -90,16 +84,15 @@
                 </td>
             </tr>
         </table>
-        <input type="hidden" id="UserKey" value="@userKey" />
-        <input type="hidden" id="ItemKey" value="@Model.LaborContractGuid" />
+        <input type="hidden" id="ItemKeys" value="@itemKeys" />
         <input type="button" id="submitButton" value="保存" class="buttons" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
     }
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#submitButton").click(function () {
-            submitAndRedirect("#formContainer form", '@Url.Action("ContractList", new { itemKey = userKey })');
+            submitAndRedirect("#formContainer form");
         });
     });
 </script>
-*@
+
