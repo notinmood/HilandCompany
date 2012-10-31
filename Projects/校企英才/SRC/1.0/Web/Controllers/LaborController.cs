@@ -74,7 +74,7 @@ namespace XQYC.Web.Controllers
             bool isExportExcel = RequestHelper.GetValue("exportExcel", false);
             if (isExportExcel == true)
             {
-                return GetLaborExcelFile(entityList.Records);
+                return LaborListToExcelFile(entityList.Records);
             }
             else
             {
@@ -82,11 +82,28 @@ namespace XQYC.Web.Controllers
             }
         }
 
-        private ActionResult GetLaborExcelFile(IList<LaborEntity> laborList)
+        private ActionResult LaborListToExcelFile(IList<LaborEntity> laborList)
         {
-            Dictionary<string,string> dic= new Dictionary<string,string>();
-            dic["UserNameCN"]= "人员名称";
-            dic["UserCardID"]= "身份证号码";
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic["UserNameCN"] = "人员名称";
+            dic["UserCardID"] = "身份证号码";
+            dic["UserStatus"] = "人员状态";
+            dic["LaborWorkStatus"] = "工作状态";
+            dic["CurrentEnterpriseName"] = "务工企业";
+            dic["LaborCode"] = "职工编号";
+            dic["UserSex"] = "性别";
+            dic["UserAge"] = "年龄";
+            dic["UserBirthDay"] = "出生日期";
+            dic["UserMobileNO"] = "联系电话";
+            dic["UrgentTelephone"] = "紧急联系电话";
+            dic["CurrentContractStartDate"] = "最近合同开始时间";
+            dic["CurrentContractStopDate"] = "最近合同到期时间";
+            dic["CurrentContractDiscontinueDate"] = "最近离职时间";
+            dic["ProviderUserName"] = "信息提供人员";
+            dic["RecommendUserName"] = "推荐人员";
+            dic["FinanceUserName"] = "财务人员";
+            dic["ServiceUserName"] = "客服人员";
+
             Stream excelStream = ExcelHelper.WriteExcel(laborList, dic);
             return File(excelStream, ContentTypes.GetContentType("xls"), "劳务人员信息.xls");
         }
@@ -850,7 +867,7 @@ namespace XQYC.Web.Controllers
 
                 isSuccessful = SalarySummaryBLL.Instance.Create(salarySummaryEntity);
             }
-            
+
             if (isSuccessful == true)
             {
                 return RedirectToAction("SalaryDetailsList", new { itemKey = salarySummaryEntity.SalarySummaryGuid, enterpriseKey = enterpriseKey });
@@ -1128,7 +1145,7 @@ namespace XQYC.Web.Controllers
                         {
                             //根据人员姓名和工号，确认劳务人员的UserGuid
                             bool isMatchedLabor = false;
-                            LaborEntity laborEntity= LaborBLL.Instance.Get(LaborUserNameCNForSalarySummary, LaborUserCodeForSalarySummary,enterpriseGuid.ToString());
+                            LaborEntity laborEntity = LaborBLL.Instance.Get(LaborUserNameCNForSalarySummary, LaborUserCodeForSalarySummary, enterpriseGuid.ToString());
                             if (laborEntity.IsEmpty)
                             {
                                 isMatchedLabor = false;
@@ -1390,7 +1407,7 @@ namespace XQYC.Web.Controllers
         }
 
 
-        public ActionResult BankCardItem(string userKey, string itemKey= StringHelper.Empty)
+        public ActionResult BankCardItem(string userKey, string itemKey = StringHelper.Empty)
         {
             BankEntity entity = BankEntity.Empty;
             if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
@@ -1667,7 +1684,7 @@ namespace XQYC.Web.Controllers
             bool isSuccessful = false;
             string displayMessage = string.Empty;
             LaborContractEntity targetEntity = null;
-            if (string.IsNullOrWhiteSpace(itemKeys)==true)
+            if (string.IsNullOrWhiteSpace(itemKeys) == true)
             {
                 isSuccessful = false;
                 displayMessage = "请先选择至少一个劳务人员，然后在为其派工，谢谢！";
@@ -1684,7 +1701,7 @@ namespace XQYC.Web.Controllers
                     List<string> laborGuidList = JsonHelper.DeSerialize<List<string>>(itemKeys);
                     foreach (string item in laborGuidList)
                     {
-                        Guid laborGuid= Converter.ChangeType<Guid>(item);
+                        Guid laborGuid = Converter.ChangeType<Guid>(item);
                         if (laborGuid != Guid.Empty)
                         {
                             targetEntity.LaborUserGuid = laborGuid;
@@ -1692,7 +1709,7 @@ namespace XQYC.Web.Controllers
                         }
                     }
                 }
-                catch 
+                catch
                 { }
             }
 

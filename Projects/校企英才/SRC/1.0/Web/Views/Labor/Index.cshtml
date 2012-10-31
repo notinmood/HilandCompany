@@ -33,8 +33,8 @@
         }
     </div>
     <div class="OperateArea" id="OperateAreaContainer">
-        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Labor").Render(new { rel = "#EditDIV" }) | 
-        @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html) | @Html.HiA("batchSettleWork").CssClassName("modalInput").Value("批量派工").ACA("BatchSettleWork", "Labor").Render(new { rel = "#EditDIV" })
+        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Labor").Render(new { rel = "#EditDIV" })  | @Html.HiA("batchSettleWork").CssClassName("modalInput").Value("批量派工").ACA("BatchSettleWork", "Labor").Render(new { rel = "#EditDIV" })
+        | @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)
     </div>
     <div class="dataContainer">
         <table style="width: 2012px" class="grid">
@@ -63,11 +63,11 @@
                 </th>
                 <th style="width: 80px">紧急联系电话
                 </th>
-                <th style="width: 80px">最近合同开始时间
+                <th style="width: 100px">最近合同开始时间
                 </th>
-                <th style="width: 80px">最近合同到期时间
+                <th style="width: 100px">最近合同到期时间
                 </th>
-                <th style="width: 80px">最近离职时间
+                <th style="width: 100px">最近离职时间
                 </th>
                 <th style="width: 80px">信息提供人员
                 </th>
