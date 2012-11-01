@@ -464,19 +464,33 @@ namespace XQYC.Web.Controllers
             string enterpriserGuid = RequestHelper.GetValue("autoCompleteExtraParam");
             List<AutoCompleteEntity> itemList = new List<AutoCompleteEntity>();
             string whereClause = string.Format(" UserNameCN like '{0}%' AND UserType={1} ", userValueInputted, (int)UserTypes.CommonUser);
-            if (string.IsNullOrWhiteSpace(enterpriserGuid) == false)
-            {
-                whereClause += string.Format(" AND CurrentEnterpriseKey='{0}' ", enterpriserGuid);
-            }
+            
+            //为了能够为刚刚离职的人员派发薪资，此处不再使用按照企业过滤劳务人员数据
+            //if (string.IsNullOrWhiteSpace(enterpriserGuid) == false)
+            //{
+            //    whereClause += string.Format(" AND CurrentEnterpriseKey='{0}' ", enterpriserGuid);
+            //}
 
             List<LaborEntity> userList = LaborBLL.Instance.GetList(whereClause);
 
             foreach (LaborEntity currentLabor in userList)
             {
+                string inCurrentEnterpriseDesc = string.Empty;
+                if (string.IsNullOrWhiteSpace(enterpriserGuid) == false
+                    && string.IsNullOrWhiteSpace(currentLabor.CurrentEnterpriseKey) == false
+                    && enterpriserGuid == currentLabor.CurrentEnterpriseKey)
+                {
+                    inCurrentEnterpriseDesc = "在职";
+                }
+                else
+                {
+                    inCurrentEnterpriseDesc = "其他";
+                }
+
                 AutoCompleteEntity item = new AutoCompleteEntity();
                 item.details = "nothing";
                 item.key = currentLabor.UserGuid.ToString();
-                item.label = string.Format("{0}({1})", currentLabor.UserNameCN, currentLabor.UserCardID);
+                item.label = string.Format("{0}({1}({2}))", currentLabor.UserNameCN, currentLabor.UserCardID, inCurrentEnterpriseDesc);
                 item.value = currentLabor.UserNameCN;
 
                 itemList.Add(item);

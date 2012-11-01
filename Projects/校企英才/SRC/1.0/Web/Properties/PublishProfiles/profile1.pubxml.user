@@ -10,6 +10,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <TimeStampOfAssociatedLegacyPublishXmlFile />
   </PropertyGroup>
   <ItemGroup>
+    <File Include="Areas/APIs/Views/Web.config">
+      <publishTime>10/31/2012 10:56:43</publishTime>
+    </File>
     <File Include="Areas/EnterpriseConsole/Views/Account/ChangePassword.cshtml">
       <publishTime>09/15/2012 11:42:07</publishTime>
     </File>
@@ -29,7 +32,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/05/2012 12:48:58</publishTime>
     </File>
     <File Include="Areas/EnterpriseConsole/Views/Web.config">
-      <publishTime>09/15/2012 08:14:51</publishTime>
+      <publishTime>10/31/2012 10:42:41</publishTime>
     </File>
     <File Include="Areas/EnterpriseConsole/Views/_ViewStart.cshtml">
       <publishTime>09/15/2012 11:16:38</publishTime>
@@ -50,7 +53,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/05/2012 12:20:15</publishTime>
     </File>
     <File Include="Areas/InformationBrokerConsole/Views/Web.config">
-      <publishTime>09/15/2012 08:14:19</publishTime>
+      <publishTime>10/31/2012 10:42:42</publishTime>
     </File>
     <File Include="Areas/InformationBrokerConsole/Views/_ViewStart.cshtml">
       <publishTime>09/15/2012 11:51:58</publishTime>
@@ -68,7 +71,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/15/2012 11:51:28</publishTime>
     </File>
     <File Include="Areas/LaborConsole/Views/Web.config">
-      <publishTime>09/15/2012 08:15:55</publishTime>
+      <publishTime>10/31/2012 10:42:42</publishTime>
     </File>
     <File Include="Areas/LaborConsole/Views/_ViewStart.cshtml">
       <publishTime>09/15/2012 11:52:00</publishTime>
@@ -86,7 +89,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/15/2012 09:17:52</publishTime>
     </File>
     <File Include="Areas/UserCenter/Views/Web.config">
-      <publishTime>09/15/2012 08:30:48</publishTime>
+      <publishTime>10/31/2012 10:42:13</publishTime>
     </File>
     <File Include="bin/Castle.Core.dll">
       <publishTime>01/11/2010 11:36:38</publishTime>
@@ -98,19 +101,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/24/2009 16:44:54</publishTime>
     </File>
     <File Include="bin/HiLand.Framework.dll">
-      <publishTime>10/30/2012 16:04:03</publishTime>
+      <publishTime>10/31/2012 15:02:17</publishTime>
     </File>
     <File Include="bin/HiLand.Framework4.dll">
-      <publishTime>10/30/2012 16:04:05</publishTime>
+      <publishTime>10/31/2012 15:02:19</publishTime>
     </File>
     <File Include="bin/HiLand.General.dll">
-      <publishTime>10/30/2012 16:04:04</publishTime>
+      <publishTime>10/31/2012 15:02:18</publishTime>
     </File>
     <File Include="bin/HiLand.Utility.dll">
-      <publishTime>10/30/2012 16:04:00</publishTime>
+      <publishTime>10/31/2012 15:02:15</publishTime>
     </File>
     <File Include="bin/HiLand.Utility4.dll">
-      <publishTime>10/30/2012 16:04:03</publishTime>
+      <publishTime>10/31/2012 15:02:16</publishTime>
     </File>
     <File Include="bin/Ionic.Zip.dll">
       <publishTime>02/15/2012 21:59:34</publishTime>
@@ -130,11 +133,29 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/System.Data.SQLite.DLL">
       <publishTime>04/28/2009 09:37:16</publishTime>
     </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>07/10/2012 21:53:02</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>07/10/2012 21:51:54</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>07/10/2012 21:53:02</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>07/10/2012 21:53:02</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>07/10/2012 21:53:02</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>07/10/2012 21:53:02</publishTime>
+    </File>
     <File Include="bin/XQYC.Business.dll">
-      <publishTime>10/31/2012 09:35:09</publishTime>
+      <publishTime>11/01/2012 10:19:05</publishTime>
     </File>
     <File Include="bin/XQYC.Web.dll">
-      <publishTime>10/31/2012 09:35:11</publishTime>
+      <publishTime>11/01/2012 10:19:06</publishTime>
     </File>
     <File Include="Content/adminStyle.css">
       <publishTime>10/29/2012 10:46:45</publishTime>
@@ -770,7 +791,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/04/2012 14:58:48</publishTime>
     </File>
     <File Include="Views/Enterprise/Index.cshtml">
-      <publishTime>10/29/2012 10:52:04</publishTime>
+      <publishTime>11/01/2012 10:08:12</publishTime>
     </File>
     <File Include="Views/Enterprise/Item.cshtml">
       <publishTime>10/30/2012 14:20:28</publishTime>
@@ -830,16 +851,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/28/2012 15:36:26</publishTime>
     </File>
     <File Include="Views/Labor/BatchSettleWork.cshtml">
-      <publishTime>10/30/2012 18:06:53</publishTime>
+      <publishTime>10/31/2012 11:19:30</publishTime>
     </File>
     <File Include="Views/Labor/ContractItem.cshtml">
       <publishTime>10/30/2012 14:51:49</publishTime>
     </File>
     <File Include="Views/Labor/ContractList.cshtml">
-      <publishTime>10/09/2012 14:18:30</publishTime>
+      <publishTime>10/31/2012 11:36:16</publishTime>
     </File>
     <File Include="Views/Labor/Index.cshtml">
-      <publishTime>10/30/2012 16:56:10</publishTime>
+      <publishTime>10/31/2012 13:59:33</publishTime>
     </File>
     <File Include="Views/Labor/Item.cshtml">
       <publishTime>10/30/2012 09:47:09</publishTime>
@@ -929,13 +950,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/27/2012 08:48:21</publishTime>
     </File>
     <File Include="Views/Web.config">
-      <publishTime>08/06/2012 16:58:54</publishTime>
+      <publishTime>10/31/2012 10:39:50</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/31/2012 09:35:14</publishTime>
+      <publishTime>11/01/2012 10:19:13</publishTime>
     </File>
   </ItemGroup>
 </Project>

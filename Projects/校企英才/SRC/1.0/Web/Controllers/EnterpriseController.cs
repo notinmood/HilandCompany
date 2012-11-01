@@ -138,7 +138,7 @@ namespace XQYC.Web.Controllers
         {
             string userValueInputted = RequestHelper.GetValue("term");
             List<AutoCompleteEntity> itemList = new List<AutoCompleteEntity>();
-            string whereClause = string.Format(" ( CompanyName like '{0}%' OR CompanyNameShort like '{0}%' ) AND  CanUsable={1}", userValueInputted, (int)Logics.True);
+            string whereClause = string.Format(" ( CompanyName like '%{0}%' OR CompanyNameShort like '%{0}%' ) AND  CanUsable={1}", userValueInputted, (int)Logics.True);
             List<EnterpriseEntity> userList = EnterpriseBLL.Instance.GetList(whereClause);
 
             foreach (EnterpriseEntity currentLabor in userList)

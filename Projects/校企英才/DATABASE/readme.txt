@@ -1,0 +1,3 @@
+1、目前使用kingstudy库
+2、xqycImport是导入了劳务人员的一个中转库
+3、xiaoqiyingcaidatabasemanage是原来的一个开发时使用的库，可以考虑删除
