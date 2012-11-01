@@ -435,8 +435,6 @@ namespace XQYC.Web.Controllers
             return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
         }
 
-
-
         /// <summary>
         /// 口令
         /// </summary>
@@ -464,7 +462,7 @@ namespace XQYC.Web.Controllers
             string enterpriserGuid = RequestHelper.GetValue("autoCompleteExtraParam");
             List<AutoCompleteEntity> itemList = new List<AutoCompleteEntity>();
             string whereClause = string.Format(" UserNameCN like '{0}%' AND UserType={1} ", userValueInputted, (int)UserTypes.CommonUser);
-            
+
             //为了能够为刚刚离职的人员派发薪资，此处不再使用按照企业过滤劳务人员数据
             //if (string.IsNullOrWhiteSpace(enterpriserGuid) == false)
             //{
@@ -1312,91 +1310,84 @@ namespace XQYC.Web.Controllers
             return SalaryDetailsBLL.Instance.Create(salaryDetailsEntity);
         }
 
-        ///// <summary>
-        ///// 计算某劳务人员各种应付费用（保险，公积金，管理费等）
-        ///// </summary>
-        ///// <param name="labor"></param>
-        ///// <param name="salarySummary"></param>
-        //private static SalarySummaryEntity CalculateNeedCost(LaborEntity labor, SalarySummaryEntity salarySummary)
-        //{
-        //    if (GuidHelper.IsInvalidOrEmpty(labor.CurrentInsuranceFormularKey) == false)
-        //    {
-        //        salarySummary.InsuranceCalculated = CalculateCostDetails(new Guid(labor.CurrentInsuranceFormularKey), salarySummary);
-        //    }
+        /// <summary>
+        /// 薪资人数的应付数与实付数校验
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SalaryListCheck()
+        {
+            List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
+            string returnUrl = Url.Action("SalaryListPreSelector");
 
-        //    if (GuidHelper.IsInvalidOrEmpty(labor.CurrentReserveFundFormularKey) == false)
-        //    {
-        //        salarySummary.ReserveFundCalculated = CalculateCostDetails(new Guid(labor.CurrentReserveFundFormularKey), salarySummary);
-        //    }
+            //1.加入对预选择条件的过滤
+            string enterpriseKey = RequestHelper.GetValue("enterpriseKey");
+            string salaryMonth = RequestHelper.GetValue("salaryMonth");
+            if (GuidHelper.IsInvalidOrEmpty(enterpriseKey))
+            {
+                SystemStatusInfo itemError = new SystemStatusInfo();
+                itemError.SystemStatus = SystemStatuses.Warnning;
+                itemError.Message = "你没有选定企业信息，请选择。";
+                infoList.Add(itemError);
+                this.TempData.Add("OperationResultData", infoList);
+                return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+            }
 
-        //    if (GuidHelper.IsInvalidOrEmpty(labor.CurrentManageFeeFormularKey) == false)
-        //    {
-        //        salarySummary.ManageFeeCalculated = CalculateCostDetails(new Guid(labor.CurrentManageFeeFormularKey), salarySummary);
-        //    }
-        //    return salarySummary;
-        //}
+            DateTime salaryDateFirstDay = DateTime.Today;
+            if (string.IsNullOrWhiteSpace(salaryMonth))
+            {
+                SystemStatusInfo itemError = new SystemStatusInfo();
+                itemError.SystemStatus = SystemStatuses.Warnning;
+                itemError.Message = "你没有选定薪资月份，请选择。";
+                infoList.Add(itemError);
+                this.TempData.Add("OperationResultData", infoList);
+                return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+            }
+            else
+            {
+                salaryMonth = HttpUtility.UrlDecode(salaryMonth);
+                string salaryDateString = salaryMonth + "/1";
+                salaryDateFirstDay = DateTimeHelper.Parse(salaryDateString, DateFormats.YMD);
+            }
 
-        ///// <summary>
-        ///// 计算具体的费用
-        ///// </summary>
-        ///// <param name="costFormularKey"></param>
-        ///// <param name="salarySummary"></param>
-        ///// <returns></returns>
-        //private static decimal CalculateCostDetails(Guid costFormularKey, SalarySummaryEntity salarySummary)
-        //{
-        //    decimal result = 0M;
-        //    CostFormularEntity formularEntity = CostFormularBLL.Instance.Get(costFormularKey);
-        //    if (formularEntity == null)
-        //    {
-        //        return 0M;
-        //    }
+            //TODO:xieran20121101 因为要遍历企业中所有的人员，性能有可能不高，后续需要调整算法或者实现方式（异步？）
+            List<LaborEntity> laborList = LaborBLL.Instance.GetLaborsByEnterprise(new Guid(enterpriseKey));
+            List<SalarySummaryEntity> salarySummaryList = SalarySummaryBLL.Instance.GetList(enterpriseKey, salaryDateFirstDay);
+            for (int j = laborList.Count - 1; j >= 0; j--)
+            {
+                LaborEntity laborItem = laborList[j];
+                for (int i = 0; i < salarySummaryList.Count; i++)
+                {
+                    if (laborItem.UserGuid.ToString() == salarySummaryList[i].LaborKey)
+                    {
+                        laborList.Remove(laborItem);
+                        break;
+                    }
+                }
+            }
 
-        //    string formularValue = formularEntity.CostFormularValue;
-        //    if (string.IsNullOrWhiteSpace(formularValue) == false)
-        //    {
-        //        List<string> costElementList = StringHelper.GetPlaceHolderList(formularValue, "{", "}");
-        //        foreach (string costElement in costElementList)
-        //        {
-        //            string placeHolderContent = string.Empty;
-        //            switch (costElement)
-        //            {
-        //                case "NeedPaySalary":
-        //                    placeHolderContent = salarySummary.SalaryNeedPay.ToString();
-        //                    break;
-        //                case "RealPaySalary":
-        //                    //TODO:xieran20121019暂时未考虑实付工资的情形
-        //                    break;
-        //                default:
-        //                    {
-        //                        BasicSettingEntity basicSettingEntity = SystemConst.CostList.Find(w => w.SettingKey == costElement);
-        //                        if (basicSettingEntity != null)
-        //                        {
-        //                            placeHolderContent = basicSettingEntity.SettingValue;
-        //                        }
-        //                        break;
-        //                    }
-        //            }
-
-        //            string placeHolder = "{" + costElement + "}";
-        //            formularValue = formularValue.Replace(placeHolder, placeHolderContent);
-        //        }
-
-        //        try
-        //        {
-        //            RPN rpn = new RPN();
-        //            if (rpn.Parse(formularValue))
-        //            {
-        //                result = Convert.ToDecimal(rpn.Evaluate());
-        //            }
-        //        }
-        //        catch
-        //        {
-        //            result = 0;
-        //        }
-        //    }
-
-        //    return result;
-        //}
+            if (laborList.Count == 0)
+            {
+                SystemStatusInfo statusItem = new SystemStatusInfo();
+                statusItem.SystemStatus = SystemStatuses.Success;
+                statusItem.Message = "实付人员数量与应付人员数量相同！";
+                infoList.Add(statusItem);
+                this.TempData.Add("OperationResultData", infoList);
+                return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+            }
+            else
+            {
+                SystemStatusInfo statusItem = new SystemStatusInfo();
+                statusItem.SystemStatus = SystemStatuses.Warnning;
+                statusItem.Message = "实付人员数量与应付人员数量有差别，具体如下人员应付而未付：";
+                foreach (LaborEntity laborItem in laborList)
+                {
+                    statusItem.Message += string.Format("{0}({1})({2}), ", laborItem.UserNameCN, laborItem.LaborCode, laborItem.UserCardID);
+                }
+                infoList.Add(statusItem);
+                this.TempData.Add("OperationResultData", infoList);
+                return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+            }
+        }
         #endregion
 
         #region 银行卡

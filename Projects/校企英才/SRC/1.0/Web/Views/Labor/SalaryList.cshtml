@@ -32,7 +32,8 @@
         }
     </div>
     <div class="OperateArea" id="OperateAreaContainer">
-        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("SalaryItem", "Labor").Render(new { rel = "#EditDIV" }) 
+        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("SalaryItem", "Labor").Render(new { rel = "#EditDIV" }) | 
+        @Html.HiA("salaryListCheck").CssClassName("modalInput").Value("应付薪资人员校验").ACA("SalaryListCheck", "Labor").RouteValue(new{ enterpriseKey=enterpriseKey,salaryMonth=salaryMonth}).Render()
     </div>
     <table width="98%" class="grid">
         <tr>
