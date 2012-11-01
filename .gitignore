@@ -8,6 +8,9 @@
 *.mdf
 *.ldf
 
+*.back
+*.bak
+
 *.mp3
 
 /build
