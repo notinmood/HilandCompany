@@ -19,7 +19,7 @@
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业名称", ConditionFieldName = "CompanyName", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合作意向", ConditionFieldName = "EnterpriseLevel", ConditionType = typeof(CommonLevels), AddonData = "enumDisplayCategory:star" });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业性质", ConditionFieldName = "BusinessType", ConditionType = typeof(EnterpriseTypes) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合作意向", ConditionFieldName = "UserNameCN", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业状态", ConditionFieldName = "CanUsable", ConditionType = typeof(Logics) });
 }
 
 <h2>企业列表</h2>
@@ -34,7 +34,7 @@
         @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV" }) 
     </div>
     <div class="dataContainer">
-        <table style="width:1324px;"  class="grid">
+        <table class="grid">
             <tr>
                 <th style="width: 180px">操作
                 </th>
