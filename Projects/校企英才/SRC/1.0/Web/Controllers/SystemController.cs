@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Web.Mvc;
 using HiLand.Framework.BusinessCore;
 using HiLand.Framework4.Permission;
@@ -164,32 +165,23 @@ namespace XQYC.Web.Controllers
         /// <param name="isOnlyPlaceHolder"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult OperationResults(bool isOnlyPlaceHolder= true)
+        public ActionResult OperationResults(bool isOnlyPlaceHolder = true)
         {
             int inputDisplayCount = RequestHelper.GetValue("inputDisplayCount", 0);
 
             if (inputDisplayCount > 0)
             {
-                Stream stream = new MemoryStream();
-                //using (Stream stream = new MemoryStream())
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < inputDisplayCount; i++)
                 {
-                    StreamWriter sw = new StreamWriter(stream);
-                    //using (StreamWriter sw = new StreamWriter(stream))
-                    {
-                        for (int i = 0; i < inputDisplayCount; i++)
-                        {
-                            string inputDisplayContent = RequestHelper.GetValue("inputDisplayContent+" + i);
-                            sw.WriteLine(inputDisplayContent);
-                            sw.WriteLine("       ");
-                            sw.WriteLine("----------------------------------------------");
-                        }
-
-                        stream.Flush();
-                        sw.Flush();
-                        
-                        return File(stream, ContentTypes.GetContentType(".txt"), "操作信息.txt");
-                    }
+                    string inputDisplayContent = RequestHelper.GetValue("inputDisplayContent+" + i);
+                    sb.Append(inputDisplayContent);
                 }
+
+                Stream stream = new MemoryStream(StringHelper.GetByteArray(sb.ToString()));
+                stream.Flush();
+
+                return File(stream, ContentTypes.GetContentType(".txt"), "操作信息.txt");
             }
 
             return new EmptyResult();
