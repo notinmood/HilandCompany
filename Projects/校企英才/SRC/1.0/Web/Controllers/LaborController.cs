@@ -1351,21 +1351,28 @@ namespace XQYC.Web.Controllers
 
             //TODO:xieran20121101 因为要遍历企业中所有的人员，性能有可能不高，后续需要调整算法或者实现方式（异步？）
             List<LaborEntity> laborList = LaborBLL.Instance.GetLaborsByEnterprise(new Guid(enterpriseKey));
+            List<LaborEntity> unMatchedLaborList = new List<LaborEntity>();
             List<SalarySummaryEntity> salarySummaryList = SalarySummaryBLL.Instance.GetList(enterpriseKey, salaryDateFirstDay);
             for (int j = laborList.Count - 1; j >= 0; j--)
             {
                 LaborEntity laborItem = laborList[j];
+                bool isMatch = false;
                 for (int i = 0; i < salarySummaryList.Count; i++)
                 {
                     if (laborItem.UserGuid.ToString() == salarySummaryList[i].LaborKey)
                     {
-                        laborList.Remove(laborItem);
+                        isMatch = true;
                         break;
                     }
                 }
+
+                if (isMatch == false)
+                {
+                    unMatchedLaborList.Add(laborItem);
+                }
             }
 
-            if (laborList.Count == 0)
+            if (unMatchedLaborList.Count == 0)
             {
                 SystemStatusInfo statusItem = new SystemStatusInfo();
                 statusItem.SystemStatus = SystemStatuses.Success;
@@ -1379,7 +1386,7 @@ namespace XQYC.Web.Controllers
                 SystemStatusInfo statusItem = new SystemStatusInfo();
                 statusItem.SystemStatus = SystemStatuses.Warnning;
                 statusItem.Message = "实付人员数量与应付人员数量有差别，具体如下人员应付而未付：";
-                foreach (LaborEntity laborItem in laborList)
+                foreach (LaborEntity laborItem in unMatchedLaborList)
                 {
                     statusItem.Message += string.Format("{0}({1})({2}), ", laborItem.UserNameCN, laborItem.LaborCode, laborItem.UserCardID);
                 }

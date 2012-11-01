@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Web.Mvc;
 using HiLand.Framework.BusinessCore;
@@ -12,6 +13,8 @@ using HiLand.Utility.Entity;
 using HiLand.Utility.Entity.Status;
 using HiLand.Utility.Enums;
 using HiLand.Utility.Event;
+using HiLand.Utility.IO;
+using HiLand.Utility.Web;
 using HiLand.Utility4.Data;
 using HiLand.Utility4.MVC;
 
@@ -19,9 +22,6 @@ namespace XQYC.Web.Controllers
 {
     public class SystemController : Controller
     {
-        //
-        // GET: /System/
-
         public ActionResult Index()
         {
             return View();
@@ -130,7 +130,7 @@ namespace XQYC.Web.Controllers
             statusInfos.Add(statusInfo);
 
             this.TempData.Add("OperationResultData", statusInfos);
-            return RedirectToAction("OperationResults", new { returnUrl = returnUrl});
+            return RedirectToAction("OperationResults", new { returnUrl = returnUrl });
         }
 
         /// <summary>
@@ -156,6 +156,43 @@ namespace XQYC.Web.Controllers
 
             this.ViewData["returnUrl"] = returnUrl;
             return View("OperationResult", statusInfos);
+        }
+
+        /// <summary>
+        /// 信息导出另存
+        /// </summary>
+        /// <param name="isOnlyPlaceHolder"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult OperationResults(bool isOnlyPlaceHolder= true)
+        {
+            int inputDisplayCount = RequestHelper.GetValue("inputDisplayCount", 0);
+
+            if (inputDisplayCount > 0)
+            {
+                Stream stream = new MemoryStream();
+                //using (Stream stream = new MemoryStream())
+                {
+                    StreamWriter sw = new StreamWriter(stream);
+                    //using (StreamWriter sw = new StreamWriter(stream))
+                    {
+                        for (int i = 0; i < inputDisplayCount; i++)
+                        {
+                            string inputDisplayContent = RequestHelper.GetValue("inputDisplayContent+" + i);
+                            sw.WriteLine(inputDisplayContent);
+                            sw.WriteLine("       ");
+                            sw.WriteLine("----------------------------------------------");
+                        }
+
+                        stream.Flush();
+                        sw.Flush();
+                        
+                        return File(stream, ContentTypes.GetContentType(".txt"), "操作信息.txt");
+                    }
+                }
+            }
+
+            return new EmptyResult();
         }
 
         /// <summary>
