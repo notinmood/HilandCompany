@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Areas\APIs\APIsAreaRegistration.cs" />
+    <Compile Include="Areas\APIs\Controllers\MemberController.cs" />
     <Compile Include="Areas\EnterpriseConsole\Controllers\AccountController.cs" />
     <Compile Include="Areas\EnterpriseConsole\Controllers\EnterpriseController.cs" />
     <Compile Include="Areas\EnterpriseConsole\Controllers\LaborController.cs" />
@@ -382,7 +383,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\APIs\Controllers\" />
     <Folder Include="Areas\APIs\Models\" />
     <Folder Include="Areas\APIs\Views\Shared\" />
     <Folder Include="Areas\EnterpriseConsole\Models\" />
