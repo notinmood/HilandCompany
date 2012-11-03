@@ -29,7 +29,7 @@ namespace LaborCompare
             string connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             //1.获取LaborBankCard表的所有数据
             DataTable dtOuter = new DataTable();
-            string commandStringOuter = "SELECT [工号] ,[姓名] ,[银行卡号],[身份证号]  FROM [dbo].[LaborBankCard]";
+            string commandStringOuter = "SELECT [工号] ,[姓名] ,[银行卡号],[身份证号],[企业名称]  FROM [dbo].[LaborBankCard]";
             SqlDataAdapter daOuter = new SqlDataAdapter(commandStringOuter, connectionString);
 
             daOuter.Fill(dtOuter);
@@ -63,10 +63,9 @@ namespace LaborCompare
                     }
                 }
 
-
                 if (isMartched == false)
                 {
-                    resultData.Add(string.Format("{0}-{1}-{2}", drOuter["姓名"].ToString(), drOuter["身份证号"].ToString(), drOuter["银行卡号"].ToString()));
+                    resultData.Add(string.Format("[{0}]-{1}-{2}-{3}", drOuter["企业名称"].ToString(), drOuter["姓名"].ToString(), drOuter["身份证号"].ToString(), drOuter["银行卡号"].ToString()));
                 }
 
                 base.backgroundWorker1.ReportProgress(100 * j / rowCountOuter);
