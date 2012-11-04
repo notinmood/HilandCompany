@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using HiLand.Utility.Setting;
@@ -33,12 +34,22 @@ namespace XQYC.Web
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional }, // Parameter defaults
                 new string[] { "XQYC.Web.Controllers" }
             );
+        }
 
+        public static void RegisterWebApi(HttpConfiguration config)
+        {
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
         }
 
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+
+            RegisterWebApi(GlobalConfiguration.Configuration);
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
