@@ -55,9 +55,9 @@
                 </td>
                 <td>@EnumHelper.GetDisplayValue(entity.LaborContractStatus)
                 </td>
-                <td>@entity.LaborContractStartDate.ToShortDateString()
+                <td>@DateTimeHelper.ToSaftShortDateString(entity.LaborContractStartDate)
                 </td>
-                <td>@entity.LaborContractStopDate.ToShortDateString()
+                <td>@DateTimeHelper.ToSaftShortDateString(entity.LaborContractStopDate)
                 </td>
             </tr>   
         }
