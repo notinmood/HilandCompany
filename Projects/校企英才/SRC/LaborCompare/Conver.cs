@@ -34,5 +34,17 @@ namespace LaborCompare
             后勤提供数据与财务提供数据对比 window = new 后勤提供数据与财务提供数据对比();
             window.ShowDialog();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            修改劳务人员中关联企业的guid window = new 修改劳务人员中关联企业的guid();
+            window.ShowDialog();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            创建劳务人员合同 window = new 创建劳务人员合同();
+            window.ShowDialog();
+        }
     }
 }
