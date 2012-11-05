@@ -62,11 +62,16 @@ namespace XQYC.Business.Enums
         [EnumItemDescription("zh-CN", "公积金(个人部分)")]
         ReserveFundPersonal = 52,
 
-
         /// <summary>
         /// 管理费
         /// </summary>
         [EnumItemDescription("zh-CN", "管理费")]
         ManageFee=60,
+        
+        /// <summary>
+        /// 工资税
+        /// </summary>
+        [EnumItemDescription("zh-CN", "工资税")]
+        SalaryTax= 80,
     }
 }

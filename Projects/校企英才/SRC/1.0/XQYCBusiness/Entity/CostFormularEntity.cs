@@ -51,8 +51,8 @@ namespace XQYC.Business.Entity
             set { enterpriseKey = value; }
         }
 
-        private int costType;
-        public int CostType
+        private CostTypes costType;
+        public CostTypes CostType
         {
             get { return costType; }
             set { costType = value; }

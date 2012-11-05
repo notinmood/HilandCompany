@@ -3,6 +3,7 @@ using HiLand.Framework.FoundationLayer;
 using HiLand.Framework.FoundationLayer.Attributes;
 using HiLand.Utility.Data;
 using HiLand.Utility.Enums;
+using HiLand.Utility.Finance;
 using XQYC.Business.Enums;
 
 namespace XQYC.Business.Entity
@@ -11,6 +12,21 @@ namespace XQYC.Business.Entity
     {
         /*
          * 本类添加两个冗余字段LaborName（劳务人员名称），LaborCode（劳务人员工号）以便于查询
+         */
+
+        /*
+         * 公积金，管理费，保险统称为常规费用（Cost），Cost有企业部分和个人部分，每个部分都包含2种使用模式（具体使用选择其一）
+         * 1.使用MixCost （所有常规费用都在这里，不进行单个细分为保险，公积金等了）
+         * 2.使用单个分项目：公积金，管理费，保险和其他费用
+         * 两种选用其一，使用提取这些数据的时候，MixCost有限
+         */
+
+        /*
+            各种工资实付，应付名称直接的关系：1.先扣除罚款 2.扣除保险等各种费用中个人应该承担的部分 3.扣除个税
+         * 1.SalaryGrossPay 未扣减费用前的毛工资
+         * 2.SalaryNeedPayBeforeCost 
+         * 3.SalaryNeedPayBeforeTax
+         * 4.SalaryNeedPayToLabor 
          */
 
         public override string[] BusinessKeyNames
@@ -92,7 +108,7 @@ namespace XQYC.Business.Entity
 
         private decimal salaryGrossPay;
         /// <summary>
-        /// 未扣减费用钱的毛工资
+        /// 未扣减费用前的毛工资
         /// </summary>
         public decimal SalaryGrossPay
         {
@@ -114,18 +130,119 @@ namespace XQYC.Business.Entity
         }
 
         /// <summary>
-        /// 应付工资（SalaryGrossPay和SalaryRebate的差额）
+        /// 应付工资（扣除保险公积金等前的应付工资）（SalaryGrossPay和SalaryRebate的差额）
         /// </summary>
         /// <remarks>
         /// 因为SalaryRebate已经用负值表示表示了，所以其跟SalaryGrossPay相加即可
         /// </remarks>
-        public decimal SalaryNeedPay
+        public decimal SalaryNeedPayBeforeCost
         {
             get
             {
                 return SalaryGrossPay + SalaryRebate;
             }
         }
+
+        /// <summary>
+        /// 扣除个税前的应付(里面已经去除了保险等各种常规费用的个人承担部分)
+        /// </summary>
+        public decimal SalaryNeedPayBeforeTax
+        {
+            get
+            {
+                return SalaryNeedPayBeforeCost - PersonCostReal;
+            }
+        }
+
+        /// <summary>
+        /// 最后到劳务人员手中的应付费用
+        /// </summary>
+        public decimal SalaryNeedPayToLabor
+        {
+            get
+            {
+
+                return SalaryNeedPayBeforeTax - SalaryTax;
+            }
+        }
+
+        /// <summary>
+        /// 各种常规费用中个人担负的部分（实际）
+        /// </summary>
+        public decimal PersonCostReal
+        {
+            get
+            {
+                if (PersonMixCostReal > 0)
+                {
+                    return PersonMixCostReal;
+                }
+                else
+                {
+                   return  PersonInsuranceReal + PersonManageFeeReal + PersonReserveFundReal + PersonOtherCostReal;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 各种常规费用中个人担负的部分（计算）
+        /// </summary>
+        public decimal PersonCostCalculated
+        {
+            get
+            {
+                if (PersonMixCostCalculated > 0)
+                {
+                    return PersonMixCostCalculated;
+                }
+                else
+                {
+                    return PersonInsuranceCalculated + PersonManageFeeCalculated + PersonReserveFundCalculated + PersonOtherCostCalculated;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 各种常规费用中企业担负的部分（实际）
+        /// </summary>
+        public decimal EnterpriseCostReal
+        {
+            get
+            {
+                if (EnterpriseMixCostReal > 0)
+                {
+                    return EnterpriseMixCostReal;
+                }
+                else
+                {
+                    return EnterpriseInsuranceReal + EnterpriseManageFeeReal + EnterpriseReserveFundReal + EnterpriseOtherCostReal;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 各种常规费用中企业担负的部分（计算）
+        /// </summary>
+        public decimal EnterpriseCostCalculated
+        {
+            get
+            {
+                if (EnterpriseMixCostCalculated > 0)
+                {
+                    return EnterpriseMixCostCalculated;
+                }
+                else
+                {
+                    return EnterpriseInsuranceCalculated + EnterpriseManageFeeCalculated + EnterpriseReserveFundCalculated + EnterpriseOtherCostCalculated;
+                }
+            }
+        }
+
+        ///// <summary>
+        ///// 个税
+        ///// </summary>
+        //private decimal salaryTax = 0M;
+
 
         private Logics isCostCalculated;
         public Logics IsCostCalculated
@@ -141,46 +258,178 @@ namespace XQYC.Business.Entity
             set { salaryPayStatus = value; }
         }
 
-        private decimal manageFeeReal;
-        public decimal ManageFeeReal
+        private decimal enterpriseManageFeeReal;
+        public decimal EnterpriseManageFeeReal
         {
-            get { return manageFeeReal; }
-            set { manageFeeReal = value; }
+            get { return enterpriseManageFeeReal; }
+            set { enterpriseManageFeeReal = value; }
         }
 
-        private decimal manageFeeCalculated;
-        public decimal ManageFeeCalculated
+        private decimal enterpriseManageFeeCalculated;
+        public decimal EnterpriseManageFeeCalculated
         {
-            get { return manageFeeCalculated; }
-            set { manageFeeCalculated = value; }
+            get { return enterpriseManageFeeCalculated; }
+            set { enterpriseManageFeeCalculated = value; }
         }
 
-        private decimal insuranceReal;
-        public decimal InsuranceReal
+        private decimal enterpriseInsuranceReal;
+        public decimal EnterpriseInsuranceReal
         {
-            get { return insuranceReal; }
-            set { insuranceReal = value; }
+            get { return enterpriseInsuranceReal; }
+            set { enterpriseInsuranceReal = value; }
         }
 
-        private decimal insuranceCalculated;
-        public decimal InsuranceCalculated
+        private decimal enterpriseInsuranceCalculated;
+        public decimal EnterpriseInsuranceCalculated
         {
-            get { return insuranceCalculated; }
-            set { insuranceCalculated = value; }
+            get { return enterpriseInsuranceCalculated; }
+            set { enterpriseInsuranceCalculated = value; }
         }
 
-        private decimal reserveFundReal;
-        public decimal ReserveFundReal
+        private decimal enterpriseReserveFundReal;
+        public decimal EnterpriseReserveFundReal
         {
-            get { return reserveFundReal; }
-            set { reserveFundReal = value; }
+            get { return enterpriseReserveFundReal; }
+            set { enterpriseReserveFundReal = value; }
         }
 
-        private decimal reserveFundCalculated;
-        public decimal ReserveFundCalculated
+        private decimal enterpriseReserveFundCalculated;
+        public decimal EnterpriseReserveFundCalculated
         {
-            get { return reserveFundCalculated; }
-            set { reserveFundCalculated = value; }
+            get { return enterpriseReserveFundCalculated; }
+            set { enterpriseReserveFundCalculated = value; }
+        }
+
+        private decimal personManageFeeReal;
+        public decimal PersonManageFeeReal
+        {
+            get { return personManageFeeReal; }
+            set { personManageFeeReal = value; }
+        }
+
+        private decimal personManageFeeCalculated;
+        public decimal PersonManageFeeCalculated
+        {
+            get { return personManageFeeCalculated; }
+            set { personManageFeeCalculated = value; }
+        }
+
+        private decimal personInsuranceReal;
+        public decimal PersonInsuranceReal
+        {
+            get { return personInsuranceReal; }
+            set { personInsuranceReal = value; }
+        }
+
+        private decimal personInsuranceCalculated;
+        public decimal PersonInsuranceCalculated
+        {
+            get { return personInsuranceCalculated; }
+            set { personInsuranceCalculated = value; }
+        }
+
+        private decimal personReserveFundReal;
+        public decimal PersonReserveFundReal
+        {
+            get { return personReserveFundReal; }
+            set { personReserveFundReal = value; }
+        }
+
+        private decimal personReserveFundCalculated;
+        public decimal PersonReserveFundCalculated
+        {
+            get { return personReserveFundCalculated; }
+            set { personReserveFundCalculated = value; }
+        }
+
+        private decimal enterpriseMixCostReal;
+        public decimal EnterpriseMixCostReal
+        {
+            get { return enterpriseMixCostReal; }
+            set { enterpriseMixCostReal = value; }
+        }
+
+        private decimal enterpriseMixCostCalculated;
+        public decimal EnterpriseMixCostCalculated
+        {
+            get { return enterpriseMixCostCalculated; }
+            set { enterpriseMixCostCalculated = value; }
+        }
+
+        private decimal personMixCostReal;
+        public decimal PersonMixCostReal
+        {
+            get { return personMixCostReal; }
+            set { personMixCostReal = value; }
+        }
+
+        private decimal personMixCostCalculated;
+        public decimal PersonMixCostCalculated
+        {
+            get { return personMixCostCalculated; }
+            set { personMixCostCalculated = value; }
+        }
+
+        private decimal enterpriseOtherCostReal;
+        public decimal EnterpriseOtherCostReal
+        {
+            get { return enterpriseOtherCostReal; }
+            set { enterpriseOtherCostReal = value; }
+        }
+
+        private decimal enterpriseOtherCostCalculated;
+        public decimal EnterpriseOtherCostCalculated
+        {
+            get { return enterpriseOtherCostCalculated; }
+            set { enterpriseOtherCostCalculated = value; }
+        }
+
+        private decimal personOtherCostReal;
+        public decimal PersonOtherCostReal
+        {
+            get { return personOtherCostReal; }
+            set { personOtherCostReal = value; }
+        }
+
+        private decimal personOtherCostCalculated;
+        public decimal PersonOtherCostCalculated
+        {
+            get { return personOtherCostCalculated; }
+            set { personOtherCostCalculated = value; }
+        }
+
+        //TODO:xieran20121105 工资税这个地方,如果有实际值使用实际值，否则使用计算的值
+        private decimal SalaryTax
+        {
+            get
+            {
+                if (SalaryTaxReal > 0)
+                {
+                    return SalaryTaxReal;
+                }
+                else
+                {
+                    return SalaryTaxCalculated;
+                }
+            }
+        }
+
+        private decimal salaryTaxReal;
+        public decimal SalaryTaxReal
+        {
+            get { return salaryTaxReal; }
+            set { salaryTaxReal = value; }
+        }
+
+        private decimal salaryTaxCalculated;
+        public decimal SalaryTaxCalculated
+        {
+            internal set { salaryTaxCalculated = value; }
+            get 
+            {
+                salaryTaxCalculated = SalaryTaxHelper.GetSalaryTax(SalaryNeedPayBeforeTax);
+                return salaryTaxCalculated; 
+            }
         }
 
         private string salaryMemo = String.Empty;
@@ -188,6 +437,20 @@ namespace XQYC.Business.Entity
         {
             get { return salaryMemo; }
             set { salaryMemo = value; }
+        }
+
+        private int isCheckPast;
+        public int IsCheckPast
+        {
+            get { return isCheckPast; }
+            set { isCheckPast = value; }
+        }
+
+        private string checkMemo = String.Empty;
+        public string CheckMemo
+        {
+            get { return checkMemo; }
+            set { checkMemo = value; }
         }
         
         #endregion

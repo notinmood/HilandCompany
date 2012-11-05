@@ -1,4 +1,6 @@
-﻿using HiLand.Framework.FoundationLayer;
+﻿using System;
+using System.Collections.Generic;
+using HiLand.Framework.FoundationLayer;
 using HiLand.Utility.Enums;
 using XQYC.Business.DAL;
 using XQYC.Business.DALCommon;
@@ -19,6 +21,7 @@ namespace XQYC.Business.BLL
     */
 
     //TODO:xieran20121011 添加系统自动扫描任务，完成上面提到的第五项目
+    //TODO:xieran20121005 需要实现一个系统任务调用的，根据当前时间变更劳务合同状态（主要是变更到自然到期）的方法
 
     /// <summary>
     /// 劳务人员合同业务逻辑类
@@ -82,13 +85,25 @@ namespace XQYC.Business.BLL
             laborEntity.LaborWorkStatus = contractEntity.LaborContractStatus;
             laborEntity.LaborCode = contractEntity.LaborCode;
 
-            laborEntity.CurrentInsuranceFormularKey = contractEntity.InsuranceFormularKey;
-            laborEntity.CurrentManageFeeFormularKey = contractEntity.ManageFeeFormularKey;
-            laborEntity.CurrentReserveFundFormularKey = contractEntity.ReserveFundFormularKey;
-
             return LaborBLL.Instance.Update(laborEntity);
         }
 
-        //TODO:xieran20121005 需要实现一个系统任务调用的，根据当前时间变更劳务合同状态（主要是变更到自然到期）的方法
+        /// <summary>
+        /// 获取某人员当前的劳务合同
+        /// </summary>
+        /// <param name="LaborUserGuid"></param>
+        /// <returns></returns>
+        public LaborContractEntity GetCurrentContract(Guid LaborUserGuid)
+        {
+            List<LaborContractEntity> contractList = base.GetList(string.Format(" LaborUserGuid= '{0}' AND LaborContractIsCurrent={1} ",LaborUserGuid,(int)Logics.True));
+            if (contractList != null && contractList.Count > 0)
+            {
+                return contractList[0];
+            }
+            else
+            {
+                return LaborContractEntity.Empty;
+            }
+        }
     }
 }

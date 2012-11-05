@@ -111,25 +111,124 @@ namespace XQYC.Business.Entity
             set { laborContractDiscontinueDesc = value; }
         }
 
-        private string insuranceFormularKey = String.Empty;
-        public string InsuranceFormularKey
+        //private string insuranceFormularKey = String.Empty;
+        //public string InsuranceFormularKey
+        //{
+        //    get { return insuranceFormularKey; }
+        //    set { insuranceFormularKey = value; }
+        //}
+
+        //private string reserveFundFormularKey = String.Empty;
+        //public string ReserveFundFormularKey
+        //{
+        //    get { return reserveFundFormularKey; }
+        //    set { reserveFundFormularKey = value; }
+        //}
+
+        //private string manageFeeFormularKey = String.Empty;
+        //public string ManageFeeFormularKey
+        //{
+        //    get { return manageFeeFormularKey; }
+        //    set { manageFeeFormularKey = value; }
+        //}
+        private string enterpriseInsuranceFormularKey = String.Empty;
+        /// <summary>
+        /// 劳务合同中的保险企业应该担负部分的计算公式Key
+        /// </summary>
+        public string EnterpriseInsuranceFormularKey
         {
-            get { return insuranceFormularKey; }
-            set { insuranceFormularKey = value; }
+            get { return enterpriseInsuranceFormularKey; }
+            set { enterpriseInsuranceFormularKey = value; }
         }
 
-        private string reserveFundFormularKey = String.Empty;
-        public string ReserveFundFormularKey
+        private string enterpriseReserveFundFormularKey = String.Empty;
+        /// <summary>
+        /// 劳务合同中的公积金企业应该担负部分的计算公式Key
+        /// </summary>
+        public string EnterpriseReserveFundFormularKey
         {
-            get { return reserveFundFormularKey; }
-            set { reserveFundFormularKey = value; }
+            get { return enterpriseReserveFundFormularKey; }
+            set { enterpriseReserveFundFormularKey = value; }
         }
 
-        private string manageFeeFormularKey = String.Empty;
-        public string ManageFeeFormularKey
+        private string enterpriseManageFeeFormularKey = String.Empty;
+        /// <summary>
+        /// 劳务合同中的管理费企业应该担负部分的计算公式Key
+        /// </summary>
+        public string EnterpriseManageFeeFormularKey
         {
-            get { return manageFeeFormularKey; }
-            set { manageFeeFormularKey = value; }
+            get { return enterpriseManageFeeFormularKey; }
+            set { enterpriseManageFeeFormularKey = value; }
+        }
+
+        private string enterpriseMixCostFormularKey = String.Empty;
+        /// <summary>
+        /// 劳务合同中的混合费用企业应该担负部分的计算公式Key
+        /// </summary>
+        public string EnterpriseMixCostFormularKey
+        {
+            get { return enterpriseMixCostFormularKey; }
+            set { enterpriseMixCostFormularKey = value; }
+        }
+
+        private string enterpriseOtherCostFormularKey = String.Empty;
+        /// <summary>
+        /// 劳务合同中的其他费用企业应该担负部分的计算公式Key
+        /// </summary>
+        public string EnterpriseOtherCostFormularKey
+        {
+            get { return enterpriseOtherCostFormularKey; }
+            set { enterpriseOtherCostFormularKey = value; }
+        }
+
+        private string personInsuranceFormularKey = String.Empty;
+        /// <summary>
+        /// 劳务合同中的保险个人应该担负部分的计算公式Key
+        /// </summary>
+        public string PersonInsuranceFormularKey
+        {
+            get { return personInsuranceFormularKey; }
+            set { personInsuranceFormularKey = value; }
+        }
+
+        private string personReserveFundFormularKey = String.Empty;
+        /// <summary>
+        /// 劳务合同中的公积金个人应该担负部分的计算公式Key
+        /// </summary>
+        public string PersonReserveFundFormularKey
+        {
+            get { return personReserveFundFormularKey; }
+            set { personReserveFundFormularKey = value; }
+        }
+
+        private string personManageFeeFormularKey = String.Empty;
+        /// <summary>
+        /// 劳务合同中的管理费个人应该担负部分的计算公式Key
+        /// </summary>
+        public string PersonManageFeeFormularKey
+        {
+            get { return personManageFeeFormularKey; }
+            set { personManageFeeFormularKey = value; }
+        }
+
+        private string personMixCostFormularKey = String.Empty;
+        /// <summary>
+        /// 劳务合同中的混合费用个人应该担负部分的计算公式Key
+        /// </summary>
+        public string PersonMixCostFormularKey
+        {
+            get { return personMixCostFormularKey; }
+            set { personMixCostFormularKey = value; }
+        }
+
+        private string personOtherCostFormularKey = String.Empty;
+        /// <summary>
+        /// 劳务合同中的其他费用个人应该担负部分的计算公式Key
+        /// </summary>
+        public string PersonOtherCostFormularKey
+        {
+            get { return personOtherCostFormularKey; }
+            set { personOtherCostFormularKey = value; }
         }
 
         private Guid operateUserGuid = Guid.Empty;

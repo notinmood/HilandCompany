@@ -108,20 +108,56 @@ namespace XQYC.Business.BLL
         {
             LaborEntity labor = LaborBLL.Instance.Get(salarySummary.LaborKey);
 
-            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentInsuranceFormularKey) == false)
+            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentLaborContract.EnterpriseInsuranceFormularKey) == false)
             {
-                salarySummary.InsuranceCalculated = CalculateCostDetails(new Guid(labor.CurrentInsuranceFormularKey), salarySummary);
+                salarySummary.EnterpriseInsuranceCalculated = CalculateCostDetails(new Guid(labor.CurrentLaborContract.EnterpriseInsuranceFormularKey), salarySummary);
             }
 
-            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentReserveFundFormularKey) == false)
+            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentLaborContract.EnterpriseReserveFundFormularKey) == false)
             {
-                salarySummary.ReserveFundCalculated = CalculateCostDetails(new Guid(labor.CurrentReserveFundFormularKey), salarySummary);
+                salarySummary.EnterpriseReserveFundCalculated = CalculateCostDetails(new Guid(labor.CurrentLaborContract.EnterpriseReserveFundFormularKey), salarySummary);
             }
 
-            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentManageFeeFormularKey) == false)
+            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentLaborContract.EnterpriseManageFeeFormularKey) == false)
             {
-                salarySummary.ManageFeeCalculated = CalculateCostDetails(new Guid(labor.CurrentManageFeeFormularKey), salarySummary);
+                salarySummary.EnterpriseManageFeeCalculated = CalculateCostDetails(new Guid(labor.CurrentLaborContract.EnterpriseManageFeeFormularKey), salarySummary);
             }
+
+            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentLaborContract.EnterpriseOtherCostFormularKey) == false)
+            {
+                salarySummary.EnterpriseOtherCostCalculated = CalculateCostDetails(new Guid(labor.CurrentLaborContract.EnterpriseOtherCostFormularKey), salarySummary);
+            }
+
+            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentLaborContract.EnterpriseMixCostFormularKey) == false)
+            {
+                salarySummary.EnterpriseMixCostCalculated = CalculateCostDetails(new Guid(labor.CurrentLaborContract.EnterpriseMixCostFormularKey), salarySummary);
+            }
+
+            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentLaborContract.PersonInsuranceFormularKey) == false)
+            {
+                salarySummary.PersonInsuranceCalculated = CalculateCostDetails(new Guid(labor.CurrentLaborContract.PersonInsuranceFormularKey), salarySummary);
+            }
+
+            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentLaborContract.PersonReserveFundFormularKey) == false)
+            {
+                salarySummary.PersonReserveFundCalculated = CalculateCostDetails(new Guid(labor.CurrentLaborContract.PersonReserveFundFormularKey), salarySummary);
+            }
+
+            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentLaborContract.PersonManageFeeFormularKey) == false)
+            {
+                salarySummary.PersonManageFeeCalculated = CalculateCostDetails(new Guid(labor.CurrentLaborContract.PersonManageFeeFormularKey), salarySummary);
+            }
+
+            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentLaborContract.PersonOtherCostFormularKey) == false)
+            {
+                salarySummary.PersonOtherCostCalculated = CalculateCostDetails(new Guid(labor.CurrentLaborContract.PersonOtherCostFormularKey), salarySummary);
+            }
+
+            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentLaborContract.PersonMixCostFormularKey) == false)
+            {
+                salarySummary.PersonMixCostCalculated = CalculateCostDetails(new Guid(labor.CurrentLaborContract.PersonMixCostFormularKey), salarySummary);
+            }
+
             return salarySummary;
         }
 
@@ -150,7 +186,7 @@ namespace XQYC.Business.BLL
                     switch (costElement)
                     {
                         case "NeedPaySalary":
-                            placeHolderContent = salarySummary.SalaryNeedPay.ToString();
+                            placeHolderContent = salarySummary.SalaryNeedPayBeforeCost.ToString();
                             break;
                         case "RealPaySalary":
                             //TODO:xieran20121019暂时未考虑实付工资的情形

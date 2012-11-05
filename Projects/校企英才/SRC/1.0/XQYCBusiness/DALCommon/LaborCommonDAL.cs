@@ -267,9 +267,6 @@ namespace XQYC.Business.DALCommon
                 GenerateParameter("CurrentEnterpriseKey",entity.CurrentEnterpriseKey??String.Empty),
                 GenerateParameter("CurrentEnterpriseName",entity.CurrentEnterpriseName??String.Empty),
                 GenerateParameter("CurrentContractKey",entity.CurrentContractKey??String.Empty),
-                GenerateParameter("CurrentInsuranceFormularKey",entity.CurrentInsuranceFormularKey??String.Empty),
-                GenerateParameter("CurrentReserveFundFormularKey",entity.CurrentReserveFundFormularKey??String.Empty),
-                GenerateParameter("CurrentManageFeeFormularKey",entity.CurrentManageFeeFormularKey??String.Empty),
 			    GenerateParameter("Memo1",entity.Memo1?? String.Empty),
 			    GenerateParameter("Memo2",entity.Memo2?? String.Empty),
 			    GenerateParameter("Memo3",entity.Memo3?? String.Empty),
@@ -457,19 +454,6 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CurrentContractKey"))
                 {
                     entity.CurrentContractKey = reader.GetString(reader.GetOrdinal("CurrentContractKey"));
-                }
-
-                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CurrentInsuranceFormularKey"))
-                {
-                    entity.CurrentInsuranceFormularKey = reader.GetString(reader.GetOrdinal("CurrentInsuranceFormularKey"));
-                }
-                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CurrentReserveFundFormularKey"))
-                {
-                    entity.CurrentReserveFundFormularKey = reader.GetString(reader.GetOrdinal("CurrentReserveFundFormularKey"));
-                }
-                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CurrentManageFeeFormularKey"))
-                {
-                    entity.CurrentManageFeeFormularKey = reader.GetString(reader.GetOrdinal("CurrentManageFeeFormularKey"));
                 }
 
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "Memo1"))

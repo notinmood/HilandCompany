@@ -25,6 +25,8 @@
             </th>
             <th style="width: 80px">类别
             </th>
+            <th style="width: 80px">种类
+            </th>
             <th  style="width: 50px">状态
             </th>
             <th style="width: 120px">名称
@@ -38,6 +40,8 @@
             <tr>
                 <td>
                     @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("编辑").ACA("Item", "CostFormular").Render(new { rel = "#EditDIV", itemKey = @entityGuid }) 
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.CostType)
                 </td>
                 <td>@EnumHelper.GetDisplayValue(entity.CostKind)
                 </td>

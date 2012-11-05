@@ -93,6 +93,7 @@
     <Compile Include="Entity\EnterpriseContractEntity.cs" />
     <Compile Include="Entity\EnterpriseServiceEntity.cs" />
     <Compile Include="Entity\InformationBrokerEntity.cs" />
+    <Compile Include="Enums\CostTypes.cs" />
     <Compile Include="Enums\HouseHoldTypes.cs" />
     <Compile Include="Enums\CostKinds.cs" />
     <Compile Include="Enums\InformationBrokerTypes.cs" />

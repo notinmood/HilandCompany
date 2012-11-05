@@ -166,7 +166,7 @@ namespace XQYC.Business.DALCommon
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CostType"))
                 {
-                    entity.CostType = reader.GetInt32(reader.GetOrdinal("CostType"));
+                    entity.CostType = (CostTypes)reader.GetInt32(reader.GetOrdinal("CostType"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CostKind"))
                 {

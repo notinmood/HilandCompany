@@ -54,47 +54,61 @@ namespace XQYC.Business.DALCommon
             }
 
             string commandText = string.Format(@"Insert Into [XQYCLaborContract] (
-			        [LaborContractGuid],
-			        [LaborUserGuid],
-                    [LaborCode],
-			        [EnterpriseGuid],
-			        [EnterpriseContractGuid],
-			        [LaborContractStatus],
-                    [LaborContractIsCurrent],
-			        [LaborContractStartDate],
-			        [LaborContractStopDate],
-			        [LaborContractDetails],
-			        [LaborContractDiscontinueDate],
-			        [LaborContractDiscontinueDesc],
-                    [InsuranceFormularKey],
-                    [ReserveFundFormularKey],
-                    [ManageFeeFormularKey],
-			        [OperateUserGuid],
-			        [OperateDate],
-			        [PropertyNames],
-			        [PropertyValues]
-                ) 
-                Values (
-			        {0}LaborContractGuid,
-			        {0}LaborUserGuid,
-                    {0}LaborCode,
-			        {0}EnterpriseGuid,
-			        {0}EnterpriseContractGuid,
-			        {0}LaborContractStatus,
-                    {0}LaborContractIsCurrent,
-			        {0}LaborContractStartDate,
-			        {0}LaborContractStopDate,
-			        {0}LaborContractDetails,
-			        {0}LaborContractDiscontinueDate,
-			        {0}LaborContractDiscontinueDesc,
-                    {0}InsuranceFormularKey,
-                    {0}ReserveFundFormularKey,
-                    {0}ManageFeeFormularKey,
-			        {0}OperateUserGuid,
-			        {0}OperateDate,
-			        {0}PropertyNames,
-			        {0}PropertyValues
-                )", ParameterNamePrefix);
+			    [LaborContractGuid],
+			    [LaborUserGuid],
+			    [LaborCode],
+			    [EnterpriseGuid],
+			    [EnterpriseContractGuid],
+			    [LaborContractStatus],
+			    [LaborContractStartDate],
+			    [LaborContractStopDate],
+			    [LaborContractDetails],
+			    [LaborContractDiscontinueDate],
+			    [LaborContractDiscontinueDesc],
+			    [LaborContractIsCurrent],
+			    [EnterpriseInsuranceFormularKey],
+			    [EnterpriseReserveFundFormularKey],
+			    [EnterpriseManageFeeFormularKey],
+			    [EnterpriseMixCostFormularKey],
+			    [EnterpriseOtherCostFormularKey],
+			    [PersonInsuranceFormularKey],
+			    [PersonReserveFundFormularKey],
+			    [PersonManageFeeFormularKey],
+			    [PersonMixCostFormularKey],
+			    [PersonOtherCostFormularKey],
+			    [OperateUserGuid],
+			    [OperateDate],
+			    [PropertyNames],
+			    [PropertyValues]
+            ) 
+            Values (
+			    {0}LaborContractGuid,
+			    {0}LaborUserGuid,
+			    {0}LaborCode,
+			    {0}EnterpriseGuid,
+			    {0}EnterpriseContractGuid,
+			    {0}LaborContractStatus,
+			    {0}LaborContractStartDate,
+			    {0}LaborContractStopDate,
+			    {0}LaborContractDetails,
+			    {0}LaborContractDiscontinueDate,
+			    {0}LaborContractDiscontinueDesc,
+			    {0}LaborContractIsCurrent,
+			    {0}EnterpriseInsuranceFormularKey,
+			    {0}EnterpriseReserveFundFormularKey,
+			    {0}EnterpriseManageFeeFormularKey,
+			    {0}EnterpriseMixCostFormularKey,
+			    {0}EnterpriseOtherCostFormularKey,
+			    {0}PersonInsuranceFormularKey,
+			    {0}PersonReserveFundFormularKey,
+			    {0}PersonManageFeeFormularKey,
+			    {0}PersonMixCostFormularKey,
+			    {0}PersonOtherCostFormularKey,
+			    {0}OperateUserGuid,
+			    {0}OperateDate,
+			    {0}PropertyNames,
+			    {0}PropertyValues
+            )", ParameterNamePrefix);
 
             TParameter[] sqlParas = PrepareParasAll(entity);
 
@@ -105,26 +119,33 @@ namespace XQYC.Business.DALCommon
         public override bool Update(LaborContractEntity entity)
         {
             string commandText = string.Format(@"Update [XQYCLaborContract] Set   
-					[LaborContractGuid] = {0}LaborContractGuid,
-					[LaborUserGuid] = {0}LaborUserGuid, 
-                    [LaborCode]= {0}LaborCode,
-					[EnterpriseGuid] = {0}EnterpriseGuid,
-					[EnterpriseContractGuid] = {0}EnterpriseContractGuid,
-					[LaborContractStatus] = {0}LaborContractStatus,
-                    [LaborContractIsCurrent]={0}LaborContractIsCurrent,
-					[LaborContractStartDate] = {0}LaborContractStartDate,
-					[LaborContractStopDate] = {0}LaborContractStopDate,
-					[LaborContractDetails] = {0}LaborContractDetails,
-					[LaborContractDiscontinueDate] = {0}LaborContractDiscontinueDate,
-					[LaborContractDiscontinueDesc] = {0}LaborContractDiscontinueDesc,
-                    [InsuranceFormularKey] = {0}InsuranceFormularKey,
-                    [ReserveFundFormularKey] = {0}ReserveFundFormularKey,
-                    [ManageFeeFormularKey] = {0}ManageFeeFormularKey,
-					[OperateUserGuid] = {0}OperateUserGuid,
-					[OperateDate] = {0}OperateDate,
-					[PropertyNames] = {0}PropertyNames,
-					[PropertyValues] = {0}PropertyValues
-             Where [LaborContractID] = {0}LaborContractID", ParameterNamePrefix);
+				    [LaborContractGuid] = {0}LaborContractGuid,
+				    [LaborUserGuid] = {0}LaborUserGuid,
+				    [LaborCode] = {0}LaborCode,
+				    [EnterpriseGuid] = {0}EnterpriseGuid,
+				    [EnterpriseContractGuid] = {0}EnterpriseContractGuid,
+				    [LaborContractStatus] = {0}LaborContractStatus,
+				    [LaborContractStartDate] = {0}LaborContractStartDate,
+				    [LaborContractStopDate] = {0}LaborContractStopDate,
+				    [LaborContractDetails] = {0}LaborContractDetails,
+				    [LaborContractDiscontinueDate] = {0}LaborContractDiscontinueDate,
+				    [LaborContractDiscontinueDesc] = {0}LaborContractDiscontinueDesc,
+				    [LaborContractIsCurrent] = {0}LaborContractIsCurrent,
+				    [EnterpriseInsuranceFormularKey] = {0}EnterpriseInsuranceFormularKey,
+				    [EnterpriseReserveFundFormularKey] = {0}EnterpriseReserveFundFormularKey,
+				    [EnterpriseManageFeeFormularKey] = {0}EnterpriseManageFeeFormularKey,
+				    [EnterpriseMixCostFormularKey] = {0}EnterpriseMixCostFormularKey,
+				    [EnterpriseOtherCostFormularKey] = {0}EnterpriseOtherCostFormularKey,
+				    [PersonInsuranceFormularKey] = {0}PersonInsuranceFormularKey,
+				    [PersonReserveFundFormularKey] = {0}PersonReserveFundFormularKey,
+				    [PersonManageFeeFormularKey] = {0}PersonManageFeeFormularKey,
+				    [PersonMixCostFormularKey] = {0}PersonMixCostFormularKey,
+				    [PersonOtherCostFormularKey] = {0}PersonOtherCostFormularKey,
+				    [OperateUserGuid] = {0}OperateUserGuid,
+				    [OperateDate] = {0}OperateDate,
+				    [PropertyNames] = {0}PropertyNames,
+				    [PropertyValues] = {0}PropertyValues
+            Where [LaborContractID] = {0}LaborContractID", ParameterNamePrefix);
 
             TParameter[] sqlParas = PrepareParasAll(entity);
 
@@ -166,19 +187,26 @@ namespace XQYC.Business.DALCommon
                 GenerateParameter("LaborContractID",entity.LaborContractID),
 			    GenerateParameter("LaborContractGuid",entity.LaborContractGuid),
 			    GenerateParameter("LaborUserGuid",entity.LaborUserGuid),
-                GenerateParameter("LaborCode",entity.LaborCode),
+			    GenerateParameter("LaborCode",entity.LaborCode?? String.Empty),
 			    GenerateParameter("EnterpriseGuid",entity.EnterpriseGuid),
 			    GenerateParameter("EnterpriseContractGuid",entity.EnterpriseContractGuid),
 			    GenerateParameter("LaborContractStatus",entity.LaborContractStatus),
-                GenerateParameter("LaborContractIsCurrent",entity.LaborContractIsCurrent),
 			    GenerateParameter("LaborContractStartDate",entity.LaborContractStartDate),
 			    GenerateParameter("LaborContractStopDate",entity.LaborContractStopDate),
 			    GenerateParameter("LaborContractDetails",entity.LaborContractDetails?? String.Empty),
 			    GenerateParameter("LaborContractDiscontinueDate",entity.LaborContractDiscontinueDate),
 			    GenerateParameter("LaborContractDiscontinueDesc",entity.LaborContractDiscontinueDesc?? String.Empty),
-                GenerateParameter("InsuranceFormularKey",entity.InsuranceFormularKey?? String.Empty),
-                GenerateParameter("ReserveFundFormularKey",entity.ReserveFundFormularKey?? String.Empty),
-                GenerateParameter("ManageFeeFormularKey",entity.ManageFeeFormularKey?? String.Empty),
+			    GenerateParameter("LaborContractIsCurrent",entity.LaborContractIsCurrent),
+			    GenerateParameter("EnterpriseInsuranceFormularKey",entity.EnterpriseInsuranceFormularKey?? String.Empty),
+			    GenerateParameter("EnterpriseReserveFundFormularKey",entity.EnterpriseReserveFundFormularKey?? String.Empty),
+			    GenerateParameter("EnterpriseManageFeeFormularKey",entity.EnterpriseManageFeeFormularKey?? String.Empty),
+			    GenerateParameter("EnterpriseMixCostFormularKey",entity.EnterpriseMixCostFormularKey?? String.Empty),
+			    GenerateParameter("EnterpriseOtherCostFormularKey",entity.EnterpriseOtherCostFormularKey?? String.Empty),
+			    GenerateParameter("PersonInsuranceFormularKey",entity.PersonInsuranceFormularKey?? String.Empty),
+			    GenerateParameter("PersonReserveFundFormularKey",entity.PersonReserveFundFormularKey?? String.Empty),
+			    GenerateParameter("PersonManageFeeFormularKey",entity.PersonManageFeeFormularKey?? String.Empty),
+			    GenerateParameter("PersonMixCostFormularKey",entity.PersonMixCostFormularKey?? String.Empty),
+			    GenerateParameter("PersonOtherCostFormularKey",entity.PersonOtherCostFormularKey?? String.Empty),
 			    GenerateParameter("OperateUserGuid",entity.OperateUserGuid),
 			    GenerateParameter("OperateDate",entity.OperateDate)
             };
@@ -250,17 +278,45 @@ namespace XQYC.Business.DALCommon
                     entity.LaborContractDiscontinueDesc = reader.GetString(reader.GetOrdinal("LaborContractDiscontinueDesc"));
                 }
 
-                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "InsuranceFormularKey"))
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseInsuranceFormularKey"))
                 {
-                    entity.InsuranceFormularKey = reader.GetString(reader.GetOrdinal("InsuranceFormularKey"));
+                    entity.EnterpriseInsuranceFormularKey = reader.GetString(reader.GetOrdinal("EnterpriseInsuranceFormularKey"));
                 }
-                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "ReserveFundFormularKey"))
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseReserveFundFormularKey"))
                 {
-                    entity.ReserveFundFormularKey = reader.GetString(reader.GetOrdinal("ReserveFundFormularKey"));
+                    entity.EnterpriseReserveFundFormularKey = reader.GetString(reader.GetOrdinal("EnterpriseReserveFundFormularKey"));
                 }
-                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "ManageFeeFormularKey"))
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseManageFeeFormularKey"))
                 {
-                    entity.ManageFeeFormularKey = reader.GetString(reader.GetOrdinal("ManageFeeFormularKey"));
+                    entity.EnterpriseManageFeeFormularKey = reader.GetString(reader.GetOrdinal("EnterpriseManageFeeFormularKey"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseMixCostFormularKey"))
+                {
+                    entity.EnterpriseMixCostFormularKey = reader.GetString(reader.GetOrdinal("EnterpriseMixCostFormularKey"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseOtherCostFormularKey"))
+                {
+                    entity.EnterpriseOtherCostFormularKey = reader.GetString(reader.GetOrdinal("EnterpriseOtherCostFormularKey"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonInsuranceFormularKey"))
+                {
+                    entity.PersonInsuranceFormularKey = reader.GetString(reader.GetOrdinal("PersonInsuranceFormularKey"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonReserveFundFormularKey"))
+                {
+                    entity.PersonReserveFundFormularKey = reader.GetString(reader.GetOrdinal("PersonReserveFundFormularKey"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonManageFeeFormularKey"))
+                {
+                    entity.PersonManageFeeFormularKey = reader.GetString(reader.GetOrdinal("PersonManageFeeFormularKey"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonMixCostFormularKey"))
+                {
+                    entity.PersonMixCostFormularKey = reader.GetString(reader.GetOrdinal("PersonMixCostFormularKey"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonOtherCostFormularKey"))
+                {
+                    entity.PersonOtherCostFormularKey = reader.GetString(reader.GetOrdinal("PersonOtherCostFormularKey"));
                 }
 
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "OperateUserGuid"))

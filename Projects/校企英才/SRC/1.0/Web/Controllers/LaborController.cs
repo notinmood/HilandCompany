@@ -476,7 +476,7 @@ namespace XQYC.Web.Controllers
                 string inCurrentEnterpriseDesc = string.Empty;
                 if (string.IsNullOrWhiteSpace(enterpriserGuid) == false
                     && string.IsNullOrWhiteSpace(currentLabor.CurrentEnterpriseKey) == false
-                    && enterpriserGuid == currentLabor.CurrentEnterpriseKey)
+                    && enterpriserGuid.ToLower() == currentLabor.CurrentEnterpriseKey.ToLower())
                 {
                     inCurrentEnterpriseDesc = "在职";
                 }
@@ -587,9 +587,10 @@ namespace XQYC.Web.Controllers
             targetEntity.LaborCode = originalEntity.LaborCode;
             targetEntity.LaborContractIsCurrent = originalEntity.LaborContractIsCurrent;
 
-            targetEntity.InsuranceFormularKey = originalEntity.InsuranceFormularKey;
-            targetEntity.ManageFeeFormularKey = originalEntity.ManageFeeFormularKey;
-            targetEntity.ReserveFundFormularKey = originalEntity.ReserveFundFormularKey;
+            //TODO:xieran20121105 重整常规费用（Cost）
+            //targetEntity.InsuranceFormularKey = originalEntity.InsuranceFormularKey;
+            //targetEntity.ManageFeeFormularKey = originalEntity.ManageFeeFormularKey;
+            //targetEntity.ReserveFundFormularKey = originalEntity.ReserveFundFormularKey;
 
             targetEntity.LaborContractDiscontinueDate = originalEntity.LaborContractDiscontinueDate;
             targetEntity.LaborContractDiscontinueDesc = originalEntity.LaborContractDiscontinueDesc;
@@ -686,7 +687,7 @@ namespace XQYC.Web.Controllers
                 //获取某用户银行首要账户
                 row[BankCardNumber] = BankBLL.Instance.GetPrimary(Converter.TryToGuid(item.LaborKey)).AccountNumber;
                 row[columnUserNameCN] = item.LaborName;
-                row[SalaryValue] = item.SalaryNeedPay;
+                row[SalaryValue] = item.SalaryNeedPayToLabor;
                 row[SalaryMemo] = string.Format("{0}-{1}-工资", enterprise.CompanyNameShort, salaryMonth.ToString("yyyyMM"));
                 salaryTable.Rows.Add(row);
             }
@@ -960,19 +961,20 @@ namespace XQYC.Web.Controllers
                     case SalaryItemKinds.Rebate:
                         salarySummaryEntity.SalaryRebate += itemValueDelta;
                         break;
-                    case SalaryItemKinds.Insurance:
-                    case SalaryItemKinds.InsuranceEnterprise:
-                    case SalaryItemKinds.InsurancePersonal:
-                        salarySummaryEntity.InsuranceReal += itemValueDelta;
-                        break;
-                    case SalaryItemKinds.ReserveFund:
-                    case SalaryItemKinds.ReserveFundEnterprise:
-                    case SalaryItemKinds.ReserveFundPersonal:
-                        salarySummaryEntity.ReserveFundReal += itemValueDelta;
-                        break;
-                    case SalaryItemKinds.ManageFee:
-                        salarySummaryEntity.ManageFeeReal += itemValueDelta;
-                        break;
+                    //TODO:xieran20121105 重整常规费用（Cost）
+                    //case SalaryItemKinds.Insurance:
+                    //case SalaryItemKinds.InsuranceEnterprise:
+                    //case SalaryItemKinds.InsurancePersonal:
+                    //    salarySummaryEntity.InsuranceReal += itemValueDelta;
+                    //    break;
+                    //case SalaryItemKinds.ReserveFund:
+                    //case SalaryItemKinds.ReserveFundEnterprise:
+                    //case SalaryItemKinds.ReserveFundPersonal:
+                    //    salarySummaryEntity.ReserveFundReal += itemValueDelta;
+                    //    break;
+                    //case SalaryItemKinds.ManageFee:
+                    //    salarySummaryEntity.ManageFeeReal += itemValueDelta;
+                    //    break;
                     default:
                         break;
                 }
@@ -1118,18 +1120,19 @@ namespace XQYC.Web.Controllers
                                     case "LaborCode":
                                         LaborUserCodeForSalarySummary = cellValue.ToString();
                                         break;
-                                    case "ManageFeeReal":
-                                        salarySummaryEntity.ManageFeeReal = salaryItemValue;
-                                        SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.ManageFee);
-                                        break;
-                                    case "ReserveFundReal":
-                                        salarySummaryEntity.ReserveFundReal = salaryItemValue;
-                                        SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.ReserveFund);
-                                        break;
-                                    case "InsuranceReal":
-                                        salarySummaryEntity.InsuranceReal = salaryItemValue;
-                                        SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.Insurance);
-                                        break;
+                                    //TODO:xieran20121105 重整常规费用（Cost）
+                                    //case "ManageFeeReal":
+                                    //    salarySummaryEntity.ManageFeeReal = salaryItemValue;
+                                    //    SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.ManageFee);
+                                    //    break;
+                                    //case "ReserveFundReal":
+                                    //    salarySummaryEntity.ReserveFundReal = salaryItemValue;
+                                    //    SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.ReserveFund);
+                                    //    break;
+                                    //case "InsuranceReal":
+                                    //    salarySummaryEntity.InsuranceReal = salaryItemValue;
+                                    //    SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.Insurance);
+                                    //    break;
                                     default:
                                         if (salaryItemValue >= 0)
                                         {
@@ -1181,9 +1184,10 @@ namespace XQYC.Web.Controllers
                                 }
                                 else
                                 {
-                                    salarySummaryEntityConfirm.InsuranceReal += salarySummaryEntity.InsuranceReal;
-                                    salarySummaryEntityConfirm.ManageFeeReal += salarySummaryEntity.ManageFeeReal;
-                                    salarySummaryEntityConfirm.ReserveFundReal += salarySummaryEntity.ReserveFundReal;
+                                    //TODO:xieran20121105 重整常规费用（Cost）
+                                    //salarySummaryEntityConfirm.InsuranceReal += salarySummaryEntity.InsuranceReal;
+                                    //salarySummaryEntityConfirm.ManageFeeReal += salarySummaryEntity.ManageFeeReal;
+                                    //salarySummaryEntityConfirm.ReserveFundReal += salarySummaryEntity.ReserveFundReal;
                                     salarySummaryEntityConfirm.SalaryGrossPay += salarySummaryEntity.SalaryGrossPay;
                                     salarySummaryEntityConfirm.SalaryRebate += salarySummaryEntity.SalaryRebate;
                                     isSuccessful = SalarySummaryBLL.Instance.Update(salarySummaryEntityConfirm);

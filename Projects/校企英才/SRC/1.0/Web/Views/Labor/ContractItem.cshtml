@@ -71,6 +71,8 @@
                 <td>@Html.DropDownListFor(entity => entity.LaborContractStatus, EnumEx.BuildSelectItemList<LaborWorkStatuses>())
                 </td>
             </tr>
+
+            @*//TODO:xieran20121105 重整常规费用（Cost）
             <tr>
                 <td>保险类型:
                 </td>
@@ -88,7 +90,7 @@
                 </td>
                 <td>@HtmlHelperEx.XQYCDDLManageFee(Html, "ManageFeeFormularKey", Model.ManageFeeFormularKey)
                 </td>
-            </tr>
+            </tr>*@
             <tr>
                 <td>合同终止时间:
                 </td>
