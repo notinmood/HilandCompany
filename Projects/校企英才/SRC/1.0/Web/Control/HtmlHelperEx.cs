@@ -315,41 +315,41 @@ namespace XQYC.Web.Control
         #endregion
 
         #region 各种费用公式列表控件
-        /// <summary>
-        /// 保险下拉列表
-        /// </summary>
-        /// <param name="html"></param>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static IHtmlString XQYCDDLInsurance(System.Web.Mvc.HtmlHelper html, string name, string value)
-        {
-            return XQYCDDLCostFormular(html, CostKinds.Insurance, name, value);
-        }
+        ///// <summary>
+        ///// 保险下拉列表
+        ///// </summary>
+        ///// <param name="html"></param>
+        ///// <param name="name"></param>
+        ///// <param name="value"></param>
+        ///// <returns></returns>
+        //public static IHtmlString XQYCDDLInsurance(System.Web.Mvc.HtmlHelper html, string name, string value)
+        //{
+        //    return XQYCDDLCostFormular(html, CostKinds.Insurance, name, value);
+        //}
 
-        /// <summary>
-        /// 管理费下拉列表
-        /// </summary>
-        /// <param name="html"></param>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static IHtmlString XQYCDDLManageFee(System.Web.Mvc.HtmlHelper html, string name, string value)
-        {
-            return XQYCDDLCostFormular(html, CostKinds.ManageFee, name, value);
-        }
+        ///// <summary>
+        ///// 管理费下拉列表
+        ///// </summary>
+        ///// <param name="html"></param>
+        ///// <param name="name"></param>
+        ///// <param name="value"></param>
+        ///// <returns></returns>
+        //public static IHtmlString XQYCDDLManageFee(System.Web.Mvc.HtmlHelper html, string name, string value)
+        //{
+        //    return XQYCDDLCostFormular(html, CostKinds.ManageFee, name, value);
+        //}
 
-        /// <summary>
-        /// 公积金下拉列表
-        /// </summary>
-        /// <param name="html"></param>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static IHtmlString XQYCDDLReserveFund(System.Web.Mvc.HtmlHelper html, string name, string value)
-        {
-            return XQYCDDLCostFormular(html, CostKinds.ReserveFund, name, value);
-        }
+        ///// <summary>
+        ///// 公积金下拉列表
+        ///// </summary>
+        ///// <param name="html"></param>
+        ///// <param name="name"></param>
+        ///// <param name="value"></param>
+        ///// <returns></returns>
+        //public static IHtmlString XQYCDDLReserveFund(System.Web.Mvc.HtmlHelper html, string name, string value)
+        //{
+        //    return XQYCDDLCostFormular(html, CostKinds.ReserveFund, name, value);
+        //}
 
 
         /// <summary>
@@ -360,10 +360,10 @@ namespace XQYC.Web.Control
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static IHtmlString XQYCDDLCostFormular(System.Web.Mvc.HtmlHelper html, CostKinds costKind, string name, string value)
+        public static IHtmlString XQYCDDLCostFormular(System.Web.Mvc.HtmlHelper html, CostKinds costKind, CostTypes costType, string name, string value)
         {
             List<SelectListItem> itemList = new List<SelectListItem>();
-            List<CostFormularEntity> entityList = CostFormularBLL.Instance.GetList(costKind, Logics.True, string.Empty);
+            List<CostFormularEntity> entityList = CostFormularBLL.Instance.GetList(costKind,costType, Logics.True, string.Empty);
             foreach (CostFormularEntity currentItem in entityList)
             {
                 SelectListItem listItem = new SelectListItem();

@@ -14,17 +14,19 @@ namespace XQYC.Business.BLL
         /// 按照类别获取公式集合
         /// </summary>
         /// <param name="costKind"></param>
+        /// <param name="costType"></param>
+        /// <param name="onlyDisplayUsable"></param>
         /// <param name="whereClause"></param>
         /// <param name="paras"></param>
         /// <returns></returns>
-        public List<CostFormularEntity> GetList(CostKinds costKind, Logics onlyDisplayUsable, string whereClause, params IDbDataParameter[] paras)
+        public List<CostFormularEntity> GetList(CostKinds costKind,CostTypes costType, Logics onlyDisplayUsable, string whereClause, params IDbDataParameter[] paras)
         {
             if (string.IsNullOrEmpty(whereClause))
             {
                 whereClause = " 1=1 ";
             }
 
-            whereClause += string.Format(" AND CostKind={0} ", (int)costKind);
+            whereClause += string.Format(" AND CostKind={0} AND CostType={1} ", (int)costKind,(int)costType);
 
             return base.GetList(onlyDisplayUsable, whereClause, 0, string.Empty, paras);
         }

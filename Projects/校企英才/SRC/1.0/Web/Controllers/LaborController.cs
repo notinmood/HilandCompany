@@ -587,10 +587,17 @@ namespace XQYC.Web.Controllers
             targetEntity.LaborCode = originalEntity.LaborCode;
             targetEntity.LaborContractIsCurrent = originalEntity.LaborContractIsCurrent;
 
-            //TODO:xieran20121105 重整常规费用（Cost）
-            //targetEntity.InsuranceFormularKey = originalEntity.InsuranceFormularKey;
-            //targetEntity.ManageFeeFormularKey = originalEntity.ManageFeeFormularKey;
-            //targetEntity.ReserveFundFormularKey = originalEntity.ReserveFundFormularKey;
+            targetEntity.EnterpriseInsuranceFormularKey = originalEntity.EnterpriseInsuranceFormularKey;
+            targetEntity.EnterpriseManageFeeFormularKey = originalEntity.EnterpriseManageFeeFormularKey;
+            targetEntity.EnterpriseMixCostFormularKey = originalEntity.EnterpriseMixCostFormularKey;
+            targetEntity.EnterpriseOtherCostFormularKey = originalEntity.EnterpriseOtherCostFormularKey;
+            targetEntity.EnterpriseReserveFundFormularKey = originalEntity.EnterpriseReserveFundFormularKey;
+
+            targetEntity.PersonInsuranceFormularKey = originalEntity.PersonInsuranceFormularKey;
+            targetEntity.PersonManageFeeFormularKey = originalEntity.PersonManageFeeFormularKey;
+            targetEntity.PersonMixCostFormularKey = originalEntity.PersonMixCostFormularKey;
+            targetEntity.PersonOtherCostFormularKey = originalEntity.PersonOtherCostFormularKey;
+            targetEntity.PersonReserveFundFormularKey = originalEntity.PersonReserveFundFormularKey;
 
             targetEntity.LaborContractDiscontinueDate = originalEntity.LaborContractDiscontinueDate;
             targetEntity.LaborContractDiscontinueDesc = originalEntity.LaborContractDiscontinueDesc;
@@ -962,25 +969,25 @@ namespace XQYC.Web.Controllers
                         //确保扣费为负值
                         salarySummaryEntity.SalaryRebate += (0 - Math.Abs(itemValueDelta));
                         break;
-                    case SalaryItemKinds.InsuranceEnterprise:
+                    case SalaryItemKinds.EnterpriseInsurance:
                         salarySummaryEntity.EnterpriseInsuranceReal += itemValueDelta;
                         break;
-                    case SalaryItemKinds.ReserveFundEnterprise:
+                    case SalaryItemKinds.EnterpriseReserveFund:
                         salarySummaryEntity.EnterpriseReserveFundReal += itemValueDelta;
                         break;
-                    case SalaryItemKinds.ManageFeeEnterprise:
+                    case SalaryItemKinds.EnterpriseManageFee:
                         salarySummaryEntity.EnterpriseManageFeeReal += itemValueDelta;
                         break;
-                    case SalaryItemKinds.OtherFeeEnterprise:
+                    case SalaryItemKinds.EnterpriseOtherFee:
                         salarySummaryEntity.EnterpriseOtherCostReal += itemValueDelta;
                         break;
-                    case SalaryItemKinds.InsurancePersonal:
+                    case SalaryItemKinds.PersonalInsurance:
                         salarySummaryEntity.PersonInsuranceReal += itemValueDelta;
                         break;
-                    case SalaryItemKinds.ReserveFundPersonal:
+                    case SalaryItemKinds.PersonalReserveFund:
                         salarySummaryEntity.PersonReserveFundReal += itemValueDelta;
                         break;
-                    case SalaryItemKinds.OtherFeePersonal:
+                    case SalaryItemKinds.PersonalOtherFee:
                         salarySummaryEntity.PersonOtherCostReal += itemValueDelta;
                         break;
                     case SalaryItemKinds.SalaryTax:
@@ -1195,10 +1202,18 @@ namespace XQYC.Web.Controllers
                                 }
                                 else
                                 {
-                                    //TODO:xieran20121105 重整常规费用（Cost）
-                                    //salarySummaryEntityConfirm.InsuranceReal += salarySummaryEntity.InsuranceReal;
-                                    //salarySummaryEntityConfirm.ManageFeeReal += salarySummaryEntity.ManageFeeReal;
-                                    //salarySummaryEntityConfirm.ReserveFundReal += salarySummaryEntity.ReserveFundReal;
+                                    salarySummaryEntityConfirm.EnterpriseInsuranceReal += salarySummaryEntity.EnterpriseInsuranceReal;
+                                    salarySummaryEntityConfirm.EnterpriseManageFeeReal += salarySummaryEntity.EnterpriseManageFeeReal;
+                                    salarySummaryEntityConfirm.EnterpriseReserveFundReal += salarySummaryEntity.EnterpriseReserveFundReal;
+                                    salarySummaryEntityConfirm.EnterpriseOtherCostReal += salarySummaryEntity.EnterpriseOtherCostReal;
+                                    salarySummaryEntityConfirm.EnterpriseMixCostReal += salarySummaryEntity.EnterpriseMixCostReal;
+
+                                    salarySummaryEntityConfirm.PersonInsuranceReal += salarySummaryEntity.PersonInsuranceReal;
+                                    salarySummaryEntityConfirm.PersonManageFeeReal += salarySummaryEntity.PersonManageFeeReal;
+                                    salarySummaryEntityConfirm.PersonReserveFundReal += salarySummaryEntity.PersonReserveFundReal;
+                                    salarySummaryEntityConfirm.PersonOtherCostReal += salarySummaryEntity.PersonOtherCostReal;
+                                    salarySummaryEntityConfirm.PersonMixCostReal += salarySummaryEntity.PersonMixCostReal;
+                                    
                                     salarySummaryEntityConfirm.SalaryGrossPay += salarySummaryEntity.SalaryGrossPay;
                                     salarySummaryEntityConfirm.SalaryRebate += salarySummaryEntity.SalaryRebate;
                                     isSuccessful = SalarySummaryBLL.Instance.Update(salarySummaryEntityConfirm);
@@ -1207,7 +1222,6 @@ namespace XQYC.Web.Controllers
                                 if (isSuccessful == true)
                                 {
                                     userCountSuccessful++;
-                                    //laborGuidsPaid.Add(new Guid(salarySummaryEntity.LaborKey));
                                 }
                                 else
                                 {

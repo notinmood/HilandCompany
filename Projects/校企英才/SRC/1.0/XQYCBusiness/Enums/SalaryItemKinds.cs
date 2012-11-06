@@ -37,45 +37,45 @@ namespace XQYC.Business.Enums
         /// 保险(企业部分)
         /// </summary>
         [EnumItemDescription("zh-CN", "保险(企业部分)")]
-        InsuranceEnterprise = 31,
+        EnterpriseInsurance = 31,
 
         /// <summary>
         /// 公积金(企业部分)
         /// </summary>
         [EnumItemDescription("zh-CN", "公积金(企业部分)")]
-        ReserveFundEnterprise = 32,
+        EnterpriseReserveFund = 32,
 
         /// <summary>
         /// 管理费
         /// </summary>
         [EnumItemDescription("zh-CN", "管理费(企业部分)")]
-        ManageFeeEnterprise = 33,
+        EnterpriseManageFee = 33,
 
         /// <summary>
         /// 其他费用(企业部分)
         /// </summary>
         [EnumItemDescription("zh-CN", "其他费用(企业部分)")]
-        OtherFeeEnterprise = 34,
+        EnterpriseOtherFee = 34,
 
         /// <summary>
         /// 保险(个人部分)
         /// </summary>
         [EnumItemDescription("zh-CN", "保险(个人部分)")]
-        InsurancePersonal = 51,
+        PersonalInsurance = 51,
 
 
         /// <summary>
         /// 公积金(个人部分)
         /// </summary>
         [EnumItemDescription("zh-CN", "公积金(个人部分)")]
-        ReserveFundPersonal = 52,
+        PersonalReserveFund = 52,
 
 
         /// <summary>
         /// 其他费用(个人部分)
         /// </summary>
         [EnumItemDescription("zh-CN", "其他费用(个人部分)")]
-        OtherFeePersonal=54,
+        PersonalOtherFee=54,
 
         /// <summary>
         /// 工资税

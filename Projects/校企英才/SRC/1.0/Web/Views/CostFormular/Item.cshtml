@@ -29,7 +29,14 @@
             </tr>
             <tr>
                 <td>
-                    类型:
+                    类别:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.CostType, EnumEx.BuildSelectItemList<CostTypes>())
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   种类 :
                 </td>
                 <td>@Html.DropDownListFor(entity => entity.CostKind, EnumEx.BuildSelectItemList<CostKinds>())
                 </td>

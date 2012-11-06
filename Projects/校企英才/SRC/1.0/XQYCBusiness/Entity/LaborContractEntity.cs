@@ -111,26 +111,6 @@ namespace XQYC.Business.Entity
             set { laborContractDiscontinueDesc = value; }
         }
 
-        //private string insuranceFormularKey = String.Empty;
-        //public string InsuranceFormularKey
-        //{
-        //    get { return insuranceFormularKey; }
-        //    set { insuranceFormularKey = value; }
-        //}
-
-        //private string reserveFundFormularKey = String.Empty;
-        //public string ReserveFundFormularKey
-        //{
-        //    get { return reserveFundFormularKey; }
-        //    set { reserveFundFormularKey = value; }
-        //}
-
-        //private string manageFeeFormularKey = String.Empty;
-        //public string ManageFeeFormularKey
-        //{
-        //    get { return manageFeeFormularKey; }
-        //    set { manageFeeFormularKey = value; }
-        //}
         private string enterpriseInsuranceFormularKey = String.Empty;
         /// <summary>
         /// 劳务合同中的保险企业应该担负部分的计算公式Key

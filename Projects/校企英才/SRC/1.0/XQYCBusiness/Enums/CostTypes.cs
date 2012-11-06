@@ -21,6 +21,6 @@ namespace XQYC.Business.Enums
         /// 个人承担部分
         /// </summary>
         [EnumItemDescription("zh-CN", "个人承担部分")]
-        Personal=1,
+        Person=1,
     }
 }
