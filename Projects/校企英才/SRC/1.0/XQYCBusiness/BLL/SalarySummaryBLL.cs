@@ -102,9 +102,10 @@ namespace XQYC.Business.BLL
         /// <summary>
         /// 计算某劳务人员各种应付费用（保险，公积金，管理费等）
         /// </summary>
-        /// <param name="labor"></param>
+        /// <param name="isUpdateSalaryTaxDetails">是否同时更新工资税的明细记录</param>
         /// <param name="salarySummary"></param>
-        private static SalarySummaryEntity CalculateNeedCost(SalarySummaryEntity salarySummary)
+        /// <returns></returns>
+        private static SalarySummaryEntity CalculateNeedCost(SalarySummaryEntity salarySummary, bool isUpdateSalaryTaxDetails = true)
         {
             LaborEntity labor = LaborBLL.Instance.Get(salarySummary.LaborKey);
 
@@ -156,6 +157,11 @@ namespace XQYC.Business.BLL
             if (GuidHelper.IsInvalidOrEmpty(labor.CurrentLaborContract.PersonMixCostFormularKey) == false)
             {
                 salarySummary.PersonMixCostCalculated = CalculateCostDetails(new Guid(labor.CurrentLaborContract.PersonMixCostFormularKey), salarySummary);
+            }
+
+            if (isUpdateSalaryTaxDetails == true)
+            {
+                SalaryDetailsBLL.Instance.CreateOrUpdateSalaryTax(salarySummary.SalarySummaryGuid, salarySummary.SalaryTax);
             }
 
             return salarySummary;

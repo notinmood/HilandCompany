@@ -188,7 +188,7 @@ namespace XQYC.Business.DALCommon
 				[IsCheckPast] = {0}IsCheckPast,
 				[CheckMemo] = {0}CheckMemo,
 				[PropertyNames] = {0}PropertyNames,
-				[PropertyValues] = {0}PropertyValues,
+				[PropertyValues] = {0}PropertyValues
         Where [SalarySummaryID] = {0}SalarySummaryID", ParameterNamePrefix);
 
             TParameter[] sqlParas = PrepareParasAll(entity);

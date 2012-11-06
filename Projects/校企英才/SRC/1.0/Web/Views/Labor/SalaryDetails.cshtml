@@ -22,21 +22,21 @@
     { 
         <table>
             <tr>
-                <td style="width: 150px;">工资项名称:
+                <td style="width: 150px;">费用项名称:
                 </td>
                 <td>@Html.TextBoxFor(entity => entity.SalaryItemKey)
                 </td>
             </tr>
             <tr>
-                <td>工资项类型:
+                <td>费用项类型:
                 </td>
                 <td>@Html.DropDownListFor(entity => entity.SalaryItemKind, EnumEx.BuildSelectItemList<SalaryItemKinds>())
                 </td>
             </tr>
             <tr>
-                <td>工资:
+                <td>费用:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.SalaryItemValue) (如果是扣费等请使用负值)
+                <td>@Html.TextBoxFor(entity => entity.SalaryItemValue)
                 </td>
             </tr>
         </table>

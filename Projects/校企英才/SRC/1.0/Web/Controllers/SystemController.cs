@@ -175,7 +175,7 @@ namespace XQYC.Web.Controllers
                 for (int i = 0; i < inputDisplayCount; i++)
                 {
                     string inputDisplayContent = RequestHelper.GetValue("inputDisplayContent+" + i);
-                    sb.Append(inputDisplayContent);
+                    sb.AppendLine(inputDisplayContent);
                 }
 
                 Stream stream = new MemoryStream(StringHelper.GetByteArray(sb.ToString()));

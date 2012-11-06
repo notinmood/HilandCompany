@@ -173,14 +173,7 @@ namespace XQYC.Business.Entity
         {
             get
             {
-                if (PersonMixCostReal > 0)
-                {
-                    return PersonMixCostReal;
-                }
-                else
-                {
-                   return  PersonInsuranceReal + PersonManageFeeReal + PersonReserveFundReal + PersonOtherCostReal;
-                }
+                return PersonMixCostReal + PersonInsuranceReal + PersonManageFeeReal + PersonReserveFundReal + PersonOtherCostReal;
             }
         }
 
@@ -191,14 +184,7 @@ namespace XQYC.Business.Entity
         {
             get
             {
-                if (PersonMixCostCalculated > 0)
-                {
-                    return PersonMixCostCalculated;
-                }
-                else
-                {
-                    return PersonInsuranceCalculated + PersonManageFeeCalculated + PersonReserveFundCalculated + PersonOtherCostCalculated;
-                }
+                return PersonMixCostCalculated + PersonInsuranceCalculated + PersonManageFeeCalculated + PersonReserveFundCalculated + PersonOtherCostCalculated;
             }
         }
 
@@ -209,14 +195,7 @@ namespace XQYC.Business.Entity
         {
             get
             {
-                if (EnterpriseMixCostReal > 0)
-                {
-                    return EnterpriseMixCostReal;
-                }
-                else
-                {
-                    return EnterpriseInsuranceReal + EnterpriseManageFeeReal + EnterpriseReserveFundReal + EnterpriseOtherCostReal;
-                }
+                return EnterpriseMixCostReal + EnterpriseInsuranceReal + EnterpriseManageFeeReal + EnterpriseReserveFundReal + EnterpriseOtherCostReal;
             }
         }
 
@@ -227,22 +206,9 @@ namespace XQYC.Business.Entity
         {
             get
             {
-                if (EnterpriseMixCostCalculated > 0)
-                {
-                    return EnterpriseMixCostCalculated;
-                }
-                else
-                {
-                    return EnterpriseInsuranceCalculated + EnterpriseManageFeeCalculated + EnterpriseReserveFundCalculated + EnterpriseOtherCostCalculated;
-                }
+                return EnterpriseMixCostCalculated + EnterpriseInsuranceCalculated + EnterpriseManageFeeCalculated + EnterpriseReserveFundCalculated + EnterpriseOtherCostCalculated;
             }
         }
-
-        ///// <summary>
-        ///// 个税
-        ///// </summary>
-        //private decimal salaryTax = 0M;
-
 
         private Logics isCostCalculated;
         public Logics IsCostCalculated
@@ -251,7 +217,7 @@ namespace XQYC.Business.Entity
             set { isCostCalculated = value; }
         }
 
-        private SalaryPayStatuses salaryPayStatus= SalaryPayStatuses.PaidToOrgnization;
+        private SalaryPayStatuses salaryPayStatus = SalaryPayStatuses.PaidToOrgnization;
         public SalaryPayStatuses SalaryPayStatus
         {
             get { return salaryPayStatus; }
@@ -398,8 +364,11 @@ namespace XQYC.Business.Entity
             set { personOtherCostCalculated = value; }
         }
 
-        //TODO:xieran20121105 工资税这个地方,如果有实际值使用实际值，否则使用计算的值
-        private decimal SalaryTax
+        /// <summary>
+        /// 工资税(工资税这个地方,如果有实际值使用实际值，否则使用计算的值)
+        /// 为了便于以后修改的方便，这个值向外暴漏，其他两个值SalaryTaxReal、SalaryTaxCalculated不向外暴漏
+        /// </summary>
+        public decimal SalaryTax
         {
             get
             {
@@ -425,10 +394,10 @@ namespace XQYC.Business.Entity
         public decimal SalaryTaxCalculated
         {
             internal set { salaryTaxCalculated = value; }
-            get 
+            get
             {
                 salaryTaxCalculated = SalaryTaxHelper.GetSalaryTax(SalaryNeedPayBeforeTax);
-                return salaryTaxCalculated; 
+                return salaryTaxCalculated;
             }
         }
 
@@ -452,7 +421,7 @@ namespace XQYC.Business.Entity
             get { return checkMemo; }
             set { checkMemo = value; }
         }
-        
+
         #endregion
     }
 }

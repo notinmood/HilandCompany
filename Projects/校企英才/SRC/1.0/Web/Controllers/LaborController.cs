@@ -959,22 +959,33 @@ namespace XQYC.Web.Controllers
                         salarySummaryEntity.SalaryGrossPay += itemValueDelta;
                         break;
                     case SalaryItemKinds.Rebate:
-                        salarySummaryEntity.SalaryRebate += itemValueDelta;
+                        //确保扣费为负值
+                        salarySummaryEntity.SalaryRebate += (0 - Math.Abs(itemValueDelta));
                         break;
-                    //TODO:xieran20121105 重整常规费用（Cost）
-                    //case SalaryItemKinds.Insurance:
-                    //case SalaryItemKinds.InsuranceEnterprise:
-                    //case SalaryItemKinds.InsurancePersonal:
-                    //    salarySummaryEntity.InsuranceReal += itemValueDelta;
-                    //    break;
-                    //case SalaryItemKinds.ReserveFund:
-                    //case SalaryItemKinds.ReserveFundEnterprise:
-                    //case SalaryItemKinds.ReserveFundPersonal:
-                    //    salarySummaryEntity.ReserveFundReal += itemValueDelta;
-                    //    break;
-                    //case SalaryItemKinds.ManageFee:
-                    //    salarySummaryEntity.ManageFeeReal += itemValueDelta;
-                    //    break;
+                    case SalaryItemKinds.InsuranceEnterprise:
+                        salarySummaryEntity.EnterpriseInsuranceReal += itemValueDelta;
+                        break;
+                    case SalaryItemKinds.ReserveFundEnterprise:
+                        salarySummaryEntity.EnterpriseReserveFundReal += itemValueDelta;
+                        break;
+                    case SalaryItemKinds.ManageFeeEnterprise:
+                        salarySummaryEntity.EnterpriseManageFeeReal += itemValueDelta;
+                        break;
+                    case SalaryItemKinds.OtherFeeEnterprise:
+                        salarySummaryEntity.EnterpriseOtherCostReal += itemValueDelta;
+                        break;
+                    case SalaryItemKinds.InsurancePersonal:
+                        salarySummaryEntity.PersonInsuranceReal += itemValueDelta;
+                        break;
+                    case SalaryItemKinds.ReserveFundPersonal:
+                        salarySummaryEntity.PersonReserveFundReal += itemValueDelta;
+                        break;
+                    case SalaryItemKinds.OtherFeePersonal:
+                        salarySummaryEntity.PersonOtherCostReal += itemValueDelta;
+                        break;
+                    case SalaryItemKinds.SalaryTax:
+                        //do nothing.(工资税系统自动计算，不能录入)
+                        break;
                     default:
                         break;
                 }
