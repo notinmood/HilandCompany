@@ -82,12 +82,18 @@ namespace XQYC.Business.BLL
         /// <param name="laborCode">劳工编号</param>
         /// <param name="enterpriseKey">企业Guid信息</param>
         /// <returns></returns>
-        public LaborEntity Get(string laborName,string laborCode,string enterpriseKey)
+        public LaborEntity Get(string laborName, string laborCode, string enterpriseKey)
         {
-            string whereClause = string.Format(" UserNameCN='{0}' AND LaborCode='{1}' AND CurrentEnterpriseKey='{2}' ", laborName,laborCode,enterpriseKey);
-            List < LaborEntity > list= this.GetList(whereClause);
+            string whereClause = string.Format(" UserNameCN='{0}' AND CurrentEnterpriseKey='{1}' ", laborName, enterpriseKey);
+            if (string.IsNullOrWhiteSpace(laborCode) == false)
+            {
+                whereClause += string.Format(" AND LaborCode='{0}'  ", laborCode);
+            }
 
-            if (list == null || list.Count == 0)
+            List<LaborEntity> list = this.GetList(whereClause);
+
+            //通过条件进行匹配的时候，没有人员或者多于1个人员都返回匹配失败。
+            if (list == null || list.Count == 0 || list.Count>1)
             {
                 return LaborEntity.Empty;
             }
@@ -123,7 +129,7 @@ namespace XQYC.Business.BLL
             {
                 whereClause += string.Format(" AND LaborWorkStatus={0} ", (int)laborWorkStatus.Value);
             }
-            string sqlClause = string.Format("SELECT BIZ.*,CU.* FROM XQYCLabor BIZ LEFT JOIN CoreUser CU ON BIZ.UserGuid= CU.UserGuid WHERE {0}",whereClause);
+            string sqlClause = string.Format("SELECT BIZ.*,CU.* FROM XQYCLabor BIZ LEFT JOIN CoreUser CU ON BIZ.UserGuid= CU.UserGuid WHERE {0}", whereClause);
             result = base.GetListBySQL(sqlClause);
             return result;
         }

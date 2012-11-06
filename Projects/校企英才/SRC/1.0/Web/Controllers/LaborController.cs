@@ -254,11 +254,8 @@ namespace XQYC.Web.Controllers
 
             Guid informationBrokerUserGuid = ControlHelper.GetRealValue<Guid>("InformationBroker");
             string informationBrokerUserName = RequestHelper.GetValue("InformationBroker");
-            //Guid informationBrokerUserGuid = RequestHelper.GetValue<Guid>("InformationBrokerUserGuid");
-            //string informationBrokerUserName = RequestHelper.GetValue("InformationBrokerUserGuid_Text");
 
             int headerRowNumber = RequestHelper.GetValue<int>("headerRowNumber", 1);
-
 
             HttpPostedFile postedFile = RequestHelper.CurrentRequest.Files["fileSelector"];
             if (HttpPostedFileHelper.HasFile(postedFile))
@@ -374,7 +371,7 @@ namespace XQYC.Web.Controllers
                             if (string.IsNullOrWhiteSpace(laborEntity.UserNameCN) && string.IsNullOrWhiteSpace(laborEntity.UserCardID))
                             {
                                 userCountFailure++;
-                                userListFailure += string.Format("{0}(人员姓名和身份证同时为空),<br/> ", originalExcelRowNumber);
+                                userListFailure += string.Format("{0}(人员姓名和身份证同时为空), \r\n", originalExcelRowNumber);
                             }
                             else
                             {
@@ -387,7 +384,7 @@ namespace XQYC.Web.Controllers
                                 else
                                 {
                                     userCountFailure++;
-                                    userListFailure += string.Format("{0}({1}),<br/> ", originalExcelRowNumber, EnumHelper.GetDisplayValue(createStatus));
+                                    userListFailure += string.Format("{0}({1}), \r\n", originalExcelRowNumber, EnumHelper.GetDisplayValue(createStatus));
                                 }
                             }
                         }
@@ -981,10 +978,10 @@ namespace XQYC.Web.Controllers
                     case SalaryItemKinds.EnterpriseOtherFee:
                         salarySummaryEntity.EnterpriseOtherCostReal += itemValueDelta;
                         break;
-                    case SalaryItemKinds.PersonalInsurance:
+                    case SalaryItemKinds.PersonInsurance:
                         salarySummaryEntity.PersonInsuranceReal += itemValueDelta;
                         break;
-                    case SalaryItemKinds.PersonalReserveFund:
+                    case SalaryItemKinds.PersonReserveFund:
                         salarySummaryEntity.PersonReserveFundReal += itemValueDelta;
                         break;
                     case SalaryItemKinds.PersonalOtherFee:
@@ -1114,6 +1111,12 @@ namespace XQYC.Web.Controllers
 
                         foreach (string columnName in columnNameList)
                         {
+                            //0.处理特殊的标题头信息
+                            if (columnName.Contains("[忽略]"))
+                            {
+                                continue;
+                            }
+
                             //1.根据Excel文件中的列名称映射Labor实体的属性名称
                             string propertyName = laborSalaryItemMapData[columnName];
                             if (string.IsNullOrWhiteSpace(propertyName))
@@ -1129,6 +1132,10 @@ namespace XQYC.Web.Controllers
                                 salaryDetailsEntity.SalarySummaryKey = salarySummaryGuid.ToString();
                                 salaryDetailsEntity.SalaryItemKey = columnName;
                                 decimal salaryItemValue = Converter.ChangeType<decimal>(cellValue);
+                                if (columnName.Contains("[负值]"))
+                                {
+                                    salaryItemValue = 0 - Math.Abs(salaryItemValue);
+                                }
 
                                 switch (propertyName)
                                 {
@@ -1138,19 +1145,14 @@ namespace XQYC.Web.Controllers
                                     case "LaborCode":
                                         LaborUserCodeForSalarySummary = cellValue.ToString();
                                         break;
-                                    //TODO:xieran20121105 重整常规费用（Cost）
-                                    //case "ManageFeeReal":
-                                    //    salarySummaryEntity.ManageFeeReal = salaryItemValue;
-                                    //    SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.ManageFee);
-                                    //    break;
-                                    //case "ReserveFundReal":
-                                    //    salarySummaryEntity.ReserveFundReal = salaryItemValue;
-                                    //    SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.ReserveFund);
-                                    //    break;
-                                    //case "InsuranceReal":
-                                    //    salarySummaryEntity.InsuranceReal = salaryItemValue;
-                                    //    SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.Insurance);
-                                    //    break;
+                                    case "EnterpriseMixCost":
+                                        salarySummaryEntity.EnterpriseMixCostReal = salaryItemValue;
+                                        SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.EnterpriseMixCost);
+                                        break;
+                                    case "PersonMixCost":
+                                        salarySummaryEntity.PersonMixCostReal = salaryItemValue;
+                                        SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.PersonMixCost);
+                                        break;
                                     default:
                                         if (salaryItemValue >= 0)
                                         {
@@ -1167,11 +1169,11 @@ namespace XQYC.Web.Controllers
                             }
                         }
 
-                        if (string.IsNullOrWhiteSpace(LaborUserNameCNForSalarySummary) || string.IsNullOrWhiteSpace(LaborUserCodeForSalarySummary))
+                        if (string.IsNullOrWhiteSpace(LaborUserNameCNForSalarySummary))
                         {
                             userCountFailure++;
-                            userListFailure += string.Format("{0}({1}({2})请确认此用户的用户名称和工号均不可以为空), <br />", dataRowNumberInExcel, LaborUserNameCNForSalarySummary, LaborUserCodeForSalarySummary);
-                            //物联删除掉已经插入的无效的salaryDetails数据
+                            userListFailure += string.Format("{0}({1}({2})请确认此用户的用户名称不可以为空), \r\n", dataRowNumberInExcel, LaborUserNameCNForSalarySummary, LaborUserCodeForSalarySummary);
+                            //物理删除掉已经插入的无效的salaryDetails数据
                             SalaryDetailsBLL.Instance.DeleteList(salarySummaryEntity.SalarySummaryGuid);
                         }
                         else
@@ -1232,7 +1234,7 @@ namespace XQYC.Web.Controllers
                             else
                             {
                                 userCountFailure++;
-                                userListFailure += string.Format("{0}({1}({2})请确认此用户的用户名称和工号是否跟系统内的数据一致), <br />", dataRowNumberInExcel, LaborUserNameCNForSalarySummary, LaborUserCodeForSalarySummary);
+                                userListFailure += string.Format("{0}({1}({2})请确认此用户的用户名称和工号是否跟系统内的数据一致), \r\n", dataRowNumberInExcel, LaborUserNameCNForSalarySummary, LaborUserCodeForSalarySummary);
                                 //物联删除掉已经插入的无效的salaryDetails数据
                                 SalaryDetailsBLL.Instance.DeleteList(salarySummaryEntity.SalarySummaryGuid);
                             }
@@ -1308,7 +1310,7 @@ namespace XQYC.Web.Controllers
                     itemError.Message = string.Format("共有{0}人导入失败。", userCountFailure);
                     if (string.IsNullOrWhiteSpace(userListFailure) == false)
                     {
-                        itemError.Message += string.Format("导入失败的人员分别位于{0}行, <br />", userListFailure);
+                        itemError.Message += string.Format("导入失败的人员分别位于{0}行, \r\n", userListFailure);
                     }
                     infoList.Add(itemError);
                 }
@@ -1621,7 +1623,7 @@ namespace XQYC.Web.Controllers
                         if (string.IsNullOrWhiteSpace(laborUserNameCN) || string.IsNullOrWhiteSpace(laborUserCardID))
                         {
                             userCountFailure++;
-                            userListFailure += string.Format("{0}({1}({2})请确认此用户的用户名称和身份证号均不可以为空), <br />", dataRowNumberInExcel, laborUserNameCN, laborUserCardID);
+                            userListFailure += string.Format("{0}({1}({2})请确认此用户的用户名称和身份证号均不可以为空), \r\n", dataRowNumberInExcel, laborUserNameCN, laborUserCardID);
                         }
                         else
                         {
@@ -1643,19 +1645,19 @@ namespace XQYC.Web.Controllers
                                     else
                                     {
                                         userCountFailure++;
-                                        userListFailure += string.Format("{0}({1}({2})错误未知), <br />", dataRowNumberInExcel, laborUserNameCN, laborUserCardID);
+                                        userListFailure += string.Format("{0}({1}({2})错误未知), \r\n", dataRowNumberInExcel, laborUserNameCN, laborUserCardID);
                                     }
                                 }
                                 else
                                 {
                                     userCountFailure++;
-                                    userListFailure += string.Format("{0}({1}({2})请确认此用户的用户名称和身份证号是否跟系统内的数据一致), <br />", dataRowNumberInExcel, laborUserNameCN, laborUserCardID);
+                                    userListFailure += string.Format("{0}({1}({2})请确认此用户的用户名称和身份证号是否跟系统内的数据一致), \r\n", dataRowNumberInExcel, laborUserNameCN, laborUserCardID);
                                 }
                             }
                             else
                             {
                                 userCountFailure++;
-                                userListFailure += string.Format("{0}({1}({2})请确认此用户的用户名称和身份证号是否跟系统内的数据一致), <br />", dataRowNumberInExcel, laborUserNameCN, laborUserCardID);
+                                userListFailure += string.Format("{0}({1}({2})请确认此用户的用户名称和身份证号是否跟系统内的数据一致), \r\n", dataRowNumberInExcel, laborUserNameCN, laborUserCardID);
                             }
                         }
                     }
@@ -1682,7 +1684,7 @@ namespace XQYC.Web.Controllers
                     itemError.Message = string.Format("共有{0}人导入失败。", userCountFailure);
                     if (string.IsNullOrWhiteSpace(userListFailure) == false)
                     {
-                        itemError.Message += string.Format("导入失败的人员分别位于{0}行, <br />", userListFailure);
+                        itemError.Message += string.Format("导入失败的人员分别位于{0}行, \r\n", userListFailure);
                     }
                     infoList.Add(itemError);
                 }

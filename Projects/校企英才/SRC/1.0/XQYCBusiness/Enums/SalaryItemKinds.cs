@@ -58,17 +58,22 @@ namespace XQYC.Business.Enums
         EnterpriseOtherFee = 34,
 
         /// <summary>
+        /// 混合费用(企业部分)
+        /// </summary>
+        [EnumItemDescription("zh-CN", "混合费用(企业部分)")]
+        EnterpriseMixCost = 35,
+
+        /// <summary>
         /// 保险(个人部分)
         /// </summary>
         [EnumItemDescription("zh-CN", "保险(个人部分)")]
-        PersonalInsurance = 51,
-
+        PersonInsurance = 51,
 
         /// <summary>
         /// 公积金(个人部分)
         /// </summary>
         [EnumItemDescription("zh-CN", "公积金(个人部分)")]
-        PersonalReserveFund = 52,
+        PersonReserveFund = 52,
 
 
         /// <summary>
@@ -76,6 +81,12 @@ namespace XQYC.Business.Enums
         /// </summary>
         [EnumItemDescription("zh-CN", "其他费用(个人部分)")]
         PersonalOtherFee=54,
+
+        /// <summary>
+        /// 混合费用(个人部分)
+        /// </summary>
+        [EnumItemDescription("zh-CN", "混合费用(个人部分)")]
+        PersonMixCost = 55,
 
         /// <summary>
         /// 工资税

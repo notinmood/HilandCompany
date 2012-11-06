@@ -66,21 +66,15 @@
                 </td>
             </tr>
             <tr>
-                <td>保险类型:
+                <td>企业担负费用类型:
                 </td>
-                <td>@HtmlHelperEx.XQYCDDLInsurance(Html, "InsuranceFormularKey", Model.InsuranceFormularKey)
-                </td>
-            </tr>
-            <tr>
-                <td>公积金类型:
-                </td>
-                <td>@HtmlHelperEx.XQYCDDLReserveFund(Html, "ReserveFundFormularKey", Model.ReserveFundFormularKey)
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html,CostKinds.MixCost,CostTypes.Enterprise, "EnterpriseMixCostFormularKey", Model.EnterpriseMixCostFormularKey)
                 </td>
             </tr>
             <tr>
-                <td>管理费类型:
+                <td>个人担负费用类型:
                 </td>
-                <td>@HtmlHelperEx.XQYCDDLManageFee(Html, "ManageFeeFormularKey", Model.ManageFeeFormularKey)
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html,CostKinds.MixCost,CostTypes.Person, "PersonMixCostFormularKey", Model.PersonMixCostFormularKey)
                 </td>
             </tr>
         </table>
