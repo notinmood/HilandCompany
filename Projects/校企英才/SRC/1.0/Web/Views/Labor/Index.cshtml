@@ -14,6 +14,10 @@
 @{
     ViewBag.Title = "Index";
     string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+    if (currentUrl.Length > 512)
+    {
+        currentUrl = Url.Action("Index");
+    }
 
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业", ConditionFieldName = "CurrentEnterpriseName", ConditionType = typeof(string) });
@@ -39,7 +43,8 @@
     <div class="dataContainer">
         <table style="width: 2300px" class="grid">
             <tr>
-                <th style="width: 180px"><input type="checkbox" class="allCcheckboxSelector"  />操作
+                <th style="width: 180px">
+                    <input type="checkbox" class="allCheckboxSelector" />操作
                 </th>
                 <th style="width: 80px">身份证
                 </th>
@@ -89,11 +94,11 @@
                 string entityGuid = entity.UserGuid.ToString();
                 <tr>
                     <td>
-                    <input type="checkbox" name="itemCheckboxSelector" class="checkboxSelector" value="@entityGuid"   />
-                    @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
+                        <input type="checkbox" name="itemCheckboxSelector" class="checkboxSelector" value="@entityGuid"   />
+                        @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
                     @Html.HiA().CssClassName("modalInput password " + @entityGuid).Value("口令").ACA("Password", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) |
-                    @Html.HiA().CssClassName("contract").Value("合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid }).Render() |
-                    @Html.HiA().CssClassName("bankCard").Value("银行账户").ACA("BankCardList", "Labor").RouteValue(new { itemKey = @entity.UserGuid }).Render()
+                    @Html.HiA().CssClassName("contract").Value("合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl }).Render() |
+                    @Html.HiA().CssClassName("bankCard").Value("银行账户").ACA("BankCardList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl  }).Render()
                     </td>
                     <td>@entity.UserCardID
                     </td>
@@ -198,7 +203,7 @@
                 $("#EditDIV").load(url);
             });
 
-            $(".allCcheckboxSelector").click(function () {
+            $(".allCheckboxSelector").click(function () {
                 var selectedStatus = $(this).attr("checked");
                 $(":checkbox", $(this).parents("table")).attr("checked", selectedStatus);
             });

@@ -205,6 +205,7 @@
     <Content Include="Content\Images\button-overlay.png" />
     <Content Include="Content\Images\calendar.png" />
     <Content Include="Content\Images\close.png" />
+    <Content Include="Content\Images\header-home-img.jpg" />
     <Content Include="Content\Images\holiday-hero.gif" />
     <Content Include="Content\Images\Logo.png" />
     <Content Include="Content\Images\next-horizontal.png" />

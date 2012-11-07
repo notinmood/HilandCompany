@@ -17,11 +17,17 @@
     string itemKey = this.ViewBag.ItemKey;
     Guid itemGuid = GuidHelper.TryConvert(itemKey);
     string itemName = BusinessUserBLL.Get(itemGuid).UserNameCN;
+
+    string returnUrl = HiLand.Utility.Web.RequestHelper.GetValue("returnUrl");
+    if(string.IsNullOrWhiteSpace(returnUrl))
+    {
+        returnUrl = Url.Action("Index");
+    }
 }
 <h2>劳务人员合同列表(@itemName)</h2>
 <div id="ItemListDIV">
     <div class="OperateArea" id="OperateAreaContainer">
-        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("ContractItem", "Labor").Render(new { rel = "#EditDIV" })
+        <a href="@returnUrl" title="返回列表页">返回</a> | @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("ContractItem", "Labor").Render(new { rel = "#EditDIV" })
     </div>
     <table width="98%" class="grid">
         <tr>
