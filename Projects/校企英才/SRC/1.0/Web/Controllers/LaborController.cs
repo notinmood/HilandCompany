@@ -251,6 +251,10 @@ namespace XQYC.Web.Controllers
             Guid serviceUserGuid = ControlHelper.GetRealValue<Guid>("ServiceUser");
             string serviceUserName = RequestHelper.GetValue("ServiceUser");
 
+            string businessUserName = RequestHelper.GetValue("BusinessUser");
+            Guid businessUserGuid = ControlHelper.GetRealValue<Guid>("BusinessUser");
+            string settleUserName = RequestHelper.GetValue("SettleUser");
+            Guid settleUserGuid = ControlHelper.GetRealValue<Guid>("SettleUser");
 
             Guid informationBrokerUserGuid = ControlHelper.GetRealValue<Guid>("InformationBroker");
             string informationBrokerUserName = RequestHelper.GetValue("InformationBroker");
@@ -345,6 +349,10 @@ namespace XQYC.Web.Controllers
                             laborEntity.ServiceUserName = serviceUserName;
                             laborEntity.InformationBrokerUserGuid = informationBrokerUserGuid;
                             laborEntity.InformationBrokerUserName = informationBrokerUserName;
+                            laborEntity.BusinessUserGuid = businessUserGuid;
+                            laborEntity.BusinessUserName = businessUserName;
+                            laborEntity.SettleUserGuid = settleUserGuid;
+                            laborEntity.SettleUserName = settleUserName;
 
                             IDCard idCard = IDCard.Parse(laborEntity.UserCardID);
                             //人员生日的抽取先后顺序1、直接的生日输入 2、身份证中提取 3、年龄计算。（满足前面的条件，自动跳过后面的条件）
