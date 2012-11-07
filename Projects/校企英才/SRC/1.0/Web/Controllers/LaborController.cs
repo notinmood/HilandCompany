@@ -49,20 +49,20 @@ namespace XQYC.Web.Controllers
 
             //2.通常情形下走get查询
             int pageIndex = id;
-            int pageSize = SystemConst.CountPerPage;
+            int pageSize = SystemConst.CountPerPageForLaborList;
             int startIndex = (pageIndex - 1) * pageSize + 1;
             string whereClause = " 1=1 ";
 
-            //--数据权限----------------------------------------------------------------------
-            whereClause += " AND ( ";
-            whereClause += string.Format(" {0} ", PermissionDataHelper.GetFilterCondition("FinanceUserGuid"));
-            whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ProviderUserGuid"));
-            whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("RecommendUserGuid"));
-            whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ServiceUserGuid"));
-            whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("BusinessUserGuid"));
-            whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("SettleUserGuid"));
-            whereClause += " ) ";
-            //--end--------------------------------------------------------------------------
+            ////--数据权限----------------------------------------------------------------------
+            //whereClause += " AND ( ";
+            //whereClause += string.Format(" {0} ", PermissionDataHelper.GetFilterCondition("FinanceUserGuid"));
+            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ProviderUserGuid"));
+            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("RecommendUserGuid"));
+            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ServiceUserGuid"));
+            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("BusinessUserGuid"));
+            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("SettleUserGuid"));
+            //whereClause += " ) ";
+            ////--end--------------------------------------------------------------------------
 
             whereClause += " AND " + QueryControlHelper.GetQueryCondition("LaborQuery");
 
@@ -91,6 +91,7 @@ namespace XQYC.Web.Controllers
             dic["LaborWorkStatus"] = "工作状态";
             dic["CurrentEnterpriseName"] = "务工企业";
             dic["LaborCode"] = "职工编号";
+            dic["CurrentBankAccountNumber"] = "银行账户";
             dic["UserSex"] = "性别";
             dic["UserAge"] = "年龄";
             dic["UserBirthDay"] = "出生日期";
@@ -103,6 +104,8 @@ namespace XQYC.Web.Controllers
             dic["RecommendUserName"] = "推荐人员";
             dic["FinanceUserName"] = "财务人员";
             dic["ServiceUserName"] = "客服人员";
+            dic["BusinessUserName"] = "业务人员";
+            dic["SettleUserName"] = "安置人员";
 
             Stream excelStream = ExcelHelper.WriteExcel(laborList, dic);
             return File(excelStream, ContentTypes.GetContentType("xls"), "劳务人员信息.xls");

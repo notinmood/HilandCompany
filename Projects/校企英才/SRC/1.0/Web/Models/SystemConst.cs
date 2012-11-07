@@ -20,6 +20,11 @@ namespace XQYC.Web.Models
             {
                 countPerPage = Converter.ChangeType(args.NewData.SettingValue, 10);
             }
+
+            if (args.NewData.SettingKey == "CountPerPageForLaborList")
+            {
+                countPerPageForLaborList = Converter.ChangeType(args.NewData.SettingValue, 10);
+            }
         }
 
         public const string PermissionItemValuePrefix = "SubModuleGuid::";
@@ -32,7 +37,7 @@ namespace XQYC.Web.Models
         /// <summary>
         /// 每列表页面显示的信息条目数量
         /// </summary>
-        public static int CountPerPage 
+        public static int CountPerPage
         {
             get
             {
@@ -45,8 +50,30 @@ namespace XQYC.Web.Models
                 {
                     countPerPage = Converter.ChangeType(BasicSettingBLL.Instance.GetBySettingKey("CountPerPage").SettingValue, 10);
                 }
-                
+
                 return countPerPage;
+            }
+        }
+
+        private static int countPerPageForLaborList = 0;
+        /// <summary>
+        /// 每列表页面显示的信息条目数量(专门为劳务人员列表)
+        /// </summary>
+        public static int CountPerPageForLaborList
+        {
+            get
+            {
+                if (countPerPageForLaborList == 0)
+                {
+                    countPerPageForLaborList = Config.GetAppSettingInt("CountPerPageForLaborList", 0);
+                }
+
+                if (countPerPageForLaborList == 0)
+                {
+                    countPerPageForLaborList = Converter.ChangeType(BasicSettingBLL.Instance.GetBySettingKey("CountPerPageForLaborList").SettingValue, 10);
+                }
+
+                return countPerPageForLaborList;
             }
         }
 
@@ -75,7 +102,7 @@ namespace XQYC.Web.Models
         {
             get
             {
-                if (string.IsNullOrWhiteSpace( initialUserPassword))
+                if (string.IsNullOrWhiteSpace(initialUserPassword))
                 {
                     initialUserPassword = Config.GetAppSetting("InitialUserPassword", "123");
                 }

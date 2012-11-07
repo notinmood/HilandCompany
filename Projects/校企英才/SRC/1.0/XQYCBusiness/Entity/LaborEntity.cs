@@ -1,4 +1,6 @@
 ﻿using System;
+using HiLand.General.BLL;
+using HiLand.General.Entity;
 using HiLand.Utility.Data;
 using XQYC.Business.BLL;
 using XQYC.Business.Enums;
@@ -412,110 +414,6 @@ namespace XQYC.Business.Entity
         }
         #endregion
 
-
-        //#region 以下几个计算公式采用延迟加载的方式，在使用时获取劳务人员当前的劳务合同中的数据
-        
-        //private string currentEnterpriseInsuranceFormularKey = String.Empty;
-        ///// <summary>
-        ///// 当前的劳务合同或者最新的劳务合同中的保险企业应该担负部分的计算公式Key
-        ///// </summary>
-        //public string CurrentEnterpriseInsuranceFormularKey
-        //{
-        //    get { return currentEnterpriseInsuranceFormularKey; }
-        //    set { currentEnterpriseInsuranceFormularKey = value; }
-        //}
-
-        //private string currentEnterpriseReserveFundFormularKey = String.Empty;
-        ///// <summary>
-        ///// 当前的劳务合同或者最新的劳务合同中的公积金企业应该担负部分的计算公式Key
-        ///// </summary>
-        //public string CurrentEnterpriseReserveFundFormularKey
-        //{
-        //    get { return currentEnterpriseReserveFundFormularKey; }
-        //    set { currentEnterpriseReserveFundFormularKey = value; }
-        //}
-
-        //private string currentEnterpriseManageFeeFormularKey = String.Empty;
-        ///// <summary>
-        ///// 当前的劳务合同或者最新的劳务合同中的管理费企业应该担负部分的计算公式Key
-        ///// </summary>
-        //public string CurrentEnterpriseManageFeeFormularKey
-        //{
-        //    get { return currentEnterpriseManageFeeFormularKey; }
-        //    set { currentEnterpriseManageFeeFormularKey = value; }
-        //}
-
-        //private string currentEnterpriseMixCostFormularKey = String.Empty;
-        ///// <summary>
-        ///// 当前的劳务合同或者最新的劳务合同中的混合费用企业应该担负部分的计算公式Key
-        ///// </summary>
-        //public string CurrentEnterpriseMixCostFormularKey
-        //{
-        //    get { return currentEnterpriseMixCostFormularKey; }
-        //    set { currentEnterpriseMixCostFormularKey = value; }
-        //}
-
-        //private string currentEnterpriseOtherCostFormularKey = String.Empty;
-        ///// <summary>
-        ///// 劳务合同中的其他费用企业应该担负部分的计算公式Key
-        ///// </summary>
-        //public string CurrentEnterpriseOtherCostFormularKey
-        //{
-        //    get { return currentEnterpriseOtherCostFormularKey; }
-        //    set { currentEnterpriseOtherCostFormularKey = value; }
-        //}
-
-        //private string currentPersonInsuranceFormularKey = String.Empty;
-        ///// <summary>
-        ///// 劳务合同中的保险个人应该担负部分的计算公式Key
-        ///// </summary>
-        //public string CurrentPersonInsuranceFormularKey
-        //{
-        //    get { return currentPersonInsuranceFormularKey; }
-        //    set { currentPersonInsuranceFormularKey = value; }
-        //}
-
-        //private string currentPersonReserveFundFormularKey = String.Empty;
-        ///// <summary>
-        ///// 劳务合同中的公积金个人应该担负部分的计算公式Key
-        ///// </summary>
-        //public string CurrentPersonReserveFundFormularKey
-        //{
-        //    get { return currentPersonReserveFundFormularKey; }
-        //    set { currentPersonReserveFundFormularKey = value; }
-        //}
-
-        //private string currentPersonManageFeeFormularKey = String.Empty;
-        ///// <summary>
-        ///// 劳务合同中的管理费个人应该担负部分的计算公式Key
-        ///// </summary>
-        //public string CurrentPersonManageFeeFormularKey
-        //{
-        //    get { return currentPersonManageFeeFormularKey; }
-        //    set { currentPersonManageFeeFormularKey = value; }
-        //}
-
-        //private string currentPersonMixCostFormularKey = String.Empty;
-        ///// <summary>
-        ///// 劳务合同中的混合费用个人应该担负部分的计算公式Key
-        ///// </summary>
-        //public string CurrentPersonMixCostFormularKey
-        //{
-        //    get { return currentPersonMixCostFormularKey; }
-        //    set { currentPersonMixCostFormularKey = value; }
-        //}
-
-        //private string currentPersonOtherCostFormularKey = String.Empty;
-        ///// <summary>
-        ///// 劳务合同中的其他费用个人应该担负部分的计算公式Key
-        ///// </summary>
-        //public string CurrentPersonOtherCostFormularKey
-        //{
-        //    get { return currentPersonOtherCostFormularKey; }
-        //    set { currentPersonOtherCostFormularKey = value; }
-        //}
-        //#endregion
-
         #region 延迟属性
         private LaborContractEntity currentLaborContract = LaborContractEntity.Empty;
         /// <summary>
@@ -531,6 +429,34 @@ namespace XQYC.Business.Entity
                 }
 
                 return currentLaborContract;
+            }
+        }
+
+        private BankEntity currentBank = BankEntity.Empty;
+        /// <summary>
+        /// 当前使用的银行卡信息
+        /// </summary>
+        public BankEntity CurrentBank
+        { 
+            get
+            {
+                if (currentBank.IsEmpty==true)
+                {
+                    currentBank = BankBLL.Instance.GetPrimary(this.UserGuid);
+                }
+
+                return currentBank;
+            }
+        }
+
+        /// <summary>
+        /// 当前使用的银行卡账户名称
+        /// </summary>
+        public string CurrentBankAccountNumber
+        {
+            get
+            {
+                return this.CurrentBank.AccountNumber;
             }
         }
         #endregion

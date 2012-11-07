@@ -6,6 +6,7 @@ using System.Text;
 using System.Web.Mvc;
 using HiLand.Framework.BusinessCore;
 using HiLand.Framework4.Permission;
+using HiLand.Framework4.Permission.Attributes;
 using HiLand.General.BLL;
 using HiLand.General.Entity;
 using HiLand.Utility.Cache;
@@ -61,7 +62,7 @@ namespace XQYC.Web.Controllers
             return string.Format("版本号为：{0}.{1}.{2}.{3}<br/>最后编译时间为:{4}", version.Major, version.Minor, version.Build, version.Revision, AssemblyHelper.GetCompiledTime(assembly).ToString("yyyy-MM-dd"));
         }
 
-
+        [PermissionAuthorize]
         public ActionResult CacheInfo()
         {
             ICache cache = CacheFactory.Create();
@@ -76,12 +77,14 @@ namespace XQYC.Web.Controllers
             return View(cache.Count);
         }
 
+        [PermissionAuthorize]
         public ActionResult BasicSettingList()
         {
             List<BasicSettingEntity> basicSettingList = BasicSettingBLL.Instance.GetList(string.Empty);
             return View(basicSettingList);
         }
 
+        [PermissionAuthorize]
         public ActionResult BasicSetting(int settingID)
         {
             BasicSettingEntity basicSettingEntity = BasicSettingEntity.Empty;

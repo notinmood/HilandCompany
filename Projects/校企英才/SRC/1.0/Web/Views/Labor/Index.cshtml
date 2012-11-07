@@ -37,7 +37,7 @@
         | @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)
     </div>
     <div class="dataContainer">
-        <table style="width: 2012px" class="grid">
+        <table style="width: 2300px" class="grid">
             <tr>
                 <th style="width: 180px"><input type="checkbox" class="allCcheckboxSelector"  />操作
                 </th>
@@ -52,6 +52,8 @@
                 <th style="width: 180px">务工企业
                 </th>
                 <th style="width: 80px">职工编号
+                </th>
+                <th style="width: 180px">银行账户
                 </th>
                 <th style="width: 50px">性别
                 </th>
@@ -74,6 +76,10 @@
                 <th style="width: 80px">推荐人员
                 </th>
                 <th style="width: 80px">财务人员
+                </th>
+                <th style="width: 80px">业务人员
+                </th>
+                <th style="width: 80px">安置人员
                 </th>
                 <th>客服人员
                 </th>
@@ -101,6 +107,8 @@
                     </td>
                     <td>@entity.LaborCode
                     </td>
+                    <td>@entity.CurrentBank.AccountNumber
+                    </td>
                     <td>@EnumHelper.GetDisplayValue(entity.UserSex)
                     </td>
                     <td>@entity.UserAge
@@ -123,6 +131,10 @@
                     </td>
                     <td>@entity.FinanceUserName
                     </td>
+                    <td>@entity.BusinessUserName
+                    </td>
+                    <td>@entity.SettleUserName
+                    </td>
                     <td>@entity.ServiceUserName
                     </td>
                 </tr>   
@@ -131,13 +143,11 @@
     </div>
     <div class="myPager">
         <span style="float: left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
-        &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@SystemConst.CountPerPage</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)
+        &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@SystemConst.CountPerPageForLaborList</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)
     </div>
-
     <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
     <div class="modal modalFix" id="EditDIV">
     </div>
-
     <script type="text/javascript">
         $(document).ready(function () {
             $("#aLaborSection").click();

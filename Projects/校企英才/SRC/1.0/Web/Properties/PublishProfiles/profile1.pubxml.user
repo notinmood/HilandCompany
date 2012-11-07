@@ -173,7 +173,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/07/2012 15:06:13</publishTime>
     </File>
     <File Include="bin/XQYC.Web.dll">
-      <publishTime>11/07/2012 15:06:16</publishTime>
+      <publishTime>11/07/2012 18:05:31</publishTime>
     </File>
     <File Include="Content/adminStyle.css">
       <publishTime>10/29/2012 10:46:45</publishTime>
@@ -929,7 +929,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/26/2012 17:48:04</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutAbstract.cshtml">
-      <publishTime>10/30/2012 16:42:53</publishTime>
+      <publishTime>11/07/2012 17:25:55</publishTime>
     </File>
     <File Include="Views/Shared/_LogOnPartial.cshtml">
       <publishTime>08/06/2012 16:58:53</publishTime>
@@ -974,7 +974,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/07/2012 15:06:21</publishTime>
+      <publishTime>11/07/2012 18:05:33</publishTime>
     </File>
   </ItemGroup>
 </Project>

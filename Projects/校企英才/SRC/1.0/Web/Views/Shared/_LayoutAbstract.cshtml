@@ -5,7 +5,7 @@
     string currentUserName = string.Empty;
     if (BusinessUserBLL.IsLogined)
     {
-        currentUserName = BusinessUserBLL.CurrentUserName;
+        currentUserName = BusinessUserBLL.CurrentUser.UserNameDisplay;
     }
 
     string frontMainUrl = Url.Action("Index", "Home", new { area = "" });
@@ -52,9 +52,9 @@
                 <img id="logo" style="margin-left:15px;" src="@Url.Content("~/Content/Images/logo.png")" alt="logo" />
                 <!-- Sidebar Profile links -->
                 <div id="profile-links">
-                    Hello, @currentUserName
+                    你好, @currentUserName
                     <br />
-                    <a href="@frontMainUrl" title="View the Site">View the Site</a> | <a href="@Url.Action("Logout", "Home", new { area = "UserCenter" })" title="Sign Out">Sign Out</a>
+                    <a href="@frontMainUrl" title="View the Site">浏览网站</a> | <a href="@Url.Action("Logout", "Home", new { area = "UserCenter" })" title="Sign Out">退出</a>
                 </div>
                 @RenderSection("mainAccordionMenu", false)
             </div>

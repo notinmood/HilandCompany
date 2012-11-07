@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HiLand.Framework4.Permission.Attributes;
 using HiLand.Utility.Data;
 using HiLand.Utility.Entity;
 using XQYC.Business.BLL;
@@ -10,6 +11,7 @@ using XQYC.Business.Entity;
 
 namespace XQYC.Web.Controllers
 {
+    [PermissionAuthorize]
     public class CostFormularController : Controller
     {
         public ActionResult Index()
