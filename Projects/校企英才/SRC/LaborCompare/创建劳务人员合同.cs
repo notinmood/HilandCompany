@@ -33,7 +33,7 @@ namespace LaborCompare
 
             //1.获取Labor表的所有数据
             DataTable dtForAll = new DataTable();
-            string commandStringForAll = "select * from XQYCLabor ";
+            string commandStringForAll = "select * from XQYCLabor where LaborID>=2725";
             SqlDataAdapter daForAll = new SqlDataAdapter(commandStringForAll, connectionString);
 
             daForAll.Fill(dtForAll);
