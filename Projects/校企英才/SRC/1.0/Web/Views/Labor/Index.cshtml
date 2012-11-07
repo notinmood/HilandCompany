@@ -37,13 +37,15 @@
         }
     </div>
     <div class="OperateArea" id="OperateAreaContainer">
-        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Labor").Render(new { rel = "#EditDIV" })  | @Html.HiA("batchSettleWork").CssClassName("modalInput").Value("批量派工").ACA("BatchSettleWork", "Labor").Render(new { rel = "#EditDIV" })
-        | @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)
+        <div class="btn-group">
+            @Html.HiA("newDisplayA").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("Item", "Labor").Render(new { rel = "#EditDIV" })  @Html.HiA("batchSettleWork").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-list icon-white\"></i>批量派工").ACA("BatchSettleWork", "Labor").Render(new { rel = "#EditDIV" })
+            @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)
+        </div>
     </div>
     <div class="dataContainer">
         <table style="width: 2300px" class="grid">
             <tr>
-                <th style="width: 180px">
+                <th style="width: 250px">
                     <input type="checkbox" class="allCheckboxSelector" />操作
                 </th>
                 <th style="width: 80px">身份证
@@ -95,10 +97,10 @@
                 <tr>
                     <td>
                         <input type="checkbox" name="itemCheckboxSelector" class="checkboxSelector" value="@entityGuid"   />
-                        @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
-                    @Html.HiA().CssClassName("modalInput password " + @entityGuid).Value("口令").ACA("Password", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) |
-                    @Html.HiA().CssClassName("contract").Value("合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl }).Render() |
-                    @Html.HiA().CssClassName("bankCard").Value("银行账户").ACA("BankCardList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl  }).Render()
+                        @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
+                    @Html.HiA().CssClassName("modalInput password " + @entityGuid).Value("<i class=\"icon-asterisk\"></i>口令").ACA("Password", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) |
+                    @Html.HiA().CssClassName("contract").Value("<i class=\"icon-file\"></i>合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl }).Render() |
+                    @Html.HiA().CssClassName("bankCard").Value("<i class=\"icon-retweet\"></i>银行账户").ACA("BankCardList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl }).Render()
                     </td>
                     <td>@entity.UserCardID
                     </td>

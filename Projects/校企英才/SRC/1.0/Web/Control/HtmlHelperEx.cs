@@ -49,7 +49,7 @@ namespace XQYC.Web.Control
         public static IHtmlString ExportExcel(System.Web.Mvc.HtmlHelper html)
         {
             string currentUrlWithExportExcelFunction = RequestHelper.AddOrModifyQueryString(RequestHelper.CurrentRequest, "exportExcel", "true");
-            string result = string.Format("<a href=\"{0}\">导出</a>", currentUrlWithExportExcelFunction);
+            string result = string.Format("<a href=\"{0}\" class=\"btn btn-info\"><i class=\"icon-download-alt icon-white\"></i>导出</a>", currentUrlWithExportExcelFunction);
             return new MvcHtmlString(result);
         }
         #endregion
