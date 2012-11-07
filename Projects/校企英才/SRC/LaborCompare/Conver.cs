@@ -46,5 +46,11 @@ namespace LaborCompare
             创建劳务人员合同 window = new 创建劳务人员合同();
             window.ShowDialog();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            更新劳务人员对应的工作人员 window = new 更新劳务人员对应的工作人员();
+            window.ShowDialog();
+        }
     }
 }

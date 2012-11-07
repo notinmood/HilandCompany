@@ -80,6 +80,9 @@
     <Compile Include="创建劳务人员合同.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="更新劳务人员对应的工作人员.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Conver.resx">
       <DependentUpon>Conver.cs</DependentUpon>
     </EmbeddedResource>

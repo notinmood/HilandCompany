@@ -101,25 +101,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/24/2009 16:44:54</publishTime>
     </File>
     <File Include="bin/HiLand.Framework.dll">
-      <publishTime>11/01/2012 20:09:08</publishTime>
+      <publishTime>11/06/2012 14:12:53</publishTime>
     </File>
     <File Include="bin/HiLand.Framework4.dll">
-      <publishTime>11/01/2012 20:09:13</publishTime>
+      <publishTime>11/06/2012 14:12:59</publishTime>
     </File>
     <File Include="bin/HiLand.General.dll">
-      <publishTime>11/01/2012 20:09:11</publishTime>
+      <publishTime>11/06/2012 14:13:00</publishTime>
     </File>
     <File Include="bin/HiLand.Utility.dll">
-      <publishTime>11/01/2012 20:09:02</publishTime>
+      <publishTime>11/06/2012 14:12:31</publishTime>
     </File>
     <File Include="bin/HiLand.Utility4.dll">
-      <publishTime>11/01/2012 20:09:06</publishTime>
+      <publishTime>11/06/2012 14:12:54</publishTime>
     </File>
     <File Include="bin/Ionic.Zip.dll">
       <publishTime>02/15/2012 21:59:34</publishTime>
     </File>
     <File Include="bin/MvcPager.dll">
       <publishTime>06/04/2011 17:08:13</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>10/03/2012 22:58:19</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.Net20.dll">
       <publishTime>04/23/2011 13:29:40</publishTime>
@@ -133,8 +136,23 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/System.Data.SQLite.DLL">
       <publishTime>04/28/2009 09:37:16</publishTime>
     </File>
+    <File Include="bin/System.Net.Http.dll">
+      <publishTime>07/09/2012 00:40:10</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>07/10/2012 21:51:54</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.WebRequest.dll">
+      <publishTime>07/09/2012 00:40:10</publishTime>
+    </File>
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>07/10/2012 21:53:02</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>07/10/2012 21:51:54</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>07/10/2012 21:51:54</publishTime>
     </File>
     <File Include="bin/System.Web.Mvc.dll">
       <publishTime>07/10/2012 21:51:54</publishTime>
@@ -152,10 +170,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/10/2012 21:53:02</publishTime>
     </File>
     <File Include="bin/XQYC.Business.dll">
-      <publishTime>11/03/2012 17:55:19</publishTime>
+      <publishTime>11/07/2012 15:06:13</publishTime>
     </File>
     <File Include="bin/XQYC.Web.dll">
-      <publishTime>11/03/2012 17:55:22</publishTime>
+      <publishTime>11/07/2012 15:06:16</publishTime>
     </File>
     <File Include="Content/adminStyle.css">
       <publishTime>10/29/2012 10:46:45</publishTime>
@@ -632,7 +650,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/28/2012 20:54:28</publishTime>
     </File>
     <File Include="DownFiles/Templet/劳务人员工资导入模板.xls">
-      <publishTime>10/26/2012 17:56:54</publishTime>
+      <publishTime>11/06/2012 17:30:00</publishTime>
     </File>
     <File Include="DownFiles/Templet/劳务人员批量导入模板.xls">
       <publishTime>10/26/2012 17:53:14</publishTime>
@@ -767,10 +785,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/15/2012 09:17:43</publishTime>
     </File>
     <File Include="Views/CostFormular/Index.cshtml">
-      <publishTime>10/19/2012 18:13:53</publishTime>
+      <publishTime>11/05/2012 15:19:34</publishTime>
     </File>
     <File Include="Views/CostFormular/Item.cshtml">
-      <publishTime>10/16/2012 16:38:57</publishTime>
+      <publishTime>11/06/2012 15:31:01</publishTime>
     </File>
     <File Include="Views/Department/Index.cshtml">
       <publishTime>10/18/2012 08:54:49</publishTime>
@@ -848,16 +866,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/30/2012 11:30:52</publishTime>
     </File>
     <File Include="Views/Labor/BatchEntering.cshtml">
-      <publishTime>10/28/2012 15:36:26</publishTime>
+      <publishTime>11/07/2012 14:20:51</publishTime>
     </File>
     <File Include="Views/Labor/BatchSettleWork.cshtml">
-      <publishTime>10/31/2012 11:19:30</publishTime>
+      <publishTime>11/06/2012 17:42:24</publishTime>
     </File>
     <File Include="Views/Labor/ContractItem.cshtml">
-      <publishTime>10/30/2012 14:51:49</publishTime>
+      <publishTime>11/06/2012 15:16:44</publishTime>
     </File>
     <File Include="Views/Labor/ContractList.cshtml">
-      <publishTime>10/31/2012 11:36:16</publishTime>
+      <publishTime>11/05/2012 13:29:48</publishTime>
     </File>
     <File Include="Views/Labor/Index.cshtml">
       <publishTime>10/31/2012 13:59:33</publishTime>
@@ -869,7 +887,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/26/2012 17:05:24</publishTime>
     </File>
     <File Include="Views/Labor/SalaryDetails.cshtml">
-      <publishTime>10/24/2012 10:27:08</publishTime>
+      <publishTime>11/06/2012 11:13:52</publishTime>
     </File>
     <File Include="Views/Labor/SalaryDetailsList.cshtml">
       <publishTime>10/26/2012 17:05:24</publishTime>
@@ -878,7 +896,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/26/2012 17:05:24</publishTime>
     </File>
     <File Include="Views/Labor/SalaryList.cshtml">
-      <publishTime>11/01/2012 14:19:07</publishTime>
+      <publishTime>11/06/2012 14:40:32</publishTime>
     </File>
     <File Include="Views/Labor/SalaryListPreSelector.cshtml">
       <publishTime>10/26/2012 17:05:24</publishTime>
@@ -956,7 +974,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/03/2012 17:55:27</publishTime>
+      <publishTime>11/07/2012 15:06:21</publishTime>
     </File>
   </ItemGroup>
 </Project>
