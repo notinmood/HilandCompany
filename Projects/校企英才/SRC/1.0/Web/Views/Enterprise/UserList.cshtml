@@ -9,6 +9,8 @@
 @using HiLand.Utility.Data;
 @using XQYC.Business.Entity;
 @using HiLand.General.BLL;
+@using HiLand.Utility.Web;
+
 @model List<BusinessUser>
 @{
     ViewBag.Title = "Index";
@@ -20,7 +22,12 @@
         enterpriseName = EnterpriseBLL.Instance.Get(enterpriseKey).CompanyName;
     }
 
-    string returnUrl = HiLand.Utility.Web.RequestHelper.GetValue("returnUrl");
+    string returnUrl = RequestHelper.GetValue("returnUrl");
+    bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
+    if (isUsingCompress == true && string.IsNullOrWhiteSpace(returnUrl) == false)
+    {
+        returnUrl = CompressHelper.Decompress(returnUrl);
+    }
     if (string.IsNullOrWhiteSpace(returnUrl))
     {
         returnUrl = Url.Action("Index");

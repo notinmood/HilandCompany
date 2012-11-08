@@ -16,7 +16,7 @@
     ViewBag.Title = "Index";
     string currentUrl = RequestHelper.CurrentFullUrl;
     string enterpriseKey = RequestHelper.GetValue("enterpriseKey");
-    string salaryMonth = RequestHelper.GetValue("SalaryMonth"); 
+    string salaryMonth = RequestHelper.GetValue("SalaryMonth");
 
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员名称", ConditionFieldName = "LaborName", ConditionType = typeof(string) });
@@ -33,8 +33,8 @@
     </div>
     <div class="OperateArea" id="OperateAreaContainer">
         <div class="btn-group">@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("SalaryItem", "Labor").Render(new { rel = "#EditDIV" })
-        @Html.HiA("salaryListCheck").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-refresh icon-white\"></i>应付薪资人员校验").ACA("SalaryListCheck", "Labor").RouteValue(new{ enterpriseKey=enterpriseKey,salaryMonth=salaryMonth}).Render()
-            </div>
+            @Html.HiA("salaryListCheck").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-refresh icon-white\"></i>应付薪资人员校验").ACA("SalaryListCheck", "Labor").RouteValue(new { enterpriseKey = enterpriseKey, salaryMonth = salaryMonth }).Render()
+        </div>
     </div>
     <table width="98%" class="grid">
         <tr>
