@@ -8,7 +8,7 @@
 .welcome div {
     color: #57A000;
     font-size: 34px;
-    font-style: italic;
+    font-family: Verdana,Arial,Helvetica,微软雅黑2,宋体,sans-serif;
     letter-spacing: -1px;
     line-height: 1.2;
     padding: 0 1px 10px;
@@ -23,4 +23,3 @@
     width: 436px;
     z-index: 1000;
 }
-

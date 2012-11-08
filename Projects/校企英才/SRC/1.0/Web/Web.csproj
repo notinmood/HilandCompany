@@ -182,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\adminStyle.css" />
+    <Content Include="Content\Images\notepad.png" />
     <Content Include="Content\twitter-bootstrap\css\bootstrap-responsive.css" />
     <Content Include="Content\twitter-bootstrap\css\bootstrap.css" />
     <Content Include="Content\twitter-bootstrap\css\bootstrapExpress.css" />
@@ -260,7 +261,6 @@
     <Content Include="Content\Images\button-overlay.png" />
     <Content Include="Content\Images\calendar.png" />
     <Content Include="Content\Images\close.png" />
-    <Content Include="Content\Images\header-home-img.jpg" />
     <Content Include="Content\Images\holiday-hero.gif" />
     <Content Include="Content\Images\Logo.png" />
     <Content Include="Content\Images\next-horizontal.png" />
