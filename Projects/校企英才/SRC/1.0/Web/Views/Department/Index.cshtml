@@ -15,7 +15,7 @@
 <h2>部门基本信息</h2>
 <div id="ItemListDIV">
     <div class="OperateArea" id="OperateAreaContainer">
-        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Department").Render(new { rel = "#EditDIV" })
+        <div class="btn-group">@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("Item", "Department").Render(new { rel = "#EditDIV" })</div>
     </div>
     <table width="98%" class="grid">
         <tr>
@@ -37,9 +37,9 @@
             string entityGuid = entity.DepartmentGuid.ToString();
             <tr>
                 <td>
-                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("编辑").ACA("Item", "Department").Render(new { rel = "#EditDIV", itemKey = @entity.DepartmentGuid }) | 
-                    @Html.HiA().CssClassName("modalInput newSub "+ @entityGuid).Value("子部门").ACA("Item", "Department").Render(new { rel = "#EditDIV", parentKey = @entity.DepartmentGuid }) | 
-                    @Html.HiA().CssClassName("modalInput permission "+ @entityGuid).Value("权限").ACA("Permission", "Department").Render(new { rel = "#EditDIV", itemGuid = @entity.DepartmentGuid, itemName = @entity.DepartmentName })
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Department").Render(new { rel = "#EditDIV", itemKey = @entity.DepartmentGuid }) | 
+                    @Html.HiA().CssClassName("modalInput newSub "+ @entityGuid).Value("<i class=\"icon-indent-left\"></i>子部门").ACA("Item", "Department").Render(new { rel = "#EditDIV", parentKey = @entity.DepartmentGuid }) | 
+                    @Html.HiA().CssClassName("modalInput permission "+ @entityGuid).Value("<i class=\"icon-ok-circle\"></i>权限").ACA("Permission", "Department").Render(new { rel = "#EditDIV", itemGuid = @entity.DepartmentGuid, itemName = @entity.DepartmentName })
                 </td>
                 <td>@Html.Raw(StringHelper.Repeate(">", entity.DepartmentLevel) + entity.DepartmentName)
                 </td>

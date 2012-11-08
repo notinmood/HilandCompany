@@ -19,11 +19,11 @@
 <h2>内部员工列表</h2>
 <div id="ItemListDIV">
     <div class="OperateArea" id="OperateAreaContainer">
-        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Employee").Render(new { rel = "#EditDIV" })
+        <div class="btn-group">@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("Item", "Employee").Render(new { rel = "#EditDIV" })</div>
     </div>
     <table width="98%" class="grid">
         <tr>
-            <th style="width: 250px">操作
+            <th style="width: 350px">操作
             </th>
             <th style="width: 120px">账号
             </th>
@@ -39,12 +39,12 @@
             string entityGuid = entity.UserGuid.ToString();
             <tr>
                 <td>
-                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("编辑").ACA("Item", "Employee").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
-                    @Html.HiA().CssClassName("modalInput password "+ @entityGuid).Value("口令").ACA("Password", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) | 
-                    @Html.HiA().CssClassName("modalInput role "+ @entityGuid).Value("角色").ACA("RoleSelector", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) | 
-                    @Html.HiA().CssClassName("modalInput permissionData "+ @entityGuid).Value("数据").ACA("PermissionData", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) | 
-                    @Html.HiA().CssClassName("modalInput permissionAllow "+ @entityGuid).Value("允许权限").ACA("PermissionAllow", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) | 
-                    @Html.HiA().CssClassName("modalInput permissionDeny "+ @entityGuid).Value("拒绝权限").ACA("PermissionDeny", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN })
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Employee").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
+                    @Html.HiA().CssClassName("modalInput password "+ @entityGuid).Value("<i class=\"icon-asterisk\"></i>口令").ACA("Password", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) | 
+                    @Html.HiA().CssClassName("modalInput role "+ @entityGuid).Value("<i class=\"icon-th-large\"></i>角色").ACA("RoleSelector", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) | 
+                    @Html.HiA().CssClassName("modalInput permissionData "+ @entityGuid).Value("<i class=\"icon-ban-circle\"></i>数据权限").ACA("PermissionData", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) | 
+                    @Html.HiA().CssClassName("modalInput permissionAllow "+ @entityGuid).Value("<i class=\"icon-ok-circle\"></i>允许权限").ACA("PermissionAllow", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) | 
+                    @Html.HiA().CssClassName("modalInput permissionDeny "+ @entityGuid).Value("<i class=\"icon-remove-circle\"></i>拒绝权限").ACA("PermissionDeny", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN })
                 </td>
                 <td>@entity.UserName
                 </td>
