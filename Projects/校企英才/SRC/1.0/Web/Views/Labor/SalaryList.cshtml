@@ -32,8 +32,9 @@
         }
     </div>
     <div class="OperateArea" id="OperateAreaContainer">
-        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("SalaryItem", "Labor").Render(new { rel = "#EditDIV" }) | 
-        @Html.HiA("salaryListCheck").CssClassName("modalInput").Value("应付薪资人员校验").ACA("SalaryListCheck", "Labor").RouteValue(new{ enterpriseKey=enterpriseKey,salaryMonth=salaryMonth}).Render()
+        <div class="btn-group">@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("SalaryItem", "Labor").Render(new { rel = "#EditDIV" })
+        @Html.HiA("salaryListCheck").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-refresh icon-white\"></i>应付薪资人员校验").ACA("SalaryListCheck", "Labor").RouteValue(new{ enterpriseKey=enterpriseKey,salaryMonth=salaryMonth}).Render()
+            </div>
     </div>
     <table width="98%" class="grid">
         <tr>
@@ -71,7 +72,7 @@
             decimal salaryrebate = entity.SalaryRebate;
             <tr>
                 <td>
-                    @Html.HiA().CssClassName("salaryDetailsList").Value("详情").ACA("SalaryDetailsList", "Labor").RouteValue(new { itemKey = entity.SalarySummaryGuid, returnUrl = currentUrl }).Render()
+                    @Html.HiA().CssClassName("salaryDetailsList").Value("<i class=\"icon-align-justify\"></i>详情").ACA("SalaryDetailsList", "Labor").RouteValue(new { itemKey = entity.SalarySummaryGuid, returnUrl = currentUrl }).Render()
                 </td>
                 <td>
                     @entity.SalaryDate.ToString("yyyyMM")

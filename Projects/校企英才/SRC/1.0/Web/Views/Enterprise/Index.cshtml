@@ -15,6 +15,12 @@
 @{
     ViewBag.Title = "Index";
 
+    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+    if (currentUrl.Length > 512)
+    {
+        currentUrl = Url.Action("Index");
+    }
+
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业名称", ConditionFieldName = "CompanyName", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合作意向", ConditionFieldName = "EnterpriseLevel", ConditionType = typeof(CommonLevels), AddonData = "enumDisplayCategory:star" });
@@ -31,7 +37,7 @@
         }
     </div>
     <div class="OperateArea" id="OperateAreaContainer">
-        @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV" }) 
+        <div class="btn-group">@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV" }) </div>
     </div>
     <div class="dataContainer">
         <table class="grid">
@@ -52,11 +58,10 @@
                 string entityGuid = entity.EnterpriseGuid.ToString();
                 <tr>
                     <td>
-                        @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("编辑").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseGuid }) | 
-                    @Html.HiA().CssClassName("user").Value("用户").ACA("UserList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName }).Render() | 
-                    @Html.HiA().CssClassName("contract").Value("合同").ACA("ContractList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName }).Render() | 
-                    @Html.HiA().CssClassName("service").Value("合作方式").ACA("ServiceList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName }).Render()
-                        @*@Html.HiA().CssClassName("modalInput contract").Value("合同").ACA("ContractList", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseGuid ,itemName= @entity.CompanyName}) | *@
+                        @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseGuid }) | 
+                    @Html.HiA().CssClassName("user").Value("<i class=\"icon-user\"></i>用户").ACA("UserList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl  }).Render() | 
+                    @Html.HiA().CssClassName("contract").Value("<i class=\"icon-file\"></i>合同").ACA("ContractList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl  }).Render() | 
+                    @Html.HiA().CssClassName("service").Value("<i class=\"icon-random\"></i>合作方式").ACA("ServiceList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl  }).Render()
                     </td>
                     <td>@entity.CompanyName
                     </td>

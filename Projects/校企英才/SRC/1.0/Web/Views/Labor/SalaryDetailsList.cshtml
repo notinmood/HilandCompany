@@ -32,7 +32,7 @@
 <h2>劳务人员薪资列表</h2>
 <div id="ItemListDIV">
     <div class="OperateArea" id="OperateAreaContainer">
-        <a href="@returnUrl" title="返回列表页">返回</a> | @Html.HiA("newDisplayA").CssClassName("modalInput").Value("新建").ACA("SalaryDetails", "Labor").Render(new { rel = "#EditDIV" })
+        <div class="btn-group"><a href="@returnUrl" class="btn btn-info" title="返回列表页"><i class="icon-share icon-white"></i>返回</a>@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("SalaryDetails", "Labor").Render(new { rel = "#EditDIV" })</div>
     </div>
     <table width="98%" class="grid">
         <tr>
@@ -53,7 +53,7 @@
             decimal salaryValue = entity.SalaryItemValue;
             <tr>
                 <td>
-                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("编辑").ACA("SalaryDetails", "Labor").Render(new { rel = "#EditDIV", itemKey = @entityGuid }) | 
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("SalaryDetails", "Labor").Render(new { rel = "#EditDIV", itemKey = @entityGuid }) | 
                 </td>
                 <td>@EnumHelper.GetDisplayValue(entity.SalaryItemKind)
                 </td>

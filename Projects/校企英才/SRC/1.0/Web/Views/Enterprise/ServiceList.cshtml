@@ -21,12 +21,19 @@
     }
 
     List<EnterpriseServiceEntity> selectedServiceList = this.ViewBag.SelectedServiceList;
-    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl; 
+    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+
+    string returnUrl = HiLand.Utility.Web.RequestHelper.GetValue("returnUrl");
+    if (string.IsNullOrWhiteSpace(returnUrl))
+    {
+        returnUrl = Url.Action("Index");
+    }
 }
 
 <h2>企业选用服务列表(@enterpriseName)</h2>
 <div id="ItemListDIV">
     <div class="OperateArea" id="OperateAreaContainer">
+        <div class="btn-group"><a href="@returnUrl" class="btn btn-info" title="返回列表页"><i class="icon-share icon-white"></i>返回</a></div>
     </div>
     <table width="98%" class="grid">
         <tr>
@@ -71,10 +78,10 @@
                 effectString = "有效";
             }
 
-            string operateString = "启用";
+            string operateString = "<i class=\"icon-edit\"></i>启用";
             if (isExistCurrentService)
             {
-                operateString = "编辑";
+                operateString = "<i class=\"icon-edit\"></i>编辑";
             }
             string entityGuid = currentSelectService.EnterpriseServiceGuid.ToString();
             <tr>
