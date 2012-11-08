@@ -40,14 +40,15 @@ namespace XQYC.Web.Controllers
             int startIndex = (pageIndex - 1) * pageSize + 1;
             string whereClause = " 1=1 ";
 
-            //--数据权限----------------------------------------------------------------------
-            whereClause += " AND ( ";
-            whereClause += string.Format(" {0} ", PermissionDataHelper.GetFilterCondition("FinanceUserGuid"));
-            whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ProviderUserGuid"));
-            whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("RecommendUserGuid"));
-            whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ServiceUserGuid"));
-            whereClause += " ) ";
-            //--end--------------------------------------------------------------------------
+            ////--数据权限----------------------------------------------------------------------
+            //whereClause += " AND ( ";
+            //whereClause += string.Format(" {0} ", PermissionDataHelper.GetFilterCondition("FinanceUserGuid"));
+            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ProviderUserGuid"));
+            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("RecommendUserGuid"));
+            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ServiceUserGuid"));
+            //whereClause += " ) ";
+            ////--end--------------------------------------------------------------------------
+
             string orderClause = "InformationBrokerID DESC";
 
             whereClause += " AND " + QueryControlHelper.GetQueryCondition("QueryControl");
@@ -156,7 +157,7 @@ namespace XQYC.Web.Controllers
 
         public ActionResult UserList(string itemKey, string itemName = StringHelper.Empty)
         {
-            List<BusinessUser> userList = null;
+            List<BusinessUser> userList = new List<BusinessUser>();
 
             if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
             {
