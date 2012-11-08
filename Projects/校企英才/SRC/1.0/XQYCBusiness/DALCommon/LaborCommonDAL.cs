@@ -80,6 +80,8 @@ namespace XQYC.Business.DALCommon
 			        [InformationBrokerUserName],
 			        [InsureType],
                     [LaborWorkStatus],
+			        [CurrentLaborDepartment],
+			        [CurrentLaborWorkShop],
                     [CurrentContractStartDate],
                     [CurrentContractStopDate],
                     [CurrentContractDesc],
@@ -129,6 +131,8 @@ namespace XQYC.Business.DALCommon
 			        {0}InformationBrokerUserName,
 			        {0}InsureType,
                     {0}LaborWorkStatus,
+			        {0}CurrentLaborDepartment,
+			        {0}CurrentLaborWorkShop,
                     {0}CurrentContractStartDate,
                     {0}CurrentContractStopDate,
                     {0}CurrentContractDesc,
@@ -187,6 +191,8 @@ namespace XQYC.Business.DALCommon
                     [InformationBrokerUserName] = {0}InformationBrokerUserName,
 					[InsureType] = {0}InsureType,
                     [LaborWorkStatus] = {0}LaborWorkStatus,
+				    [CurrentLaborDepartment] = {0}CurrentLaborDepartment,
+				    [CurrentLaborWorkShop] = {0}CurrentLaborWorkShop,
                     [CurrentContractStartDate] = {0}CurrentContractStartDate,
                     [CurrentContractStopDate] = {0}CurrentContractStopDate,
                     [CurrentContractDesc] = {0}CurrentContractDesc,
@@ -250,6 +256,8 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("InformationBrokerUserName",entity.InformationBrokerUserName?? String.Empty),
 			    GenerateParameter("InsureType",entity.InsureType),
                 GenerateParameter("LaborWorkStatus",entity.LaborWorkStatus),
+                GenerateParameter("CurrentLaborDepartment",entity.CurrentLaborDepartment?? String.Empty),
+			    GenerateParameter("CurrentLaborWorkShop",entity.CurrentLaborWorkShop?? String.Empty),
                 GenerateParameter("CurrentContractStartDate",entity.CurrentContractStartDate),
                 GenerateParameter("CurrentContractStopDate",entity.CurrentContractStopDate),
                 GenerateParameter("CurrentContractDesc",entity.CurrentContractDesc??String.Empty),
@@ -413,6 +421,16 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.LaborWorkStatus = (LaborWorkStatuses)reader.GetInt32(reader.GetOrdinal("LaborWorkStatus"));
                 }
+
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CurrentLaborDepartment"))
+                {
+                    entity.CurrentLaborDepartment = reader.GetString(reader.GetOrdinal("CurrentLaborDepartment"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CurrentLaborWorkShop"))
+                {
+                    entity.CurrentLaborWorkShop = reader.GetString(reader.GetOrdinal("CurrentLaborWorkShop"));
+                }
+
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CurrentContractStartDate"))
                 {
                     entity.CurrentContractStartDate = reader.GetDateTime(reader.GetOrdinal("CurrentContractStartDate"));

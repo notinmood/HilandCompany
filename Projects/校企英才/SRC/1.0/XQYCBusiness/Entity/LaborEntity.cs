@@ -328,6 +328,20 @@ namespace XQYC.Business.Entity
             set { currentContractKey = value; }
         }
 
+        private string currentLaborDepartment = String.Empty;
+        public string CurrentLaborDepartment
+        {
+            get { return currentLaborDepartment; }
+            set { currentLaborDepartment = value; }
+        }
+
+        private string currentLaborWorkShop = String.Empty;
+        public string CurrentLaborWorkShop
+        {
+            get { return currentLaborWorkShop; }
+            set { currentLaborWorkShop = value; }
+        }
+
         private DateTime currentContractStartDate = DateTimeHelper.Min;
         public DateTime CurrentContractStartDate
         {

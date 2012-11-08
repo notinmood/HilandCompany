@@ -74,7 +74,20 @@ namespace XQYC.Business.Entity
             get { return laborContractIsCurrent; }
             set { laborContractIsCurrent = value; }
         }
-        
+
+        private string laborDepartment = String.Empty;
+        public string LaborDepartment
+        {
+            get { return laborDepartment; }
+            set { laborDepartment = value; }
+        }
+
+        private string laborWorkShop = String.Empty;
+        public string LaborWorkShop
+        {
+            get { return laborWorkShop; }
+            set { laborWorkShop = value; }
+        }
 
         private DateTime laborContractStartDate = DateTimeHelper.Min;
         public DateTime LaborContractStartDate

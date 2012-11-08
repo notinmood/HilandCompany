@@ -60,6 +60,8 @@ namespace XQYC.Business.DALCommon
 			    [EnterpriseGuid],
 			    [EnterpriseContractGuid],
 			    [LaborContractStatus],
+			    [LaborDepartment],
+			    [LaborWorkShop],
 			    [LaborContractStartDate],
 			    [LaborContractStopDate],
 			    [LaborContractDetails],
@@ -88,6 +90,8 @@ namespace XQYC.Business.DALCommon
 			    {0}EnterpriseGuid,
 			    {0}EnterpriseContractGuid,
 			    {0}LaborContractStatus,
+			    {0}LaborDepartment,
+			    {0}LaborWorkShop,
 			    {0}LaborContractStartDate,
 			    {0}LaborContractStopDate,
 			    {0}LaborContractDetails,
@@ -125,6 +129,8 @@ namespace XQYC.Business.DALCommon
 				    [EnterpriseGuid] = {0}EnterpriseGuid,
 				    [EnterpriseContractGuid] = {0}EnterpriseContractGuid,
 				    [LaborContractStatus] = {0}LaborContractStatus,
+				    [LaborDepartment] = {0}LaborDepartment,
+				    [LaborWorkShop] = {0}LaborWorkShop,
 				    [LaborContractStartDate] = {0}LaborContractStartDate,
 				    [LaborContractStopDate] = {0}LaborContractStopDate,
 				    [LaborContractDetails] = {0}LaborContractDetails,
@@ -191,6 +197,8 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("EnterpriseGuid",entity.EnterpriseGuid),
 			    GenerateParameter("EnterpriseContractGuid",entity.EnterpriseContractGuid),
 			    GenerateParameter("LaborContractStatus",entity.LaborContractStatus),
+                GenerateParameter("LaborDepartment",entity.LaborDepartment?? String.Empty),
+			    GenerateParameter("LaborWorkShop",entity.LaborWorkShop?? String.Empty),
 			    GenerateParameter("LaborContractStartDate",entity.LaborContractStartDate),
 			    GenerateParameter("LaborContractStopDate",entity.LaborContractStopDate),
 			    GenerateParameter("LaborContractDetails",entity.LaborContractDetails?? String.Empty),
@@ -257,6 +265,16 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.LaborContractIsCurrent = (Logics)reader.GetInt32(reader.GetOrdinal("LaborContractIsCurrent"));
                 }
+
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "LaborDepartment"))
+                {
+                    entity.LaborDepartment = reader.GetString(reader.GetOrdinal("LaborDepartment"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "LaborWorkShop"))
+                {
+                    entity.LaborWorkShop = reader.GetString(reader.GetOrdinal("LaborWorkShop"));
+                }
+
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "LaborContractStartDate"))
                 {
                     entity.LaborContractStartDate = reader.GetDateTime(reader.GetOrdinal("LaborContractStartDate"));
