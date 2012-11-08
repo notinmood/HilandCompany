@@ -16,7 +16,7 @@
 <h2>操作结果</h2>
 @using (Html.BeginForm())
 {
-    for (int i = 0; i < statusList.Count;i++ )
+    for (int i = 0; i < statusList.Count; i++)
     {
         SystemStatusInfo currentItem = statusList[i];
         string cssClassName = "hl_Success";
@@ -43,12 +43,14 @@
     }
     <input type="hidden" name="inputDisplayCount" value="@statusList.Count" />
     
-    if (string.IsNullOrWhiteSpace(returnUrl) == false)
-    { 
-    <a href="@returnUrl" target="_self" title="返回">返回</a>
-    }
-    
-    <input type="submit" name="SavaAs" value="导出另存" />
+    <div class="btn-group">
+        @if (string.IsNullOrWhiteSpace(returnUrl) == false)
+        { 
+            <a href="@returnUrl" class="btn btn-info" style="height:20px;" target="_self" title="返回"><i class="icon-share icon-white"></i>返回</a>
+        }
+
+        <input type="submit" class="btn btn-info"  style="height:30px;" name="SavaAs" value="导出另存" />
+    </div>
 }
 
 

@@ -3,36 +3,16 @@
     HiLand.Framework.BusinessCore.BusinessUser CurrentUser = HiLand.Framework.BusinessCore.BLL.BusinessUserBLL.CurrentUser;
 }
 
-<style type="text/css">
-    
-.welcome {
-    padding: 81px 0 30px;
-    position: relative;
-    width: 500px;
-    z-index: 2;
-}
-
-.home-image {
-    background: url(@Url.Content("~/Content/Images/header-home-img.jpg") repeat scroll 0 0 transparent;
-    height: 506px;
-    position: absolute;
-    right: -48px;
-    top: 6px;
-    width: 584px;
-    z-index: 1000;
-}
-</style>
+<link rel="stylesheet" href="@Url.Content("~/Content/welcome.css")" type="text/css" media="screen" />
 <h2>欢迎</h2>
-<div class="shell">
-    <div class="welcome">
-        <div>登录账户为：@CurrentUser.UserName</div>
-        <div>姓名为：@CurrentUser.UserNameDisplay</div>
-        <div>所在部门为：@CurrentUser.Department.DepartmentFullPath</div>
-        <div>最近一次的登录时间为：@CurrentUser.UserLastDateTime.ToString()</div>
-        <div>最近一次的登录IP为：@CurrentUser.UserLastIP</div>
-    </div>
-    <div class="home-image"></div>
+<div class="welcome">
+    <div>登录账户为：@CurrentUser.UserName</div>
+    <div>姓名为：@CurrentUser.UserNameDisplay</div>
+    <div>所在部门为：@CurrentUser.Department.DepartmentFullPath</div>
+    <div>最近一次的登录时间为：@CurrentUser.UserLastDateTime.ToString()</div>
+    <div>最近一次的登录IP为：@CurrentUser.UserLastIP</div>
 </div>
+<div class="home-image"></div>
 
 
 <script type="text/javascript">

@@ -1,0 +1,26 @@
+﻿.welcome {
+    padding: 10px 0 30px;
+    position: relative;
+    width: 500px;
+    z-index: 2;
+}
+
+.welcome div {
+    color: #57A000;
+    font-size: 34px;
+    font-style: italic;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    padding: 0 1px 10px;
+}
+
+.home-image {
+    background: url("Images/notepad.png") no-repeat scroll 0 0 transparent;
+    height: 325px;
+    position: absolute;
+    right: 130px;
+    top: 80px;
+    width: 436px;
+    z-index: 1000;
+}
+
