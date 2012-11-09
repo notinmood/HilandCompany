@@ -190,6 +190,9 @@ namespace XQYC.Business.Entity
         }
 
         private Guid providerUserGuid = Guid.Empty;
+        /// <summary>
+        /// 信息提供人员Guid
+        /// </summary>
         public Guid ProviderUserGuid
         {
             get { return providerUserGuid; }
@@ -197,6 +200,9 @@ namespace XQYC.Business.Entity
         }
 
         private string providerUserName = String.Empty;
+        /// <summary>
+        /// 信息提供人员姓名
+        /// </summary>
         public string ProviderUserName
         {
             get { return providerUserName; }
@@ -204,6 +210,9 @@ namespace XQYC.Business.Entity
         }
 
         private Guid recommendUserGuid = Guid.Empty;
+        /// <summary>
+        /// 推荐人员Guid
+        /// </summary>
         public Guid RecommendUserGuid
         {
             get { return recommendUserGuid; }
@@ -211,6 +220,9 @@ namespace XQYC.Business.Entity
         }
 
         private string recommendUserName = String.Empty;
+        /// <summary>
+        /// 推荐人员姓名
+        /// </summary>
         public string RecommendUserName
         {
             get { return recommendUserName; }
@@ -218,6 +230,9 @@ namespace XQYC.Business.Entity
         }
 
         private Guid serviceUserGuid = Guid.Empty;
+        /// <summary>
+        /// 客服人员Guid
+        /// </summary>
         public Guid ServiceUserGuid
         {
             get { return serviceUserGuid; }
@@ -225,6 +240,9 @@ namespace XQYC.Business.Entity
         }
 
         private string serviceUserName = String.Empty;
+        /// <summary>
+        /// 客服人员姓名
+        /// </summary>
         public string ServiceUserName
         {
             get { return serviceUserName; }
@@ -232,6 +250,9 @@ namespace XQYC.Business.Entity
         }
 
         private Guid financeUserGuid = Guid.Empty;
+        /// <summary>
+        /// 财务人员Guid
+        /// </summary>
         public Guid FinanceUserGuid
         {
             get { return financeUserGuid; }
@@ -239,6 +260,9 @@ namespace XQYC.Business.Entity
         }
 
         private string financeUserName = String.Empty;
+        /// <summary>
+        /// 财务人员姓名
+        /// </summary>
         public string FinanceUserName
         {
             get { return financeUserName; }
@@ -246,6 +270,9 @@ namespace XQYC.Business.Entity
         }
 
         private Guid businessUserGuid = Guid.Empty;
+        /// <summary>
+        /// 安置人员Guid
+        /// </summary>
         public Guid BusinessUserGuid
         {
             get { return businessUserGuid; }
@@ -253,6 +280,9 @@ namespace XQYC.Business.Entity
         }
 
         private string businessUserName = String.Empty;
+        /// <summary>
+        /// 业务人员姓名
+        /// </summary>
         public string BusinessUserName
         {
             get { return businessUserName; }
@@ -260,6 +290,9 @@ namespace XQYC.Business.Entity
         }
 
         private Guid settleUserGuid = Guid.Empty;
+        /// <summary>
+        /// 安置人员
+        /// </summary>
         public Guid SettleUserGuid
         {
             get { return settleUserGuid; }
@@ -267,6 +300,9 @@ namespace XQYC.Business.Entity
         }
 
         private string settleUserName = String.Empty;
+        /// <summary>
+        /// 安置人员
+        /// </summary>
         public string SettleUserName
         {
             get { return settleUserName; }

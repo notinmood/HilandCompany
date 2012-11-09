@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="dataContainer">
-        <table style="width: 3300px" class="grid">
+        <table style="width: 3700px" class="grid">
             <tr>
                 <th style="width: 250px">
                     <input type="checkbox" class="allCheckboxSelector" />操作
@@ -104,7 +104,17 @@
                 </th>
                 <th style="width: 80px">安置人员
                 </th>
-                <th>客服人员
+                <th style="width: 80px">客服人员
+                </th>
+                <th style="width: 80px">备注1
+                </th>
+                <th style="width: 80px">备注2
+                </th>
+                <th style="width: 80px">备注3
+                </th>
+                <th style="width: 80px">备注4
+                </th>
+                <th>备注5
                 </th>
             </tr>
             @foreach (LaborEntity entity in Model)
@@ -173,6 +183,16 @@
                     <td>@entity.SettleUserName
                     </td>
                     <td>@entity.ServiceUserName
+                    </td>
+                    <td>@entity.Memo1
+                    </td>
+                    <td>@entity.Memo2
+                    </td>
+                    <td>@entity.Memo3
+                    </td>
+                    <td>@entity.Memo4
+                    </td>
+                    <td>@entity.Memo5
                     </td>
                 </tr>   
             }

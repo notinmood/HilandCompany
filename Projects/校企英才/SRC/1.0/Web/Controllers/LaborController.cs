@@ -90,22 +90,34 @@ namespace XQYC.Web.Controllers
             dic["UserStatus"] = "人员状态";
             dic["LaborWorkStatus"] = "工作状态";
             dic["CurrentEnterpriseName"] = "务工企业";
+            dic["CurrentLaborDepartment"] = "所在部门";
+            dic["CurrentLaborWorkShop"] = "所在车间";
             dic["LaborCode"] = "职工编号";
             dic["CurrentBankAccountNumber"] = "银行账户";
             dic["UserSex"] = "性别";
             dic["UserAge"] = "年龄";
             dic["UserBirthDay"] = "出生日期";
+            dic["UserEducationalBackground"] = "学历";
+            dic["UserEducationalSchool"] = "毕业学校";
+            dic["SocialSecurityNumber"] = "社保号";
+            dic["HouseHoldType"] = "户口性质";
             dic["UserMobileNO"] = "联系电话";
             dic["UrgentTelephone"] = "紧急联系电话";
             dic["CurrentContractStartDate"] = "最近合同开始时间";
             dic["CurrentContractStopDate"] = "最近合同到期时间";
             dic["CurrentContractDiscontinueDate"] = "最近离职时间";
+            dic["InformationBrokerUserName"] = "信息员";
             dic["ProviderUserName"] = "信息提供人员";
             dic["RecommendUserName"] = "推荐人员";
             dic["FinanceUserName"] = "财务人员";
             dic["ServiceUserName"] = "客服人员";
             dic["BusinessUserName"] = "业务人员";
             dic["SettleUserName"] = "安置人员";
+            dic["Memo1"] = "备注1";
+            dic["Memo2"] = "备注2";
+            dic["Memo3"] = "备注3";
+            dic["Memo4"] = "备注4";
+            dic["Memo5"] = "备注5";
 
             Stream excelStream = ExcelHelper.WriteExcel(laborList, dic);
             return File(excelStream, ContentTypes.GetContentType("xls"), "劳务人员信息.xls");
@@ -250,22 +262,22 @@ namespace XQYC.Web.Controllers
             List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
             string returnUrl = RequestHelper.CurrentFullUrl;
 
-            Guid providerUserGuid = ControlHelper.GetRealValue<Guid>("ProviderUser");
-            string providerUserName = RequestHelper.GetValue("ProviderUser");
-            Guid recommendUserGuid = ControlHelper.GetRealValue<Guid>("RecommendUser");
-            string recommendUserName = RequestHelper.GetValue("RecommendUser");
-            Guid financeUserGuid = ControlHelper.GetRealValue<Guid>("FinanceUser");
-            string financeUserName = RequestHelper.GetValue("FinanceUser");
-            Guid serviceUserGuid = ControlHelper.GetRealValue<Guid>("ServiceUser");
-            string serviceUserName = RequestHelper.GetValue("ServiceUser");
+            //Guid providerUserGuid = ControlHelper.GetRealValue<Guid>("ProviderUser");
+            //string providerUserName = RequestHelper.GetValue("ProviderUser");
+            //Guid recommendUserGuid = ControlHelper.GetRealValue<Guid>("RecommendUser");
+            //string recommendUserName = RequestHelper.GetValue("RecommendUser");
+            //Guid financeUserGuid = ControlHelper.GetRealValue<Guid>("FinanceUser");
+            //string financeUserName = RequestHelper.GetValue("FinanceUser");
+            //Guid serviceUserGuid = ControlHelper.GetRealValue<Guid>("ServiceUser");
+            //string serviceUserName = RequestHelper.GetValue("ServiceUser");
 
-            string businessUserName = RequestHelper.GetValue("BusinessUser");
-            Guid businessUserGuid = ControlHelper.GetRealValue<Guid>("BusinessUser");
-            string settleUserName = RequestHelper.GetValue("SettleUser");
-            Guid settleUserGuid = ControlHelper.GetRealValue<Guid>("SettleUser");
+            //string businessUserName = RequestHelper.GetValue("BusinessUser");
+            //Guid businessUserGuid = ControlHelper.GetRealValue<Guid>("BusinessUser");
+            //string settleUserName = RequestHelper.GetValue("SettleUser");
+            //Guid settleUserGuid = ControlHelper.GetRealValue<Guid>("SettleUser");
 
-            Guid informationBrokerUserGuid = ControlHelper.GetRealValue<Guid>("InformationBroker");
-            string informationBrokerUserName = RequestHelper.GetValue("InformationBroker");
+            //Guid informationBrokerUserGuid = ControlHelper.GetRealValue<Guid>("InformationBroker");
+            //string informationBrokerUserName = RequestHelper.GetValue("InformationBroker");
 
             int headerRowNumber = RequestHelper.GetValue<int>("headerRowNumber", 1);
 
@@ -286,6 +298,10 @@ namespace XQYC.Web.Controllers
                     {
                         columnNameList.Add(dataTable.Columns[i].ColumnName);
                     }
+
+                    //Hack:xieran20121109 为了匹配所有的服务角色的guid，这里获取全部内部员工的信息，如果以后员工人数数量
+                    //增加到一个程度后，可能会有性能问题
+                    List<BusinessUser> employeeList = BusinessUserBLL.GetList(UserTypes.Manager);
 
                     for (int i = 0; i < dataTable.Rows.Count; i++)
                     {
@@ -347,20 +363,31 @@ namespace XQYC.Web.Controllers
                             laborEntity.UserType = UserTypes.CommonUser;
                             laborEntity.UserRegisterDate = DateTime.Now;
 
-                            laborEntity.ProviderUserGuid = providerUserGuid;
-                            laborEntity.ProviderUserName = providerUserName;
-                            laborEntity.RecommendUserGuid = recommendUserGuid;
-                            laborEntity.RecommendUserName = recommendUserName;
-                            laborEntity.FinanceUserGuid = financeUserGuid;
-                            laborEntity.FinanceUserName = financeUserName;
-                            laborEntity.ServiceUserGuid = serviceUserGuid;
-                            laborEntity.ServiceUserName = serviceUserName;
-                            laborEntity.InformationBrokerUserGuid = informationBrokerUserGuid;
-                            laborEntity.InformationBrokerUserName = informationBrokerUserName;
-                            laborEntity.BusinessUserGuid = businessUserGuid;
-                            laborEntity.BusinessUserName = businessUserName;
-                            laborEntity.SettleUserGuid = settleUserGuid;
-                            laborEntity.SettleUserName = settleUserName;
+                            /*目前不集中设置各个服务角色的信息，这些数据都从Excel导入进来*/
+                            //laborEntity.ProviderUserGuid = providerUserGuid;
+                            //laborEntity.ProviderUserName = providerUserName;
+                            //laborEntity.RecommendUserGuid = recommendUserGuid;
+                            //laborEntity.RecommendUserName = recommendUserName;
+                            //laborEntity.FinanceUserGuid = financeUserGuid;
+                            //laborEntity.FinanceUserName = financeUserName;
+                            //laborEntity.ServiceUserGuid = serviceUserGuid;
+                            //laborEntity.ServiceUserName = serviceUserName;
+                            //laborEntity.InformationBrokerUserGuid = informationBrokerUserGuid;
+                            //laborEntity.InformationBrokerUserName = informationBrokerUserName;
+                            //laborEntity.BusinessUserGuid = businessUserGuid;
+                            //laborEntity.BusinessUserName = businessUserName;
+                            //laborEntity.SettleUserGuid = settleUserGuid;
+                            //laborEntity.SettleUserName = settleUserName;
+
+                            //从Excel导入的各个服务角色的姓名，以下将其转换为guid
+                            laborEntity.ProviderUserGuid = GetEmployeeGuid(employeeList, laborEntity.ProviderUserName);
+                            laborEntity.RecommendUserGuid = GetEmployeeGuid(employeeList, laborEntity.RecommendUserName);
+                            laborEntity.FinanceUserGuid = GetEmployeeGuid(employeeList, laborEntity.FinanceUserName);
+                            laborEntity.ServiceUserGuid = GetEmployeeGuid(employeeList, laborEntity.ServiceUserName);
+                            laborEntity.BusinessUserGuid = GetEmployeeGuid(employeeList, laborEntity.BusinessUserName);
+                            laborEntity.SettleUserGuid = GetEmployeeGuid(employeeList, laborEntity.SettleUserName);
+
+                            laborEntity.InformationBrokerUserGuid = GetInformationBrokerGuid(laborEntity.InformationBrokerUserName);
 
                             IDCard idCard = IDCard.Parse(laborEntity.UserCardID);
                             //人员生日的抽取先后顺序1、直接的生日输入 2、身份证中提取 3、年龄计算。（满足前面的条件，自动跳过后面的条件）
@@ -446,6 +473,49 @@ namespace XQYC.Web.Controllers
 
             this.TempData.Add("OperationResultData", infoList);
             return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+        }
+
+        /// <summary>
+        /// 获取内部员工的Guid
+        /// </summary>
+        /// <param name="employeeList"></param>
+        /// <param name="employeeName"></param>
+        /// <returns></returns>
+        private Guid GetEmployeeGuid(List<BusinessUser> employeeList, string employeeName)
+        {
+            if (string.IsNullOrWhiteSpace(employeeName))
+            {
+                return Guid.Empty;
+            }
+
+            foreach (BusinessUser currentUser in employeeList)
+            {
+                if (currentUser.UserNameCN == employeeName)
+                {
+                    return currentUser.UserGuid;
+                }
+            }
+
+            return Guid.Empty;
+        }
+
+        /// <summary>
+        /// 根据姓名匹配信息员的Guid
+        /// </summary>
+        /// <param name="informationBrokerUserName"></param>
+        /// <returns></returns>
+        private Guid GetInformationBrokerGuid(string informationBrokerUserName)
+        {
+            string whereClause = string.Format(" InformationBrokerName='{0}' OR InformationBrokerNameShort='{0}' ", informationBrokerUserName);
+            List<InformationBrokerEntity> entityList = InformationBrokerBLL.Instance.GetList(whereClause);
+            if (entityList == null || entityList.Count == 0 || entityList.Count > 1)
+            {
+                return Guid.Empty;
+            }
+            else
+            {
+                return entityList[0].InformationBrokerGuid;
+            }
         }
 
         /// <summary>
@@ -1234,7 +1304,7 @@ namespace XQYC.Web.Controllers
                                     salarySummaryEntityConfirm.PersonReserveFundReal += salarySummaryEntity.PersonReserveFundReal;
                                     salarySummaryEntityConfirm.PersonOtherCostReal += salarySummaryEntity.PersonOtherCostReal;
                                     salarySummaryEntityConfirm.PersonMixCostReal += salarySummaryEntity.PersonMixCostReal;
-                                    
+
                                     salarySummaryEntityConfirm.SalaryGrossPay += salarySummaryEntity.SalaryGrossPay;
                                     salarySummaryEntityConfirm.SalaryRebate += salarySummaryEntity.SalaryRebate;
                                     isSuccessful = SalarySummaryBLL.Instance.Update(salarySummaryEntityConfirm);
@@ -1629,7 +1699,7 @@ namespace XQYC.Web.Controllers
                                         bankEntity.AccountNumber = cellValue.ToString();
                                         break;
                                     case "CompanyName":
-                                        //TODO:xieran20121022暂时使用BankAddress记录公司信息
+                                        //Hack:xieran20121022 暂时使用BankAddress记录公司信息
                                         bankEntity.BankAddress = cellValue.ToString();
                                         break;
                                     default:
