@@ -904,7 +904,7 @@ namespace XQYC.Web.Controllers
 
             string enterpriseKey = RequestHelper.GetValue("enterpriseGuid");
             Guid userGuid = RequestHelper.GetValue<Guid>("UserNameCN_Value");
-            string salaryMonth = RequestHelper.GetValue("salaryMonth");
+            string salaryMonth = RequestHelper.GetValue(PassingParamValueSourceTypes.Form, "salaryMonth","");
             DateTime salaryMonthDate = DateTimeHelper.Min;
             LaborEntity labor = LaborEntity.Empty;
 

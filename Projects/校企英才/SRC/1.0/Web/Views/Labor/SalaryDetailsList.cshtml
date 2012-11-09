@@ -40,7 +40,7 @@
             </th>
             <th style="width: 80px">工资项类型
             </th>
-            <th style="width: 80px">工资项名称
+            <th style="width: 180px">工资项名称
             </th>
             <th style="width: 80px">数值
             </th>
@@ -53,7 +53,14 @@
             decimal salaryValue = entity.SalaryItemValue;
             <tr>
                 <td>
-                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("SalaryDetails", "Labor").Render(new { rel = "#EditDIV", itemKey = @entityGuid }) | 
+                    @if(entity.SalaryItemKind== XQYC.Business.Enums.SalaryItemKinds.SalaryTax)
+                    {
+                        <span>不可编辑</span>
+                    }
+                    else
+                    {
+                       <span> @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("SalaryDetails", "Labor").Render(new { rel = "#EditDIV", itemKey = @entityGuid }) </span>
+                    }
                 </td>
                 <td>@EnumHelper.GetDisplayValue(entity.SalaryItemKind)
                 </td>
