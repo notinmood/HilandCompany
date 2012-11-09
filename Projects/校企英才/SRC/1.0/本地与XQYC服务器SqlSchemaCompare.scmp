@@ -3,12 +3,12 @@
   <Version>10</Version>
   <SourceModelProvider>
     <ConnectionBasedModelProvider>
-      <ConnectionString>Data Source=192.168.10.253;Initial Catalog=kingstudy_master_db;Persist Security Info=True;User ID=sa;Pooling=False</ConnectionString>
+      <ConnectionString>Data Source=.;Initial Catalog=KingStudyTarget;Integrated Security=True;Pooling=False</ConnectionString>
     </ConnectionBasedModelProvider>
   </SourceModelProvider>
   <TargetModelProvider>
     <ConnectionBasedModelProvider>
-      <ConnectionString>Data Source=.;Initial Catalog=xiaoqiyingcaidatabasemanage;Integrated Security=True;Pooling=False</ConnectionString>
+      <ConnectionString>Data Source=192.168.10.253;Initial Catalog=kingstudy_master_db;Persist Security Info=True;User ID=sa;Pooling=False</ConnectionString>
     </ConnectionBasedModelProvider>
   </TargetModelProvider>
   <SchemaCompareSettingsService>
