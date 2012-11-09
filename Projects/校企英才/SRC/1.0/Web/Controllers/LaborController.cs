@@ -189,6 +189,7 @@ namespace XQYC.Web.Controllers
             targetEntity.UserCardID = originalEntity.UserCardID;
             targetEntity.IDCardPlace = originalEntity.IDCardPlace;
             targetEntity.UserHeight = originalEntity.UserHeight;
+            targetEntity.UserWeight = originalEntity.UserWeight;
             targetEntity.UserEducationalBackground = originalEntity.UserEducationalBackground;
             targetEntity.UserNation = originalEntity.UserNation;
             targetEntity.NativePlace = originalEntity.NativePlace;
@@ -209,6 +210,10 @@ namespace XQYC.Web.Controllers
             targetEntity.Memo3 = originalEntity.Memo3;
             targetEntity.Memo4 = originalEntity.Memo4;
             targetEntity.Memo5 = originalEntity.Memo5;
+
+            targetEntity.SocialSecurityNumber = originalEntity.SocialSecurityNumber;
+            targetEntity.HouseHoldType = originalEntity.HouseHoldType;
+            targetEntity.UserEducationalSchool = originalEntity.UserEducationalSchool;
 
             targetEntity.InformationBrokerUserGuid = ControlHelper.GetRealValue<Guid>("InformationBroker");
             targetEntity.InformationBrokerUserName = RequestHelper.GetValue("InformationBroker");
@@ -609,6 +614,9 @@ namespace XQYC.Web.Controllers
 
             targetEntity.LaborContractDiscontinueDate = originalEntity.LaborContractDiscontinueDate;
             targetEntity.LaborContractDiscontinueDesc = originalEntity.LaborContractDiscontinueDesc;
+
+            targetEntity.LaborWorkShop = originalEntity.LaborWorkShop;
+            targetEntity.LaborDepartment = originalEntity.LaborDepartment;
         }
         #endregion
 
@@ -1753,13 +1761,21 @@ namespace XQYC.Web.Controllers
                 try
                 {
                     List<string> laborGuidList = JsonHelper.DeSerialize<List<string>>(itemKeys);
-                    foreach (string item in laborGuidList)
+                    if (laborGuidList.Count == 1 && laborGuidList[0].ToLower() == "on")
                     {
-                        Guid laborGuid = Converter.ChangeType<Guid>(item);
-                        if (laborGuid != Guid.Empty)
+                        isSuccessful = false;
+                        displayMessage = "请先选择至少一个劳务人员，然后在为其派工，谢谢！";
+                    }
+                    else
+                    {
+                        foreach (string item in laborGuidList)
                         {
-                            targetEntity.LaborUserGuid = laborGuid;
-                            isSuccessful = LaborContractBLL.Instance.Create(targetEntity);
+                            Guid laborGuid = Converter.ChangeType<Guid>(item);
+                            if (laborGuid != Guid.Empty)
+                            {
+                                targetEntity.LaborUserGuid = laborGuid;
+                                isSuccessful = LaborContractBLL.Instance.Create(targetEntity);
+                            }
                         }
                     }
                 }
@@ -1773,7 +1789,7 @@ namespace XQYC.Web.Controllers
             }
             else
             {
-                displayMessage = "数据保存失败";
+                displayMessage = "数据保存失败。" + displayMessage;
             }
 
             return Json(new LogicStatusInfo(isSuccessful, displayMessage));

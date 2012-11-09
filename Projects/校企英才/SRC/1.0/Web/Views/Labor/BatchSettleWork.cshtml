@@ -13,14 +13,14 @@
     ViewBag.Title = "劳务人员批量派工";
     this.Layout = null;
 
-    object itemKeysObject= this.ViewData["itemKeys"];
-    
+    object itemKeysObject = this.ViewData["itemKeys"];
+
     string itemKeys = string.Empty;
-    if(itemKeysObject!=null)
+    if (itemKeysObject != null)
     {
         itemKeys = itemKeysObject.ToString();
     }
-    
+
     LaborContractEntity laborContractEntity = LaborContractEntity.Empty;
     if (Model != null)
     {
@@ -48,6 +48,18 @@
                 </td>
             </tr>
             <tr>
+                <td>所在部门:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.LaborDepartment)
+                </td>
+            </tr>
+            <tr>
+                <td>所在车间
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.LaborWorkShop)
+                </td>
+            </tr>
+            <tr>
                 <td>合同开始时间:
                 </td>
                 <td>@HtmlHelperEx.DateInput(Html, "LaborContractStartDate", Model.LaborContractStartDate.ToShortDateString())
@@ -68,13 +80,13 @@
             <tr>
                 <td>企业担负费用类型:
                 </td>
-                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html,CostKinds.MixCost,CostTypes.Enterprise, "EnterpriseMixCostFormularKey", Model.EnterpriseMixCostFormularKey)
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.MixCost, CostTypes.Enterprise, "EnterpriseMixCostFormularKey", Model.EnterpriseMixCostFormularKey)
                 </td>
             </tr>
             <tr>
                 <td>个人担负费用类型:
                 </td>
-                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html,CostKinds.MixCost,CostTypes.Person, "PersonMixCostFormularKey", Model.PersonMixCostFormularKey)
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.MixCost, CostTypes.Person, "PersonMixCostFormularKey", Model.PersonMixCostFormularKey)
                 </td>
             </tr>
         </table>

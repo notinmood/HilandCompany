@@ -39,9 +39,13 @@
     </div>
     <table width="98%" class="grid">
         <tr>
-            <th style="width: 80px">操作
+            <th style="width: 50px">操作
             </th>
             <th style="width: 150px">企业名称
+            </th>
+            <th style="width: 80px">所在部门
+            </th>
+            <th style="width: 80px">所在车间
             </th>
             <th style="width: 150px">合同名称
             </th>
@@ -51,7 +55,9 @@
             </th>
             <th style="width: 80px">合同开始时间
             </th>
-            <th>合同结束时间
+            <th style="width: 80px">合同结束时间
+            </th>
+            <th>离职时间
             </th>
         </tr>
         @foreach (LaborContractEntity entity in Model)
@@ -63,6 +69,10 @@
                 </td>
                 <td>@entity.Enterprise.CompanyNameShort
                 </td>
+                <td>@entity.LaborDepartment
+                </td>
+                <td>@entity.LaborWorkShop
+                </td>
                 <td>@entity.LaborContractDetails
                 </td>
                 <td>@EnumHelper.GetDisplayValue(entity.LaborContractIsCurrent)
@@ -72,6 +82,8 @@
                 <td>@DateTimeHelper.ToSaftShortDateString(entity.LaborContractStartDate)
                 </td>
                 <td>@DateTimeHelper.ToSaftShortDateString(entity.LaborContractStopDate)
+                </td>
+                <td>@DateTimeHelper.ToSaftShortDateString(entity.LaborContractDiscontinueDate)
                 </td>
             </tr>   
         }
@@ -102,11 +114,13 @@
             });
 
             $("#newDisplayA").click(function () {
+                $(".modal").width("650px");
                 var url = $.UrlUtil('@Url.Action("ContractItem")').concat("itemKey", "").concat("userKey", "@itemKey").show(true);
                 $("#EditDIV").load(url);
             });
 
             $("a.edit").click(function () {
+                $(".modal").width("650px");
                 var itemKey = $(this).attr("itemKey");
                 $("#currentPopupItemGuid").val(itemKey);
                 var url = $.UrlUtil('@Url.Action("ContractItem")').concat("itemKey", itemKey).concat("userKey", "@itemKey").show(true);

@@ -85,6 +85,9 @@ namespace XQYC.Business.BLL
             laborEntity.LaborWorkStatus = contractEntity.LaborContractStatus;
             laborEntity.LaborCode = contractEntity.LaborCode;
 
+            laborEntity.CurrentLaborDepartment = contractEntity.LaborDepartment;
+            laborEntity.CurrentLaborWorkShop = contractEntity.LaborWorkShop;
+
             return LaborBLL.Instance.Update(laborEntity);
         }
 

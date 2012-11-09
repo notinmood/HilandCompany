@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="dataContainer">
-        <table style="width: 2400px" class="grid">
+        <table style="width: 3300px" class="grid">
             <tr>
                 <th style="width: 250px">
                     <input type="checkbox" class="allCheckboxSelector" />操作
@@ -60,9 +60,17 @@
                 </th>
                 <th style="width: 180px">务工企业
                 </th>
+                <th style="width: 80px">所在部门
+                </th>
+                <th style="width: 80px">所在车间
+                </th>
                 <th style="width: 80px">职工编号
                 </th>
                 <th style="width: 180px">银行账户
+                </th>
+                <th style="width: 100px">社保号
+                </th>
+                <th style="width: 80px">户口性质
                 </th>
                 <th style="width: 50px">性别
                 </th>
@@ -74,11 +82,17 @@
                 </th>
                 <th style="width: 80px">紧急联系电话
                 </th>
+                <th style="width: 80px">学历
+                </th>
+                <th style="width: 180px">毕业学校
+                </th>
                 <th style="width: 100px">最近合同开始时间
                 </th>
                 <th style="width: 100px">最近合同到期时间
                 </th>
                 <th style="width: 100px">最近离职时间
+                </th>
+                <th style="width: 80px">信息员
                 </th>
                 <th style="width: 80px">信息提供人员
                 </th>
@@ -114,9 +128,17 @@
                     </td>
                     <td>@entity.CurrentEnterpriseName
                     </td>
+                    <td>@entity.CurrentLaborDepartment
+                    </td>
+                    <td>@entity.CurrentLaborWorkShop
+                    </td>
                     <td>@entity.LaborCode
                     </td>
                     <td>@entity.CurrentBank.AccountNumber
+                    </td>
+                    <td>@entity.SocialSecurityNumber
+                    </td>
+                    <td>@EnumHelper.GetDisplayValue(entity.HouseHoldType)
                     </td>
                     <td>@EnumHelper.GetDisplayValue(entity.UserSex)
                     </td>
@@ -128,11 +150,17 @@
                     </td>
                     <td>@entity.UrgentTelephone
                     </td>
+                    <td>@EnumHelper.GetDisplayValue(entity.UserEducationalBackground)
+                    </td>
+                    <td>@entity.UserEducationalSchool
+                    </td>
                     <td>@DateTimeHelper.ToSaftShortDateString(entity.CurrentContractStartDate)
                     </td>
                     <td>@DateTimeHelper.ToSaftShortDateString(entity.CurrentContractStopDate)
                     </td>
                     <td>@DateTimeHelper.ToSaftShortDateString(entity.CurrentContractDiscontinueDate)
+                    </td>
+                    <td>@entity.InformationBrokerUserName
                     </td>
                     <td>@entity.ProviderUserName
                     </td>
