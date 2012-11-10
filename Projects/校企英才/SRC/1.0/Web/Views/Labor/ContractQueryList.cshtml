@@ -1,0 +1,148 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using HiLand.General.BLL;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility.Web;
+
+@model PagedList<LaborContractEntity>
+@{
+    ViewBag.Title = "Index";
+
+    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+    bool isUsingCompress = false;
+    if (currentUrl.Length > 512)
+    {
+        isUsingCompress = true;
+        currentUrl = CompressHelper.Compress(currentUrl);
+    }
+
+    List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业", ConditionFieldName = "CompanyName", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员名称", ConditionFieldName = "UserNameCN", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "身份证号", ConditionFieldName = "UserCardID", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "离职时间", ConditionFieldName = "LaborContractDiscontinueDate", ConditionType = typeof(DateTime) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "离职时间", ConditionFieldName = "LaborContractDiscontinueDate", ConditionType = typeof(DateTime) });
+}
+<h2>劳务人员合同查询</h2>
+<div id="ItemListDIV">
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.HiQuery("QueryControl").QueryConditionList(queryItemList).Render()
+        }
+    </div>
+    <div class="OperateArea" id="OperateAreaContainer">
+        <div class="btn-group"></div>
+    </div>
+    <div class="dataContainer">
+        <table style="width: 1500px" class="grid">
+            <tr>
+                <th style="width: 80px">人员姓名
+                </th>
+                <th style="width: 150px">身份证号
+                </th>
+                <th style="width: 200px">企业名称
+                </th>
+                <th style="width: 80px">所在部门
+                </th>
+                <th style="width: 80px">所在车间
+                </th>
+                <th style="width: 150px">合同名称
+                </th>
+                <th style="width: 50px">当前合同
+                </th>
+                <th style="width: 50px">状态
+                </th>
+                <th style="width: 80px">合同开始时间
+                </th>
+                <th style="width: 80px">合同结束时间
+                </th>
+                <th>离职时间
+                </th>
+            </tr>
+            @foreach (LaborContractEntity entity in Model)
+            {
+                string entityGuid = entity.LaborContractGuid.ToString();
+                <tr>
+                    <td>@entity.Labor.UserNameCN
+                    </td>
+                    <td>@entity.Labor.UserCardID
+                    </td>
+                    <td>@entity.Enterprise.CompanyNameShort
+                    </td>
+                    <td>@entity.LaborDepartment
+                    </td>
+                    <td>@entity.LaborWorkShop
+                    </td>
+                    <td>@entity.LaborContractDetails
+                    </td>
+                    <td>@EnumHelper.GetDisplayValue(entity.LaborContractIsCurrent)
+                    </td>
+                    <td>@EnumHelper.GetDisplayValue(entity.LaborContractStatus)
+                    </td>
+                    <td>@DateTimeHelper.ToSaftShortDateString(entity.LaborContractStartDate)
+                    </td>
+                    <td>@DateTimeHelper.ToSaftShortDateString(entity.LaborContractStopDate)
+                    </td>
+                    <td>@DateTimeHelper.ToSaftShortDateString(entity.LaborContractDiscontinueDate)
+                    </td>
+                </tr>   
+            }
+        </table>
+    </div>
+    <div class="myPager">
+        <span style="float: left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
+        &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@XQYC.Web.Models.SystemConst.CountPerPageForLaborList</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)
+    </div>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aLaborSection").click();
+            $("#aLaborSection").addClass("current");
+            $("#aContractQueryList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                var currentItemGuid = $("#currentPopupItemGuid").val();
+                $(".modalInput").overlay().close();
+                $(".modalInput.edit." + currentItemGuid).overlay().close();
+            });
+
+            @* $("#newDisplayA").click(function () {
+                $(".modal").width("650px");
+                var url = $.UrlUtil('@Url.Action("ContractItem")').concat("itemKey", "").concat("userKey", "@itemKey").show(true);
+                $("#EditDIV").load(url);
+            });*@
+
+             @*$("a.edit").click(function () {
+                $(".modal").width("650px");
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = $.UrlUtil('@Url.Action("ContractItem")').concat("itemKey", itemKey).show(true);
+                $("#EditDIV").load(url);
+            });*@
+        });
+    </script>
+</div>
+
+
+

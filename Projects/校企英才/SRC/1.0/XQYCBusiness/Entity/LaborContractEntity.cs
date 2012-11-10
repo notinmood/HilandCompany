@@ -237,9 +237,8 @@ namespace XQYC.Business.Entity
             get { return operateDate; }
             set { operateDate = value; }
         }
-
-
-
+        #endregion        
+        
         #region 延迟属性
         private EnterpriseEntity enterprise = null;
         public EnterpriseEntity Enterprise
@@ -267,8 +266,20 @@ namespace XQYC.Business.Entity
                 return this.enterpriseContract;
             }
         }
-        #endregion
 
+        private LaborEntity labor = null;
+        public LaborEntity Labor
+        {
+            get
+            {
+                if (this.labor == null)
+                {
+                    this.labor = LaborBLL.Instance.Get(this.LaborUserGuid);
+                }
+
+                return this.labor;
+            }
+        }
         #endregion
     }
 }

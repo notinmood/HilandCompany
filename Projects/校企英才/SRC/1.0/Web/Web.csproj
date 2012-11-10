@@ -669,6 +669,7 @@
     <Content Include="Views\Labor\BankCardList.cshtml" />
     <Content Include="Views\Labor\BankCardItem.cshtml" />
     <Content Include="Views\Labor\BatchSettleWork.cshtml" />
+    <Content Include="Views\Labor\ContractQueryList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

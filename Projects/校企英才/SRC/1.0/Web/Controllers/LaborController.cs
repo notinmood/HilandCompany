@@ -592,7 +592,7 @@ namespace XQYC.Web.Controllers
         }
         #endregion
 
-        #region 合同
+        #region 个人合同
         public ActionResult ContractList(string itemKey)
         {
             List<LaborContractEntity> userList = new List<LaborContractEntity>();
@@ -687,6 +687,94 @@ namespace XQYC.Web.Controllers
 
             targetEntity.LaborWorkShop = originalEntity.LaborWorkShop;
             targetEntity.LaborDepartment = originalEntity.LaborDepartment;
+        }
+        #endregion
+
+        #region 劳务人员合同查询
+        public ActionResult ContractQueryList(int id = 1)
+        {
+            //1.如果是点击查询控件的查询按钮，那么将查询条件作为QueryString附加在地址后面（为了在客户端保存查询条件的状体），重新发起一次请求。
+            if (this.Request.HttpMethod.ToLower().Contains("post"))
+            {
+                string targetUrlWithoutParam = Url.Action("ContractQueryList", new { id = 1 });
+                string targetUrl = QueryControlHelper.GetNewQueryUrl("QueryControl", targetUrlWithoutParam);
+                return Redirect(targetUrl);
+            }
+
+            //2.通常情形下走get查询
+            int pageIndex = id;
+            int pageSize = SystemConst.CountPerPageForLaborList;
+            int startIndex = (pageIndex - 1) * pageSize + 1;
+            string whereClause = " 1=1 ";
+
+            ////--数据权限----------------------------------------------------------------------
+            //whereClause += " AND ( ";
+            //whereClause += string.Format(" {0} ", PermissionDataHelper.GetFilterCondition("FinanceUserGuid"));
+            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ProviderUserGuid"));
+            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("RecommendUserGuid"));
+            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ServiceUserGuid"));
+            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("BusinessUserGuid"));
+            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("SettleUserGuid"));
+            //whereClause += " ) ";
+            ////--end--------------------------------------------------------------------------
+
+            whereClause += " AND " + QueryControlHelper.GetQueryCondition("QueryControl");
+
+            string orderClause = "LaborContractID DESC";
+
+            PagedEntityCollection<LaborContractEntity> entityList = LaborContractBLL.Instance.GetPagedCollection(startIndex, pageSize, whereClause, orderClause);
+            PagedList<LaborContractEntity> pagedExList = new PagedList<LaborContractEntity>(entityList.Records, entityList.PageIndex, entityList.PageSize, entityList.TotalCount);
+
+            bool isExportExcel = RequestHelper.GetValue("exportExcel", false);
+            if (isExportExcel == true)
+            {
+                return LaborContractListToExcelFile(entityList.Records);
+            }
+            else
+            {
+                return View(pagedExList);
+            }
+        }
+
+        private ActionResult LaborContractListToExcelFile(IList<LaborContractEntity> laborList)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic["UserNameCN"] = "人员名称";
+            dic["UserCardID"] = "身份证号码";
+            dic["UserStatus"] = "人员状态";
+            dic["LaborWorkStatus"] = "工作状态";
+            dic["CurrentEnterpriseName"] = "务工企业";
+            dic["CurrentLaborDepartment"] = "所在部门";
+            dic["CurrentLaborWorkShop"] = "所在车间";
+            dic["LaborCode"] = "职工编号";
+            dic["CurrentBankAccountNumber"] = "银行账户";
+            dic["UserSex"] = "性别";
+            dic["UserAge"] = "年龄";
+            dic["UserBirthDay"] = "出生日期";
+            dic["UserEducationalBackground"] = "学历";
+            dic["UserEducationalSchool"] = "毕业学校";
+            dic["SocialSecurityNumber"] = "社保号";
+            dic["HouseHoldType"] = "户口性质";
+            dic["UserMobileNO"] = "联系电话";
+            dic["UrgentTelephone"] = "紧急联系电话";
+            dic["CurrentContractStartDate"] = "最近合同开始时间";
+            dic["CurrentContractStopDate"] = "最近合同到期时间";
+            dic["CurrentContractDiscontinueDate"] = "最近离职时间";
+            dic["InformationBrokerUserName"] = "信息员";
+            dic["ProviderUserName"] = "信息提供人员";
+            dic["RecommendUserName"] = "推荐人员";
+            dic["FinanceUserName"] = "财务人员";
+            dic["ServiceUserName"] = "客服人员";
+            dic["BusinessUserName"] = "业务人员";
+            dic["SettleUserName"] = "安置人员";
+            dic["Memo1"] = "备注1";
+            dic["Memo2"] = "备注2";
+            dic["Memo3"] = "备注3";
+            dic["Memo4"] = "备注4";
+            dic["Memo5"] = "备注5";
+
+            Stream excelStream = ExcelHelper.WriteExcel(laborList, dic);
+            return File(excelStream, ContentTypes.GetContentType("xls"), "劳务人员信息.xls");
         }
         #endregion
 
