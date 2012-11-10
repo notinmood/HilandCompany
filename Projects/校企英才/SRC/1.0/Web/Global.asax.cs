@@ -63,6 +63,9 @@ namespace XQYC.Web
                 JobContainer.ExecuteJobs(scheduler);
                 scheduler.Start();
             }
+            
+            //加入以下代码的目的是使API响应的内容类型（Content-Type）为xml/json
+            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
         }
 
         protected void Application_End(object sender, EventArgs e)
