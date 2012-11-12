@@ -23,9 +23,8 @@
 
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业", ConditionFieldName = "CurrentEnterpriseName", ConditionType = typeof(string) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员名称", ConditionFieldName = "UserNameCN", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员名称,身份证号", ConditionFieldName = "UserNameCN,UserCardID", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员性别", ConditionFieldName = "UserSex", ConditionType = typeof(HiLand.Utility.Enums.Sexes) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "身份证号", ConditionFieldName = "UserCardID", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "工作状态", ConditionFieldName = "LaborWorkStatus", ConditionType = typeof(XQYC.Business.Enums.LaborWorkStatuses) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "录入时间", ConditionFieldName = "UserRegisterDate", ConditionType = typeof(DateTime) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "录入时间", ConditionFieldName = "UserRegisterDate", ConditionType = typeof(DateTime) });
@@ -36,7 +35,7 @@
     <div>
         @using (Html.BeginForm())
         {
-            @Html.HiQuery("LaborQuery").QueryConditionList(queryItemList).Render()
+            @Html.HiQuery("LaborQuery").QueryConditionList(queryItemList).IsDisplayBrackets(false).Render()
         }
     </div>
     <div class="OperateArea" id="OperateAreaContainer">

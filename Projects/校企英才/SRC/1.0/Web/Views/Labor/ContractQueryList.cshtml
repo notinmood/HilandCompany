@@ -26,8 +26,7 @@
 
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业", ConditionFieldName = "CompanyName", ConditionType = typeof(string) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员名称", ConditionFieldName = "UserNameCN", ConditionType = typeof(string) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "身份证号", ConditionFieldName = "UserCardID", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员名称,身份证号", ConditionFieldName = "UserNameCN,UserCardID", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "离职时间", ConditionFieldName = "LaborContractDiscontinueDate", ConditionType = typeof(DateTime) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "离职时间", ConditionFieldName = "LaborContractDiscontinueDate", ConditionType = typeof(DateTime) });
 }
@@ -36,7 +35,7 @@
     <div>
         @using (Html.BeginForm())
         {
-            @Html.HiQuery("QueryControl").QueryConditionList(queryItemList).Render()
+            @Html.HiQuery("QueryControl").QueryConditionList(queryItemList).IsDisplayBrackets(false).Render()
         }
     </div>
     <div class="OperateArea" id="OperateAreaContainer">
