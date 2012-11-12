@@ -40,7 +40,9 @@
     </div>
     <div class="OperateArea" id="OperateAreaContainer">
         <div class="btn-group">
-            @Html.HiA("newDisplayA").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("Item", "Labor").Render(new { rel = "#EditDIV" })  @Html.HiA("batchSettleWork").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-list icon-white\"></i>批量派工").ACA("BatchSettleWork", "Labor").Render(new { rel = "#EditDIV" })
+            @Html.HiA("newDisplayA").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("Item", "Labor").Render(new { rel = "#EditDIV" })  
+            @Html.HiA("batchSettleWork").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-list icon-white\"></i>批量派工").ACA("BatchSettleWork", "Labor").Render(new { rel = "#EditDIV" })
+            @Html.HiA("batchSettleCost").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-th-list icon-white\"></i>费用模式设置").ACA("BatchSettleCost", "Labor").Render(new { rel = "#EditDIV" })
             @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)
         </div>
     </div>
@@ -236,6 +238,14 @@
                 var itemKeys = JSON.stringify($("input:checked").map(function () { return $(this).val(); }).get(), null, null);
                 $("#currentPopupItemGuid").val(itemKeys);
                 var url = '@Url.Action("BatchSettleWork")' + '?r=' + Math.random() + '&itemKeys=' + itemKeys;
+                $("#EditDIV").load(url);
+            });
+
+            $("#batchSettleCost").click(function () {
+                $(".modal").width("350px");
+                var itemKeys = JSON.stringify($("input:checked").map(function () { return $(this).val(); }).get(), null, null);
+                $("#currentPopupItemGuid").val(itemKeys);
+                var url = '@Url.Action("BatchSettleCost")' + '?r=' + Math.random() + '&itemKeys=' + itemKeys;
                 $("#EditDIV").load(url);
             });
 

@@ -670,6 +670,22 @@ namespace XQYC.Web.Controllers
             targetEntity.LaborCode = originalEntity.LaborCode;
             targetEntity.LaborContractIsCurrent = originalEntity.LaborContractIsCurrent;
 
+            SetTargetContractCostValue(originalEntity, ref targetEntity);
+
+            targetEntity.LaborContractDiscontinueDate = originalEntity.LaborContractDiscontinueDate;
+            targetEntity.LaborContractDiscontinueDesc = originalEntity.LaborContractDiscontinueDesc;
+
+            targetEntity.LaborWorkShop = originalEntity.LaborWorkShop;
+            targetEntity.LaborDepartment = originalEntity.LaborDepartment;
+        }
+
+        /// <summary>
+        /// 设置劳务人员合同的费用模式
+        /// </summary>
+        /// <param name="originalEntity"></param>
+        /// <param name="targetEntity"></param>
+        private static void SetTargetContractCostValue(LaborContractEntity originalEntity, ref LaborContractEntity targetEntity)
+        {
             targetEntity.EnterpriseInsuranceFormularKey = originalEntity.EnterpriseInsuranceFormularKey;
             targetEntity.EnterpriseManageFeeFormularKey = originalEntity.EnterpriseManageFeeFormularKey;
             targetEntity.EnterpriseMixCostFormularKey = originalEntity.EnterpriseMixCostFormularKey;
@@ -681,12 +697,6 @@ namespace XQYC.Web.Controllers
             targetEntity.PersonMixCostFormularKey = originalEntity.PersonMixCostFormularKey;
             targetEntity.PersonOtherCostFormularKey = originalEntity.PersonOtherCostFormularKey;
             targetEntity.PersonReserveFundFormularKey = originalEntity.PersonReserveFundFormularKey;
-
-            targetEntity.LaborContractDiscontinueDate = originalEntity.LaborContractDiscontinueDate;
-            targetEntity.LaborContractDiscontinueDesc = originalEntity.LaborContractDiscontinueDesc;
-
-            targetEntity.LaborWorkShop = originalEntity.LaborWorkShop;
-            targetEntity.LaborDepartment = originalEntity.LaborDepartment;
         }
         #endregion
 
@@ -992,7 +1002,7 @@ namespace XQYC.Web.Controllers
 
             string enterpriseKey = RequestHelper.GetValue("enterpriseGuid");
             Guid userGuid = RequestHelper.GetValue<Guid>("UserNameCN_Value");
-            string salaryMonth = RequestHelper.GetValue(PassingParamValueSourceTypes.Form, "salaryMonth","");
+            string salaryMonth = RequestHelper.GetValue(PassingParamValueSourceTypes.Form, "salaryMonth", "");
             DateTime salaryMonthDate = DateTimeHelper.Min;
             LaborEntity labor = LaborEntity.Empty;
 
@@ -1880,7 +1890,79 @@ namespace XQYC.Web.Controllers
         }
         #endregion
 
-        #region 批量派工
+        #region 批量派工，批量设置费用模式
+        /// <summary>
+        /// 批量设置费用模式
+        /// </summary>
+        /// <param name="itemKeys">劳务人员标识</param>
+        /// <returns></returns>
+        public ActionResult BatchSettleCost(string itemKeys)
+        {
+            LaborContractEntity laborContractEntity = LaborContractEntity.Empty;
+            this.ViewData["itemKeys"] = itemKeys;
+            return View(laborContractEntity);
+        }
+
+        /// <summary>
+        /// 批量设置费用模式
+        /// </summary>
+        /// <param name="itemKeys">劳务人员标识</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult BatchSettleCost(string itemKeys, LaborContractEntity originalEntity)
+        {
+            bool isSuccessful = false;
+            string displayMessage = string.Empty;
+            LaborContractEntity targetEntity = null;
+            if (string.IsNullOrWhiteSpace(itemKeys) == true)
+            {
+                isSuccessful = false;
+                displayMessage = "请先选择至少一个劳务人员，然后在为其设置费用模式，谢谢！";
+            }
+            else
+            {
+                try
+                {
+                    List<string> laborGuidList = JsonHelper.DeSerialize<List<string>>(itemKeys);
+                    if (laborGuidList.Count == 1 && laborGuidList[0].ToLower() == "on")
+                    {
+                        isSuccessful = false;
+                        displayMessage = "请先选择至少一个劳务人员，然后在为其设置费用模式，谢谢！";
+                    }
+                    else
+                    {
+                        foreach (string item in laborGuidList)
+                        {
+                            Guid laborGuid = Converter.ChangeType<Guid>(item);
+                            if (laborGuid != Guid.Empty)
+                            {
+                                targetEntity = LaborContractBLL.Instance.GetCurrentContract(laborGuid);
+                                if (targetEntity.IsEmpty == false)
+                                {
+                                    SetTargetContractCostValue(originalEntity, ref  targetEntity);
+                                    isSuccessful = LaborContractBLL.Instance.Update(targetEntity);
+                                }
+                            }
+                        }
+                    }
+                }
+                catch
+                { }
+            }
+
+            if (isSuccessful == true)
+            {
+                displayMessage = "数据保存成功";
+            }
+            else
+            {
+                displayMessage = "数据保存失败。" + displayMessage;
+            }
+
+            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+        }
+
+
         /// <summary>
         /// 批量派工
         /// </summary>

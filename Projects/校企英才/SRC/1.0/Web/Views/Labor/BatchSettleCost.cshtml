@@ -1,0 +1,67 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility4.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Control;
+@using XQYC.Business.Enums;
+
+@model LaborContractEntity
+@{
+    ViewBag.Title = "劳务人员批量派工";
+    this.Layout = null;
+
+    object itemKeysObject = this.ViewData["itemKeys"];
+
+    string itemKeys = string.Empty;
+    if (itemKeysObject != null)
+    {
+        itemKeys = itemKeysObject.ToString();
+    }
+
+    LaborContractEntity laborContractEntity = LaborContractEntity.Empty;
+    if (Model != null)
+    {
+        laborContractEntity = Model;
+    }
+}
+<div id="formContainer">
+    <style type="text/css">
+        #formContainer table td {
+        }
+    </style>
+    @using (Html.BeginForm())
+    { 
+        <table>
+            <tr>
+                <td>企业担负费用类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.MixCost, CostTypes.Enterprise, "EnterpriseMixCostFormularKey", Model.EnterpriseMixCostFormularKey)
+                </td>
+            </tr>
+            <tr>
+                <td>个人保险类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.Insurance, CostTypes.Person, "PersonInsuranceFormularKey", Model.PersonInsuranceFormularKey)
+                </td>
+            </tr>
+            <tr>
+                <td>个人公积金类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.ReserveFund, CostTypes.Person, "PersonReserveFundFormularKey", Model.PersonReserveFundFormularKey)
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" id="ItemKeys" value="@itemKeys" />
+        <input type="button" id="submitButton" value="保存" class="buttons" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form");
+        });
+    });
+</script>
