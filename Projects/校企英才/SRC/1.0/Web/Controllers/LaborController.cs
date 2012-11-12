@@ -9,7 +9,6 @@ using System.Web.Mvc;
 using HiLand.Framework.BusinessCore;
 using HiLand.Framework.BusinessCore.BLL;
 using HiLand.Framework.BusinessCore.Enum;
-using HiLand.Framework4.Permission;
 using HiLand.Framework4.Permission.Attributes;
 using HiLand.General.BLL;
 using HiLand.General.Entity;
@@ -118,6 +117,7 @@ namespace XQYC.Web.Controllers
             dic["Memo3"] = "备注3";
             dic["Memo4"] = "备注4";
             dic["Memo5"] = "备注5";
+            //dic["CurrentBank.AccountNumber"] = "银行账号测试2";
 
             Stream excelStream = ExcelHelper.WriteExcel(laborList, dic);
             return File(excelStream, ContentTypes.GetContentType("xls"), "劳务人员信息.xls");
