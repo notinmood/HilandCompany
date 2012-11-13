@@ -11,6 +11,7 @@
 @using XQYC.Web.Models;
 @using HiLand.Utility.Web;
 @using HiLand.General.BLL;
+@using System.Web.UI.WebControls;
 
 @model PagedList<SalarySummaryEntity>
 @{
@@ -25,9 +26,14 @@
         enterpriseName = EnterpriseBLL.Instance.Get(enterpriseKey).CompanyNameShort;
     }
 
+    List<ListItem> listItems = new List<ListItem>();
+    //listItems.Add(new ListItem("解然","xieran"));
+    //listItems.Add(new ListItem("公维永", "gongweiyong"));
+
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员名称", ConditionFieldName = "LaborName", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员名称", ConditionFieldName = "LaborName", ConditionType = typeof(string), ConditionValueItems = listItems });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "工号", ConditionFieldName = "LaborCode", ConditionType = typeof(string) });
+    //queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "个人公积金", ConditionFieldName = "LaborCode", ConditionType = typeof(string) });
 }
 
 <h2>@string.Format("劳务人员薪资列表-({0}-{1})", enterpriseName, salaryMonth)</h2>
