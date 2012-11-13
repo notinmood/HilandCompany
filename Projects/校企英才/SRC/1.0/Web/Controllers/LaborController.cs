@@ -963,13 +963,38 @@ namespace XQYC.Web.Controllers
                 return Redirect(targetUrl);
             }
 
-
             //2.2、通常情形下走get查询
             whereClause += " AND " + QueryControlHelper.GetQueryCondition("LaborQuery");
             PagedEntityCollection<SalarySummaryEntity> entityList = SalarySummaryBLL.Instance.GetPagedCollection(startIndex, pageSize, whereClause, orderClause);
             PagedList<SalarySummaryEntity> pagedExList = new PagedList<SalarySummaryEntity>(entityList.Records, entityList.PageIndex, entityList.PageSize, entityList.TotalCount);
 
-            return View(pagedExList);
+            bool isExportExcel = RequestHelper.GetValue("exportExcel", false);
+            if (isExportExcel == true)
+            {
+                return SalaryListToExcelFile(entityList.Records);
+            }
+            else
+            {
+                return View(pagedExList);
+            }
+        }
+
+        private ActionResult SalaryListToExcelFile(IList<SalarySummaryEntity> laborList)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic["LaborName"] = "人员名称";
+            dic["LaborCode"] = "职工编号";
+            dic["Labor.CurrentBankAccountNumber"] = "银行账户";
+            dic["SalaryNeedPayBeforeCost"] = "应付工资";
+            dic["PersonInsuranceReal"] = "个人保险";
+            dic["PersonReserveFundReal"] = "个人公积金";
+            dic["PersonOtherCostReal"] = "补扣保险（滞纳金）";
+            dic["SalaryNeedPayBeforeTax"] = "应税工资";
+            dic["PersonBorrow"] = "扣其他（借款等）";
+            dic["SalaryNeedPayToLabor"] = "实付";
+
+            Stream excelStream = ExcelHelper.WriteExcel(laborList, dic);
+            return File(excelStream, ContentTypes.GetContentType("xls"), string.Format("劳务人员薪资信息-{0}.xls",DateTime.Now.ToShortDateString()));
         }
 
         /// <summary>
@@ -1056,7 +1081,7 @@ namespace XQYC.Web.Controllers
 
             //判断某人某月是否已经有薪资记录。1、如果有就直接使用，2、如果没有就创建新的薪资数据;(以此保证人员某月薪资数据的唯一)
             bool isSuccessful = true;
-            SalarySummaryEntity salarySummaryEntity = SalarySummaryBLL.Instance.Get(labor.UserGuid.ToString(), salaryMonthDate);
+            SalarySummaryEntity salarySummaryEntity = SalarySummaryBLL.Instance.Get(enterpriseKey, labor.UserGuid.ToString(), salaryMonthDate);
 
             if (salarySummaryEntity.IsEmpty)
             {
@@ -1380,7 +1405,7 @@ namespace XQYC.Web.Controllers
                             if (isMatchedLabor == true)
                             {
                                 bool isSuccessful = true;
-                                SalarySummaryEntity salarySummaryEntityConfirm = SalarySummaryBLL.Instance.Get(laborEntity.UserGuid.ToString(), salaryDate);
+                                SalarySummaryEntity salarySummaryEntityConfirm = SalarySummaryBLL.Instance.Get(enterpriseGuid.ToString(), laborEntity.UserGuid.ToString(), salaryDate);
                                 if (salarySummaryEntityConfirm.IsEmpty)
                                 {
                                     salarySummaryEntity.LaborKey = laborEntity.UserGuid.ToString();

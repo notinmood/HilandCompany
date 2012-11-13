@@ -67,6 +67,7 @@ namespace XQYC.Business.DALCommon
 			    [CreateDate],
 			    [SalaryGrossPay],
 			    [SalaryRebate],
+                [PersonBorrow],
 			    [IsCostCalculated],
 			    [SalaryPayStatus],
 			    [EnterpriseManageFeeReal],
@@ -109,6 +110,7 @@ namespace XQYC.Business.DALCommon
 			    {0}CreateDate,
 			    {0}SalaryGrossPay,
 			    {0}SalaryRebate,
+                {0}PersonBorrow,
 			    {0}IsCostCalculated,
 			    {0}SalaryPayStatus,
 			    {0}EnterpriseManageFeeReal,
@@ -160,6 +162,7 @@ namespace XQYC.Business.DALCommon
 				[CreateDate] = {0}CreateDate,
 				[SalaryGrossPay] = {0}SalaryGrossPay,
 				[SalaryRebate] = {0}SalaryRebate,
+                [PersonBorrow] = {0}PersonBorrow,
 				[IsCostCalculated] = {0}IsCostCalculated,
 				[SalaryPayStatus] = {0}SalaryPayStatus,
 				[EnterpriseManageFeeReal] = {0}EnterpriseManageFeeReal,
@@ -217,6 +220,7 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("CreateDate",entity.CreateDate),
 			    GenerateParameter("SalaryGrossPay",entity.SalaryGrossPay),
 			    GenerateParameter("SalaryRebate",entity.SalaryRebate),
+                GenerateParameter("PersonBorrow",entity.PersonBorrow),
 			    GenerateParameter("IsCostCalculated",entity.IsCostCalculated),
 			    GenerateParameter("SalaryPayStatus",entity.SalaryPayStatus),
 			    GenerateParameter("EnterpriseManageFeeReal",entity.EnterpriseManageFeeReal),
@@ -306,6 +310,12 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.SalaryRebate = reader.GetDecimal(reader.GetOrdinal("SalaryRebate"));
                 }
+
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonBorrow"))
+                {
+                    entity.PersonBorrow = reader.GetDecimal(reader.GetOrdinal("PersonBorrow"));
+                }
+
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "IsCostCalculated"))
                 {
                     entity.IsCostCalculated = (Logics)reader.GetInt32(reader.GetOrdinal("IsCostCalculated"));
@@ -408,7 +418,7 @@ namespace XQYC.Business.DALCommon
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "IsCheckPast"))
                 {
-                    entity.IsCheckPast = reader.GetInt32(reader.GetOrdinal("IsCheckPast"));
+                    entity.IsCheckPast = (Logics)reader.GetInt32(reader.GetOrdinal("IsCheckPast"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CheckMemo"))
                 {

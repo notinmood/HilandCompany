@@ -1,9 +1,12 @@
 ﻿using System;
 using HiLand.Framework.FoundationLayer;
 using HiLand.Framework.FoundationLayer.Attributes;
+using HiLand.General.BLL;
+using HiLand.General.Entity;
 using HiLand.Utility.Data;
 using HiLand.Utility.Enums;
 using HiLand.Utility.Finance;
+using XQYC.Business.BLL;
 using XQYC.Business.Enums;
 
 namespace XQYC.Business.Entity
@@ -18,7 +21,7 @@ namespace XQYC.Business.Entity
          * 公积金，管理费，保险统称为常规费用（Cost），Cost有企业部分和个人部分，每个部分都包含2种使用模式（具体使用选择其一）
          * 1.使用MixCost （所有常规费用都在这里，不进行单个细分为保险，公积金等了）
          * 2.使用单个分项目：公积金，管理费，保险和其他费用
-         * 两种选用其一，使用提取这些数据的时候，MixCost有限
+         * 两种选用其一，使用提取这些数据的时候，MixCost优先
          */
 
         /*
@@ -144,7 +147,7 @@ namespace XQYC.Business.Entity
         }
 
         /// <summary>
-        /// 扣除个税前的应付(里面已经去除了保险等各种常规费用的个人承担部分)
+        /// 扣除工资税前的应付，通常称为应税工资(里面已经去除了保险等各种常规费用的个人承担部分)
         /// </summary>
         public decimal SalaryNeedPayBeforeTax
         {
@@ -161,8 +164,7 @@ namespace XQYC.Business.Entity
         {
             get
             {
-
-                return SalaryNeedPayBeforeTax - SalaryTax;
+                return SalaryNeedPayBeforeTax - SalaryTax - PersonBorrow;
             }
         }
 
@@ -350,7 +352,20 @@ namespace XQYC.Business.Entity
             set { enterpriseOtherCostCalculated = value; }
         }
 
+        private decimal personBorrow;
+        /// <summary>
+        /// 个人从单位的借款（给人员发放薪资的时候，需要扣除掉）
+        /// </summary>
+        public decimal PersonBorrow
+        {
+            get { return personBorrow; }
+            set { personBorrow = value; }
+        }
+
         private decimal personOtherCostReal;
+        /// <summary>
+        /// 补扣保险金，保险滞纳金等信息
+        /// </summary>
         public decimal PersonOtherCostReal
         {
             get { return personOtherCostReal; }
@@ -408,8 +423,8 @@ namespace XQYC.Business.Entity
             set { salaryMemo = value; }
         }
 
-        private int isCheckPast;
-        public int IsCheckPast
+        private Logics isCheckPast= Logics.True;
+        public Logics IsCheckPast
         {
             get { return isCheckPast; }
             set { isCheckPast = value; }
@@ -422,6 +437,42 @@ namespace XQYC.Business.Entity
             set { checkMemo = value; }
         }
 
+        #endregion
+
+        #region 延迟属性
+        private EnterpriseEntity enterprise = null;
+        /// <summary>
+        /// 当前合同对应的企业信息
+        /// </summary>
+        public EnterpriseEntity Enterprise
+        {
+            get
+            {
+                if (this.enterprise == null)
+                {
+                    this.enterprise = EnterpriseBLL.Instance.Get(this.EnterpriseKey);
+                }
+
+                return this.enterprise;
+            }
+        }
+
+        private LaborEntity labor = null;
+        /// <summary>
+        /// 当前合同对应的劳务人员信息
+        /// </summary>
+        public LaborEntity Labor
+        {
+            get
+            {
+                if (this.labor == null)
+                {
+                    this.labor = LaborBLL.Instance.Get(this.LaborKey);
+                }
+
+                return this.labor;
+            }
+        }
         #endregion
     }
 }

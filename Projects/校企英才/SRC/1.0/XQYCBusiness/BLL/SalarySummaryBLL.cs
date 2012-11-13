@@ -61,12 +61,14 @@ namespace XQYC.Business.BLL
         /// <summary>
         /// 获取某人某个月的薪资数据
         /// </summary>
+        /// <param name="enterpriseKey"></param>
         /// <param name="laborKey"></param>
         /// <param name="salaryMonth"></param>
         /// <returns></returns>
-        public SalarySummaryEntity Get(string laborKey, DateTime salaryMonth)
+        public SalarySummaryEntity Get(string enterpriseKey, string laborKey, DateTime salaryMonth)
         {
             string whereClause = string.Format(" LaborKey='{0}' ", laborKey);
+            whereClause += string.Format(" AND EnterpriseKey='{0}' ", enterpriseKey);
             DateTime salaryDateFirstDay = DateTimeHelper.GetFirstDateOfMonth(salaryMonth);
             DateTime salaryDateLastDay = DateTimeHelper.GetFirstDateOfMonth(salaryMonth.AddMonths(1));
             whereClause += string.Format(" AND SalaryDate>='{0}' AND SalaryDate<'{1}' ", salaryDateFirstDay, salaryDateLastDay);

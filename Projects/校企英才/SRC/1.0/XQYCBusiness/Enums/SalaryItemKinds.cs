@@ -79,7 +79,7 @@ namespace XQYC.Business.Enums
         /// <summary>
         /// 其他费用(个人部分)
         /// </summary>
-        [EnumItemDescription("zh-CN", "其他费用(个人部分)")]
+        [EnumItemDescription("zh-CN", "补扣保险等其他费用(个人部分)")]
         PersonalOtherFee=54,
 
         /// <summary>
@@ -87,6 +87,12 @@ namespace XQYC.Business.Enums
         /// </summary>
         [EnumItemDescription("zh-CN", "混合费用(个人部分)")]
         PersonMixCost = 55,
+
+        /// <summary>
+        /// 个人从单位的借款
+        /// </summary>
+        [EnumItemDescription("zh-CN", "补扣个人的借款")]
+        PersonBorrow=60,
 
         /// <summary>
         /// 工资税

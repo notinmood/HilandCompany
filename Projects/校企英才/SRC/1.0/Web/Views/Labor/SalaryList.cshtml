@@ -10,6 +10,7 @@
 @using XQYC.Business.Entity;
 @using XQYC.Web.Models;
 @using HiLand.Utility.Web;
+@using HiLand.General.BLL;
 
 @model PagedList<SalarySummaryEntity>
 @{
@@ -18,12 +19,18 @@
     string enterpriseKey = RequestHelper.GetValue("enterpriseKey");
     string salaryMonth = RequestHelper.GetValue("SalaryMonth");
 
+    string enterpriseName = string.Empty;
+    if (GuidHelper.IsInvalidOrEmpty(enterpriseKey) == false)
+    {
+        enterpriseName = EnterpriseBLL.Instance.Get(enterpriseKey).CompanyNameShort;
+    }
+
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员名称", ConditionFieldName = "LaborName", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "工号", ConditionFieldName = "LaborCode", ConditionType = typeof(string) });
 }
 
-<h2>劳务人员薪资列表</h2>
+<h2>@string.Format("劳务人员薪资列表-({0}-{1})", enterpriseName, salaryMonth)</h2>
 <div id="ItemListDIV">
     <div>
         @using (Html.BeginForm())
@@ -32,78 +39,115 @@
         }
     </div>
     <div class="OperateArea" id="OperateAreaContainer">
-        <div class="btn-group">@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("SalaryItem", "Labor").Render(new { rel = "#EditDIV" })
+        <div class="btn-group">
+            @Html.HiA("newDisplayA").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("SalaryItem", "Labor").Render(new { rel = "#EditDIV" })
             @Html.HiA("salaryListCheck").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-refresh icon-white\"></i>应付薪资人员校验").ACA("SalaryListCheck", "Labor").RouteValue(new { enterpriseKey = enterpriseKey, salaryMonth = salaryMonth }).Render()
+            @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)
         </div>
     </div>
-    <table width="98%" class="grid">
-        <tr>
-            <th style="width: 60px">操作
-            </th>
-            <th style="width: 60px">账期
-            </th>
-            <th style="width: 60px">状态
-            </th>
-            <th style="width: 80px">工号
-            </th>
-            <th style="width: 80px">姓名
-            </th>
-            <th style="width: 50px">扣税(费)前工资
-            </th>
-            <th style="width: 50px">各种扣费
-            </th>
-            <th style="width: 50px">工资税
-            </th>
-            <th style="width: 60px">企业常规费用(实收)
-            </th>
-            <th style="width: 60px">企业常规费用(计算)
-            </th>
-            <th style="width: 60px">个人常规费用(实扣)
-            </th>
-            <th style="width: 60px">个人常规费用(计算)
-            </th>
-            <th style="width: 80px">应付(计算)
-            </th>
-        </tr>
-        @foreach (SalarySummaryEntity entity in Model)
-        {
-            string entityGuid = entity.SalarySummaryGuid.ToString();
-            decimal salaryGrossPay = entity.SalaryGrossPay;
-            decimal salaryrebate = entity.SalaryRebate;
+    <div class="dataContainer">
+        <table style="width: 1800px" class="grid">
             <tr>
-                <td>
-                    @Html.HiA().CssClassName("salaryDetailsList").Value("<i class=\"icon-align-justify\"></i>详情").ACA("SalaryDetailsList", "Labor").RouteValue(new { itemKey = entity.SalarySummaryGuid, returnUrl = currentUrl }).Render()
-                </td>
-                <td>
-                    @entity.SalaryDate.ToString("yyyyMM")
-                </td>
-                <td>
-                    @EnumHelper.GetDisplayValue(entity.SalaryPayStatus)
-                </td>
-                <td>
-                    @entity.LaborCode
-                </td>
-                <td>@entity.LaborName
-                </td>
-                <td>@salaryGrossPay.ToString("0.00")
-                </td>
-                <td>@salaryrebate.ToString("0.00")
-                </td>
-                <td>@entity.SalaryTax.ToString("0.00")
-                </td>
-                <td>@entity.EnterpriseCostReal.ToString("0.00")
-                </td>
-                <td>@entity.EnterpriseCostCalculated.ToString("0.00")
-                </td>
-                <td>@entity.PersonCostReal.ToString("0.00")
-                </td>
-                <td>@entity.PersonCostCalculated.ToString("0.00")
-                </td>
-                <td>@entity.SalaryNeedPayToLabor.ToString("0.00")
-                </td>
-            </tr>   
-        }
-    </table>
+                <th style="width: 60px">操作
+                </th>
+                <th style="width: 60px">账期
+                </th>
+                <th style="width: 60px">校验状态
+                </th>
+                <th style="width: 60px">付款状态
+                </th>
+                <th style="width: 80px">工号
+                </th>
+                <th style="width: 60px">姓名
+                </th>
+                <th style="width: 120px">银行账号
+                </th>
+                <th style="width: 50px">应付工资
+                </th>
+                <th style="width: 50px">扣费前工资
+                </th>
+                <th style="width: 50px">各种扣费
+                </th>
+                <th style="width: 60px">企业常规费用(实收)
+                </th>
+                <th style="width: 60px">企业常规费用(计算)
+                </th>
+                <th style="width: 60px">个人保险费用(实扣)
+                </th>
+                <th style="width: 60px">个人保险费用(计算)
+                </th>
+                <th style="width: 60px">个人公积金(实扣)
+                </th>
+                <th style="width: 60px">个人公积金(计算)
+                </th>
+                <th style="width: 60px">补扣个人保险
+                </th>
+                <th style="width: 60px">应税工资
+                </th>
+                <th style="width: 50px">工资税
+                </th>
+                <th style="width: 60px">扣其他(借款等)
+                </th>
+                <th>实付工资
+                </th>
+            </tr>
+            @foreach (SalarySummaryEntity entity in Model)
+            {
+                string entityGuid = entity.SalarySummaryGuid.ToString();
+                decimal salaryGrossPay = entity.SalaryGrossPay;
+                decimal salaryrebate = entity.SalaryRebate;
+                <tr>
+                    <td>
+                        @Html.HiA().CssClassName("salaryDetailsList").Value("<i class=\"icon-align-justify\"></i>详情").ACA("SalaryDetailsList", "Labor").RouteValue(new { itemKey = entity.SalarySummaryGuid, returnUrl = currentUrl }).Render()
+                    </td>
+                    <td>
+                        @entity.SalaryDate.ToString("yyyyMM")
+                    </td>
+                    <td>
+                        @EnumHelper.GetDisplayValue(entity.IsCheckPast)
+                    </td>
+                    <td>
+                        @EnumHelper.GetDisplayValue(entity.SalaryPayStatus)
+                    </td>
+                    <td>
+                        @entity.LaborCode
+                    </td>
+                    <td>@entity.LaborName
+                    </td>
+                    <td>@entity.Labor.CurrentBankAccountNumber
+                    </td>
+                    <td>@entity.SalaryNeedPayBeforeCost.ToString("0.00")
+                    </td>
+                    <td>@salaryGrossPay.ToString("0.00")
+                    </td>
+                    <td>@salaryrebate.ToString("0.00")
+                    </td>
+                    <td>@entity.EnterpriseCostReal.ToString("0.00")
+                    </td>
+                    <td>@entity.EnterpriseCostCalculated.ToString("0.00")
+                    </td>
+                    <td>@entity.PersonInsuranceReal.ToString("0.00")
+                    </td>
+                    <td>@entity.PersonInsuranceCalculated.ToString("0.00")
+                    </td>
+                    <td>@entity.PersonReserveFundReal.ToString("0.00")
+                    </td>
+                    <td>@entity.PersonReserveFundCalculated.ToString("0.00")
+                    </td>
+                    <td>@entity.PersonOtherCostReal.ToString("0.00")
+                    </td>
+                    <td>@entity.SalaryNeedPayBeforeTax.ToString("0.00")
+                    </td>
+                    <td>@entity.SalaryTax.ToString("0.00")
+                    </td>
+                    <td>@entity.PersonBorrow.ToString("0.00")
+                    </td>
+                    <td>@entity.SalaryNeedPayToLabor.ToString("0.00")
+                    </td>
+                </tr>   
+            }
+        </table>
+    </div>
     <div class="myPager">
         <span style="float: left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
         &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@SystemConst.CountPerPage</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)
