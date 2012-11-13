@@ -749,42 +749,18 @@ namespace XQYC.Web.Controllers
         private ActionResult LaborContractListToExcelFile(IList<LaborContractEntity> laborList)
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
-            dic["UserNameCN"] = "人员名称";
-            dic["UserCardID"] = "身份证号码";
-            dic["UserStatus"] = "人员状态";
-            dic["LaborWorkStatus"] = "工作状态";
-            dic["CurrentEnterpriseName"] = "务工企业";
-            dic["CurrentLaborDepartment"] = "所在部门";
-            dic["CurrentLaborWorkShop"] = "所在车间";
-            dic["LaborCode"] = "职工编号";
-            dic["CurrentBankAccountNumber"] = "银行账户";
-            dic["UserSex"] = "性别";
-            dic["UserAge"] = "年龄";
-            dic["UserBirthDay"] = "出生日期";
-            dic["UserEducationalBackground"] = "学历";
-            dic["UserEducationalSchool"] = "毕业学校";
-            dic["SocialSecurityNumber"] = "社保号";
-            dic["HouseHoldType"] = "户口性质";
-            dic["UserMobileNO"] = "联系电话";
-            dic["UrgentTelephone"] = "紧急联系电话";
-            dic["CurrentContractStartDate"] = "最近合同开始时间";
-            dic["CurrentContractStopDate"] = "最近合同到期时间";
-            dic["CurrentContractDiscontinueDate"] = "最近离职时间";
-            dic["InformationBrokerUserName"] = "信息员";
-            dic["ProviderUserName"] = "信息提供人员";
-            dic["RecommendUserName"] = "推荐人员";
-            dic["FinanceUserName"] = "财务人员";
-            dic["ServiceUserName"] = "客服人员";
-            dic["BusinessUserName"] = "业务人员";
-            dic["SettleUserName"] = "安置人员";
-            dic["Memo1"] = "备注1";
-            dic["Memo2"] = "备注2";
-            dic["Memo3"] = "备注3";
-            dic["Memo4"] = "备注4";
-            dic["Memo5"] = "备注5";
+            dic["Labor.UserNameCN"] = "人员名称";
+            dic["Labor.UserCardID"] = "身份证号码";
+            dic["Enterprise.CompanyNameShort"] = "企业名称";
+            dic["LaborDepartment"] = "所在部门";
+            dic["LaborWorkShop"] = "所在车间";
+            dic["LaborContractStartDate"] = "合同开始时间";
+            dic["LaborContractStopDate"] = "合同到期时间";
+            dic["LaborContractDiscontinueDate"] = "合同终止时间";
+            dic["LaborContractDiscontinueDesc"] = "合同终止原因";
 
             Stream excelStream = ExcelHelper.WriteExcel(laborList, dic);
-            return File(excelStream, ContentTypes.GetContentType("xls"), "劳务人员信息.xls");
+            return File(excelStream, ContentTypes.GetContentType("xls"), string.Format( "劳务人员合同信息-{0}.xls",DateTime.Today.ToShortDateString()));
         }
         #endregion
 
