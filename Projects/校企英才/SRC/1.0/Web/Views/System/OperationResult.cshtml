@@ -21,6 +21,8 @@
         SystemStatusInfo currentItem = statusList[i];
         string cssClassName = "hl_Success";
         string displayMessage = currentItem.Message;
+        string displayMessageForWin = currentItem.Message.Replace("<br />", "\r\n");
+        displayMessageForWin = displayMessageForWin.Replace("<br/>", "\r\n");
 
         switch (currentItem.SystemStatus)
         {
@@ -39,7 +41,7 @@
                 break;
         }
     <div class="hl_Status @cssClassName">@Html.Raw(displayMessage)</div>
-    <input type="hidden" name="inputDisplayContent+@i"  value="@displayMessage" />
+    <input type="hidden" name="inputDisplayContent+@i"  value="@displayMessageForWin" />
     }
     <input type="hidden" name="inputDisplayCount" value="@statusList.Count" />
     

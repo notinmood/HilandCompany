@@ -35,7 +35,7 @@
     <div>
         @using (Html.BeginForm())
         {
-            @Html.HiQuery("LaborQuery").QueryConditionList(queryItemList).Render()
+            @Html.HiQuery("LaborQuery").QueryConditionList(queryItemList).IsDisplayBrackets(false).Render()
         }
     </div>
     <div class="OperateArea" id="OperateAreaContainer">
