@@ -4,8 +4,7 @@
 /*1.以下为设置布局的样式*/
 /*以下为CSS清除浮动的代码，其必须在浮动元素所在容器的闭合标签之前运用
 （同时还通过height:1;margin-top:-1解决了不占用页面高度的问题）*/
-.clear
-{
+.clear {
     clear: both;
     height: 1px;
     margin-top: -1px;
@@ -15,8 +14,7 @@
 
 
 /*2.以下内容为元素的应用样式*/
-.hl_abstract
-{
+.hl_abstract {
     padding: 15px;
     border: dotted 2px #999;
     color: #999;
@@ -26,8 +24,7 @@
     border-radius: 4px;
 }
 
-.hl_firstTitle
-{
+.hl_firstTitle {
     margin: 10px 0;
     font-family: 'Microsoft Yahei';
     text-align: left;
@@ -41,8 +38,7 @@
     clear: both;
 }
 
-.hl_secondTitle
-{
+.hl_secondTitle {
     margin: 10px 0;
     font-family: 'Microsoft Yahei';
     padding: 6px 20px;
@@ -55,8 +51,7 @@
     clear: both;
 }
 
-.hl_thirdTitle
-{
+.hl_thirdTitle {
     margin: 10px 0;
     padding: 6px 20px;
     font-family: 'Microsoft Yahei';
@@ -70,8 +65,8 @@
     border-radius: 4px;
     clear: both;
 }
-.hl_noteInfo
-{
+
+.hl_noteInfo {
     margin: 10px 0;
     padding: 15px 20px 15px 60px;
     background: #FCFAA9 url('hlimages/yellow-pin.png') no-repeat 20px 0;
@@ -81,8 +76,7 @@
     clear: both;
 }
 
-.hl_demo
-{
+.hl_demo {
     text-align: left;
     padding: 6px 20px;
     overflow: auto;
@@ -96,28 +90,24 @@
 }
 
 /*颜色渐变*/
-.hl_gradient
-{
+.hl_gradient {
     background: -webkit-gradient(linear, left top, left bottom, from(#74b8d7), to(#437fbc));
-    background: -moz-linear-gradient(top,  #74b8d7,  #437fbc);
+    background: -moz-linear-gradient(top, #74b8d7, #437fbc);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#74b8d7', endColorstr='#437fbc');
 }
 
 /*文字阴影*/
-.text-shadow
-{
+.text-shadow {
     text-shadow: 2px 2px 4px #666;
 }
 
 /*打印分页*/
-.page-break
-{
+.page-break {
     page-break-before: always;
 }
 
 /*透明*/
-.transparent
-{
+.transparent {
     filter: alpha(opacity=50);
     -moz-opacity: 0.5;
     -khtml-opacity: 0.5;
@@ -126,14 +116,12 @@
 
 
 /*图片的边框*/
-.hl_imageBorder
-{
+.hl_imageBorder {
     border: 1px solid #fff;
 }
 
 /*以下为设置table的样式*/
-table.slimTable
-{
+table.slimTable {
     font-family: Arial, Helvetica, sans-serif;
     margin-top: 10px;
     border-collapse: collapse;
@@ -141,31 +129,28 @@ table.slimTable
     width: 100%;
 }
 
-table.slimTable pre
-{
-    width: auto;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    background-color: transparent;
-}
+    table.slimTable pre {
+        width: auto;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background-color: transparent;
+    }
 
-table.slimTable th
-{
-    vertical-align: baseline;
-    padding: 5px 15px 5px 5px;
-    background-color: #ccc;
-    border: 1px solid #888;
-    text-align: left;
-}
+    table.slimTable th {
+        vertical-align: baseline;
+        padding: 5px 15px 5px 5px;
+        background-color: #ccc;
+        border: 1px solid #888;
+        text-align: left;
+    }
 
-table.slimTable td
-{
-    vertical-align: text-top;
-    padding: 5px 15px 5px 5px;
-    background-color: #efefef;
-    border: 1px solid #aaa;
-}
+    table.slimTable td {
+        vertical-align: text-top;
+        padding: 5px 15px 5px 5px;
+        background-color: #efefef;
+        border: 1px solid #aaa;
+    }
 
 
 /*以下代码用于控制表格内容超过一行的部分，用省略号代替】【支持IE6】，
@@ -177,32 +162,28 @@ table.slimTable td
 在线演示：http://www.cnblogs.com/warrentech/archive/2012/05/09/table_ellipsis.html
 本地演示：WebResourceCollection\PageEffect\表格内容超过一行的部分，用省略号代替.htm
 */
-table.overflowTable
-{
+table.overflowTable {
     table-layout: fixed;
     /*还需要在表格中指定宽度*/
 }
 
-table.overflowTable td
-{
+    table.overflowTable td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+/*通用的内容超过指定宽度的部分，用省略号代替的样式*/
+.overflowContainer {
+    /*还需要在容器中指定宽度*/
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/*通用的内容超过指定宽度的部分，用省略号代替的样式*/
-.overflowContainer
-{
-    /*还需要在容器中指定宽度*/
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    }
-    
-    
+
 /*常用的各种提醒样式*/
-.hl_Status
-{
+.hl_Status {
     margin: 10px 0;
     font-family: 'Microsoft Yahei';
     text-align: left;
@@ -215,22 +196,42 @@ table.overflowTable td
     clear: both;
 }
 
-.hl_Success
-{
+.hl_Success {
     background: #55895B url('hlimages/hl_status_ok_48.png') no-repeat 20px 0;
 }
 
-.hl_Failuer
-{
+.hl_Failuer {
     background: #55895B url('hlimages/hl_status_cancel_48.png') no-repeat 20px 0;
 }
 
-.hl_Tip
-{
+.hl_Tip {
     background: #55895B url('hlimages/hl_status_tip_48.png') no-repeat 20px 0;
 }
 
-.hl_Warnning
-{
+.hl_Warnning {
     background: #55895B url('hlimages/hl_status_alert_48.png') no-repeat 20px 0;
+}
+
+
+
+.moduleStyle {
+    float: left;
+    width: 450px;
+    height: 200px;
+    margin: 0px 10px 10px 0px;
+}
+
+.moduleStyle div {
+    margin: 3px;
+}
+
+.moduleStyle h5 {
+    margin: 1px;
+    background-color: #B2D3F5;
+    height: 24px;
+}
+
+.moduleStyle1 {
+    border: 1px solid #96C2F1;
+    background-color: #EFF7FF;
 }

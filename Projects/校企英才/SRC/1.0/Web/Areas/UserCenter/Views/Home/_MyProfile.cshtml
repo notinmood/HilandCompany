@@ -1,6 +1,36 @@
-﻿@{
-    ViewBag.Title = "MyProfile";
+﻿@using HiLand.Utility.Enums;
+
+@{
+    ViewBag.Title = "Home Page";
+    HiLand.Framework.BusinessCore.BusinessUser CurrentUser = HiLand.Framework.BusinessCore.BLL.BusinessUserBLL.CurrentUser;
 }
 
-<h2>我的基本信息</h2>
+<link rel="stylesheet" href="@Url.Content("~/Content/welcome.css")" type="text/css" media="screen" />
+<h2>欢迎</h2>
+<div class="welcome">
+    <div>登录账户为：@CurrentUser.UserName</div>
+    <div>姓名为：@CurrentUser.UserNameDisplay</div>
+
+    @switch (CurrentUser.UserType)
+    {
+        case UserTypes.Broker:
+            break;
+        case UserTypes.CommonUser:
+            break;
+        case UserTypes.EnterpriseUser:
+            @*<div>所在企业为：@CurrentUser.EnterpriseKey</div>*@
+            break;
+        case UserTypes.Manager:
+        case UserTypes.SuperAdmin:
+            <div>所在部门为：@CurrentUser.Department.DepartmentFullPath</div>
+            break;
+        default:
+            break;
+    }
+    
+    <div>最近一次的登录时间为：@CurrentUser.UserLastDateTime.ToString()</div>
+    <div>最近一次的登录IP为：@CurrentUser.UserLastIP</div>
+</div>
+<div class="home-image"></div>
+
 

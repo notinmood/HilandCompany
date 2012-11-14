@@ -93,7 +93,7 @@ namespace XQYC.Business.BLL
             List<LaborEntity> list = this.GetList(whereClause);
 
             //通过条件进行匹配的时候，没有人员或者多于1个人员都返回匹配失败。
-            if (list == null || list.Count == 0 || list.Count>1)
+            if (list == null || list.Count == 0 || list.Count > 1)
             {
                 return LaborEntity.Empty;
             }
@@ -111,8 +111,58 @@ namespace XQYC.Business.BLL
         /// <returns></returns>
         public override List<LaborEntity> GetList(string whereClause, params System.Data.IDbDataParameter[] paras)
         {
-            string sqlClause = string.Format("SELECT BIZ.*,CU.* FROM XQYCLabor BIZ LEFT JOIN CoreUser CU ON BIZ.UserGuid= CU.UserGuid WHERE {0}", whereClause);
+            return GetList(whereClause, 0, string.Empty);
+        }
+
+        public List<LaborEntity> GetList(string whereClause, int topCount, string orderByClause)
+        {
+            string selectString = " SELECT ";
+            if (topCount > 0)
+            {
+                selectString += string.Format(" TOP {0} ", topCount);
+            }
+
+            if (string.IsNullOrWhiteSpace(orderByClause))
+            {
+                orderByClause = " LaborID DESC ";
+            }
+
+            if (string.IsNullOrWhiteSpace(whereClause))
+            {
+                whereClause = " 1=1 ";
+            }
+
+            string sqlClause = string.Format("{0} BIZ.*,CU.* FROM XQYCLabor BIZ LEFT JOIN CoreUser CU ON BIZ.UserGuid= CU.UserGuid WHERE {1} ORDER BY {2}", selectString, whereClause, orderByClause);
             return base.GetListBySQL(sqlClause);
+        }
+
+        public override int GetTotalCount(string whereClause)
+        {
+            string sqlClause = string.Format("SELECT COUNT(1) FROM XQYCLabor BIZ LEFT JOIN CoreUser CU ON BIZ.UserGuid= CU.UserGuid WHERE {0}", whereClause);
+            return (int)base.GetScalar(sqlClause);
+        }
+
+        /// <summary>
+        /// 获取最新录入的人员列表
+        /// </summary>
+        /// <param name="topN"></param>
+        /// <returns></returns>
+        public List<LaborEntity> GetListForLastest(int topN)
+        {
+            string orderByClause = " UserRegisterDate DESC ";
+            return GetList(string.Empty, topN, orderByClause);
+        }
+
+        /// <summary>
+        /// 从某个时间段内总共录入的人数
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        public int GetCountForLastestRegister(DateTime startDate, DateTime endDate)
+        {
+            string whereClause = string.Format(" UserRegisterDate >='{0}' AND UserRegisterDate<='{1}' ", startDate, endDate);
+            return GetTotalCount(whereClause);
         }
 
         /// <summary>

@@ -163,6 +163,7 @@
     <Compile Include="Controllers\RemindController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
+    <Compile Include="Controllers\TestAsyncController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Control\HtmlHelperEx.cs" />
     <Compile Include="Global.asax.cs">

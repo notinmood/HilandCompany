@@ -1,20 +1,61 @@
-﻿@{
+﻿@using XQYC.Business.Entity;
+
+@{
     ViewBag.Title = "Home Page";
     HiLand.Framework.BusinessCore.BusinessUser CurrentUser = HiLand.Framework.BusinessCore.BLL.BusinessUserBLL.CurrentUser;
+
+    List<LaborContractEntity> laborDiscontinueContractList = (List<LaborContractEntity>)this.ViewData["laborDiscontinueContractList"];
+    int laborDiscontinueCount = (int)this.ViewData["laborDiscontinueCount"];
+
+    List<LaborContractEntity> laborLastContractList = (List<LaborContractEntity>)this.ViewData["laborLastContractList"];
+    int laborLastCountCount = (int)this.ViewData["laborLastCountCount"];
+
+    List<LaborEntity> laborLastestList = (List<LaborEntity>)this.ViewData["laborLastestList"];
+    int laborRegisterCount = (int)this.ViewData["laborRegisterCount"];
 }
 
-<link rel="stylesheet" href="@Url.Content("~/Content/welcome.css")" type="text/css" media="screen" />
-<h2>欢迎</h2>
-<div class="welcome">
+<div class="moduleStyle moduleStyle1">
+    <h5>提醒摘要
+    </h5>
+    <div>1我是内容</div>
+    <div>1我是内容</div>
+    <div>1我是内容</div>
+</div>
+@*<div class="moduleStyle moduleStyle1">
+    <h5>个人信息摘要
+    </h5>
     <div>登录账户为：@CurrentUser.UserName</div>
     <div>姓名为：@CurrentUser.UserNameDisplay</div>
     <div>所在部门为：@CurrentUser.Department.DepartmentFullPath</div>
     <div>最近一次的登录时间为：@CurrentUser.UserLastDateTime.ToString()</div>
     <div>最近一次的登录IP为：@CurrentUser.UserLastIP</div>
+</div>*@
+
+<div class="moduleStyle moduleStyle1">
+    <h5>最新劳务人员信息(最近一月内录入的人数为: @laborRegisterCount)
+    </h5>
+    @foreach (LaborEntity item in laborLastestList)
+    { 
+        <div> @string.Format("【{0}】的信息于【{1}】录入系统", item.UserNameCN,item.UserRegisterDate.ToShortDateString()) </div>
+    }
 </div>
-<div class="home-image"></div>
-
-
+<div class="moduleStyle moduleStyle1">
+    <h5>最新劳务人员信息(最近一月内录入的人数为: @laborLastCountCount)
+    </h5>
+    @foreach (LaborContractEntity item in laborLastContractList)
+    { 
+        <div> @string.Format("【{0}】于【{1}】在【{2}】入职", item.Labor.UserNameCN,item.LaborContractStartDate.ToShortDateString(),item.Enterprise.CompanyNameShort) </div>
+    }
+</div>
+<div class="moduleStyle moduleStyle1">
+    <h5>最新离职人员信息(最近一月内离职的人数为: @laborDiscontinueCount)
+    </h5>
+    @foreach (LaborContractEntity item in laborDiscontinueContractList)
+    { 
+        <div> @string.Format("【{0}】于【{1}】在【{2}】离职", item.Labor.UserNameCN,item.LaborContractDiscontinueDate.ToShortDateString(),item.Enterprise.CompanyNameShort)</div>
+    }
+</div>
+<div class="clear"></div>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#aDashboardSection").addClass("current");

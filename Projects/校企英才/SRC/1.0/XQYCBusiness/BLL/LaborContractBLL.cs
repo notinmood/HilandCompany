@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HiLand.Framework.FoundationLayer;
+using HiLand.Utility.Data;
 using HiLand.Utility.Enums;
 using XQYC.Business.DAL;
 using XQYC.Business.DALCommon;
@@ -107,6 +108,54 @@ namespace XQYC.Business.BLL
             {
                 return LaborContractEntity.Empty;
             }
+        }
+
+        /// <summary>
+        /// 获取最新离职的人员列表
+        /// </summary>
+        /// <param name="topN"></param>
+        /// <returns></returns>
+        public List<LaborContractEntity> GetListForLastestDiscontinue(int topN)
+        {
+            string whereClause = string.Format(" LaborContractStatus !={0} AND LaborContractStatus!={1} ", (int)LaborWorkStatuses.NewWorker, (int)LaborWorkStatuses.Worked);
+            string orderbyClause = string.Format(" LaborContractDiscontinueDate DESC ");
+            return base.GetList(Logics.False,whereClause,topN,orderbyClause);
+        }
+
+        /// <summary>
+        /// 从某个时间段内总共离职的人数
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        public int GetCountForLastestDiscontinue(DateTime startDate,DateTime endDate)
+        {
+            string whereClause = string.Format(" LaborContractDiscontinueDate >='{0}' AND LaborContractDiscontinueDate<='{1}' ", startDate,endDate);
+            return base.GetTotalCount(whereClause);
+        }
+
+        /// <summary>
+        /// 获取最新入职的人员列表
+        /// </summary>
+        /// <param name="topN"></param>
+        /// <returns></returns>
+        public List<LaborContractEntity> GetListForLastestContract(int topN)
+        {
+            string whereClause = string.Format(" LaborContractStatus ={0}", (int)LaborWorkStatuses.Worked);
+            string orderbyClause = string.Format(" LaborContractStartDate DESC ");
+            return base.GetList(Logics.False, whereClause, topN, orderbyClause);
+        }
+
+        /// <summary>
+        /// 从某个时间段内总共入职的人数
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        public int GetCountForLastestContract(DateTime startDate, DateTime endDate)
+        {
+            string whereClause = string.Format(" LaborContractStartDate >='{0}' AND LaborContractStartDate<='{1}' ", startDate, endDate);
+            return base.GetTotalCount(whereClause);
         }
     }
 }
