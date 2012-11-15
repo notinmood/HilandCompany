@@ -26,6 +26,7 @@
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员名称,身份证号", ConditionFieldName = "UserNameCN,UserCardID", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员性别", ConditionFieldName = "UserSex", ConditionType = typeof(HiLand.Utility.Enums.Sexes) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "工作状态", ConditionFieldName = "LaborWorkStatus", ConditionType = typeof(XQYC.Business.Enums.LaborWorkStatuses) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "信息提供人,推荐人员,服务人员,财务人员,业务人员,安置人员", ConditionFieldName = "ProviderUserName,RecommendUserName,ServiceUserName,FinanceUserName,BusinessUserName,SettleUserName", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "录入时间", ConditionFieldName = "UserRegisterDate", ConditionType = typeof(DateTime) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "录入时间", ConditionFieldName = "UserRegisterDate", ConditionType = typeof(DateTime) });
 }
