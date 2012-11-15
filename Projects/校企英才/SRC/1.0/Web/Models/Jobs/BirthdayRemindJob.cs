@@ -26,11 +26,12 @@ namespace XQYC.Web.Models.Jobs
                 daysOffToday = Converter.ChangeType(SystemTaskInConfig.GetAddonItemValue("aheadDays"), 3);
             }
 
-            DateTime dateLower = DateTime.Today.AddDays(daysOffToday);
-            DateTime dateUpper = DateTime.Today.AddDays(daysOffToday + 1);
+            int dayOfYear = DateTime.Today.DayOfYear;
+            int dateLower = dayOfYear+ daysOffToday;
+            int dateUpper = dateLower + 1;
 
-            List<BusinessUser> userList = BusinessUserBLL.GetList(string.Format("[UserType] ={0} AND [UserBirthDay]>= '{1}'  AND [UserBirthDay]<='{2}' ", (int)this.UserType, dateLower, dateUpper));
-            DispatchRemindMessage(userList);
+            List<BusinessUser> birthdayUserList = BusinessUserBLL.GetList(string.Format("[UserType] ={0} AND DATEPART(DY,UserBirthDay)>= {1}  AND DATEPART(DY,UserBirthDay)<{2} ", (int)this.UserType, dateLower, dateUpper));
+            DispatchRemindMessage(birthdayUserList);
         }
 
         /// <summary>

@@ -254,7 +254,7 @@ namespace XQYC.Business.DALCommon
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CanUsable"))
                 {
-                    entity.CanUsable = reader.GetInt32(reader.GetOrdinal("CanUsable"));
+                    entity.CanUsable = (Logics)reader.GetInt32(reader.GetOrdinal("CanUsable"));
                 }
             }
         }

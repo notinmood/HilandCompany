@@ -1,4 +1,5 @@
 ﻿using System;
+using HiLand.General;
 using HiLand.General.BLL;
 using HiLand.General.Entity;
 using HiLand.Utility.Data;

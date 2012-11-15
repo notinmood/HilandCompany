@@ -23,6 +23,11 @@ namespace XQYC.Web.Models
 
             foreach (SystemTaskOfDailyExcutorEntity item in sectionConfig.SystemTaskOfDailyExcutorList)
             {
+                if (item.IsUse == false)
+                {
+                    continue;
+                }
+
                 JobDetail jobDetail = new JobDetail(item.Name + "Job", null, item.Type);
 
                 Trigger triger = TriggerUtils.MakeDailyTrigger(item.ExcuteHour, item.ExcuteMinute);
@@ -51,6 +56,11 @@ namespace XQYC.Web.Models
 
             foreach (SystemTaskOfDailyExcutorEntity item in sectionConfig.SystemTaskOfDailyExcutorList)
             {
+                if (item.IsUse == false)
+                {
+                    continue;
+                }
+
                 ExcuteJobManaul(item);
             }
         }
