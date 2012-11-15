@@ -156,6 +156,92 @@ namespace XQYC.Web.Controllers
         }
         #endregion
 
+        #region 回访跟踪
+        public ActionResult TrackerList(string itemKey, string itemName = StringHelper.Empty)
+        {
+            List<TrackerEntity> trackerList = null;
+
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                Guid itemGuid = GuidHelper.TryConvert(itemKey);
+                string whereClause = string.Format(" RelativeKey='{0}' ", itemGuid.ToString());
+                trackerList = TrackerBLL.Instance.GetList(whereClause);
+            }
+
+            if (string.IsNullOrWhiteSpace(itemName))
+            {
+                itemName = EnterpriseBLL.Instance.Get(itemKey).CompanyName;
+            }
+
+            this.ViewBag.EnterpriseKey = itemKey;
+            this.ViewBag.EnterpriseName = itemName;
+            return View(trackerList);
+        }
+
+        public ActionResult TrackerItem(string enterpriseKey, string itemKey = StringHelper.Empty)
+        {
+            TrackerEntity entity = TrackerEntity.Empty;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                entity = TrackerBLL.Instance.Get(itemKey);
+            }
+
+            this.ViewBag.EnterpriseKey = enterpriseKey;
+
+            return View(entity);
+        }
+
+        [HttpPost]
+        public ActionResult TrackerItem(string enterpriseKey, string itemKey, TrackerEntity originalEntity)
+        {
+            bool isSuccessful = false;
+            string displayMessage = string.Empty;
+            TrackerEntity targetEntity = null;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == true)
+            {
+                targetEntity = new TrackerEntity();
+
+                targetEntity.RelativeKey = enterpriseKey;
+                targetEntity.TrackerCategory = "EnterpriseTracker";
+                targetEntity.CreateTime = DateTime.Now;
+                targetEntity.CreateUserKey = BusinessUserBLL.CurrentUser.UserGuid.ToString();
+
+                SetTargetContractEntityValue(originalEntity, ref  targetEntity);
+
+                isSuccessful = TrackerBLL.Instance.Create(targetEntity);
+
+            }
+            else
+            {
+                targetEntity = TrackerBLL.Instance.Get(itemKey);
+
+                SetTargetContractEntityValue(originalEntity, ref  targetEntity);
+                isSuccessful = TrackerBLL.Instance.Update(targetEntity);
+            }
+
+            if (isSuccessful == true)
+            {
+                displayMessage = "数据保存成功";
+            }
+            else
+            {
+                displayMessage = "数据保存失败";
+            }
+
+            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+        }
+
+        private void SetTargetContractEntityValue(TrackerEntity originalEntity, ref TrackerEntity targetEntity)
+        {
+            targetEntity.CanUsable = originalEntity.CanUsable;
+            targetEntity.TrackerDesc = originalEntity.TrackerDesc;
+            targetEntity.TrackerTime = originalEntity.TrackerTime;
+            targetEntity.TrackerTitle = originalEntity.TrackerTitle;
+            targetEntity.TrackerType = originalEntity.TrackerType;
+            targetEntity.TrackerUserKey = originalEntity.TrackerUserKey;
+        }
+        #endregion
+
         #region 企业合同管理
         public ActionResult ContractList(string itemKey, string itemName = StringHelper.Empty)
         {
@@ -242,7 +328,6 @@ namespace XQYC.Web.Controllers
             targetEntity.ContractTitle = originalEntity.ContractTitle;
             targetEntity.ContractStatus = originalEntity.ContractStatus;
         }
-
         #endregion
 
         #region 企业登录用户的管理

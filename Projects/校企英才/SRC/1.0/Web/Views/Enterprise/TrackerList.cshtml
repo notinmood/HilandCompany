@@ -11,7 +11,7 @@
 @using HiLand.General.BLL;
 @using HiLand.Utility.Web;
 
-@model List<EnterpriseContractEntity>
+@model List<TrackerEntity>
 @{
     ViewBag.Title = "Index";
 
@@ -34,42 +34,38 @@
     }
 }
 
-<h2>企业合同列表(@enterpriseName)</h2>
+<h2>企业回访信息列表(@enterpriseName)</h2>
 <div id="ItemListDIV">
     <div class="OperateArea" id="OperateAreaContainer">
-        <div class="btn-group"><a href="@returnUrl" class="btn btn-info" title="返回列表页"><i class="icon-share icon-white"></i>返回</a>@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("ContractItem", "Enterprise").Render(new { rel = "#EditDIV" })</div>
+        <div class="btn-group"><a href="@returnUrl" class="btn btn-info" title="返回列表页"><i class="icon-share icon-white"></i>返回</a>@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-info").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("TrackerItem", "Enterprise").Render(new { rel = "#EditDIV" })</div>
     </div>
     <table width="98%" class="grid">
         <tr>
             <th style="width: 50px">操作
             </th>
-            <th style="width: 80px">合同开始时间
+            <th style="width: 80px">创建时间
             </th>
-            <th style="width: 80px">合同结束时间
+            <th style="width: 80px">回访时间
             </th>
-            <th style="width: 50px">人员数量
+            <th style="width: 50px">回访人员
             </th>
-            <th style="width: 150px">合同名称
-            </th>
-            <th>人员需求
+            <th>回访信息
             </th>
         </tr>
-        @foreach (EnterpriseContractEntity entity in Model)
+        @foreach (TrackerEntity entity in Model)
         {
-            string entityGuid = entity.ContractGuid.ToString();
+            string entityGuid = entity.TrackerGuid.ToString();
             <tr>
                 <td>
-                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("ContractItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.ContractGuid }) | 
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("TrackerItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.TrackerGuid }) | 
                 </td>
-                <td>@entity.ContractStartDate.ToShortDateString()
+                <td>@entity.CreateTime.ToShortDateString()
                 </td>
-                <td>@entity.ContractStopDate.ToShortDateString()
+                <td>@entity.TrackerTime.ToShortDateString()
                 </td>
-                <td>@entity.ContractLaborCount
+                <td>@entity.TrackerUserKey
                 </td>
-                <td>@entity.ContractTitle
-                </td>
-                <td>@entity.ContractLaborAddon
+                <td>@entity.TrackerTitle
                 </td>
             </tr>   
         }
@@ -100,14 +96,14 @@
             });
 
             $("#newDisplayA").click(function () {
-                var url = '@Url.Action("ContractItem")?r=' + Math.random() + '&itemKey=&enterpriseKey=@enterpriseKey';
+                var url = '@Url.Action("TrackerItem")?r=' + Math.random() + '&itemKey=&enterpriseKey=@enterpriseKey';
                 $("#EditDIV").load(url);
             });
 
             $("a.edit").click(function () {
                 var itemKey = $(this).attr("itemKey");
                 $("#currentPopupItemGuid").val(itemKey);
-                var url = '@Url.Action("ContractItem")?r=' + Math.random() + '&itemKey=' + itemKey + '&enterpriseKey=@enterpriseKey';
+                var url = '@Url.Action("TrackerItem")?r=' + Math.random() + '&itemKey=' + itemKey + '&enterpriseKey=@enterpriseKey';
                 $("#EditDIV").load(url);
             });
         });

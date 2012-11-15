@@ -44,15 +44,15 @@
     <div class="dataContainer">
         <table class="grid">
             <tr>
-                <th style="width: 180px">操作
+                <th style="width: 250px">操作
                 </th>
-                <th style="width: 250px">企业名称
+                <th style="width: 220px">企业名称
                 </th>
                 <th style="width: 80px">联系人员名称
                 </th>
                 <th style="width: 30px">状态
                 </th>
-                <th style="width: 120px">联系地址
+                <th>联系地址
                 </th>
             </tr>
             @foreach (EnterpriseEntity entity in Model)
@@ -64,6 +64,7 @@
                     @Html.HiA().CssClassName("user").Value("<i class=\"icon-user\"></i>用户").ACA("UserList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress  }).Render() | 
                     @Html.HiA().CssClassName("contract").Value("<i class=\"icon-file\"></i>合同").ACA("ContractList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress  }).Render() | 
                     @Html.HiA().CssClassName("service").Value("<i class=\"icon-random\"></i>合作方式").ACA("ServiceList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress  }).Render()
+                    @Html.HiA().CssClassName("tracker").Value("<i class=\"icon-time\"></i>回访").ACA("TrackerList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress  }).Render() 
                     </td>
                     <td>@entity.CompanyName
                     </td>
