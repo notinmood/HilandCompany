@@ -137,7 +137,7 @@ namespace XQYC.Web.Controllers
             }
 
             string returnUrl = RequestHelper.CurrentRequest.AppRelativeCurrentExecutionFilePath;
-            return RedirectToAction("Data", "Permission", new { ownerGuid = userGuid, ownerName = userName, ownerType = ExecuterTypes.User });
+            return RedirectToAction("Data", "Permission", new { ownerGuid = userGuid, ownerName = userName, ownerType = ExecutorTypes.User });
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace XQYC.Web.Controllers
             }
 
             string returnUrl = RequestHelper.CurrentRequest.AppRelativeCurrentExecutionFilePath;
-            return RedirectToAction("Index", "Permission", new { ownerGuid = userGuid, ownerName = userName, ownerType = ExecuterTypes.User, permissionMode = PermissionModes.Allow, returenUrl = returnUrl });
+            return RedirectToAction("Index", "Permission", new { ownerGuid = userGuid, ownerName = userName, ownerType = ExecutorTypes.User, permissionMode = PermissionModes.Allow, returenUrl = returnUrl });
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace XQYC.Web.Controllers
             }
 
             string returnUrl = RequestHelper.CurrentRequest.AppRelativeCurrentExecutionFilePath;
-            return RedirectToAction("Index", "Permission", new { ownerGuid = userGuid, ownerName = userName, ownerType = ExecuterTypes.User, permissionMode = PermissionModes.Deny, returenUrl = returnUrl });
+            return RedirectToAction("Index", "Permission", new { ownerGuid = userGuid, ownerName = userName, ownerType = ExecutorTypes.User, permissionMode = PermissionModes.Deny, returenUrl = returnUrl });
         }
 
         public ActionResult Password(string userGuid, string userName = "")

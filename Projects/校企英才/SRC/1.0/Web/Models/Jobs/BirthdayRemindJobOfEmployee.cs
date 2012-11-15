@@ -18,13 +18,13 @@ namespace XQYC.Web.Models.Jobs
     {
         protected override void DispatchRemindMessage(List<BusinessUser> userList)
         {
-            string[] roles = StringHelper.SplitToArray(SystemTaskInConfig.AddonDetails);
+            string[] roles = StringHelper.SplitToArray(SystemTaskInConfig.GetAddonItemValue("receiveRoleNames"));
 
             RemindEntity remindEntity = CreateRemindEntity();
 
             foreach (BusinessUser currentUser in userList)
             {
-                remindEntity.RemindTitle = string.Format("人员【{0}】将在{1}过生日",currentUser.UserNameDisplay,currentUser.UserBirthDay.ToShortDateString());
+                remindEntity.RemindTitle = string.Format("同事【{0}】将在{1}过生日",currentUser.UserNameDisplay,currentUser.UserBirthDay.ToShortDateString());
                 remindEntity.RemindCategory = RemindCategories.EmployeeBirthdayRemind;
                 remindEntity.RemindUrl = string.Empty;
 
@@ -32,7 +32,7 @@ namespace XQYC.Web.Models.Jobs
                 foreach (string currentRole in roles)
                 {
                     BusinessRole role = BusinessRoleBLL.Get(currentRole);
-                    RemindBLL.Instance.Create(role.ExecutorGuid, ExecuterTypes.Role, remindEntity);
+                    RemindBLL.Instance.Create(role.ExecutorGuid, ExecutorTypes.Role, remindEntity);
                 }
             }
         }

@@ -23,7 +23,7 @@ namespace XQYC.Web.Models.Jobs
 
             if (SystemTaskInConfig != null)
             {
-                daysOffToday = Converter.ChangeType(SystemTaskInConfig.AddonInfo, 3);
+                daysOffToday = Converter.ChangeType(SystemTaskInConfig.GetAddonItemValue("aheadDays"), 3);
             }
 
             DateTime dateLower = DateTime.Today.AddDays(daysOffToday);

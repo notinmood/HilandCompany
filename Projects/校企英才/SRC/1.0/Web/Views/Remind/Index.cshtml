@@ -8,44 +8,75 @@
 @using HiLand.Framework4.Permission.Controls;
 @using HiLand.Utility.Data;
 @using XQYC.Web.Models;
+@using HiLand.Utility.Enums;
 
 @model PagedList<RemindEntity>
 @{
     ViewBag.Title = "提醒列表";
+
+    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+    bool isUsingCompress = false;
+    if (currentUrl.Length > 512)
+    {
+        isUsingCompress = true;
+        currentUrl = CompressHelper.Compress(currentUrl);
+    }
+
+    List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "提醒标题", ConditionFieldName = "RemindTitle", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "是否已读", ConditionFieldName = "ReadStatus", ConditionType = typeof(Logics) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "类别", ConditionFieldName = "RemindCategory", ConditionType = typeof(RemindCategories) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "创建时间", ConditionFieldName = "CreateDate", ConditionType = typeof(DateTime) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "创建时间", ConditionFieldName = "CreateDate", ConditionType = typeof(DateTime) });
 }
 
 <h2>提醒列表</h2>
 <div id="ItemListDIV">
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.HiQuery("QueryControl").QueryConditionList(queryItemList).IsDisplayBrackets(false).Render()
+        }
+    </div>
     <div class="OperateArea" id="OperateAreaContainer">
     </div>
     <table width="98%" class="grid">
         <tr>
-            @*<th style="width: 80px">操作
-            </th>*@
+            <th style="width: 80px">操作
+            </th>
+            <th style="width: 80px">创建时间
+            </th>
             <th style="width: 120px">类别
             </th>
-            <th style="width: 200px">提醒标题
-            </th>
-            <th>创建时间
+            <th>提醒标题
             </th>
         </tr>
         @foreach (RemindEntity entity in Model)
         {
             <tr>
-                @*<td>
-                    @Html.HiA().CssClassName("modalInput known").Value("知道了").ACA("Known", "Remind").Render(new { rel = "#EditDIV", itemKey = @entity.RemindGuid }) | 
-                </td>*@
+                <td>
+                    @if (entity.ReadStatus == Logics.False)
+                    {
+                        <span>@Html.HiA().CssClassName("modalInput known").Value("设置已读").ACA("SetRead", "Remind").RouteValue(new { itemKey = entity.RemindGuid, isUsingCompress = isUsingCompress, returnUrl = currentUrl }).Render(new { itemKey = @entity.RemindGuid })</span>
+                    }
+                    else
+                    {
+                        <span>已读</span>
+                    }
+                </td>
+                <td>@entity.CreateDate.ToShortDateString()
+                </td>
                 <td>@EnumHelper.GetDisplayValue(entity.RemindCategory)
                 </td>
                 <td>@entity.RemindTitle
                 </td>
-                <td>@entity.CreateDate.ToShortDateString()
-                </td>
             </tr>   
         }
     </table>
-    <div class="myPager"><span style="float:left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
-     &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@SystemConst.CountPerPage</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)</div>
+    <div class="myPager">
+        <span style="float: left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
+        &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@SystemConst.CountPerPage</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)
+    </div>
     <div class="modal modalFix" id="EditDIV">
     </div>
     <script type="text/javascript">
@@ -54,11 +85,11 @@
                 $("#aRemindSection").addClass("current");
             });
 
-            $("a.edit").click(function () {
+            @*$("a.known").click(function () {
                 var itemKey = $(this).attr("itemKey");
-                var url = '@Url.Action("Item")' + '?KeyGuid=' + itemKey + '&r=' + Math.random();
+                var url = '@Url.Action("SetRead")' + '?itemKey=' + itemKey + '&isUsingCompress= @isUsingCompress&returnUrl=@currentUrl';
                 $("#EditDIV").load(url);
-            });
+            });*@
         });
     </script>
 </div>

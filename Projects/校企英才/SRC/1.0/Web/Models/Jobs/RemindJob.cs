@@ -38,9 +38,10 @@ namespace XQYC.Web.Models.Jobs
         /// </summary>
         /// <returns></returns>
         /// <remarks>
-        /// 请在派生类中修改实体的以下两个属性
+        /// 请在派生类中修改实体的以下属性
         /// RemindCategory
         /// RemindTitle
+        /// RemindGuid
         /// </remarks>
         protected virtual RemindEntity CreateRemindEntity()
         {

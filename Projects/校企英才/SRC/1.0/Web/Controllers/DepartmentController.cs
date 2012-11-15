@@ -107,7 +107,7 @@ namespace XQYC.Web.Controllers
             }
 
             string returnUrl = RequestHelper.CurrentRequest.AppRelativeCurrentExecutionFilePath;
-            return RedirectToAction("Index", "Permission", new { ownerGuid = departmentGuid, ownerName = departmentName, ownerType = ExecuterTypes.Department, permissionMode = PermissionModes.Allow, returenUrl = returnUrl });
+            return RedirectToAction("Index", "Permission", new { ownerGuid = departmentGuid, ownerName = departmentName, ownerType = ExecutorTypes.Department, permissionMode = PermissionModes.Allow, returenUrl = returnUrl });
         }
 
     }

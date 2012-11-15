@@ -38,8 +38,7 @@ namespace XQYC.Web.Controllers
         /// <returns></returns>
         public ActionResult SystemTaskTest()
         {
-            JobContainer.ExecuteJobs(null);
-
+            JobContainer.DebugJobs();
             return View();
         }
 

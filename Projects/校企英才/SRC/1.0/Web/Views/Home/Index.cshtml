@@ -1,4 +1,5 @@
 ﻿@using XQYC.Business.Entity;
+@using HiLand.General.Entity；
 
 @{
     ViewBag.Title = "Home Page";
@@ -12,14 +13,18 @@
 
     List<LaborEntity> laborLastestList = (List<LaborEntity>)this.ViewData["laborLastestList"];
     int laborRegisterCount = (int)this.ViewData["laborRegisterCount"];
+
+    List<RemindEntity> remindList = (List<RemindEntity>)this.ViewData["remindList"];
+    int remindCount = (int)this.ViewData["remindCount"];
 }
 
 <div class="moduleStyle moduleStyle1">
-    <h5>提醒摘要
+    <h5>提醒摘要(您共有 @remindCount 条信息未读)
     </h5>
-    <div>1我是内容</div>
-    <div>1我是内容</div>
-    <div>1我是内容</div>
+    @foreach (RemindEntity item in remindList)
+    { 
+        <div> @string.Format("【{0}】{1}", item.CreateDate.ToShortDateString(),item.RemindTitle) </div>
+    }
 </div>
 @*<div class="moduleStyle moduleStyle1">
     <h5>个人信息摘要

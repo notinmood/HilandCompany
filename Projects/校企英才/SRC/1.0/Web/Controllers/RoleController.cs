@@ -119,7 +119,7 @@ namespace XQYC.Web.Controllers
             }
 
             string returnUrl = RequestHelper.CurrentRequest.AppRelativeCurrentExecutionFilePath;
-            return RedirectToAction("Index", "Permission", new { ownerGuid = targetKey, ownerName = targetName, ownerType = ExecuterTypes.Role, permissionMode = PermissionModes.Allow, returenUrl = returnUrl });
+            return RedirectToAction("Index", "Permission", new { ownerGuid = targetKey, ownerName = targetName, ownerType = ExecutorTypes.Role, permissionMode = PermissionModes.Allow, returenUrl = returnUrl });
         }
     }
 }

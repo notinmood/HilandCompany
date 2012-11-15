@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Web.Mvc;
+using HiLand.Framework.BusinessCore.BLL;
 using HiLand.Framework4.Permission.Attributes;
+using HiLand.General.BLL;
+using HiLand.General.Entity;
 using HiLand.Utility.Enums;
 using XQYC.Business.BLL;
 using XQYC.Business.Entity;
@@ -20,6 +23,14 @@ namespace XQYC.Web.Controllers
         public ActionResult Index()
         {
             ViewBag.Message = "欢迎使用校企英才数据库管理系统!";
+
+            //获取个人提醒信息
+            List<RemindEntity> remindList= RemindBLL.Instance.GetListUnRead(BusinessUserBLL.CurrentUserGuid,8);
+            this.ViewData["remindList"] = remindList;
+
+            //获取个人提醒信息的数量
+            int remindCount = RemindBLL.Instance.GetCountUnRead(BusinessUserBLL.CurrentUserGuid);
+            this.ViewData["remindCount"] = remindCount;
 
             //获取最新录入的劳务人员
             List<LaborEntity> laborLastestList= LaborBLL.Instance.GetListForLastest(8);

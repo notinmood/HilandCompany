@@ -29,7 +29,7 @@ namespace XQYC.Web.Controllers
         /// <param name="permissionMode"></param>
         /// <param name="returnUrl"></param>
         /// <returns></returns>
-        public ActionResult Index(string ownerGuid = "b378663f-c02a-4205-957d-e47ec331d535", string ownerName = "xieran", ExecuterTypes ownerType = ExecuterTypes.User, PermissionModes permissionMode = PermissionModes.Allow, string returnUrl = StringHelper.Empty)
+        public ActionResult Index(string ownerGuid = "b378663f-c02a-4205-957d-e47ec331d535", string ownerName = "xieran", ExecutorTypes ownerType = ExecutorTypes.User, PermissionModes permissionMode = PermissionModes.Allow, string returnUrl = StringHelper.Empty)
         {
             PermissionValidateConfig config = PermissionValidateConfig.GetConfig();
 
@@ -48,7 +48,7 @@ namespace XQYC.Web.Controllers
         /// <param name="isOnlyPlaceHolder"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Index(string ownerGuid, ExecuterTypes ownerType, PermissionModes permissionMode)
+        public ActionResult Index(string ownerGuid, ExecutorTypes ownerType, PermissionModes permissionMode)
         {
             NameValueCollection nvc = this.Request.Form;
             Dictionary<Guid, PermissionItem> changedPermissionItems = new Dictionary<Guid, PermissionItem>();
@@ -108,7 +108,7 @@ namespace XQYC.Web.Controllers
         /// <param name="permissionMode"></param>
         /// <param name="returnUrl"></param>
         /// <returns></returns>
-        public ActionResult Data(string ownerGuid = "b378663f-c02a-4205-957d-e47ec331d535", string ownerName = "xieran", ExecuterTypes ownerType = ExecuterTypes.User)
+        public ActionResult Data(string ownerGuid = "b378663f-c02a-4205-957d-e47ec331d535", string ownerName = "xieran", ExecutorTypes ownerType = ExecutorTypes.User)
         {
             PermissionDataConfig config = PermissionDataConfig.GetConfig();
 
@@ -125,7 +125,7 @@ namespace XQYC.Web.Controllers
         /// <param name="isOnlyPlaceHolder"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Data(string ownerGuid, ExecuterTypes ownerType)
+        public ActionResult Data(string ownerGuid, ExecutorTypes ownerType)
         {
             NameValueCollection nvc = this.Request.Form;
             Dictionary<Guid, PermissionItem> changedPermissionItems = new Dictionary<Guid, PermissionItem>();
