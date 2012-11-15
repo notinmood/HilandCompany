@@ -52,14 +52,14 @@
                 <td>
                     合同开始时间:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.ContractStartDate)
+                <td>@HtmlHelperEx.DateInput(Html, "ContractStartDate", Model.ContractStartDate.ToShortDateString())
                 </td>
             </tr>
             <tr>
                 <td>
                     合同结束时间:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.ContractStopDate)
+                <td>@HtmlHelperEx.DateInput(Html, "ContractStopDate", Model.ContractStopDate.ToShortDateString())
                 </td>
             </tr>
             <tr>

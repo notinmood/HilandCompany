@@ -41,17 +41,17 @@
     </div>
     <table width="98%" class="grid">
         <tr>
-            <th style="width: 150px">操作
+            <th style="width: 50px">操作
             </th>
-            <th style="width: 80px">合同名称
+            <th style="width: 80px">合同开始时间
             </th>
-            <th style="width: 100px">人员需求
+            <th style="width: 80px">合同结束时间
             </th>
             <th style="width: 50px">人员数量
             </th>
-            <th>合同开始时间
+            <th style="width: 150px">合同名称
             </th>
-            <th>合同结束时间
+            <th>人员需求
             </th>
         </tr>
         @foreach (EnterpriseContractEntity entity in Model)
@@ -61,15 +61,15 @@
                 <td>
                     @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("ContractItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.ContractGuid }) | 
                 </td>
-                <td>@entity.ContractTitle
-                </td>
-                <td>@entity.ContractLaborAddon
-                </td>
-                <td>@entity.ContractLaborCount
-                </td>
                 <td>@entity.ContractStartDate.ToShortDateString()
                 </td>
                 <td>@entity.ContractStopDate.ToShortDateString()
+                </td>
+                <td>@entity.ContractLaborCount
+                </td>
+                <td>@entity.ContractTitle
+                </td>
+                <td>@entity.ContractLaborAddon
                 </td>
             </tr>   
         }
