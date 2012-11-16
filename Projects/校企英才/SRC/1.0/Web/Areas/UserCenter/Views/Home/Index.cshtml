@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="@Url.Content("~/Content/adminStyle.css")" type="text/css" media="screen" />
     <link rel="stylesheet" href="@Url.Content("~/Content/invalid.css")" type="text/css" media="screen" />
     <link rel="stylesheet" href="@Url.Content("~/Content/notificationStyle.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/twitter-bootstrap/css/bootstrapExpress.css")" type="text/css" media="screen" />
     <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/simpla.jquery.configuration.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/facebox.js")"></script>
@@ -30,7 +31,7 @@
 
 </head>
 <body id="login">
-    <div id="login-wrapper" class="png_bg">
+    <div id="login-wrapper">
         <div id="login-top">
             <h1>
                 青岛校企英才人力资源开发有限公司</h1>
@@ -42,7 +43,7 @@
         <div id="login-content">
             @using (Html.BeginForm())
             {
-                <div class="notification information png_bg">
+                <div class="notification information">
                     <div>
                         @messageTip
                     </div>
@@ -62,7 +63,7 @@
                 <div class="clear">
                 </div>
                 <p>
-                    <input class="buttons" type="submit" style="width:80px;" value="登录" />
+                    <input class="btn btn-warning" type="submit" style="width:80px;" value="登录" />
                 </p>
             }
         </div>

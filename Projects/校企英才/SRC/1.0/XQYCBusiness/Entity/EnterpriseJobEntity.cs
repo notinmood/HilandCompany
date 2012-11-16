@@ -50,6 +50,13 @@ namespace XQYC.Business.Entity
             set { enterpriseName = value; }
         }
 
+        private string enterpriseAreaCode = String.Empty;
+        public string EnterpriseAreaCode
+        {
+            get { return enterpriseAreaCode; }
+            set { enterpriseAreaCode = value; }
+        }
+
         private string enterpriseAddress = String.Empty;
         public string EnterpriseAddress
         {

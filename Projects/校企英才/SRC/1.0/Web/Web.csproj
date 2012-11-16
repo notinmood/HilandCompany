@@ -185,6 +185,10 @@
   <ItemGroup>
     <Content Include="Content\adminStyle.css" />
     <Content Include="Content\Images\notepad.png" />
+    <Content Include="Content\manageImages\bg-menu-item-orange.png" />
+    <Content Include="Content\manageImages\bg-menu-item-orange1.png" />
+    <Content Include="Content\manageImages\grey-bg.jpg" />
+    <Content Include="Content\manageImages\stripe_orange_navy.jpg" />
     <Content Include="Content\twitter-bootstrap\css\bootstrap-responsive.css" />
     <Content Include="Content\twitter-bootstrap\css\bootstrap.css" />
     <Content Include="Content\twitter-bootstrap\css\bootstrapExpress.css" />
@@ -675,6 +679,9 @@
     <Content Include="Views\Labor\BatchSettleCost.cshtml" />
     <Content Include="Views\Enterprise\TrackerList.cshtml" />
     <Content Include="Views\Enterprise\TrackerItem.cshtml" />
+    <Content Include="Scripts\jquery-ui.min.js.map">
+      <DependentUpon>jquery-ui.js</DependentUpon>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

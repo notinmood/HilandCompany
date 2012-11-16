@@ -62,6 +62,7 @@ namespace XQYC.Business.DALCommon
 			    [EnterpriseJobTitle],
 			    [EnterpriseKey],
 			    [EnterpriseName],
+                [EnterpriseAreaCode],
 			    [EnterpriseAddress],
 			    [EnterpriseContackInfo],
 			    [EnterpriseDesc],
@@ -84,6 +85,7 @@ namespace XQYC.Business.DALCommon
 			    {0}EnterpriseJobTitle,
 			    {0}EnterpriseKey,
 			    {0}EnterpriseName,
+                {0}EnterpriseAreaCode,
 			    {0}EnterpriseAddress,
 			    {0}EnterpriseContackInfo,
 			    {0}EnterpriseDesc,
@@ -115,6 +117,7 @@ namespace XQYC.Business.DALCommon
 				    [EnterpriseJobTitle] = {0}EnterpriseJobTitle,
 				    [EnterpriseKey] = {0}EnterpriseKey,
 				    [EnterpriseName] = {0}EnterpriseName,
+                    [EnterpriseAreaCode] = {0}EnterpriseAreaCode,
 				    [EnterpriseAddress] = {0}EnterpriseAddress,
 				    [EnterpriseContackInfo] = {0}EnterpriseContackInfo,
 				    [EnterpriseDesc] = {0}EnterpriseDesc,
@@ -152,7 +155,8 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("EnterpriseJobTitle",entity.EnterpriseJobTitle?? String.Empty),
 			    GenerateParameter("EnterpriseKey",entity.EnterpriseKey?? String.Empty),
 			    GenerateParameter("EnterpriseName",entity.EnterpriseName?? String.Empty),
-			    GenerateParameter("EnterpriseAddress",entity.EnterpriseAddress?? String.Empty),
+			    GenerateParameter("EnterpriseAreaCode",entity.EnterpriseAreaCode?? String.Empty),
+                GenerateParameter("EnterpriseAddress",entity.EnterpriseAddress?? String.Empty),
 			    GenerateParameter("EnterpriseContackInfo",entity.EnterpriseContackInfo?? String.Empty),
 			    GenerateParameter("EnterpriseDesc",entity.EnterpriseDesc?? String.Empty),
 			    GenerateParameter("EnterpriseJobLaborCount",entity.EnterpriseJobLaborCount),
@@ -199,6 +203,10 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseName"))
                 {
                     entity.EnterpriseName = reader.GetString(reader.GetOrdinal("EnterpriseName"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseAreaCode"))
+                {
+                    entity.EnterpriseAreaCode = reader.GetString(reader.GetOrdinal("EnterpriseAreaCode"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseAddress"))
                 {

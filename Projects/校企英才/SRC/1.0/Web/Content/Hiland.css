@@ -221,17 +221,17 @@ table.overflowTable {
     margin: 0px 10px 10px 0px;
 }
 
-.moduleStyle div {
-    margin: 3px;
-}
+    .moduleStyle div {
+        margin: 3px;
+    }
 
-.moduleStyle h5 {
-    margin: 1px;
-    background-color: #B2D3F5;
-    height: 24px;
-}
+    .moduleStyle h5 {
+        margin: 1px;
+        background-color: #FFDD99;
+        height: 24px;
+    }
 
 .moduleStyle1 {
-    border: 1px solid #96C2F1;
-    background-color: #EFF7FF;
+            border: 1px solid #FFCC00;
+            background-color: #FFFFF7;
 }
