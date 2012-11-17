@@ -9,15 +9,26 @@
 @using HiLand.Utility.Data;
 @using XQYC.Business.Entity;
 @using XQYC.Web.Models;
+@using HiLand.Utility.Enums;
 
 @model PagedList<EmployeeEntity>
 @{
     ViewBag.Title = "Index";
-}
 
+    List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员名称,账号", ConditionFieldName = "UserNameCN,UserName", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "状态", ConditionFieldName = "UserStatus", ConditionType = typeof(UserStatuses) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属部门", ConditionFieldName = "UserFullPath", ConditionType = typeof(string) });
+}
 
 <h2>内部员工列表</h2>
 <div id="ItemListDIV">
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.HiQuery("QueryControl").QueryConditionList(queryItemList).IsDisplayBrackets(false).Render()
+        }
+    </div>
     <div class="OperateArea" id="OperateAreaContainer">
         <div class="btn-group">@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("Item", "Employee").Render(new { rel = "#EditDIV" })</div>
     </div>
