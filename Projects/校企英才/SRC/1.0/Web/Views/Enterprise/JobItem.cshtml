@@ -1,0 +1,78 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility4.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Control;
+@using HiLand.General.Entity;
+
+@model TrackerEntity
+@{
+    ViewBag.Title = "企业回访信息";
+    this.Layout = null;
+    
+    string enterpriseKey= this.ViewBag.EnterpriseKey;
+    if(Model.IsEmpty==false)
+    {
+        enterpriseKey = Model.RelativeKey;
+    }
+}
+<div id="formContainer">
+<style type="text/css">
+    #formContainer table td
+    {
+        
+    }
+</style>
+    @using (Html.BeginForm())
+    { 
+        <table>
+            <tr>
+                <td style="width: 150px;">
+                    回访信息:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.TrackerTitle)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    回访人员:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.TrackerUserKey)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    回访时间:
+                </td>
+                <td>@HtmlHelperEx.DateInput(Html, "TrackerTime", Model.TrackerTime.ToShortDateString())
+                </td>
+            </tr>
+            <tr>
+                <td>回访状态:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.CanUsable, EnumEx.BuildSelectItemList<Logics>())
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    回访描述:
+                </td>
+                <td>@Html.TextAreaFor(entity => entity.TrackerDesc)
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" id="EnterpriseKey" value="@enterpriseKey" />
+        <input type="hidden" id="ItemKey" value="@Model.TrackerGuid" />
+        <input type="button" id="submitButton" value="保存" class="btn btn-warning" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form", '@Url.Action("TrackerList", new { itemKey= enterpriseKey })');
+        });
+    });
+</script>

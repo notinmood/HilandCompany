@@ -682,6 +682,8 @@
     <Content Include="Scripts\jquery-ui.min.js.map">
       <DependentUpon>jquery-ui.js</DependentUpon>
     </Content>
+    <Content Include="Views\Enterprise\JobList.cshtml" />
+    <Content Include="Views\Enterprise\JobItem.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

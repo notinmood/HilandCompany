@@ -156,92 +156,99 @@ namespace XQYC.Web.Controllers
         }
         #endregion
 
-        
-        //    #region 招聘简章
-        //public ActionResult JobsList(string itemKey, string itemName = StringHelper.Empty)
-        //{
-        //    List<TrackerEntity> trackerList = null;
 
-        //    if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
-        //    {
-        //        Guid itemGuid = GuidHelper.TryConvert(itemKey);
-        //        string whereClause = string.Format(" RelativeKey='{0}' ", itemGuid.ToString());
-        //        trackerList = TrackerBLL.Instance.GetList(whereClause);
-        //    }
+        #region 招聘简章
+        public ActionResult JobList(string itemKey, string itemName = StringHelper.Empty)
+        {
+            List<EnterpriseJobEntity> entityList = null;
 
-        //    if (string.IsNullOrWhiteSpace(itemName))
-        //    {
-        //        itemName = EnterpriseBLL.Instance.Get(itemKey).CompanyName;
-        //    }
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                Guid itemGuid = GuidHelper.TryConvert(itemKey);
+                string whereClause = string.Format(" EnterpriseKey='{0}' ", itemGuid.ToString());
+                entityList = EnterpriseJobBLL.Instance.GetList(whereClause);
+            }
 
-        //    this.ViewBag.EnterpriseKey = itemKey;
-        //    this.ViewBag.EnterpriseName = itemName;
-        //    return View(trackerList);
-        //}
+            if (string.IsNullOrWhiteSpace(itemName))
+            {
+                itemName = EnterpriseBLL.Instance.Get(itemKey).CompanyName;
+            }
 
-        //public ActionResult TrackerItem(string enterpriseKey, string itemKey = StringHelper.Empty)
-        //{
-        //    TrackerEntity entity = TrackerEntity.Empty;
-        //    if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
-        //    {
-        //        entity = TrackerBLL.Instance.Get(itemKey);
-        //    }
+            this.ViewBag.EnterpriseKey = itemKey;
+            this.ViewBag.EnterpriseName = itemName;
+            return View(entityList);
+        }
 
-        //    this.ViewBag.EnterpriseKey = enterpriseKey;
+        public ActionResult JobItem(string enterpriseKey, string itemKey = StringHelper.Empty)
+        {
+            EnterpriseJobEntity entity = EnterpriseJobEntity.Empty;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                entity = EnterpriseJobBLL.Instance.Get(itemKey);
+            }
 
-        //    return View(entity);
-        //}
+            this.ViewBag.EnterpriseKey = enterpriseKey;
 
-        //[HttpPost]
-        //public ActionResult TrackerItem(string enterpriseKey, string itemKey, TrackerEntity originalEntity)
-        //{
-        //    bool isSuccessful = false;
-        //    string displayMessage = string.Empty;
-        //    TrackerEntity targetEntity = null;
-        //    if (GuidHelper.IsInvalidOrEmpty(itemKey) == true)
-        //    {
-        //        targetEntity = new TrackerEntity();
+            return View(entity);
+        }
 
-        //        targetEntity.RelativeKey = enterpriseKey;
-        //        targetEntity.TrackerCategory = "EnterpriseTracker";
-        //        targetEntity.CreateTime = DateTime.Now;
-        //        targetEntity.CreateUserKey = BusinessUserBLL.CurrentUser.UserGuid.ToString();
+        [HttpPost]
+        public ActionResult JobItem(string enterpriseKey, string itemKey, EnterpriseJobEntity originalEntity)
+        {
+            bool isSuccessful = false;
+            string displayMessage = string.Empty;
+            EnterpriseJobEntity targetEntity = null;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == true)
+            {
+                targetEntity = new EnterpriseJobEntity();
 
-        //        SetTargetContractEntityValue(originalEntity, ref  targetEntity);
+                targetEntity.EnterpriseKey = enterpriseKey;
+                targetEntity.EnterpriseName = EnterpriseBLL.Instance.Get(enterpriseKey).CompanyNameShort;
+                targetEntity.CreateTime = DateTime.Now;
+                targetEntity.CreateUserKey = BusinessUserBLL.CurrentUser.UserGuid.ToString();
 
-        //        isSuccessful = TrackerBLL.Instance.Create(targetEntity);
+                SetTargetEnterpriseJobEntityValue(originalEntity, ref  targetEntity);
 
-        //    }
-        //    else
-        //    {
-        //        targetEntity = TrackerBLL.Instance.Get(itemKey);
+                isSuccessful = EnterpriseJobBLL.Instance.Create(targetEntity);
+            }
+            else
+            {
+                targetEntity = EnterpriseJobBLL.Instance.Get(itemKey);
 
-        //        SetTargetContractEntityValue(originalEntity, ref  targetEntity);
-        //        isSuccessful = TrackerBLL.Instance.Update(targetEntity);
-        //    }
+                SetTargetEnterpriseJobEntityValue(originalEntity, ref  targetEntity);
+                isSuccessful = EnterpriseJobBLL.Instance.Update(targetEntity);
+            }
 
-        //    if (isSuccessful == true)
-        //    {
-        //        displayMessage = "数据保存成功";
-        //    }
-        //    else
-        //    {
-        //        displayMessage = "数据保存失败";
-        //    }
+            if (isSuccessful == true)
+            {
+                displayMessage = "数据保存成功";
+            }
+            else
+            {
+                displayMessage = "数据保存失败";
+            }
 
-        //    return Json(new LogicStatusInfo(isSuccessful, displayMessage));
-        //}
+            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+        }
 
-        //private void SetTargetContractEntityValue(TrackerEntity originalEntity, ref TrackerEntity targetEntity)
-        //{
-        //    targetEntity.CanUsable = originalEntity.CanUsable;
-        //    targetEntity.TrackerDesc = originalEntity.TrackerDesc;
-        //    targetEntity.TrackerTime = originalEntity.TrackerTime;
-        //    targetEntity.TrackerTitle = originalEntity.TrackerTitle;
-        //    targetEntity.TrackerType = originalEntity.TrackerType;
-        //    targetEntity.TrackerUserKey = originalEntity.TrackerUserKey;
-        //}
-        //#endregion
+        private void SetTargetEnterpriseJobEntityValue(EnterpriseJobEntity originalEntity, ref EnterpriseJobEntity targetEntity)
+        {
+            targetEntity.CanUsable = originalEntity.CanUsable;
+            targetEntity.EnterpriseAddress = originalEntity.EnterpriseAddress;
+            targetEntity.EnterpriseAreaCode = originalEntity.EnterpriseAreaCode;
+            targetEntity.EnterpriseContackInfo = originalEntity.EnterpriseContackInfo;
+            targetEntity.EnterpriseDesc = originalEntity.EnterpriseDesc;
+            targetEntity.EnterpriseJobDemand = originalEntity.EnterpriseJobDemand;
+            targetEntity.EnterpriseJobDesc = originalEntity.EnterpriseJobDesc;
+            targetEntity.EnterpriseJobLaborCount = originalEntity.EnterpriseJobLaborCount;
+            targetEntity.EnterpriseJobOther = originalEntity.EnterpriseJobOther;
+            targetEntity.EnterpriseJobStation = originalEntity.EnterpriseJobStation;
+            targetEntity.EnterpriseJobTitle = originalEntity.EnterpriseJobTitle;
+            targetEntity.EnterpriseJobTreadment = originalEntity.EnterpriseJobTreadment;
+            targetEntity.EnterpriseJobType = originalEntity.EnterpriseJobType;
+            targetEntity.EnterpriseJobStatus = originalEntity.EnterpriseJobStatus;
+        }
+        #endregion
 
         #region 回访跟踪
         public ActionResult TrackerList(string itemKey, string itemName = StringHelper.Empty)
