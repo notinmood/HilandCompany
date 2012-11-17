@@ -17,9 +17,9 @@
 
     string enterpriseKey = this.ViewBag.EnterpriseKey;
     string enterpriseName = this.ViewBag.EnterpriseName;
-    if(string.IsNullOrWhiteSpace( enterpriseName))
+    if (string.IsNullOrWhiteSpace(enterpriseName))
     {
-        enterpriseName= EnterpriseBLL.Instance.Get(enterpriseKey).CompanyName;
+        enterpriseName = EnterpriseBLL.Instance.Get(enterpriseKey).CompanyName;
     }
 
     string returnUrl = RequestHelper.GetValue("returnUrl");
@@ -47,6 +47,8 @@
             </th>
             <th style="width: 80px">合同结束时间
             </th>
+            <th style="width: 80px">合同状态
+            </th>
             <th style="width: 50px">人员数量
             </th>
             <th style="width: 150px">合同名称
@@ -59,11 +61,13 @@
             string entityGuid = entity.ContractGuid.ToString();
             <tr>
                 <td>
-                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("ContractItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.ContractGuid }) | 
+                    @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("ContractItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.ContractGuid }) | 
                 </td>
                 <td>@entity.ContractStartDate.ToShortDateString()
                 </td>
                 <td>@entity.ContractStopDate.ToShortDateString()
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.ContractStatus)
                 </td>
                 <td>@entity.ContractLaborCount
                 </td>

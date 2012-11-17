@@ -38,7 +38,9 @@ namespace XQYC.Business.DALCommon
             get { return "ContractGuid"; }
         }
 
-        //TODO:此存储过程尚未实现
+        /// <summary>
+        /// 分页存储过程的名字
+        /// </summary>
         protected override string PagingSPName
         {
             get { return "usp_XQYC_EnterpriseContract_SelectPaging"; }

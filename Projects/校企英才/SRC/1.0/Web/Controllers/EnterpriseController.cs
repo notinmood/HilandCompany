@@ -250,6 +250,44 @@ namespace XQYC.Web.Controllers
         }
         #endregion
 
+        #region 摊位预定查询
+        public ActionResult BoothQueryList(int id = 1)
+        {
+            //1.如果是点击查询控件的查询按钮，那么将查询条件作为QueryString附加在地址后面（为了在客户端保存查询条件的状体），重新发起一次请求。
+            if (this.Request.HttpMethod.ToLower().Contains("post"))
+            {
+                string targetUrlWithoutParam = Url.Action("BoothQueryList", new { id = 1 });
+                string targetUrl = QueryControlHelper.GetNewQueryUrl("QueryControl", targetUrlWithoutParam);
+                return Redirect(targetUrl);
+            }
+
+            //2.通常情形下走get查询
+            int pageIndex = id;
+            int pageSize = SystemConst.CountPerPage;
+            int startIndex = (pageIndex - 1) * pageSize + 1;
+            string whereClause = string.Format(" ForeOrderCategory='{0}' ", "Booth");
+
+            whereClause += " AND " + QueryControlHelper.GetQueryCondition("QueryControl");
+
+            string orderClause = "ForeOrderID DESC";
+
+            PagedEntityCollection<ForeOrderEntity> entityList = ForeOrderBLL.Instance.GetPagedCollection(startIndex, pageSize, whereClause, orderClause);
+            PagedList<ForeOrderEntity> pagedExList = new PagedList<ForeOrderEntity>(entityList.Records, entityList.PageIndex, entityList.PageSize, entityList.TotalCount);
+
+            bool isExportExcel = RequestHelper.GetValue("exportExcel", false);
+
+            return View(pagedExList);
+            //if (isExportExcel == true)
+            //{
+            //    return LaborContractListToExcelFile(entityList.Records);
+            //}
+            //else
+            //{
+            //    return View(pagedExList);
+            //}
+        }
+        #endregion
+
         #region 招聘简章
         public ActionResult JobList(string itemKey, string itemName = StringHelper.Empty)
         {
@@ -520,6 +558,36 @@ namespace XQYC.Web.Controllers
             targetEntity.ContractStopDate = originalEntity.ContractStopDate;
             targetEntity.ContractTitle = originalEntity.ContractTitle;
             targetEntity.ContractStatus = originalEntity.ContractStatus;
+        }
+        #endregion
+
+        #region 企业合同查询
+        public ActionResult ContractQueryList(int id = 1)
+        {
+            //1.如果是点击查询控件的查询按钮，那么将查询条件作为QueryString附加在地址后面（为了在客户端保存查询条件的状体），重新发起一次请求。
+            if (this.Request.HttpMethod.ToLower().Contains("post"))
+            {
+                string targetUrlWithoutParam = Url.Action("ContractQueryList", new { id = 1 });
+                string targetUrl = QueryControlHelper.GetNewQueryUrl("QueryControl", targetUrlWithoutParam);
+                return Redirect(targetUrl);
+            }
+
+            //2.通常情形下走get查询
+            int pageIndex = id;
+            int pageSize = SystemConst.CountPerPage;
+            int startIndex = (pageIndex - 1) * pageSize + 1;
+            string whereClause = string.Format(" 1=1 ");
+
+            whereClause += " AND " + QueryControlHelper.GetQueryCondition("QueryControl");
+
+            string orderClause = "ContractID DESC";
+
+            PagedEntityCollection<EnterpriseContractEntity> entityList = EnterpriseContractBLL.Instance.GetPagedCollection(startIndex, pageSize, whereClause, orderClause);
+            PagedList<EnterpriseContractEntity> pagedExList = new PagedList<EnterpriseContractEntity>(entityList.Records, entityList.PageIndex, entityList.PageSize, entityList.TotalCount);
+
+            bool isExportExcel = RequestHelper.GetValue("exportExcel", false);
+
+            return View(pagedExList);
         }
         #endregion
 
