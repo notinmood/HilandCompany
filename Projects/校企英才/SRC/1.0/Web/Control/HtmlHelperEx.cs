@@ -430,16 +430,11 @@ namespace XQYC.Web.Control
         }
 
         /// <summary>
-        /// 地区选择下拉列表
+        /// 获取目前使用的地区列表
         /// </summary>
-        /// <param name="html"></param>
-        /// <param name="name"></param>
-        /// <param name="selectedValue"></param>
         /// <returns></returns>
-        /// <remarks>目前仅提供青岛各辖区信息</remarks>
-        public static IHtmlString XQYCDDLArea(System.Web.Mvc.HtmlHelper html, string name, string selectedValue = StringHelper.Empty)
+        public static List<AreaEntity> XQYCItemsArea()
         {
-            List<SelectListItem> itemList = new List<SelectListItem>();
             List<AreaEntity> entityList = AreaBLL.Instance.GetListByParentCode("3702");
 
             //添加一个“其他”地区
@@ -450,6 +445,22 @@ namespace XQYC.Web.Control
                 areaEntity.AreaName = "其他";
                 entityList.Add(areaEntity);
             }
+
+            return entityList;
+        }
+
+        /// <summary>
+        /// 地区选择下拉列表
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="name"></param>
+        /// <param name="selectedValue"></param>
+        /// <returns></returns>
+        /// <remarks>目前仅提供青岛各辖区信息</remarks>
+        public static IHtmlString XQYCDDLArea(System.Web.Mvc.HtmlHelper html, string name, string selectedValue = StringHelper.Empty)
+        {
+            List<SelectListItem> itemList = new List<SelectListItem>();
+            List<AreaEntity> entityList = XQYCItemsArea();
 
             for (int i = 0; i < entityList.Count; i++)
             {
