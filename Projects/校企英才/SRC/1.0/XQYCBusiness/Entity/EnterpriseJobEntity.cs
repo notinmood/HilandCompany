@@ -148,7 +148,7 @@ namespace XQYC.Business.Entity
             set { createUserKey = value; }
         }
 
-        private Logics canUsable;
+        private Logics canUsable= Logics.True;
         public Logics CanUsable
         {
             get { return canUsable; }

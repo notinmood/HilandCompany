@@ -687,6 +687,8 @@
     </Content>
     <Content Include="Views\Enterprise\JobList.cshtml" />
     <Content Include="Views\Enterprise\JobItem.cshtml" />
+    <Content Include="Views\Enterprise\BoothList.cshtml" />
+    <Content Include="Views\Enterprise\BoothItem.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

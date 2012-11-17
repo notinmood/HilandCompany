@@ -7,8 +7,9 @@
 @using XQYC.Business.Entity;
 @using XQYC.Web.Control;
 @using HiLand.General.Entity;
+@using HiLand.General;
 
-@model EnterpriseJobEntity
+@model ForeOrderEntity
 @{
     ViewBag.Title = "企业招工简章信息";
     this.Layout = null;
@@ -16,7 +17,7 @@
     string enterpriseKey= this.ViewBag.EnterpriseKey;
     if(Model.IsEmpty==false)
     {
-        enterpriseKey = Model.EnterpriseKey;
+        enterpriseKey = Model.OwnerKey;
     }
 }
 <div id="formContainer">
@@ -31,62 +32,56 @@
         <table>
             <tr>
                 <td style="width: 150px;">
-                    简章标题:
+                    预定日期:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.EnterpriseJobTitle)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    简章状态:
-                </td>
-                <td>@Html.DropDownListFor(entity =>entity.CanUsable, EnumEx.BuildSelectItemList<Logics>())
+                <td>@HtmlHelperEx.DateInput(Html, "ForeOrderDate", Model.ForeOrderDate.ToShortDateString())
                 </td>
             </tr>
             <tr>
                 <td>
-                    联系方式:
+                    摊位状态:
                 </td>
-                <td>@Html.TextBoxFor(entity =>entity.EnterpriseContackInfo)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    岗位说明:
-                </td>
-                <td>@Html.TextBoxFor(entity =>entity.EnterpriseJobStation)
+                <td>@Html.DropDownListFor(entity =>entity.ForeOrderStatus, EnumEx.BuildSelectItemList<ForeOrderStatuses>())
                 </td>
             </tr>
             <tr>
                 <td>
-                    企业简介:
+                    单价:
                 </td>
-                <td>@Html.TextAreaFor(entity => entity.EnterpriseDesc)
-                </td>
-            </tr>
-            <tr>
-                <td>岗位要求:
-                </td>
-                <td>@Html.TextAreaFor(entity =>entity.EnterpriseJobDemand)
+                <td>@Html.TextBoxFor(entity => entity.ForeOrderUnitFee)
                 </td>
             </tr>
             <tr>
                 <td>
-                    待遇说明:
+                    使用数量:
                 </td>
-                <td>@Html.TextAreaFor(entity => entity.EnterpriseJobTreadment)
+                <td>@Html.TextBoxFor(entity =>entity.ForeOrderAmount)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    付款状态:
+                </td>
+                <td>@Html.DropDownListFor(entity =>entity.ForeOrderPaid, EnumEx.BuildSelectItemList<Logics>())
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    摊位说明:
+                </td>
+                <td>@Html.TextAreaFor(entity => entity.ForeOrderTitle)
                 </td>
             </tr>
         </table>
         <input type="hidden" id="EnterpriseKey" value="@enterpriseKey" />
-        <input type="hidden" id="ItemKey" value="@Model.EnterpriseJobGuid" />
+        <input type="hidden" id="ItemKey" value="@Model.ForeOrderGuid" />
         <input type="button" id="submitButton" value="保存" class="btn btn-warning" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
     }
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#submitButton").click(function () {
-            submitAndRedirect("#formContainer form", '@Url.Action("JobList", new { itemKey= enterpriseKey })');
+            submitAndRedirect("#formContainer form", '@Url.Action("BoothList", new { itemKey= enterpriseKey })');
         });
     });
 </script>

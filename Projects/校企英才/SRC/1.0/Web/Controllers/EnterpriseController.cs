@@ -156,6 +156,99 @@ namespace XQYC.Web.Controllers
         }
         #endregion
 
+        #region 摊位预定
+        public ActionResult BoothList(string itemKey, string itemName = StringHelper.Empty)
+        {
+            List<ForeOrderEntity> trackerList = null;
+
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                Guid itemGuid = GuidHelper.TryConvert(itemKey);
+                string whereClause = string.Format(" OwnerKey='{0}' ", itemGuid.ToString());
+                trackerList = ForeOrderBLL.Instance.GetList(whereClause);
+            }
+
+            if (string.IsNullOrWhiteSpace(itemName))
+            {
+                itemName = EnterpriseBLL.Instance.Get(itemKey).CompanyName;
+            }
+
+            this.ViewBag.EnterpriseKey = itemKey;
+            this.ViewBag.EnterpriseName = itemName;
+            return View(trackerList);
+        }
+
+        public ActionResult BoothItem(string enterpriseKey, string itemKey = StringHelper.Empty)
+        {
+            ForeOrderEntity entity = ForeOrderEntity.Empty;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                entity = ForeOrderBLL.Instance.Get(itemKey);
+            }
+
+            this.ViewBag.EnterpriseKey = enterpriseKey;
+
+            return View(entity);
+        }
+
+        [HttpPost]
+        public ActionResult BoothItem(string enterpriseKey, string itemKey, ForeOrderEntity originalEntity)
+        {
+            bool isSuccessful = false;
+            string displayMessage = string.Empty;
+            ForeOrderEntity targetEntity = null;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == true)
+            {
+                targetEntity = new ForeOrderEntity();
+
+                targetEntity.OwnerKey = enterpriseKey;
+                targetEntity.OwnerName = EnterpriseBLL.Instance.Get(enterpriseKey).CompanyNameShort;
+                targetEntity.ForeOrderCategory = "Booth";
+                targetEntity.RelativeKey = GuidHelper.EmptyString;
+                targetEntity.RelativeName = "摊位";
+                targetEntity.CreateTime = DateTime.Now;
+                targetEntity.CreateUserKey = BusinessUserBLL.CurrentUser.UserGuid.ToString();
+
+                SetTargetForeOrderEntityValue(originalEntity, ref  targetEntity);
+
+                isSuccessful = ForeOrderBLL.Instance.Create(targetEntity);
+            }
+            else
+            {
+                targetEntity = ForeOrderBLL.Instance.Get(itemKey);
+
+                SetTargetForeOrderEntityValue(originalEntity, ref  targetEntity);
+                isSuccessful = ForeOrderBLL.Instance.Update(targetEntity);
+            }
+
+            if (isSuccessful == true)
+            {
+                displayMessage = "数据保存成功";
+            }
+            else
+            {
+                displayMessage = "数据保存失败";
+            }
+
+            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+        }
+
+        private void SetTargetForeOrderEntityValue(ForeOrderEntity originalEntity, ref ForeOrderEntity targetEntity)
+        {
+            targetEntity.CanUsable = originalEntity.CanUsable;
+            targetEntity.ForeOrderAmount = originalEntity.ForeOrderAmount;
+            targetEntity.ForeOrderDate = originalEntity.ForeOrderDate;
+            targetEntity.ForeOrderDesc = originalEntity.ForeOrderDesc;
+            targetEntity.ForeOrderMemo1 = originalEntity.ForeOrderMemo1;
+            targetEntity.ForeOrderMemo2 = originalEntity.ForeOrderMemo2;
+
+            targetEntity.ForeOrderPaid = originalEntity.ForeOrderPaid;
+            targetEntity.ForeOrderStatus = originalEntity.ForeOrderStatus;
+            targetEntity.ForeOrderTitle = originalEntity.ForeOrderTitle;
+            targetEntity.ForeOrderType = originalEntity.ForeOrderType;
+            targetEntity.ForeOrderUnitFee = originalEntity.ForeOrderUnitFee;
+        }
+        #endregion
 
         #region 招聘简章
         public ActionResult JobList(string itemKey, string itemName = StringHelper.Empty)
@@ -247,6 +340,12 @@ namespace XQYC.Web.Controllers
             targetEntity.EnterpriseJobTreadment = originalEntity.EnterpriseJobTreadment;
             targetEntity.EnterpriseJobType = originalEntity.EnterpriseJobType;
             targetEntity.EnterpriseJobStatus = originalEntity.EnterpriseJobStatus;
+        }
+
+        public ActionResult JobExport(string itemKey)
+        {
+            //TODO:xieran20121117 导出成word文档
+            return View();
         }
         #endregion
 

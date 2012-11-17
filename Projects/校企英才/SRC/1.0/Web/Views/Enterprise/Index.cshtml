@@ -44,7 +44,7 @@
     <div class="dataContainer">
         <table class="grid">
             <tr>
-                <th style="width: 300px">操作
+                <th style="width: 330px">操作
                 </th>
                 <th style="width: 220px">企业名称
                 </th>
@@ -66,6 +66,7 @@
                         @Html.HiA().CssClassName("service").Value("<i class=\"icon-random\"></i>合作方式").ACA("ServiceList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress  }).Render()
                         @Html.HiA().CssClassName("tracker").Value("<i class=\"icon-time\"></i>回访").ACA("TrackerList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress  }).Render() 
                         @Html.HiA().CssClassName("job").Value("<i class=\"icon-book\"></i>简章").ACA("JobList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress  }).Render() 
+                        @Html.HiA().CssClassName("booth").Value("<i class=\"icon-road\"></i>摊位").ACA("BoothList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress  }).Render() 
                     </td>
                     <td>@entity.CompanyName
                     </td>

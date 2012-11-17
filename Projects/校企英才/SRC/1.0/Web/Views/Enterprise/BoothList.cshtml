@@ -11,7 +11,7 @@
 @using HiLand.General.BLL;
 @using HiLand.Utility.Web;
 
-@model List<EnterpriseJobEntity>
+@model List<ForeOrderEntity>
 @{
     ViewBag.Title = "Index";
 
@@ -34,39 +34,46 @@
     }
 }
 
-<h2>企业招工简章列表(@enterpriseName)</h2>
+<h2>企业预定摊位列表(@enterpriseName)</h2>
 <div id="ItemListDIV">
     <div class="OperateArea" id="OperateAreaContainer">
-        <div class="btn-group"><a href="@returnUrl" class="btn btn-warning" title="返回列表页"><i class="icon-share icon-white"></i>返回</a>@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("JobItem", "Enterprise").Render(new { rel = "#EditDIV" })</div>
+        <div class="btn-group"><a href="@returnUrl" class="btn btn-warning" title="返回列表页"><i class="icon-share icon-white"></i>返回</a>@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("BoothItem", "Enterprise").Render(new { rel = "#EditDIV" })</div>
     </div>
     <table width="98%" class="grid">
         <tr>
             <th style="width: 150px">操作
             </th>
-            <th style="width: 80px">创建时间
+            <th style="width: 80px">预定时间
             </th>
-            <th style="width: 80px">简章状态
+            <th style="width: 80px">状态
             </th>
-            <th style="width: 150px">简章标题
+            <th style="width: 80px">摊位数量
             </th>
-            <th>岗位说明
+            <th style="width: 150px">总费用
+            </th>
+            <th style="width: 150px">付款状态
+            </th>
+            <th>摊位说明
             </th>
         </tr>
-        @foreach (EnterpriseJobEntity entity in Model)
+        @foreach (ForeOrderEntity entity in Model)
         {
-            string entityGuid = entity.EnterpriseJobGuid.ToString();
+            string entityGuid = entity.ForeOrderGuid.ToString();
             <tr>
                 <td>
-                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("JobItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseJobGuid }) | 
-                    @Html.HiA().CssClassName("modalInput export " + @entityGuid).Value("<i class=\"icon-download-alt\"></i>导出打印").ACA("JobExport", "Enterprise").RouteValue(new {itemKey = @entity.EnterpriseJobGuid }).Render()
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("BoothItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = entityGuid })
                 </td>
-                <td>@entity.CreateTime.ToShortDateString()
+                <td>@entity.ForeOrderDate.ToShortDateString()
                 </td>
-                <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
+                <td>@EnumHelper.GetDisplayValue(entity.ForeOrderStatus)
                 </td>
-                <td>@entity.EnterpriseJobTitle
+                <td>@entity.ForeOrderAmount
                 </td>
-                <td>@entity.EnterpriseJobStation
+                <td>@entity.ForeOrderTotalFee.ToString("0.00")
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.ForeOrderPaid)
+                </td>
+                <td>@entity.ForeOrderTitle
                 </td>
             </tr>   
         }
@@ -97,14 +104,14 @@
             });
 
             $("#newDisplayA").click(function () {
-                var url = '@Url.Action("JobItem")?r=' + Math.random() + '&itemKey=&enterpriseKey=@enterpriseKey';
+                var url = '@Url.Action("BoothItem")?r=' + Math.random() + '&itemKey=&enterpriseKey=@enterpriseKey';
                 $("#EditDIV").load(url);
             });
 
             $("a.edit").click(function () {
                 var itemKey = $(this).attr("itemKey");
                 $("#currentPopupItemGuid").val(itemKey);
-                var url = '@Url.Action("JobItem")?r=' + Math.random() + '&itemKey=' + itemKey + '&enterpriseKey=@enterpriseKey';
+                var url = '@Url.Action("BoothItem")?r=' + Math.random() + '&itemKey=' + itemKey + '&enterpriseKey=@enterpriseKey';
                 $("#EditDIV").load(url);
             });
         });
