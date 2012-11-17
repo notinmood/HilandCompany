@@ -30,14 +30,14 @@ h1            { font-family: Calibri, Helvetica, Arial, sans-serif; font-size: 3
 				  position: absolute; top: -1000px;  /* Remove this line and delete the logo (in the HTML) if you don't want an image as a logo */
 				}
 				
-h2            { font-size: 26px; padding: 0 0 10px 0; }
+h2            { font-size: 26px; padding: 8px 0 10px 0; }
 h3            { font-size: 17px; padding: 0 0 10px 0; }
 h4            { font-size: 16px; padding: 0 0 5px 0; }
 h5            { font-size: 14px; padding: 0 0 5px 0; }
 h6            { font-size: 12px; padding: 0 0 5px 0; }
 
 
-a              { color: #57a000; text-decoration: none; }
+a              { color: #FAA732; text-decoration: none; }
 a:hover     { color: #000; }
 a:active     { color: #777; }
 a:focus     { outline: 1px; }
@@ -232,6 +232,13 @@ a.remove-link:hover {
                 /*background:url(manageImages/grey-bg.jpg);
                 min-height:560px;*/
                 }
+#main-content #enterpriseCulture {
+    margin:0 -30px 0 -30px;
+    padding:5px 20px 0px 0px;
+    background:url(manageImages/bg-top-orange.gif);
+    text-align:right;
+    height:55px;
+}
 
 .column-left {
                 width: 48%;
@@ -322,7 +329,7 @@ ul.content-box-tabs li a {
                 }
 
 ul.content-box-tabs li a:hover {
-                color: #57a000;
+                color: #FAA732;
                 }              
                 
 ul.content-box-tabs li a.current {
@@ -435,7 +442,7 @@ ul.content-box-tabs li a.current {
                 }
 				
 .shortcut-button span:hover {
-				color: #57a000; 
+				color: #FAA732; 
                 }
 
 ul.shortcut-buttons-set li {
