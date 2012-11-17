@@ -29,7 +29,15 @@ namespace XQYC.Web.Areas.InformationBrokerConsole.Controllers
             string whereClause = " 1=1 ";
 
             //--数据权限----------------------------------------------------------------------
-            whereClause += string.Format(" AND [InformationBrokerUserGuid]= '{0}' ", BusinessUserBLL.CurrentUser.UserGuid);
+            string informationBrokerGuid = BusinessUserBLL.CurrentUser.EnterpriseKey;
+            if (string.IsNullOrWhiteSpace(informationBrokerGuid))
+            {
+                whereClause += " AND 1=2 ";
+            }
+            else
+            {
+                whereClause += string.Format(" AND [InformationBrokerUserGuid]= '{0}' ", informationBrokerGuid);
+            }
             //--end--------------------------------------------------------------------------
 
 

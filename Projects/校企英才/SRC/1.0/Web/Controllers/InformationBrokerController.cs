@@ -195,7 +195,7 @@ namespace XQYC.Web.Controllers
                 targetUser = new BusinessUser();
 
                 targetUser.EnterpriseKey = enterpriseKey;
-                targetUser.UserType = UserTypes.EnterpriseUser;
+                targetUser.UserType = UserTypes.Broker;
                 targetUser.Password = SystemConst.InitialUserPassword;
 
                 SetTargetUserEntityValue(originalEntity, ref  targetUser);
