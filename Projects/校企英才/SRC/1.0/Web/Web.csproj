@@ -657,6 +657,7 @@
     <Content Include="Areas\APIs\Views\Web.config" />
     <Content Include="Content\twitter-bootstrap\js\application.js.bak" />
     <Content Include="Content\twitter-bootstrap\js\README.md" />
+    <Content Include="DownFiles\Templet\企业招聘简章模板.docx" />
     <None Include="Properties\PublishProfiles\profile1.pubxml" />
     <Content Include="Views\Permission\Data.cshtml" />
     <Content Include="Views\FreePermission\RoleSelector.cshtml" />

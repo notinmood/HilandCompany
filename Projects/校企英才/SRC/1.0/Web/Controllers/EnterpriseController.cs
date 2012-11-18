@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Web.Mvc;
 using HiLand.Framework.BusinessCore;
 using HiLand.Framework.BusinessCore.BLL;
@@ -9,9 +11,11 @@ using HiLand.General.Entity;
 using HiLand.Utility.Data;
 using HiLand.Utility.Entity;
 using HiLand.Utility.Enums;
+using HiLand.Utility.IO;
 using HiLand.Utility.Paging;
 using HiLand.Utility.Web;
 using HiLand.Utility4.MVC.Controls;
+using HiLand.Utility4.Office;
 using Webdiyer.WebControls.Mvc;
 using XQYC.Business.BLL;
 using XQYC.Business.Entity;
@@ -436,8 +440,41 @@ namespace XQYC.Web.Controllers
 
         public ActionResult JobExport(string itemKey)
         {
-            //TODO:xieran20121117 导出成word文档
-            return View();
+            //1.读取模板
+            string fileFullPath = Server.MapPath("~/DownFiles/Templet/企业招聘简章模板.docx");
+            string targetFullPath = Server.MapPath("~/DownFiles/Templet/Jobs/企业招聘简章模板-"+ GuidHelper.NewGuidString() +".docx");
+            System.IO.File.Copy(fileFullPath,targetFullPath,true);
+            
+            EnterpriseJobEntity jobEntity = EnterpriseJobBLL.Instance.Get(itemKey);
+            using (FileStream memStream = new FileStream(targetFullPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {
+                //byte[] bytes = FileHelper.ReadFileBytes(fileFullPath);
+                //MemoryStream memStream = new MemoryStream(bytes, true);
+
+                //2.替换内容
+                //string content = WordHelper.GetTextContent(memStream, "/word/document.xml");
+                //content = content.Replace("公司简介具体内容", jobEntity.EnterpriseDesc);
+                //content = content.Replace("岗位说明具体内容", jobEntity.EnterpriseJobStation);
+                //content = content.Replace("工作要求具体内容", jobEntity.EnterpriseJobDemand);
+                //content = content.Replace("薪资待遇具体内容", jobEntity.EnterpriseJobTreadment);
+                //content = content.Replace("联系方式具体内容", jobEntity.EnterpriseContackInfo);
+
+                //Stream newContentStream = new MemoryStream(Encoding.UTF8.GetBytes(content));
+                //WordHelper.ReplaceSteamContent(memStream, "/word/document.xml", newContentStream);
+
+                WordHelper.ReplaceTextContent(memStream, "/word/document.xml", "公司简介具体内容", jobEntity.EnterpriseDesc);
+                WordHelper.ReplaceTextContent(memStream, "/word/document.xml", "岗位说明具体内容", jobEntity.EnterpriseJobStation);
+                WordHelper.ReplaceTextContent(memStream, "/word/document.xml", "工作要求具体内容", jobEntity.EnterpriseJobDemand);
+                WordHelper.ReplaceTextContent(memStream, "/word/document.xml", "薪资待遇具体内容", jobEntity.EnterpriseJobTreadment);
+                WordHelper.ReplaceTextContent(memStream, "/word/document.xml", "联系方式具体内容", jobEntity.EnterpriseContackInfo);
+
+                //memStream.Flush();
+                memStream.Flush();
+                memStream.Close();
+            }
+
+            //3.输出文件
+            return File(targetFullPath, ContentTypes.GetContentType("docx"), string.Format("企业招聘简章-{0}.docx", jobEntity.EnterpriseName));
         }
         #endregion
 
