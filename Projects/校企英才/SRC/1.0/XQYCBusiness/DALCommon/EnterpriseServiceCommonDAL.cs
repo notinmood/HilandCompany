@@ -4,6 +4,8 @@ using System.Data;
 using HiLand.Framework.BusinessCore;
 using HiLand.Framework.BusinessCore.DALCommon;
 using HiLand.Framework.FoundationLayer;
+using HiLand.General.DALCommon;
+using HiLand.General.Entity;
 using HiLand.Utility.Data;
 using HiLand.Utility.DataBase;
 using HiLand.Utility.Enums;
@@ -38,7 +40,9 @@ namespace XQYC.Business.DALCommon
             get { return "EnterpriseServiceGuid"; }
         }
 
-        //TODO:此存储过程尚未实现
+        /// <summary>
+        /// 分页存储过程
+        /// </summary>
         protected override string PagingSPName
         {
             get { return "usp_XQYC_EnterpriseService_SelectPaging"; }
@@ -189,6 +193,9 @@ namespace XQYC.Business.DALCommon
         {
             if (reader != null && reader.IsClosed == false && entity != null)
             {
+                EnterpriseEntity enterpriserEntity = EnterpriseCommonDAL<TTransaction, TConnection, TCommand, TDataReader, TParameter>.StaticLoad((TDataReader)reader);
+                entity = Converter.InheritedEntityConvert<EnterpriseEntity, EnterpriseServiceEntity>(enterpriserEntity);
+
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseServiceID"))
                 {
                     entity.EnterpriseServiceID = reader.GetInt32(reader.GetOrdinal("EnterpriseServiceID"));

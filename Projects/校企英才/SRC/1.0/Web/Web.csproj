@@ -691,6 +691,9 @@
     <Content Include="Views\Enterprise\BoothItem.cshtml" />
     <Content Include="Views\Enterprise\BoothQueryList.cshtml" />
     <Content Include="Views\Enterprise\ContractQueryList.cshtml" />
+    <Content Include="Views\Enterprise\IndexLaborDispatch.cshtml" />
+    <Content Include="Views\Enterprise\IndexLaborHireBroke.cshtml" />
+    <Content Include="Views\Enterprise\IndexLaborJobFair.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

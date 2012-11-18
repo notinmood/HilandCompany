@@ -1,13 +1,29 @@
 ﻿using System;
 using HiLand.Framework.FoundationLayer;
 using HiLand.Framework.FoundationLayer.Attributes;
+using HiLand.General.Entity;
 using HiLand.Utility.Data;
 using HiLand.Utility.Enums;
 
 namespace XQYC.Business.Entity
 {
-    public class EnterpriseServiceEntity : BaseModel<EnterpriseServiceEntity>
+    public class EnterpriseServiceEntity : EnterpriseEntity//BaseModel<EnterpriseServiceEntity>
     {
+        private static EnterpriseServiceEntity empty = null;
+        public static new EnterpriseServiceEntity Empty
+        {
+            get
+            {
+                if (empty == null)
+                {
+                    empty = new EnterpriseServiceEntity();
+                    empty.isEmpty = true;
+                }
+
+                return empty;
+            }
+        }
+
         public override string[] BusinessKeyNames
         {
             get { return new string[] { "EnterpriseServiceGuid" }; }

@@ -87,7 +87,7 @@ namespace XQYC.Business.DALCommon
 
             return list.ToArray();
         }
-       
+
 
         protected override EmployeeEntity Load(IDataReader reader)
         {

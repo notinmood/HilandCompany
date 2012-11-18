@@ -48,6 +48,60 @@ namespace XQYC.Web.Controllers
         }
 
         /// <summary>
+        /// 劳务派遣企业客户信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult IndexLaborDispatch(int id = 1)
+        {
+            return InnerIndex(id, 1, "IndexLaborDispatch");//1在GeneralBasicSetting表中表示劳务派遣
+        }
+
+        /// <summary>
+        /// 代理招聘企业客户信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult IndexLaborHireBroke(int id = 1)
+        {
+            return InnerIndex(id, 2, "IndexLaborHireBroke");//2在GeneralBasicSetting表中表示代理招聘
+        }
+
+        /// <summary>
+        /// 人才会场企业客户信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult IndexLaborJobFair(int id = 1)
+        {
+            return InnerIndex(id, 3, "IndexLaborJobFair");//3在GeneralBasicSetting表中表示人才会场
+        }
+
+        private ActionResult InnerIndex(int id, int enterpriseServiceType, string viewName)
+        {
+            //1.如果是点击查询控件的查询按钮，那么将查询条件作为QueryString附加在地址后面（为了在客户端保存查询条件的状体），重新发起一次请求。
+            if (this.Request.HttpMethod.ToLower().Contains("post"))
+            {
+                string targetUrlWithoutParam = Url.Action("Index", new { id = 1 });
+                string targetUrl = QueryControlHelper.GetNewQueryUrl("QueryControl", targetUrlWithoutParam);
+                return Redirect(targetUrl);
+            }
+
+            //2.通常情形下走get查询
+            int pageIndex = id;
+            int pageSize = SystemConst.CountPerPage;
+            int startIndex = (pageIndex - 1) * pageSize + 1;
+            string whereClause = string.Format(" EnterpriseServiceType={0} AND EnterpriseServiceStatus={1} ", enterpriseServiceType, (int)Logics.True);
+            string orderClause = "EnterpriseID DESC";
+            whereClause += " AND " + QueryControlHelper.GetQueryCondition("QueryControl");
+
+            PagedEntityCollection<EnterpriseServiceEntity> entityList = EnterpriseServiceBLL.Instance.GetPagedCollection(startIndex, pageSize, whereClause, orderClause);
+            PagedList<EnterpriseServiceEntity> pagedExList = new PagedList<EnterpriseServiceEntity>(entityList.Records, entityList.PageIndex, entityList.PageSize, entityList.TotalCount);
+
+            return View(viewName, pagedExList);
+        }
+
+        /// <summary>
         /// 对单条记录进行添加（或者修改）
         /// </summary>
         /// <param name="keyGuid"></param>

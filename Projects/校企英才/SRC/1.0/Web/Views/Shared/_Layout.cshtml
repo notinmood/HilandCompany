@@ -39,7 +39,7 @@
                 <li><a id="aContractQueryList" href="@Url.Action("ContractQueryList", "Labor")">劳务人员合同查询</a></li>
             </ul>
         </li>
-        <li><a id="aLaborSalarySection" href="#" class="nav-top-item">劳务人员基本管理</a>
+        <li><a id="aLaborSalarySection" href="#" class="nav-top-item">劳务人员薪资管理</a>
             <ul>
                 <li><a id="aSalaryList" href="@Url.Action("SalaryListPreSelector", "Labor")">劳务人员薪资信息</a></li>
                 <li><a id="aSalaryBatch" href="@Url.Action("SalaryBatch", "Labor")">劳务人员薪资批量录入</a></li>
@@ -50,6 +50,9 @@
         <li><a id="aEnterpriseSection" href="#" class="nav-top-item">企业客户管理</a>
             <ul>
                 <li><a id="aEnterpriseList" href="@Url.Action("Index", "Enterprise")">企业客户基本信息</a></li>
+                <li><a id="aEnterpriseListForLaborDispatch" href="@Url.Action("IndexLaborDispatch", "Enterprise")">劳务派遣企业信息</a></li>
+                <li><a id="aEnterpriseListForHireBroke" href="@Url.Action("IndexLaborHireBroke", "Enterprise")">代理招聘企业信息</a></li>
+                <li><a id="aEnterpriseListForJobFair" href="@Url.Action("IndexLaborJobFair", "Enterprise")">人才市场企业信息</a></li>
                 <li><a id="aEnterpriseContractQueryList" href="@Url.Action("ContractQueryList", "Enterprise")">企业客户合同查询</a></li>
                 <li><a id="aBoothQueryList" href="@Url.Action("BoothQueryList", "Enterprise")">企业摊位预定查询</a></li>
             </ul>
