@@ -52,8 +52,8 @@
             string entityGuid = entity.ImageGuid.ToString();
             <tr>
                 <td>
-                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("JobPictureItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = entityGuid }) | 
-                    @Html.HiA().CssClassName("modalInput delete "+ @entityGuid).Value("<i class=\"icon-trash\"></i>删除").ACA("JobPictureDelete", "Enterprise").RouteValue(new {itemKey = entityGuid }).Render() | 
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("JobPictureItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = entityGuid }) @*| 
+                    @Html.HiA().CssClassName("modalInput delete "+ @entityGuid).Value("<i class=\"icon-trash\"></i>删除").ACA("JobPictureDelete", "Enterprise").RouteValue(new {itemKey = entityGuid }).Render() | *@
                 </td>
                 <td>@entity.CreateTime.ToShortDateString()
                 </td>

@@ -53,16 +53,16 @@ namespace XQYC.Web.Controllers
             int startIndex = (pageIndex - 1) * pageSize + 1;
             string whereClause = " 1=1 ";
 
-            ////--数据权限----------------------------------------------------------------------
-            //whereClause += " AND ( ";
-            //whereClause += string.Format(" {0} ", PermissionDataHelper.GetFilterCondition("FinanceUserGuid"));
-            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ProviderUserGuid"));
-            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("RecommendUserGuid"));
-            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ServiceUserGuid"));
-            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("BusinessUserGuid"));
-            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("SettleUserGuid"));
-            //whereClause += " ) ";
-            ////--end--------------------------------------------------------------------------
+            //--数据权限----------------------------------------------------------------------
+            whereClause += " AND ( ";
+            whereClause += string.Format(" {0} ", PermissionDataHelper.GetFilterCondition("FinanceUserGuid"));
+            whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ProviderUserGuid"));
+            whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("RecommendUserGuid"));
+            whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ServiceUserGuid"));
+            whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("BusinessUserGuid"));
+            whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("SettleUserGuid"));
+            whereClause += " ) ";
+            //--end--------------------------------------------------------------------------
 
             whereClause += " AND " + QueryControlHelper.GetQueryCondition("LaborQuery");
 
