@@ -1,0 +1,67 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility4.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Control;
+@using HiLand.General.Entity;
+
+@model ImageEntity
+@{
+    ViewBag.Title = "企业招工简章图片信息";
+    this.Layout = null;
+
+    string enterpriseJobKey = this.ViewBag.enterpriseJobKey;
+    if (Model.IsEmpty == false)
+    {
+        enterpriseJobKey = Model.RelativeGuid.ToString();
+    }
+}
+<div id="formContainer">
+    <style type="text/css">
+        #formContainer table td {
+        }
+    </style>
+    @using (Html.BeginForm())
+    { 
+        <table>
+            <tr>
+                <td style="width: 150px;">图片名称:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.ImageName)
+                </td>
+            </tr>
+            <tr>
+                <td>图片状态:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.CanUsable, EnumEx.BuildSelectItemList<Logics>())
+                </td>
+            </tr>
+            <tr>
+                <td>图片序号:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.ImageOrder)
+                </td>
+            </tr>
+            <tr>
+                <td>选择图片 :
+                </td>
+                <td>
+                    <input type="file" name="fileInput" id="fileInput" />
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" id="EnterpriseKey" value="@enterpriseJobKey" />
+        <input type="hidden" id="ItemKey" value="@Model.ImageGuid" />
+        <input type="button" id="submitButton" value="保存" class="btn btn-warning" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form", '@Url.Action("JobPictureList", new { itemKey = enterpriseJobKey })');
+        });
+    });
+</script>

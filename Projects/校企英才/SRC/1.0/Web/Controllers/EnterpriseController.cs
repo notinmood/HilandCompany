@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Web;
 using System.Web.Mvc;
 using HiLand.Framework.BusinessCore;
 using HiLand.Framework.BusinessCore.BLL;
@@ -16,6 +16,7 @@ using HiLand.Utility.Paging;
 using HiLand.Utility.Web;
 using HiLand.Utility4.MVC.Controls;
 using HiLand.Utility4.Office;
+using HiLand.Utility4.Web;
 using Webdiyer.WebControls.Mvc;
 using XQYC.Business.BLL;
 using XQYC.Business.Entity;
@@ -438,6 +439,99 @@ namespace XQYC.Web.Controllers
             targetEntity.EnterpriseJobStatus = originalEntity.EnterpriseJobStatus;
         }
 
+        public ActionResult JobPictureList(string itemKey)
+        {
+            List<ImageEntity> entityList = null;
+
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                Guid itemGuid = GuidHelper.TryConvert(itemKey);
+                string whereClause = string.Format(" RelativeGuid='{0}' ", itemGuid.ToString());
+                entityList = ImageBLL.Instance.GetList(whereClause);
+            }
+
+            this.ViewBag.EnterpriseJobKey = itemKey;
+            return View(entityList);
+        }
+
+        public ActionResult JobPictureItem(string enterpriseJobKey, string itemKey = StringHelper.Empty)
+        {
+            ImageEntity entity = ImageEntity.Empty;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                entity = ImageBLL.Instance.Get(itemKey);
+            }
+
+            this.ViewBag.EnterpriseJobKey = enterpriseJobKey;
+
+            return View(entity);
+        }
+
+        [HttpPost]
+        public ActionResult JobPictureItem(string enterpriseJobKey, string itemKey, ImageEntity originalEntity)
+        {
+            bool isSuccessful = false;
+            string displayMessage = string.Empty;
+            ImageEntity targetEntity = null;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == true)
+            {
+                targetEntity = new ImageEntity();
+
+                targetEntity.RelativeGuid = GuidHelper.TryConvert(enterpriseJobKey);
+                targetEntity.ImageCategoryCode = "enterpriserJob";
+                targetEntity.CreateTime = DateTime.Now;
+
+                SetTargetJobImageEntityValue(originalEntity, ref  targetEntity);
+
+                isSuccessful = ImageBLL.Instance.Create(targetEntity);
+            }
+            else
+            {
+                targetEntity = ImageBLL.Instance.Get(itemKey);
+                originalEntity.CreateTime = targetEntity.CreateTime;
+                originalEntity.ImageRelativePath = targetEntity.ImageRelativePath;
+                originalEntity.ImageType = targetEntity.ImageType;
+
+                SetTargetJobImageEntityValue(originalEntity, ref  targetEntity);
+                isSuccessful = ImageBLL.Instance.Update(targetEntity);
+            }
+
+            if (isSuccessful == true)
+            {
+                displayMessage = "数据保存成功";
+            }
+            else
+            {
+                displayMessage = "数据保存失败";
+            }
+
+            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+        }
+
+        private void SetTargetJobImageEntityValue(ImageEntity originalEntity, ref ImageEntity targetEntity)
+        {
+            targetEntity.CanUsable = originalEntity.CanUsable;
+            targetEntity.ImageStatus = originalEntity.CanUsable;
+            targetEntity.ImageOrder = originalEntity.ImageOrder;
+            targetEntity.ImageName = originalEntity.ImageName;
+
+            HttpPostedFileBase fileInfo = Request.Files["fileInput"];
+            if (fileInfo.HasFile())
+            {
+                string fileExtensionName = Path.GetExtension(fileInfo.FileName);
+                string fileName = string.Format("{0}{1}", GuidHelper.NewGuidString(), fileExtensionName);
+                string baseVirtualPath = PathHelper.CombineForVirtual(ImageEntity.ImageVirtualBasePath, "enterpriseJob");
+
+                string nativeFullPath = IOHelper.EnsureDatePath(Request.MapPath(baseVirtualPath), DatePathFormaters.Y_MD);
+                nativeFullPath = Path.Combine(nativeFullPath, fileName);
+                string relativeVirtualPath = IOHelper.GetRelativeVirtualPath(nativeFullPath, ImageEntity.ImageVirtualBasePath);
+                fileInfo.SaveAs(nativeFullPath);
+
+                targetEntity.ImageRelativePath = relativeVirtualPath;
+                targetEntity.ImageType = FileHelper.GeFileExtensionNameWithoutDot(fileExtensionName);
+            }
+        }
+
         public ActionResult JobExport(string itemKey)
         {
             //1.读取模板
@@ -448,19 +542,12 @@ namespace XQYC.Web.Controllers
             EnterpriseJobEntity jobEntity = EnterpriseJobBLL.Instance.Get(itemKey);
             using (FileStream memStream = new FileStream(targetFullPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
-                //byte[] bytes = FileHelper.ReadFileBytes(fileFullPath);
-                //MemoryStream memStream = new MemoryStream(bytes, true);
-
                 //2.替换内容
-                //string content = WordHelper.GetTextContent(memStream, "/word/document.xml");
-                //content = content.Replace("公司简介具体内容", jobEntity.EnterpriseDesc);
-                //content = content.Replace("岗位说明具体内容", jobEntity.EnterpriseJobStation);
-                //content = content.Replace("工作要求具体内容", jobEntity.EnterpriseJobDemand);
-                //content = content.Replace("薪资待遇具体内容", jobEntity.EnterpriseJobTreadment);
-                //content = content.Replace("联系方式具体内容", jobEntity.EnterpriseContackInfo);
 
                 //Stream newContentStream = new MemoryStream(Encoding.UTF8.GetBytes(content));
                 //WordHelper.ReplaceSteamContent(memStream, "/word/document.xml", newContentStream);
+
+                //TODO:xieran20121119 替换图片
 
                 WordHelper.ReplaceTextContent(memStream, "/word/document.xml", "公司简介具体内容", jobEntity.EnterpriseDesc);
                 WordHelper.ReplaceTextContent(memStream, "/word/document.xml", "岗位说明具体内容", jobEntity.EnterpriseJobStation);
@@ -468,7 +555,6 @@ namespace XQYC.Web.Controllers
                 WordHelper.ReplaceTextContent(memStream, "/word/document.xml", "薪资待遇具体内容", jobEntity.EnterpriseJobTreadment);
                 WordHelper.ReplaceTextContent(memStream, "/word/document.xml", "联系方式具体内容", jobEntity.EnterpriseContackInfo);
 
-                //memStream.Flush();
                 memStream.Flush();
                 memStream.Close();
             }

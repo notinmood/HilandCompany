@@ -390,6 +390,7 @@
     <Content Include="Content\ztree\js\jquery.ztree.exedit-3.3.min.js" />
     <Content Include="Content\ztree\js\jquery.ztree.exhide-3.3.js" />
     <Content Include="Content\ztree\js\jquery.ztree.exhide-3.3.min.js" />
+    <Content Include="Upload\Product\OnlyPlaceHolder.txt" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\date.js" />
     <Content Include="Scripts\DD_belatedPNG_0.0.8a-min.js" />
@@ -695,6 +696,8 @@
     <Content Include="Views\Enterprise\IndexLaborDispatch.cshtml" />
     <Content Include="Views\Enterprise\IndexLaborHireBroke.cshtml" />
     <Content Include="Views\Enterprise\IndexLaborJobFair.cshtml" />
+    <Content Include="Views\Enterprise\JobPictureList.cshtml" />
+    <Content Include="Views\Enterprise\JobPictureItem.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -11,24 +11,11 @@
 @using HiLand.General.BLL;
 @using HiLand.Utility.Web;
 
-@model List<EnterpriseJobEntity>
+@model List<ImageEntity>
 @{
     ViewBag.Title = "Index";
 
-    string enterpriseKey = this.ViewBag.EnterpriseKey;
-    string enterpriseName = this.ViewBag.EnterpriseName;
-    if(string.IsNullOrWhiteSpace( enterpriseName))
-    {
-        enterpriseName= EnterpriseBLL.Instance.Get(enterpriseKey).CompanyName;
-    }
-
-    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
-    bool isUsingCompress2 = false;
-    if (currentUrl.Length > 512)
-    {
-        isUsingCompress2 = true;
-        currentUrl = CompressHelper.Compress(currentUrl);
-    }
+    string enterpriseJobKey = this.ViewBag.EnterpriseJobKey;
 
     string returnUrl = RequestHelper.GetValue("returnUrl");
     bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
@@ -42,40 +29,39 @@
     }
 }
 
-<h2>企业招工简章列表(@enterpriseName)</h2>
+<h2>企业招工简章图片列表</h2>
 <div id="ItemListDIV">
     <div class="OperateArea" id="OperateAreaContainer">
-        <div class="btn-group"><a href="@returnUrl" class="btn btn-warning" title="返回列表页"><i class="icon-share icon-white"></i>返回</a>@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("JobItem", "Enterprise").Render(new { rel = "#EditDIV" })</div>
+        <div class="btn-group"><a href="@returnUrl" class="btn btn-warning" title="返回列表页"><i class="icon-share icon-white"></i>返回</a>@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("JobPictureItem", "Enterprise").Render(new { rel = "#EditDIV" })</div>
     </div>
     <table width="98%" class="grid">
         <tr>
-            <th style="width: 180px">操作
+            <th style="width: 150px">操作
             </th>
             <th style="width: 80px">创建时间
             </th>
-            <th style="width: 80px">简章状态
+            <th style="width: 80px">图片状态
             </th>
-            <th style="width: 150px">简章标题
+            <th style="width: 150px">图片名称
             </th>
-            <th>岗位说明
+            <th>图片序号
             </th>
         </tr>
-        @foreach (EnterpriseJobEntity entity in Model)
+        @foreach (ImageEntity entity in Model)
         {
-            string entityGuid = entity.EnterpriseJobGuid.ToString();
+            string entityGuid = entity.ImageGuid.ToString();
             <tr>
                 <td>
-                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("JobItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseJobGuid }) | 
-                    @Html.HiA().CssClassName("modalInput picture "+ @entityGuid).Value("<i class=\"icon-picture\"></i>图片").ACA("JobPictureList", "Enterprise").RouteValue(new {itemKey = @entity.EnterpriseJobGuid , returnUrl = currentUrl, isUsingCompress = isUsingCompress2 }).Render() | 
-                    @Html.HiA().CssClassName("modalInput export " + @entityGuid).Value("<i class=\"icon-download-alt\"></i>导出打印").ACA("JobExport", "Enterprise").RouteValue(new {itemKey = @entity.EnterpriseJobGuid }).Render()
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("JobPictureItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = entityGuid }) | 
+                    @Html.HiA().CssClassName("modalInput delete "+ @entityGuid).Value("<i class=\"icon-trash\"></i>删除").ACA("JobPictureDelete", "Enterprise").RouteValue(new {itemKey = entityGuid }).Render() | 
                 </td>
                 <td>@entity.CreateTime.ToShortDateString()
                 </td>
                 <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
                 </td>
-                <td>@entity.EnterpriseJobTitle
+                <td>@entity.ImageName
                 </td>
-                <td>@entity.EnterpriseJobStation
+                <td>@entity.ImageOrder
                 </td>
             </tr>   
         }
@@ -106,14 +92,14 @@
             });
 
             $("#newDisplayA").click(function () {
-                var url = '@Url.Action("JobItem")?r=' + Math.random() + '&itemKey=&enterpriseKey=@enterpriseKey';
+                var url = '@Url.Action("JobPictureItem")?r=' + Math.random() + '&itemKey=&enterpriseJobKey=@enterpriseJobKey';
                 $("#EditDIV").load(url);
             });
 
             $("a.edit").click(function () {
                 var itemKey = $(this).attr("itemKey");
                 $("#currentPopupItemGuid").val(itemKey);
-                var url = '@Url.Action("JobItem")?r=' + Math.random() + '&itemKey=' + itemKey + '&enterpriseKey=@enterpriseKey';
+                var url = '@Url.Action("JobPictureItem")?r=' + Math.random() + '&itemKey=' + itemKey + '&enterpriseJobKey=@enterpriseJobKey';
                 $("#EditDIV").load(url);
             });
         });
