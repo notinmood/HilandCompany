@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using HiLand.Framework.FoundationLayer;
+using HiLand.General.BLL;
+using HiLand.General.Entity;
 using HiLand.Utility.Enums;
 using XQYC.Business.DAL;
 using XQYC.Business.Entity;
@@ -33,6 +35,16 @@ namespace XQYC.Business.BLL
         {
             string whereClause = string.Format(" CreateTime >='{0}' AND CreateTime<='{1}' ", startDate, endDate);
             return base.GetTotalCount(whereClause);
+        }
+
+        /// <summary>
+        /// 获取招工简章对应的图片
+        /// </summary>
+        /// <param name="JobGuid"></param>
+        /// <returns></returns>
+        public List<ImageEntity> GetImages(Guid JobGuid)
+        {
+            return ImageBLL.Instance.GetList(Guid.Empty, JobGuid);
         }
     }
 }

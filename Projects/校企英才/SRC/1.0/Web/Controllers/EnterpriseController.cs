@@ -295,7 +295,7 @@ namespace XQYC.Web.Controllers
         private void SetTargetForeOrderEntityValue(ForeOrderEntity originalEntity, ref ForeOrderEntity targetEntity)
         {
             targetEntity.CanUsable = originalEntity.CanUsable;
-            targetEntity.ForeOrderAmount = originalEntity.ForeOrderAmount;
+            targetEntity.ForeOrderCount = originalEntity.ForeOrderCount;
             targetEntity.ForeOrderDate = originalEntity.ForeOrderDate;
             targetEntity.ForeOrderDesc = originalEntity.ForeOrderDesc;
             targetEntity.ForeOrderMemo1 = originalEntity.ForeOrderMemo1;
@@ -306,6 +306,12 @@ namespace XQYC.Web.Controllers
             targetEntity.ForeOrderTitle = originalEntity.ForeOrderTitle;
             targetEntity.ForeOrderType = originalEntity.ForeOrderType;
             targetEntity.ForeOrderUnitFee = originalEntity.ForeOrderUnitFee;
+
+            targetEntity.ForeOrderPayDate = originalEntity.ForeOrderPayDate;
+            targetEntity.CommissionDate = originalEntity.CommissionDate;
+            targetEntity.CommissionFee = originalEntity.CommissionFee;
+            targetEntity.CommissionIsDrawed = originalEntity.CommissionIsDrawed;
+            targetEntity.CommissionOther = originalEntity.CommissionOther;
         }
         #endregion
 
@@ -536,24 +542,40 @@ namespace XQYC.Web.Controllers
         {
             //1.读取模板
             string fileFullPath = Server.MapPath("~/DownFiles/Templet/企业招聘简章模板.docx");
-            string targetFullPath = Server.MapPath("~/DownFiles/Templet/Jobs/企业招聘简章模板-"+ GuidHelper.NewGuidString() +".docx");
-            System.IO.File.Copy(fileFullPath,targetFullPath,true);
-            
+            string targetFullPath = Server.MapPath("~/DownFiles/Templet/Jobs/企业招聘简章模板-" + GuidHelper.NewGuidString() + ".docx");
+            System.IO.File.Copy(fileFullPath, targetFullPath, true);
+
             EnterpriseJobEntity jobEntity = EnterpriseJobBLL.Instance.Get(itemKey);
+            List<ImageEntity> imageList = EnterpriseJobBLL.Instance.GetImages(jobEntity.EnterpriseJobGuid);
+
             using (FileStream memStream = new FileStream(targetFullPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
-                //2.替换内容
-
-                //Stream newContentStream = new MemoryStream(Encoding.UTF8.GetBytes(content));
-                //WordHelper.ReplaceSteamContent(memStream, "/word/document.xml", newContentStream);
-
-                //TODO:xieran20121119 替换图片
-
+                //2.1替换内容
+                WordHelper.ReplaceTextContent(memStream, "/word/document.xml", "公司名称具体内容", jobEntity.EnterpriseName);
                 WordHelper.ReplaceTextContent(memStream, "/word/document.xml", "公司简介具体内容", jobEntity.EnterpriseDesc);
                 WordHelper.ReplaceTextContent(memStream, "/word/document.xml", "岗位说明具体内容", jobEntity.EnterpriseJobStation);
                 WordHelper.ReplaceTextContent(memStream, "/word/document.xml", "工作要求具体内容", jobEntity.EnterpriseJobDemand);
                 WordHelper.ReplaceTextContent(memStream, "/word/document.xml", "薪资待遇具体内容", jobEntity.EnterpriseJobTreadment);
                 WordHelper.ReplaceTextContent(memStream, "/word/document.xml", "联系方式具体内容", jobEntity.EnterpriseContackInfo);
+
+                //2.2替换图片
+                if (imageList != null)
+                {
+                    for (int i = 0; i < imageList.Count; i++)
+                    {
+                        ImageEntity image = imageList[i];
+                        int j = i + 1;
+                        if (j > 3)
+                        {
+                            break;
+                        }
+                        string thumbVirtualPath = image.EnsureThumbnailAllVirtualPath(200, 150);
+                        string thumbFullPath = Server.MapPath(thumbVirtualPath);
+
+                        Stream imageStream = FileHelper.GetStreamFromFile(thumbFullPath);
+                        WordHelper.ReplaceSteamContent(memStream, string.Format("/word/media/image{0}.jpeg", j), imageStream);
+                    }
+                }
 
                 memStream.Flush();
                 memStream.Close();

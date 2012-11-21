@@ -27,7 +27,7 @@
 
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业名称", ConditionFieldName = "OwnerName", ConditionType = typeof(string) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "付费状态", ConditionFieldName = "ForeOrderPaid", ConditionType = typeof(Logics) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "付费状态,餐补领取状态", ConditionFieldName = "ForeOrderPaid,CommissionIsDrawed", ConditionType = typeof(Logics) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "履行状态", ConditionFieldName = "ForeOrderStatus", ConditionType = typeof(ForeOrderStatuses) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "预定时间,录入时间", ConditionFieldName = "ForeOrderDate,CreateTime", ConditionType = typeof(DateTime) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "预定时间,录入时间", ConditionFieldName = "ForeOrderDate,CreateTime", ConditionType = typeof(DateTime) });
@@ -48,15 +48,21 @@
             <tr>
                 <th style="width: 180px">企业名称
                 </th>
-                <th style="width: 80px">预定时间
+                <th style="width: 50px">预定时间
                 </th>
-                <th style="width: 80px">状态
+                <th style="width: 50px">状态
                 </th>
-                <th style="width: 80px">摊位数量
+                <th style="width: 50px">摊位数量
                 </th>
-                <th style="width: 80px">总费用
+                <th style="width: 50px">总费用
                 </th>
-                <th style="width: 80px">付款状态
+                <th style="width: 50px">付款状态
+                </th>
+                <th style="width: 50px">餐补费用
+                </th>
+                <th style="width: 80px">是否领取餐补
+                </th>
+                <th style="width: 80px">餐补领取日期
                 </th>
                 <th>摊位说明
                 </th>
@@ -71,11 +77,17 @@
                     </td>
                     <td>@EnumHelper.GetDisplayValue(entity.ForeOrderStatus)
                     </td>
-                    <td>@entity.ForeOrderAmount
+                    <td>@entity.ForeOrderCount
                     </td>
                     <td>@entity.ForeOrderTotalFee.ToString("0.00")
                     </td>
                     <td>@EnumHelper.GetDisplayValue(entity.ForeOrderPaid)
+                    </td>
+                    <td>@entity.CommissionFee.ToString("0.00")
+                    </td>
+                    <td>@EnumHelper.GetDisplayValue(entity.CommissionIsDrawed)
+                    </td>
+                    <td>@entity.CommissionDate.ToShortDateString()
                     </td>
                     <td>@entity.ForeOrderTitle
                     </td>

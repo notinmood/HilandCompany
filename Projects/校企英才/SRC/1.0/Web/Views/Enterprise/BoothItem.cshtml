@@ -55,7 +55,7 @@
                 <td>
                     使用数量:
                 </td>
-                <td>@Html.TextBoxFor(entity =>entity.ForeOrderAmount)
+                <td>@Html.TextBoxFor(entity =>entity.ForeOrderCount)
                 </td>
             </tr>
             <tr>
@@ -63,6 +63,27 @@
                     付款状态:
                 </td>
                 <td>@Html.DropDownListFor(entity =>entity.ForeOrderPaid, EnumEx.BuildSelectItemList<Logics>())
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    餐补费用:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.CommissionFee)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    是否领取餐补:
+                </td>
+                <td>@Html.DropDownListFor(entity =>entity.CommissionIsDrawed, EnumEx.BuildSelectItemList<Logics>())
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    餐补领取日期:
+                </td>
+                <td>@HtmlHelperEx.DateInput(Html, "CommissionDate", Model.CommissionDate.ToShortDateString())
                 </td>
             </tr>
             <tr>

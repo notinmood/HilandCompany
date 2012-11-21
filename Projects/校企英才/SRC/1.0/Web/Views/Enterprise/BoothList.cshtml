@@ -41,17 +41,23 @@
     </div>
     <table width="98%" class="grid">
         <tr>
-            <th style="width: 150px">操作
+            <th style="width: 50px">操作
             </th>
             <th style="width: 80px">预定时间
             </th>
-            <th style="width: 80px">状态
+            <th style="width: 50px">状态
             </th>
-            <th style="width: 80px">摊位数量
+            <th style="width: 50px">摊位数量
             </th>
-            <th style="width: 150px">总费用
+            <th style="width: 50px">总费用
             </th>
-            <th style="width: 150px">付款状态
+            <th style="width: 50px">付款状态
+            </th>
+            <th style="width: 50px">餐补费用
+            </th>
+            <th style="width: 80px">是否领取餐补
+            </th>
+            <th style="width: 80px">餐补领取日期
             </th>
             <th>摊位说明
             </th>
@@ -67,11 +73,17 @@
                 </td>
                 <td>@EnumHelper.GetDisplayValue(entity.ForeOrderStatus)
                 </td>
-                <td>@entity.ForeOrderAmount
+                <td>@entity.ForeOrderCount
                 </td>
                 <td>@entity.ForeOrderTotalFee.ToString("0.00")
                 </td>
                 <td>@EnumHelper.GetDisplayValue(entity.ForeOrderPaid)
+                </td>
+                <td>@entity.CommissionFee.ToString("0.00")
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.CommissionIsDrawed)
+                </td>
+                <td>@entity.CommissionDate.ToShortDateString()
                 </td>
                 <td>@entity.ForeOrderTitle
                 </td>
