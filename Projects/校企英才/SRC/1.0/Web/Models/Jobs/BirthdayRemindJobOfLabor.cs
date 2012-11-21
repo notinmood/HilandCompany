@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using HiLand.Framework.BusinessCore;
-using HiLand.Framework.BusinessCore.BLL;
 using HiLand.General;
 using HiLand.General.BLL;
 using HiLand.General.Entity;
-using HiLand.Utility.Data;
 using HiLand.Utility.Enums;
 using XQYC.Business.BLL;
 using XQYC.Business.Entity;
@@ -33,9 +29,9 @@ namespace XQYC.Web.Models.Jobs
                 remindEntity.RemindCategory = RemindCategories.BirthdayRemindOfLabor;
                 remindEntity.RemindUrl = string.Empty;
 
-                //向劳务人员的对应的客服人员发送提醒数据
+                //向劳务人员的对应的业务人员发送提醒数据
                 LaborEntity labor = LaborBLL.Instance.Get(currentUser.UserGuid);
-                if (labor.ServiceUserGuid != Guid.Empty)
+                if (labor.BusinessUserGuid != Guid.Empty)
                 {
                     RemindBLL.Instance.Create(labor.ServiceUserGuid, ExecutorTypes.User, remindEntity);
                 }

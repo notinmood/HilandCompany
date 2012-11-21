@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using HiLand.General;
 using HiLand.General.BLL;
 using HiLand.General.Entity;
