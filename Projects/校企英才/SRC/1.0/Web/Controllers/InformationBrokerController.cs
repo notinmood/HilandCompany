@@ -140,6 +140,8 @@ namespace XQYC.Web.Controllers
             targetEntity.InformationBrokerKind = originalEntity.InformationBrokerKind;
             targetEntity.Telephone = originalEntity.Telephone;
             targetEntity.AreaCode = originalEntity.AreaCode;
+            targetEntity.HigherOrganization = originalEntity.HigherOrganization;
+
             targetEntity.FinanceUserName = RequestHelper.GetValue("FinanceUser");
             targetEntity.FinanceUserGuid = RequestHelper.GetValue<Guid>("FinanceUser_Value");
             targetEntity.ProviderUserName = RequestHelper.GetValue("ProviderUser");
@@ -148,7 +150,6 @@ namespace XQYC.Web.Controllers
             targetEntity.RecommendUserGuid = RequestHelper.GetValue<Guid>("RecommendUser_Value");
             targetEntity.ServiceUserName = RequestHelper.GetValue("ServiceUser");
             targetEntity.ServiceUserGuid = RequestHelper.GetValue<Guid>("ServiceUser_Value");
-
             targetEntity.BusinessUserName = RequestHelper.GetValue("BusinessUser");
             targetEntity.BusinessUserGuid = RequestHelper.GetValue<Guid>("BusinessUser_Value");
             targetEntity.SettleUserName = RequestHelper.GetValue("SettleUser");

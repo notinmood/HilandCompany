@@ -58,6 +58,7 @@ namespace XQYC.Business.DALCommon
 			    [InformationBrokerGuid],
 			    [InformationBrokerName],
 			    [InformationBrokerNameShort],
+                [HigherOrganization],
 			    [CanUsable],
 			    [AreaCode],
 			    [IndustryKey],
@@ -96,6 +97,7 @@ namespace XQYC.Business.DALCommon
 			    {0}InformationBrokerGuid,
 			    {0}InformationBrokerName,
 			    {0}InformationBrokerNameShort,
+                {0}HigherOrganization,
 			    {0}CanUsable,
 			    {0}AreaCode,
 			    {0}IndustryKey,
@@ -143,6 +145,7 @@ namespace XQYC.Business.DALCommon
 				    [InformationBrokerGuid] = {0}InformationBrokerGuid,
 				    [InformationBrokerName] = {0}InformationBrokerName,
 				    [InformationBrokerNameShort] = {0}InformationBrokerNameShort,
+                    [HigherOrganization] = {0}HigherOrganization,
 				    [CanUsable] = {0}CanUsable,
 				    [AreaCode] = {0}AreaCode,
 				    [IndustryKey] = {0}IndustryKey,
@@ -195,6 +198,7 @@ namespace XQYC.Business.DALCommon
 			        GenerateParameter("InformationBrokerGuid",entity.InformationBrokerGuid),
 			        GenerateParameter("InformationBrokerName",entity.InformationBrokerName?? String.Empty),
 			        GenerateParameter("InformationBrokerNameShort",entity.InformationBrokerNameShort?? String.Empty),
+                    GenerateParameter("HigherOrganization",entity.HigherOrganization?? String.Empty),
 			        GenerateParameter("CanUsable",entity.CanUsable),
 			        GenerateParameter("AreaCode",entity.AreaCode?? String.Empty),
 			        GenerateParameter("IndustryKey",entity.IndustryKey?? String.Empty),
@@ -254,6 +258,10 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "InformationBrokerNameShort"))
                 {
                     entity.InformationBrokerNameShort = reader.GetString(reader.GetOrdinal("InformationBrokerNameShort"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "HigherOrganization"))
+                {
+                    entity.HigherOrganization = reader.GetString(reader.GetOrdinal("HigherOrganization"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CanUsable"))
                 {

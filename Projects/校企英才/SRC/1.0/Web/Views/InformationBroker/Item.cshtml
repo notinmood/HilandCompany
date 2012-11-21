@@ -71,7 +71,11 @@
             <tr>
                 <td>企业地址:
                 </td>
-                <td colspan="3">@Html.TextBoxFor(entity => entity.PrincipleAddress)
+                <td>@Html.TextBoxFor(entity => entity.PrincipleAddress)
+                </td>
+                <td>所属机构:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.HigherOrganization)
                 </td>
             </tr>
             <tr>

@@ -46,6 +46,17 @@ namespace XQYC.Business.Entity
             set { informationBrokerNameShort = value; }
         }
 
+        private string higherOrganization = String.Empty;
+        /// <summary>
+        /// 所属的上级机构名称
+        /// </summary>
+        public string HigherOrganization
+        {
+            get { return higherOrganization; }
+            set { higherOrganization = value; }
+        }
+        
+
         private Logics canUsable = Logics.True;
         public Logics CanUsable
         {
