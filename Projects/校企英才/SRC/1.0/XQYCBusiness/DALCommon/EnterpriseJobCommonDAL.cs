@@ -46,6 +46,14 @@ namespace XQYC.Business.DALCommon
         {
             get { return "usp_XQYC_EnterpriseJob_SelectPaging"; }
         }
+
+        protected override string OrderByCondition
+        {
+            get
+            {
+                return " EnterpriseJobID DESC ";
+            }
+        }
         #endregion
 
         #region 逻辑操作
@@ -67,6 +75,7 @@ namespace XQYC.Business.DALCommon
 			    [EnterpriseContackInfo],
 			    [EnterpriseDesc],
 			    [EnterpriseJobLaborCount],
+                [InterviewDateInfo],
 			    [EnterpriseJobDemand],
 			    [EnterpriseJobTreadment],
 			    [EnterpriseJobOther],
@@ -76,6 +85,7 @@ namespace XQYC.Business.DALCommon
 			    [EnterpriseJobStation],
 			    [CreateTime],
 			    [CreateUserKey],
+                [RefreshTime],
 			    [CanUsable],
 			    [PropertyNames],
 			    [PropertyValues]
@@ -90,6 +100,7 @@ namespace XQYC.Business.DALCommon
 			    {0}EnterpriseContackInfo,
 			    {0}EnterpriseDesc,
 			    {0}EnterpriseJobLaborCount,
+                {0}InterviewDateInfo,
 			    {0}EnterpriseJobDemand,
 			    {0}EnterpriseJobTreadment,
 			    {0}EnterpriseJobOther,
@@ -99,6 +110,7 @@ namespace XQYC.Business.DALCommon
 			    {0}EnterpriseJobStation,
 			    {0}CreateTime,
 			    {0}CreateUserKey,
+                {0}RefreshTime,
 			    {0}CanUsable,
 			    {0}PropertyNames,
 			    {0}PropertyValues
@@ -122,6 +134,7 @@ namespace XQYC.Business.DALCommon
 				    [EnterpriseContackInfo] = {0}EnterpriseContackInfo,
 				    [EnterpriseDesc] = {0}EnterpriseDesc,
 				    [EnterpriseJobLaborCount] = {0}EnterpriseJobLaborCount,
+                    [InterviewDateInfo] = {0}InterviewDateInfo,
 				    [EnterpriseJobDemand] = {0}EnterpriseJobDemand,
 				    [EnterpriseJobTreadment] = {0}EnterpriseJobTreadment,
 				    [EnterpriseJobOther] = {0}EnterpriseJobOther,
@@ -131,6 +144,7 @@ namespace XQYC.Business.DALCommon
 				    [EnterpriseJobStation] = {0}EnterpriseJobStation,
 				    [CreateTime] = {0}CreateTime,
 				    [CreateUserKey] = {0}CreateUserKey,
+                    [RefreshTime] = {0}RefreshTime,
 				    [CanUsable] = {0}CanUsable,
 				    [PropertyNames] = {0}PropertyNames,
 				    [PropertyValues] = {0}PropertyValues
@@ -160,6 +174,7 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("EnterpriseContackInfo",entity.EnterpriseContackInfo?? String.Empty),
 			    GenerateParameter("EnterpriseDesc",entity.EnterpriseDesc?? String.Empty),
 			    GenerateParameter("EnterpriseJobLaborCount",entity.EnterpriseJobLaborCount),
+                GenerateParameter("InterviewDateInfo",entity.InterviewDateInfo??String.Empty),
 			    GenerateParameter("EnterpriseJobDemand",entity.EnterpriseJobDemand?? String.Empty),
 			    GenerateParameter("EnterpriseJobTreadment",entity.EnterpriseJobTreadment?? String.Empty),
 			    GenerateParameter("EnterpriseJobOther",entity.EnterpriseJobOther?? String.Empty),
@@ -169,7 +184,8 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("EnterpriseJobStation",entity.EnterpriseJobStation?? String.Empty),
 			    GenerateParameter("CreateTime",entity.CreateTime),
 			    GenerateParameter("CreateUserKey",entity.CreateUserKey?? String.Empty),
-			    GenerateParameter("CanUsable",entity.CanUsable)
+			    GenerateParameter("RefreshTime",entity.RefreshTime),
+                GenerateParameter("CanUsable",entity.CanUsable)
             };
 
             paraList.AddRange(list);
@@ -224,6 +240,12 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.EnterpriseJobLaborCount = reader.GetInt32(reader.GetOrdinal("EnterpriseJobLaborCount"));
                 }
+
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "InterviewDateInfo"))
+                {
+                    entity.InterviewDateInfo = reader.GetString(reader.GetOrdinal("InterviewDateInfo"));
+                }
+                
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseJobDemand"))
                 {
                     entity.EnterpriseJobDemand = reader.GetString(reader.GetOrdinal("EnterpriseJobDemand"));
@@ -259,6 +281,10 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CreateUserKey"))
                 {
                     entity.CreateUserKey = reader.GetString(reader.GetOrdinal("CreateUserKey"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "RefreshTime"))
+                {
+                    entity.RefreshTime = reader.GetDateTime(reader.GetOrdinal("RefreshTime"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CanUsable"))
                 {

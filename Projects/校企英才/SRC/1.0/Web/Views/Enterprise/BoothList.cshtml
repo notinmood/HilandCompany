@@ -32,6 +32,9 @@
     {
         returnUrl = Url.Action("Index");
     }
+
+    decimal totalForeOrderAmount = 0M;
+    decimal totalCommissionFee = 0M;
 }
 
 <h2>企业预定摊位列表(@enterpriseName)</h2>
@@ -65,6 +68,8 @@
         @foreach (ForeOrderEntity entity in Model)
         {
             string entityGuid = entity.ForeOrderGuid.ToString();
+            totalForeOrderAmount += entity.ForeOrderTotalFee;
+            totalCommissionFee += entity.CommissionFee;
             <tr>
                 <td>
                     @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("BoothItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = entityGuid })
@@ -83,12 +88,34 @@
                 </td>
                 <td>@EnumHelper.GetDisplayValue(entity.CommissionIsDrawed)
                 </td>
-                <td>@entity.CommissionDate.ToShortDateString()
+                <td>@DateTimeHelper.ToSaftShortDateString(entity.CommissionDate)
                 </td>
                 <td>@entity.ForeOrderTitle
                 </td>
             </tr>   
         }
+        <tr>
+            <th >合计
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>@totalForeOrderAmount.ToString("0.00")
+            </th>
+            <th>
+            </th>
+            <th >@totalCommissionFee.ToString("0.00")
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+        </tr>
     </table>
     <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
     <div class="modal modalFix" id="EditDIV">

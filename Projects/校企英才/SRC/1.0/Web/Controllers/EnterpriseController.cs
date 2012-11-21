@@ -59,7 +59,7 @@ namespace XQYC.Web.Controllers
         /// <returns></returns>
         public ActionResult IndexLaborDispatch(int id = 1)
         {
-            return InnerIndex(id, 1, "IndexLaborDispatch");//1在GeneralBasicSetting表中表示劳务派遣
+            return InnerIndex(id, 1, "IndexLaborDispatch", "IndexLaborDispatch");//1在GeneralBasicSetting表中表示劳务派遣
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace XQYC.Web.Controllers
         /// <returns></returns>
         public ActionResult IndexLaborHireBroke(int id = 1)
         {
-            return InnerIndex(id, 2, "IndexLaborHireBroke");//2在GeneralBasicSetting表中表示代理招聘
+            return InnerIndex(id, 2, "IndexLaborHireBroke", "IndexLaborHireBroke");//2在GeneralBasicSetting表中表示代理招聘
         }
 
         /// <summary>
@@ -79,15 +79,15 @@ namespace XQYC.Web.Controllers
         /// <returns></returns>
         public ActionResult IndexLaborJobFair(int id = 1)
         {
-            return InnerIndex(id, 3, "IndexLaborJobFair");//3在GeneralBasicSetting表中表示人才会场
+            return InnerIndex(id, 3, "IndexLaborJobFair", "IndexLaborJobFair");//3在GeneralBasicSetting表中表示人才会场
         }
 
-        private ActionResult InnerIndex(int id, int enterpriseServiceType, string viewName)
+        private ActionResult InnerIndex(int id, int enterpriseServiceType, string viewName,string actionName)
         {
             //1.如果是点击查询控件的查询按钮，那么将查询条件作为QueryString附加在地址后面（为了在客户端保存查询条件的状体），重新发起一次请求。
             if (this.Request.HttpMethod.ToLower().Contains("post"))
             {
-                string targetUrlWithoutParam = Url.Action("Index", new { id = 1 });
+                string targetUrlWithoutParam = Url.Action(actionName, new { id = 1 });
                 string targetUrl = QueryControlHelper.GetNewQueryUrl("QueryControl", targetUrlWithoutParam);
                 return Redirect(targetUrl);
             }
@@ -186,6 +186,7 @@ namespace XQYC.Web.Controllers
             targetEntity.StaffScope = originalEntity.StaffScope;
             targetEntity.Telephone = originalEntity.Telephone;
             targetEntity.AreaCode = originalEntity.AreaCode;
+            targetEntity.AreaOther = originalEntity.AreaOther;
             targetEntity.EnterpriseMemo = originalEntity.EnterpriseMemo;
         }
 
@@ -443,6 +444,7 @@ namespace XQYC.Web.Controllers
             targetEntity.EnterpriseJobTreadment = originalEntity.EnterpriseJobTreadment;
             targetEntity.EnterpriseJobType = originalEntity.EnterpriseJobType;
             targetEntity.EnterpriseJobStatus = originalEntity.EnterpriseJobStatus;
+            targetEntity.InterviewDateInfo = originalEntity.InterviewDateInfo;
         }
 
         public ActionResult JobPictureList(string itemKey)

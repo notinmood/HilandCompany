@@ -31,6 +31,9 @@
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "履行状态", ConditionFieldName = "ForeOrderStatus", ConditionType = typeof(ForeOrderStatuses) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "预定时间,录入时间", ConditionFieldName = "ForeOrderDate,CreateTime", ConditionType = typeof(DateTime) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "预定时间,录入时间", ConditionFieldName = "ForeOrderDate,CreateTime", ConditionType = typeof(DateTime) });
+
+    decimal totalForeOrderAmount = 0M;
+    decimal totalCommissionFee = 0M;
 }
 <h2>企业预定摊位查询</h2>
 <div id="ItemListDIV">
@@ -70,6 +73,8 @@
             @foreach (ForeOrderEntity entity in Model)
             {
                 string entityGuid = entity.ForeOrderGuid.ToString();
+                totalForeOrderAmount += entity.ForeOrderTotalFee;
+                totalCommissionFee += entity.CommissionFee;
                 <tr>
                     <td>@entity.OwnerName
                     </td>
@@ -87,12 +92,34 @@
                     </td>
                     <td>@EnumHelper.GetDisplayValue(entity.CommissionIsDrawed)
                     </td>
-                    <td>@entity.CommissionDate.ToShortDateString()
+                    <td>@DateTimeHelper.ToSaftShortDateString(entity.CommissionDate)
                     </td>
                     <td>@entity.ForeOrderTitle
                     </td>
                 </tr>   
             }
+            <tr>
+            <th>当前页合计
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>@totalForeOrderAmount.ToString("0.00")
+            </th>
+            <th>
+            </th>
+            <th >@totalCommissionFee.ToString("0.00")
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+        </tr>
         </table>
     </div>
     <div class="myPager">

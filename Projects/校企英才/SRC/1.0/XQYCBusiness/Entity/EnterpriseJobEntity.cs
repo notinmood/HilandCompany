@@ -85,6 +85,16 @@ namespace XQYC.Business.Entity
             set { enterpriseJobLaborCount = value; }
         }
 
+        private string interviewDateInfo = String.Empty;
+        /// <summary>
+        /// 面试时间信息
+        /// </summary>
+        public string InterviewDateInfo
+        {
+            get { return interviewDateInfo; }
+            set { interviewDateInfo = value; }
+        }
+
         private string enterpriseJobDemand = String.Empty;
         public string EnterpriseJobDemand
         {
@@ -140,6 +150,14 @@ namespace XQYC.Business.Entity
             get { return createTime; }
             set { createTime = value; }
         }
+
+        private DateTime refreshTime = DateTimeHelper.Min;
+        public DateTime RefreshTime
+        {
+            get { return refreshTime; }
+            set { refreshTime = value; }
+        }
+        
 
         private string createUserKey = String.Empty;
         public string CreateUserKey

@@ -12,54 +12,47 @@
 @{
     ViewBag.Title = "企业招工简章信息";
     this.Layout = null;
-    
-    string enterpriseKey= this.ViewBag.EnterpriseKey;
-    if(Model.IsEmpty==false)
+
+    string enterpriseKey = this.ViewBag.EnterpriseKey;
+    if (Model.IsEmpty == false)
     {
         enterpriseKey = Model.EnterpriseKey;
     }
 }
 <div id="formContainer">
-<style type="text/css">
-    #formContainer table td
-    {
-        
-    }
-</style>
+    <style type="text/css">
+        #formContainer table td {
+        }
+    </style>
     @using (Html.BeginForm())
     { 
         <table>
             <tr>
-                <td style="width: 150px;">
-                    简章标题:
+                <td style="width: 150px;">简章标题:
                 </td>
                 <td>@Html.TextBoxFor(entity => entity.EnterpriseJobTitle)
                 </td>
-            </tr>
-            <tr>
-                <td>
-                    简章状态:
+                <td>简章状态:
                 </td>
-                <td>@Html.DropDownListFor(entity =>entity.CanUsable, EnumEx.BuildSelectItemList<Logics>())
+                <td>@Html.DropDownListFor(entity => entity.CanUsable, EnumEx.BuildSelectItemList<Logics>())
                 </td>
             </tr>
             <tr>
-                <td>
-                    联系方式:
+                <td>联系方式:
                 </td>
-                <td>@Html.TextBoxFor(entity =>entity.EnterpriseContackInfo)
+                <td>@Html.TextBoxFor(entity => entity.EnterpriseContackInfo)
                 </td>
-            </tr>
-            <tr>
-                <td>
-                    岗位说明:
+                <td>面试时间:
                 </td>
-                <td>@Html.TextBoxFor(entity =>entity.EnterpriseJobStation)
+                <td>@Html.TextBoxFor(entity => entity.InterviewDateInfo)
                 </td>
             </tr>
             <tr>
-                <td>
-                    企业简介:
+                <td>岗位说明:
+                </td>
+                <td>@Html.TextAreaFor(entity => entity.EnterpriseJobStation)
+                </td>
+                <td>企业简介:
                 </td>
                 <td>@Html.TextAreaFor(entity => entity.EnterpriseDesc)
                 </td>
@@ -67,12 +60,9 @@
             <tr>
                 <td>岗位要求:
                 </td>
-                <td>@Html.TextAreaFor(entity =>entity.EnterpriseJobDemand)
+                <td>@Html.TextAreaFor(entity => entity.EnterpriseJobDemand)
                 </td>
-            </tr>
-            <tr>
-                <td>
-                    待遇说明:
+                <td>待遇说明:
                 </td>
                 <td>@Html.TextAreaFor(entity => entity.EnterpriseJobTreadment)
                 </td>
@@ -86,7 +76,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#submitButton").click(function () {
-            submitAndRedirect("#formContainer form", '@Url.Action("JobList", new { itemKey= enterpriseKey })');
+            submitAndRedirect("#formContainer form");
         });
     });
 </script>
