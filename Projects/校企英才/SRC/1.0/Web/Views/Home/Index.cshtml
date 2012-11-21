@@ -16,9 +16,34 @@
 
     List<RemindEntity> remindList = (List<RemindEntity>)this.ViewData["remindList"];
     int remindCount = (int)this.ViewData["remindCount"];
+
+
+    List<EnterpriseJobEntity> enterpriseJobLastList = (List<EnterpriseJobEntity>)this.ViewData["enterpriseJobLastList"];
+    int enterpriseJobCount = (int)this.ViewData["enterpriseJobCount"];
 }
 
 <div style="margin-bottom:20px;"></div>
+
+<div class="moduleStyle moduleStyle1">
+    <h5>个人信息摘要
+    </h5>
+    <div>登录账户为：@CurrentUser.UserName</div>
+    <div>姓名为：@CurrentUser.UserNameDisplay</div>
+    <div>所在部门为：@CurrentUser.Department.DepartmentFullPath</div>
+    <div>最近一次的登录时间为：@CurrentUser.UserLastDateTime.ToString()</div>
+    <div>最近一次的登录IP为：@CurrentUser.UserLastIP</div>
+</div>
+
+<div class="moduleStyle moduleStyle1">
+    <h5>最新招工信息(最近一月内录入的招工信息为: @enterpriseJobCount )
+    </h5>
+    @foreach (EnterpriseJobEntity item in enterpriseJobLastList)
+    { 
+        <div> @string.Format("【{0}】{1} {2}", item.CreateTime.ToShortDateString(),item.EnterpriseName,item.EnterpriseJobTitle) </div>
+    }
+</div>
+
+
 <div class="moduleStyle moduleStyle1">
     <h5>提醒摘要(您共有 @remindCount 条信息未读)
     </h5>
@@ -27,15 +52,7 @@
         <div> @string.Format("【{0}】{1}", item.CreateDate.ToShortDateString(),item.RemindTitle) </div>
     }
 </div>
-@*<div class="moduleStyle moduleStyle1">
-    <h5>个人信息摘要
-    </h5>
-    <div>登录账户为：@CurrentUser.UserName</div>
-    <div>姓名为：@CurrentUser.UserNameDisplay</div>
-    <div>所在部门为：@CurrentUser.Department.DepartmentFullPath</div>
-    <div>最近一次的登录时间为：@CurrentUser.UserLastDateTime.ToString()</div>
-    <div>最近一次的登录IP为：@CurrentUser.UserLastIP</div>
-</div>*@
+
 
 <div class="moduleStyle moduleStyle1">
     <h5>最新劳务人员信息(最近一月内录入的人数为: @laborRegisterCount)

@@ -40,7 +40,6 @@ namespace XQYC.Web.Controllers
             int laborRegisterCount = LaborBLL.Instance.GetCountForLastestRegister(DateTime.Today.AddMonths(-1), DateTime.Today.AddDays(1));
             this.ViewData["laborRegisterCount"] = laborRegisterCount;
 
-
             //获取最新离职的劳务人员
             List<LaborContractEntity> laborDiscontinueContractList = LaborContractBLL.Instance.GetListForLastestDiscontinue(8);
             this.ViewData["laborDiscontinueContractList"] = laborDiscontinueContractList;
@@ -56,6 +55,14 @@ namespace XQYC.Web.Controllers
             //获取最新入职的劳务人员数量
             int laborLastCountCount = LaborContractBLL.Instance.GetCountForLastestContract(DateTime.Today.AddMonths(-1), DateTime.Today.AddDays(1));
             this.ViewData["laborLastCountCount"] = laborLastCountCount;
+
+            //获取最新招工简章
+            List<EnterpriseJobEntity> enterpriseJobLastList = EnterpriseJobBLL.Instance.GetListForLastest(8);
+            this.ViewData["enterpriseJobLastList"] = enterpriseJobLastList;
+
+            //获取最新招工简章数量
+            int enterpriseJobCount = EnterpriseJobBLL.Instance.GetCountForLastest(DateTime.Today.AddMonths(-1), DateTime.Today.AddDays(1));
+            this.ViewData["enterpriseJobCount"] = enterpriseJobCount;
 
             return View();
         }

@@ -3,8 +3,6 @@
 *.user           #User specific solution and project settings
 *.suo
 *.sln.cache
-*/[bB]in/         #Build output
-*/[oO]bj/
 *.mdf
 *.ldf
 
@@ -22,12 +20,13 @@ _ReSharper*
 * Thumbs.db
 =======
 # Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
-bin
-obj
+bin/
+obj/
 
 # mstest test results
 TestResults
 >>>>>>> 189447a5db717aa125c496bd679b02a26e373b00
 
 
-/Templet/Jobs
+Jobs/
+Upload/
