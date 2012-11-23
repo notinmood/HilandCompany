@@ -1,35 +1,73 @@
 ﻿@using HiLand.Utility.Entity
+@using XQYC.Web.Control;
 
 @{
     ViewBag.Title = "软件版本信息";
 
 }
-<h2>模板下载
+<style type="text/css">
+        #main-content ul,
+        #main-content ol {
+            padding: 0 0 0 18px;
+        }
+
+            #main-content ul li {
+                background: url() center left no-repeat;
+                padding: 0px;
+            }
+
+        #main-content ol {
+            padding: 0px;
+        }
+
+            #main-content ol li {
+                list-style: none;
+                padding: 0;
+            }
+    </style>
+<h2>工作移交
 </h2>
-<table>
-    <tr>
-        <td style="width: 250px;">劳务人员批量导入模板:
-        </td>
-        <td><a href="@Url.Content("~/DownFiles/Templet/劳务人员批量导入模板.xls")" class="btn btn-warning"  title="劳务人员批量导入模板"><i class="icon-chevron-down  icon-white"></i>下载</a>
-        </td>
-    </tr>
-    <tr>
-        <td style="width: 250px;">劳务人员工资导入模板:
-        </td>
-        <td><a href="@Url.Content("~/DownFiles/Templet/劳务人员工资导入模板.xls")" class="btn btn-warning"  title="劳务人员工资导入模板"><i class="icon-chevron-down  icon-white"></i>下载</a>
-        </td>
-    </tr>
-    <tr>
-        <td style="width: 250px;">银行开卡数据导入模板:
-        </td>
-        <td><a href="@Url.Content("~/DownFiles/Templet/银行开卡数据导入模板.xls")" class="btn btn-warning"  title="银行开卡数据导入模板"><i class="icon-chevron-down  icon-white"></i>下载</a>
-        </td>
-    </tr>
-</table>
+@using (Html.BeginForm())
+{ 
+    <table>
+        <tr>
+            <td style="width: 250px;">移交人:@HtmlHelperEx.XQYCEmployeeChooser(Html, "SourceUser", "", "")
+            </td>
+            <td>目标人:@HtmlHelperEx.XQYCEmployeeChooser(Html, "TargetUser", "", "")
+            </td>
+        </tr>
+        <tr>
+            <td>劳务人员信息:
+            </td>
+            <td> <input type="checkbox" name="cbxLaborData" />
+            </td>
+        </tr>
+        <tr>
+            <td>企业信息:
+            </td>
+            <td><input type="checkbox" name="cbxEnterpriseData" />
+            </td>
+        </tr>
+        <tr>
+            <td>信息员:
+            </td>
+            <td><input type="checkbox" name="cbxInformationBrokerData" />
+            </td>
+        </tr>
+    </table>
+    <input type="submit" name="submit" id="submit"  class="btn btn-warning" value="移交" />
+}
 <script type="text/javascript">
     $(document).ready(function () {
         $("#aSettingSection").click();
         $("#aSettingSection").addClass("current");
-        $("#aTempletList").addClass("current");
+        $("#aTransferJobs").addClass("current");
+
+        $("#submit").click(function () {
+            if (confirm("工作移交对系统内的数据影响是不可回复的，您确认要移交数据吗？") == false)
+            {
+                return false;
+            }
+        });
     });
 </script>

@@ -19,6 +19,8 @@ using HiLand.Utility.IO;
 using HiLand.Utility.Web;
 using HiLand.Utility4.Data;
 using HiLand.Utility4.MVC;
+using HiLand.Utility4.MVC.Controls;
+using XQYC.Business.BLL;
 
 namespace XQYC.Web.Controllers
 {
@@ -206,6 +208,176 @@ namespace XQYC.Web.Controllers
         public ActionResult TransferJobs()
         {
             return View();
+        }
+
+        //TODO:xieran20121123 工作移交时，考虑发送系统通知给每个内部员工
+        /// <summary>
+        /// 工作移交
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult TransferJobs(bool onlyPlaceHolder = true)
+        {
+            List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
+            string returnUrl = RequestHelper.CurrentFullUrl;
+
+            Guid sourceUserGuid = ControlHelper.GetRealValue<Guid>("SourceUser");
+            string sourceUserName = RequestHelper.GetValue("SourceUser");
+
+            Guid targetUserGuid = ControlHelper.GetRealValue<Guid>("TargetUser");
+            string targetUserName = RequestHelper.GetValue("TargetUser");
+
+            if (sourceUserGuid == Guid.Empty || targetUserGuid == Guid.Empty)
+            {
+                SystemStatusInfo itemError = new SystemStatusInfo();
+                itemError.SystemStatus = SystemStatuses.Failuer;
+                itemError.Message = string.Format("请先选择移交人和被移交人信息，谢谢。");
+                infoList.Add(itemError);
+            }
+            else
+            {
+                string laborData = RequestHelper.GetValue("cbxLaborData").ToLower();
+                string enterpriseData = RequestHelper.GetValue("cbxEnterpriseData").ToLower();
+                string informationBrokerData = RequestHelper.GetValue("cbxInformationBrokerData").ToLower();
+
+                if (laborData == "on")
+                {
+                    int rowCount = UpdateLaborData(sourceUserGuid, targetUserGuid, targetUserName);
+
+                    if (rowCount > 0)
+                    {
+                        SystemStatusInfo itemError = new SystemStatusInfo();
+                        itemError.SystemStatus = SystemStatuses.Success;
+                        itemError.Message = string.Format("劳务人员数据移交成功！共移交{0}笔数据。", rowCount);
+                        infoList.Add(itemError);
+                    }
+                    else
+                    {
+                        SystemStatusInfo itemError = new SystemStatusInfo();
+                        itemError.SystemStatus = SystemStatuses.Tip;
+                        itemError.Message = string.Format("{0}尚无劳务人员数据需要移交。", sourceUserName);
+                        infoList.Add(itemError);
+                    }
+                }
+
+                if (enterpriseData == "on")
+                {
+                    int rowCount = UpdateEnterpriseData(sourceUserGuid, targetUserGuid, targetUserName);
+
+                    if (rowCount > 0)
+                    {
+                        SystemStatusInfo itemError = new SystemStatusInfo();
+                        itemError.SystemStatus = SystemStatuses.Success;
+                        itemError.Message = string.Format("企业数据移交成功！共移交{0}笔数据。", rowCount);
+                        infoList.Add(itemError);
+                    }
+                    else
+                    {
+                        SystemStatusInfo itemError = new SystemStatusInfo();
+                        itemError.SystemStatus = SystemStatuses.Tip;
+                        itemError.Message = string.Format("{0}尚无企业数据需要移交。", sourceUserName);
+                        infoList.Add(itemError);
+                    }
+                }
+
+                if (informationBrokerData == "on")
+                {
+                    int rowCount = UpdateInformationBrokerData(sourceUserGuid, targetUserGuid, targetUserName);
+
+                    if (rowCount > 0)
+                    {
+                        SystemStatusInfo itemError = new SystemStatusInfo();
+                        itemError.SystemStatus = SystemStatuses.Success;
+                        itemError.Message = string.Format("信息员数据移交成功！共移交{0}笔数据。", rowCount);
+                        infoList.Add(itemError);
+                    }
+                    else
+                    {
+                        SystemStatusInfo itemError = new SystemStatusInfo();
+                        itemError.SystemStatus = SystemStatuses.Tip;
+                        itemError.Message = string.Format("{0}尚无信息员数据需要移交。", sourceUserName);
+                        infoList.Add(itemError);
+                    }
+                }
+            }
+
+            this.TempData.Add("OperationResultData", infoList);
+            return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+        }
+
+        private static int UpdateInformationBrokerData(Guid sourceUserGuid, Guid targetUserGuid, string targetUserName)
+        {
+            string sqlClauseForLaborBusinessUser = string.Format("UPDATE [XQYCInformationBroker] SET [BusinessUserGuid] = '{0}',[BusinessUserName] = '{1}' WHERE [BusinessUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborBusinessUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborBusinessUser);
+
+            string sqlClauseForLaborServiceUser = string.Format("UPDATE [XQYCInformationBroker] SET [ServiceUserGuid] = '{0}',[ServiceUserName] = '{1}' WHERE [ServiceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborServiceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborServiceUser);
+
+            string sqlClauseForLaborProviderUser = string.Format("UPDATE [XQYCInformationBroker] SET [ProviderUserGuid] = '{0}',[ProviderUserName] = '{1}' WHERE [ProviderUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborProviderUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborProviderUser);
+
+            string sqlClauseForLaborRecommendUser = string.Format("UPDATE [XQYCInformationBroker] SET [RecommendUserGuid] = '{0}',[RecommendUserName] = '{1}' WHERE [RecommendUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborRecommendUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborRecommendUser);
+
+            string sqlClauseForLaborFinanceUser = string.Format("UPDATE [XQYCInformationBroker] SET [FinanceUserGuid] = '{0}',[FinanceUserName] = '{1}' WHERE [FinanceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborFinanceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborFinanceUser);
+
+            string sqlClauseForLaborSettleUser = string.Format("UPDATE [XQYCInformationBroker] SET [SettleUserGuid] = '{0}',[SettleUserName] = '{1}' WHERE [SettleUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborSettleUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborSettleUser);
+
+            int rowCountForLabor = rowCountForLaborBusinessUser + rowCountForLaborServiceUser + rowCountForLaborProviderUser +
+                rowCountForLaborRecommendUser + rowCountForLaborFinanceUser + rowCountForLaborSettleUser;
+            return rowCountForLabor;
+        }
+
+        private static int UpdateEnterpriseData(Guid sourceUserGuid, Guid targetUserGuid, string targetUserName)
+        {
+            string sqlClauseForLaborBusinessUser = string.Format("UPDATE [XQYCEnterpriseService] SET [BusinessUserGuid] = '{0}',[BusinessUserName] = '{1}' WHERE [BusinessUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborBusinessUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborBusinessUser);
+
+            string sqlClauseForLaborServiceUser = string.Format("UPDATE [XQYCEnterpriseService] SET [ServiceUserGuid] = '{0}',[ServiceUserName] = '{1}' WHERE [ServiceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborServiceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborServiceUser);
+
+            string sqlClauseForLaborProviderUser = string.Format("UPDATE [XQYCEnterpriseService] SET [ProviderUserGuid] = '{0}',[ProviderUserName] = '{1}' WHERE [ProviderUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborProviderUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborProviderUser);
+
+            string sqlClauseForLaborRecommendUser = string.Format("UPDATE [XQYCEnterpriseService] SET [RecommendUserGuid] = '{0}',[RecommendUserName] = '{1}' WHERE [RecommendUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborRecommendUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborRecommendUser);
+
+            string sqlClauseForLaborFinanceUser = string.Format("UPDATE [XQYCEnterpriseService] SET [FinanceUserGuid] = '{0}',[FinanceUserName] = '{1}' WHERE [FinanceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborFinanceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborFinanceUser);
+
+            string sqlClauseForLaborSettleUser = string.Format("UPDATE [XQYCEnterpriseService] SET [SettleUserGuid] = '{0}',[SettleUserName] = '{1}' WHERE [SettleUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborSettleUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborSettleUser);
+
+            int rowCountForLabor = rowCountForLaborBusinessUser + rowCountForLaborServiceUser + rowCountForLaborProviderUser +
+                rowCountForLaborRecommendUser + rowCountForLaborFinanceUser + rowCountForLaborSettleUser;
+            return rowCountForLabor;
+        }
+
+        private static int UpdateLaborData(Guid sourceUserGuid, Guid targetUserGuid, string targetUserName)
+        {
+            string sqlClauseForLaborBusinessUser = string.Format("UPDATE [XQYCLabor] SET [BusinessUserGuid] = '{0}',[BusinessUserName] = '{1}' WHERE [BusinessUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborBusinessUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborBusinessUser);
+
+            string sqlClauseForLaborServiceUser = string.Format("UPDATE [XQYCLabor] SET [ServiceUserGuid] = '{0}',[ServiceUserName] = '{1}' WHERE [ServiceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborServiceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborServiceUser);
+
+            string sqlClauseForLaborProviderUser = string.Format("UPDATE [XQYCLabor] SET [ProviderUserGuid] = '{0}',[ProviderUserName] = '{1}' WHERE [ProviderUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborProviderUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborProviderUser);
+
+            string sqlClauseForLaborRecommendUser = string.Format("UPDATE [XQYCLabor] SET [RecommendUserGuid] = '{0}',[RecommendUserName] = '{1}' WHERE [RecommendUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborRecommendUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborRecommendUser);
+
+            string sqlClauseForLaborFinanceUser = string.Format("UPDATE [XQYCLabor] SET [FinanceUserGuid] = '{0}',[FinanceUserName] = '{1}' WHERE [FinanceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborFinanceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborFinanceUser);
+
+            string sqlClauseForLaborSettleUser = string.Format("UPDATE [XQYCLabor] SET [SettleUserGuid] = '{0}',[SettleUserName] = '{1}' WHERE [SettleUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborSettleUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborSettleUser);
+
+            int rowCountForLabor = rowCountForLaborBusinessUser + rowCountForLaborServiceUser + rowCountForLaborProviderUser +
+                rowCountForLaborRecommendUser + rowCountForLaborFinanceUser + rowCountForLaborSettleUser;
+            return rowCountForLabor;
         }
     }
 }
