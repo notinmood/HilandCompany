@@ -198,5 +198,14 @@ namespace XQYC.Web.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// 工作移交
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult TransferJobs()
+        {
+            return View();
+        }
     }
 }

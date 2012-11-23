@@ -33,7 +33,7 @@ namespace XQYC.Web.Control
         {
             List<string> cssFiles = new List<string>() { UrlHelperEx.UrlHelper.Content("~/Content/jQuery.tools.dateinput.css") };
             List<string> javaScriptFiles = new List<string>() { /*UrlHelperEx.UrlHelper.Content("~/Scripts/jQuery.tools.min.js")*/ };
-            string dateTimeOptions = string.Format("format:'{0}',selectors:true,yearRange:[-50,10]", datetimeFormat);
+            string dateTimeOptions = string.Format("format:'{0}',selectors:true,yearRange:[-70,10]", datetimeFormat);
             dateTimeOptions = "{" + dateTimeOptions + "}";
             if (DateTimeHelper.Parse(value, DateFormats.YMD) == DateTimeHelper.Min)
             {
