@@ -111,6 +111,9 @@ namespace XQYC.Business.DALCommon
                     [CreateUserKey],
                     [CreateUserName],
 			        [CreateDate],
+                    [LastUpdateUserKey],
+                    [LastUpdateUserName],
+			        [LastUpdateDate],
                     [IsProtectedByOwner],
 			        [PropertyNames],
 			        [PropertyValues]
@@ -166,6 +169,9 @@ namespace XQYC.Business.DALCommon
 			        {0}CreateUserKey,
                     {0}CreateUserName,
 			        {0}CreateDate,
+                    {0}LastUpdateUserKey,
+                    {0}LastUpdateUserName,
+			        {0}LastUpdateDate,
                     {0}IsProtectedByOwner,
 			        {0}PropertyNames,
 			        {0}PropertyValues
@@ -179,6 +185,10 @@ namespace XQYC.Business.DALCommon
 
         public override bool Update(LaborEntity entity)
         {
+            entity.LastUpdateDate = DateTime.Now;
+            entity.LastUpdateUserKey = BusinessUserBLL.CurrentUserGuid.ToString();
+            entity.LastUpdateUserName = BusinessUserBLL.CurrentUserName;
+
             string commandText = string.Format(@"Update [XQYCLabor] Set   
 					[UserGuid] = {0}UserGuid,
                     [LaborCode]={0}LaborCode,
@@ -230,6 +240,9 @@ namespace XQYC.Business.DALCommon
 				    [CreateUserKey] = {0}CreateUserKey,
                     [CreateUserName] = {0}CreateUserName,
 				    [CreateDate] = {0}CreateDate,
+                    [LastUpdateUserKey] = {0}LastUpdateUserKey,
+                    [LastUpdateUserName] = {0}LastUpdateUserName,
+				    [LastUpdateDate] = {0}LastUpdateDate,
                     [IsProtectedByOwner] = {0}IsProtectedByOwner,
 					[PropertyNames] = {0}PropertyNames,
 					[PropertyValues] = {0}PropertyValues
@@ -299,6 +312,9 @@ namespace XQYC.Business.DALCommon
                 GenerateParameter("CreateUserKey",entity.CreateUserKey?? String.Empty),
                 GenerateParameter("CreateUserName",entity.CreateUserName?? String.Empty),
 			    GenerateParameter("CreateDate",entity.CreateDate),
+                GenerateParameter("LastUpdateUserKey",entity.LastUpdateUserKey?? String.Empty),
+                GenerateParameter("LastUpdateUserName",entity.LastUpdateUserName?? String.Empty),
+			    GenerateParameter("LastUpdateDate",entity.LastUpdateDate),
                 GenerateParameter("IsProtectedByOwner",entity.IsProtectedByOwner),
 			    GenerateParameter("PropertyNames",entity.PropertyNames?? String.Empty),
 			    GenerateParameter("PropertyValues",entity.PropertyValues?? String.Empty)
@@ -525,6 +541,18 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CreateDate"))
                 {
                     entity.CreateDate = reader.GetDateTime(reader.GetOrdinal("CreateDate"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "LastUpdateUserKey"))
+                {
+                    entity.LastUpdateUserKey = reader.GetString(reader.GetOrdinal("LastUpdateUserKey"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "LastUpdateUserName"))
+                {
+                    entity.LastUpdateUserName = reader.GetString(reader.GetOrdinal("LastUpdateUserName"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "LastUpdateDate"))
+                {
+                    entity.LastUpdateDate = reader.GetDateTime(reader.GetOrdinal("LastUpdateDate"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "IsProtectedByOwner"))
                 {

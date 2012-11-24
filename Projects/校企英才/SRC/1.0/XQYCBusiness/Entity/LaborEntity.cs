@@ -478,7 +478,7 @@ namespace XQYC.Business.Entity
             get { return this.UserNameCN; }
         }
 
-        private Logics isProtectedByOwner = Logics.False;
+        private Logics isProtectedByOwner = Logics.True;
         /// <summary>
         /// 当前资源是否被保护（被保护的数据，仅能所有者修改，其他人仅能查看）
         /// </summary>
@@ -541,6 +541,36 @@ namespace XQYC.Business.Entity
         {
             get { return createDate; }
             set { createDate = value; }
+        }
+
+        private string lastUpdateUserKey = String.Empty;
+        /// <summary>
+        /// 资源最后更新人Key
+        /// </summary>
+        public string LastUpdateUserKey
+        {
+            get { return lastUpdateUserKey; }
+            set { lastUpdateUserKey = value; }
+        }
+
+        private string lastUpdateUserName = String.Empty;
+        /// <summary>
+        /// 资源最后更新人名称
+        /// </summary>
+        public string LastUpdateUserName
+        {
+            get { return lastUpdateUserName; }
+            set { lastUpdateUserName = value; }
+        }
+
+        private DateTime lastUpdateDate = DateTimeHelper.Min;
+        /// <summary>
+        /// 资源最后更新时间
+        /// </summary>
+        public DateTime LastUpdateDate
+        {
+            get { return lastUpdateDate; }
+            set { lastUpdateDate = value; }
         }
 
         #region 延迟属性

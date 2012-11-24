@@ -53,6 +53,8 @@ namespace XQYC.Business.BLL
             bool isSuccessful = BusinessUserBLL.UpdateUser(model);
             if (isSuccessful == true)
             {
+                //TIP:xieran2012124 保存即加锁锁定
+                model.IsProtectedByOwner = Logics.True;
                 isSuccessful = base.Update(model);
             }
 
