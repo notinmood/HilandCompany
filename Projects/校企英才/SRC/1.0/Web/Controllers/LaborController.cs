@@ -9,7 +9,6 @@ using System.Web.Mvc;
 using HiLand.Framework.BusinessCore;
 using HiLand.Framework.BusinessCore.BLL;
 using HiLand.Framework.BusinessCore.Enum;
-using HiLand.Framework4.Permission;
 using HiLand.Framework4.Permission.Attributes;
 using HiLand.General.BLL;
 using HiLand.General.Entity;

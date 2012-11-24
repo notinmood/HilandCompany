@@ -40,7 +40,7 @@
     </div>
     <div class="OperateArea" id="OperateAreaContainer">
         <div class="btn-group">
-            @Html.HiA("newDisplayA").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("Item", "Labor").Render(new { rel = "#EditDIV" })  
+            @Html.HiA("newDisplayA").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("Item", "Labor").Render(new { rel = "#EditDIV" })
             @Html.HiA("batchSettleWork").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-list icon-white\"></i>批量派工").ACA("BatchSettleWork", "Labor").Render(new { rel = "#EditDIV" })
             @Html.HiA("batchSettleCost").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-th-list icon-white\"></i>费用模式设置").ACA("BatchSettleCost", "Labor").Render(new { rel = "#EditDIV" })
             @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)
@@ -124,11 +124,18 @@
                 string entityGuid = entity.UserGuid.ToString();
                 <tr>
                     <td>
-                        <input type="checkbox" name="itemCheckboxSelector" class="checkboxSelector" value="@entityGuid"   />
-                        @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) | 
-                    @Html.HiA().CssClassName("modalInput password " + @entityGuid).Value("<i class=\"icon-asterisk\"></i>口令").ACA("Password", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) |
-                    @Html.HiA().CssClassName("contract").Value("<i class=\"icon-file\"></i>合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() |
-                    @Html.HiA().CssClassName("bankCard").Value("<i class=\"icon-retweet\"></i>银行账户").ACA("BankCardList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()
+                        @if (entity.IsOwning == true)
+                        {
+                            <input type="checkbox" name="itemCheckboxSelector" class="checkboxSelector" value="@entityGuid"   />
+                            @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) <span>|</span>
+                            @Html.HiA().CssClassName("modalInput password " + @entityGuid).Value("<i class=\"icon-asterisk\"></i>口令").ACA("Password", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) <span>|</span>
+                            @Html.HiA().CssClassName("contract").Value("<i class=\"icon-file\"></i>合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() <span>|</span>
+                            @Html.HiA().CssClassName("bankCard").Value("<i class=\"icon-retweet\"></i>银行账户").ACA("BankCardList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()
+                        }
+                        else
+                        {
+                            <span>尚无操作此条数据的权限</span>
+                        }
                     </td>
                     <td>@entity.UserCardID
                     </td>

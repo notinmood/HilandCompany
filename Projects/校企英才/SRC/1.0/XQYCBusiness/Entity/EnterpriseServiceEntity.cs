@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using HiLand.Framework.FoundationLayer;
 using HiLand.Framework.FoundationLayer.Attributes;
+using HiLand.Framework4.Permission;
 using HiLand.General.Entity;
 using HiLand.Utility.Data;
 using HiLand.Utility.Enums;
 
 namespace XQYC.Business.Entity
 {
-    public class EnterpriseServiceEntity : EnterpriseEntity//BaseModel<EnterpriseServiceEntity>
+    public class EnterpriseServiceEntity : EnterpriseEntity ,IResource
     {
         private static EnterpriseServiceEntity empty = null;
         public static new EnterpriseServiceEntity Empty
@@ -185,5 +187,50 @@ namespace XQYC.Business.Entity
             set { settleUserName = value; }
         }
         #endregion
+
+        public Guid ResourceGuid
+        {
+            get { return this.EnterpriseGuid; }
+        }
+
+        public string ResourceName
+        {
+            get { return this.CompanyName; }
+        }
+
+        private Logics isProtectedByOwner = Logics.False;
+        /// <summary>
+        /// 当前资源是否被保护（被保护的数据，仅能所有者修改，其他人仅能查看）
+        /// </summary>
+        public Logics IsProtectedByOwner
+        {
+            get { return this.isProtectedByOwner; }
+            set { this.isProtectedByOwner = value; }
+        }
+
+        private List<string> ownerKeys = new List<string>();
+        public List<string> OwnerKeys
+        {
+            get
+            {
+                if (ownerKeys.Count == 0)
+                {
+                    ownerKeys.Add(CreateUserKey);
+                    ownerKeys.Add(ServiceUserGuid.ToString());
+                    ownerKeys.Add(BusinessUserGuid.ToString());
+                    ownerKeys.Add(SettleUserGuid.ToString());
+                }
+
+                return ownerKeys;
+            }
+        }
+
+        /// <summary>
+        /// 当前用户是否拥有资源的控制权（可以是编辑等权限）
+        /// </summary>
+        public bool IsOwning
+        {
+            get { return PermissionDataHelper.IsOwning(this); }
+        }
     }
 }

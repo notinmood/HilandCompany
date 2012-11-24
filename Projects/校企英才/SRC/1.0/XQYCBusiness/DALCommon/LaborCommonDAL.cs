@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using HiLand.Framework.BusinessCore;
+using HiLand.Framework.BusinessCore.BLL;
 using HiLand.Framework.BusinessCore.DALCommon;
 using HiLand.Framework.FoundationLayer;
 using HiLand.Utility.Data;
 using HiLand.Utility.DataBase;
+using HiLand.Utility.Enums;
 using XQYC.Business.Entity;
 using XQYC.Business.Enums;
 
@@ -47,6 +49,17 @@ namespace XQYC.Business.DALCommon
         #region 逻辑操作
         public override bool Create(LaborEntity entity)
         {
+            if (entity.CreateDate == DateTimeHelper.Min)
+            {
+                entity.CreateDate = DateTime.Now;
+            }
+
+            if (string.IsNullOrEmpty(entity.CreateUserKey))
+            {
+                entity.CreateUserKey = BusinessUserBLL.CurrentUserGuid.ToString();
+                entity.CreateUserName = BusinessUserBLL.CurrentUserName;
+            }
+
             string commandText = string.Format(@"Insert Into [XQYCLabor] (
 			        [UserGuid],
                     [LaborCode],
@@ -95,6 +108,10 @@ namespace XQYC.Business.DALCommon
 			        [Memo3],
 			        [Memo4],
 			        [Memo5],
+                    [CreateUserKey],
+                    [CreateUserName],
+			        [CreateDate],
+                    [IsProtectedByOwner],
 			        [PropertyNames],
 			        [PropertyValues]
                 ) 
@@ -146,6 +163,10 @@ namespace XQYC.Business.DALCommon
 			        {0}Memo3,
 			        {0}Memo4,
 			        {0}Memo5,
+			        {0}CreateUserKey,
+                    {0}CreateUserName,
+			        {0}CreateDate,
+                    {0}IsProtectedByOwner,
 			        {0}PropertyNames,
 			        {0}PropertyValues
                 )", ParameterNamePrefix);
@@ -206,6 +227,10 @@ namespace XQYC.Business.DALCommon
 					[Memo3] = {0}Memo3,
 					[Memo4] = {0}Memo4,
 					[Memo5] = {0}Memo5,
+				    [CreateUserKey] = {0}CreateUserKey,
+                    [CreateUserName] = {0}CreateUserName,
+				    [CreateDate] = {0}CreateDate,
+                    [IsProtectedByOwner] = {0}IsProtectedByOwner,
 					[PropertyNames] = {0}PropertyNames,
 					[PropertyValues] = {0}PropertyValues
              Where [LaborID] = {0}LaborID", ParameterNamePrefix);
@@ -271,6 +296,10 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("Memo3",entity.Memo3?? String.Empty),
 			    GenerateParameter("Memo4",entity.Memo4?? String.Empty),
 			    GenerateParameter("Memo5",entity.Memo5?? String.Empty),
+                GenerateParameter("CreateUserKey",entity.CreateUserKey?? String.Empty),
+                GenerateParameter("CreateUserName",entity.CreateUserName?? String.Empty),
+			    GenerateParameter("CreateDate",entity.CreateDate),
+                GenerateParameter("IsProtectedByOwner",entity.IsProtectedByOwner),
 			    GenerateParameter("PropertyNames",entity.PropertyNames?? String.Empty),
 			    GenerateParameter("PropertyValues",entity.PropertyValues?? String.Empty)
             };
@@ -484,6 +513,22 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "Memo5"))
                 {
                     entity.Memo5 = reader.GetString(reader.GetOrdinal("Memo5"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CreateUserKey"))
+                {
+                    entity.CreateUserKey = reader.GetString(reader.GetOrdinal("CreateUserKey"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CreateUserName"))
+                {
+                    entity.CreateUserName = reader.GetString(reader.GetOrdinal("CreateUserName"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CreateDate"))
+                {
+                    entity.CreateDate = reader.GetDateTime(reader.GetOrdinal("CreateDate"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "IsProtectedByOwner"))
+                {
+                    entity.IsProtectedByOwner = (Logics)reader.GetInt32(reader.GetOrdinal("IsProtectedByOwner"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PropertyNames"))
                 {

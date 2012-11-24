@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using HiLand.Framework.FoundationLayer;
+using HiLand.Framework4.Permission;
 using HiLand.General.BLL;
 using HiLand.General.Entity;
 using HiLand.Utility.Data;
+using HiLand.Utility.Enums;
 using XQYC.Business.BLL;
 using XQYC.Business.Enums;
 
@@ -10,7 +14,7 @@ namespace XQYC.Business.Entity
     /// <summary>
     /// 劳务人员实体
     /// </summary>
-    public class LaborEntity : BusinessUserEx<LaborEntity>
+    public class LaborEntity : BusinessUserEx<LaborEntity>, IResource
     {
         public new static LaborEntity Empty
         {
@@ -355,7 +359,7 @@ namespace XQYC.Business.Entity
             get { return currentEnterpriseName; }
             set { currentEnterpriseName = value; }
         }
-        
+
 
         private string currentContractKey = String.Empty;
         public string CurrentContractKey
@@ -464,6 +468,81 @@ namespace XQYC.Business.Entity
         }
         #endregion
 
+        public Guid ResourceGuid
+        {
+            get { return this.UserGuid; }
+        }
+
+        public string ResourceName
+        {
+            get { return this.UserNameCN; }
+        }
+
+        private Logics isProtectedByOwner = Logics.False;
+        /// <summary>
+        /// 当前资源是否被保护（被保护的数据，仅能所有者修改，其他人仅能查看）
+        /// </summary>
+        public Logics IsProtectedByOwner
+        {
+            get { return this.isProtectedByOwner; }
+            set { this.isProtectedByOwner = value; }
+        }
+
+        private List<string> ownerKeys = new List<string>();
+        public List<string> OwnerKeys
+        {
+            get
+            {
+                if (ownerKeys.Count == 0)
+                {
+                    ownerKeys.Add(CreateUserKey);
+                    ownerKeys.Add(ServiceUserGuid.ToString());
+                    ownerKeys.Add(BusinessUserGuid.ToString());
+                    ownerKeys.Add(SettleUserGuid.ToString());
+                }
+
+                return ownerKeys;
+            }
+        }
+
+        /// <summary>
+        /// 当前用户是否拥有资源的控制权（可以是编辑等权限）
+        /// </summary>
+        public bool IsOwning
+        {
+            get { return PermissionDataHelper.IsOwning(this); }
+        }
+
+        private string createUserKey = String.Empty;
+        /// <summary>
+        /// 资源创建人Key
+        /// </summary>
+        public string CreateUserKey
+        {
+            get { return createUserKey; }
+            set { createUserKey = value; }
+        }
+
+        private string createUserName = String.Empty;
+        /// <summary>
+        /// 资源创建人名称
+        /// </summary>
+        public string CreateUserName
+        {
+            get { return createUserName; }
+            set { createUserName = value; }
+        }
+
+        private DateTime createDate = DateTimeHelper.Min;
+        /// <summary>
+        /// 资源创建时间
+        /// </summary>
+        public DateTime CreateDate
+        {
+            get { return createDate; }
+            set { createDate = value; }
+        }
+
         #region 延迟属性
         private LaborContractEntity currentLaborContract = LaborContractEntity.Empty;
         /// <summary>
@@ -487,10 +566,10 @@ namespace XQYC.Business.Entity
         /// 当前使用的银行卡信息
         /// </summary>
         public BankEntity CurrentBank
-        { 
+        {
             get
             {
-                if (currentBank.IsEmpty==true)
+                if (currentBank.IsEmpty == true)
                 {
                     currentBank = BankBLL.Instance.GetPrimary(this.UserGuid);
                 }
@@ -510,5 +589,8 @@ namespace XQYC.Business.Entity
             }
         }
         #endregion
+
+
+
     }
 }

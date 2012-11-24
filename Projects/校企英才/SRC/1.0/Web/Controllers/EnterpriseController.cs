@@ -561,7 +561,7 @@ namespace XQYC.Web.Controllers
                         {
                             break;
                         }
-                        string thumbVirtualPath = image.EnsureThumbnailAllVirtualPath(200, 150);
+                        string thumbVirtualPath = image.ImageAllVirtualPath; //image.EnsureThumbnailAllVirtualPath(200, 150);
                         string thumbFullPath = Server.MapPath(thumbVirtualPath);
 
                         Stream imageStream = FileHelper.GetStreamFromFile(thumbFullPath);
