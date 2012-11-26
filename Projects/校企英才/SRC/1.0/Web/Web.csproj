@@ -176,8 +176,13 @@
     <Compile Include="Models\Jobs\BirthdayRemindJobOfLabor.cs" />
     <Compile Include="Models\Jobs\ContractRemindJobOfLabor.cs" />
     <Compile Include="Models\Jobs\ContractRemindJobOfEnterprise.cs" />
+    <Compile Include="Models\Jobs\ResourceControlJobForInformationBroker.cs" />
+    <Compile Include="Models\Jobs\ResourceControlJobForEnterprise.cs" />
     <Compile Include="Models\Jobs\JobConst.cs" />
     <Compile Include="Models\Jobs\RemindJob.cs" />
+    <Compile Include="Models\Jobs\ResourceControlJobForLabor.cs" />
+    <Compile Include="Models\Jobs\ResourceControlJob.cs" />
+    <Compile Include="Models\Jobs\SystemJob.cs" />
     <Compile Include="Models\SystemConst.cs" />
     <Compile Include="Models\Test\Contact.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

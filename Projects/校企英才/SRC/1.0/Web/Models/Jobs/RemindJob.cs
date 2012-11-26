@@ -9,29 +9,17 @@ using Quartz;
 
 namespace XQYC.Web.Models.Jobs
 {
-    public abstract class RemindJob : IJob
+    /// <summary>
+    /// 提醒类别的系统任务基类
+    /// </summary>
+    public abstract class RemindJob : SystemJob
     {
-        public void Execute(JobExecutionContext context)
-        {
-            if (this.IsExcuted() == false)
-            {
-                ExecuteDetails(context);
-                Log();
-            }
-        }
-
         /// <summary>
-        /// Job执行的具体实现
+        /// 日志类别的名称
         /// </summary>
-        /// <param name="context"></param>
-        protected abstract void ExecuteDetails(JobExecutionContext context);
-
-        /// <summary>
-        /// Config中配置的系统任务
-        /// </summary>
-        protected SystemTaskOfDailyExcutorEntity SystemTaskInConfig
+        protected override string LogCategoryName
         {
-            get { return SystemTaskSectionConfig.Instance.SystemTaskOfDailyExcutorList.Find(item => item.Name == this.TaskNameInConfig); }
+            get { return "Remind"; }
         }
 
         /// <summary>
@@ -62,35 +50,6 @@ namespace XQYC.Web.Models.Jobs
             remindEntity.StartDate = DateTime.Now;
             remindEntity.TopLevel = 0;
             return remindEntity;
-        }
-
-        private void Log()
-        {
-            LogEntity entity = new LogEntity();
-            entity.LogCategory = "Remind";
-            entity.LogDate = DateTime.Now;
-            entity.Logger = this.TaskNameInConfig;
-            entity.LogLevel = LogLevels.Notice.ToString();
-            entity.LogMessage = string.Empty;
-            entity.LogStatus = Logics.True;
-            entity.LogThread = string.Empty;
-
-            LogBLL.Instance.Create(entity);
-        }
-
-        /// <summary>
-        /// 在config文件中配置的任务名称
-        /// </summary>
-        protected abstract string TaskNameInConfig
-        {
-            get;
-        }
-
-
-        private bool IsExcuted()
-        {
-            Logics logic = LogBLL.Instance.GetLogStatus(TaskNameInConfig, DateTime.Today);
-            return Converter.ToBoolean(logic);
         }
     }
 }

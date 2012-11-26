@@ -5,4 +5,4 @@
 2. InitialUserPassword 管理员创建用户时，用户的初始密码 , 缺省为123 （Models\SystemConst.cs）
 
 3.目录\Upload需要有写入权限
-4.目录\DownFiles\Templet\Jobs需要有写入权限
+4.目录\DownFiles\Templet\EnterpriseJobs需要有写入权限

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using HiLand.Framework.FoundationLayer;
+using HiLand.Framework4.Permission;
 using HiLand.General;
 using HiLand.Utility.Data;
 using HiLand.Utility.Enums;
@@ -10,7 +12,7 @@ namespace XQYC.Business.Entity
     /// <summary>
     /// 信息员实体
     /// </summary>
-    public class InformationBrokerEntity : BaseModel<InformationBrokerEntity>
+    public class InformationBrokerEntity : BaseModel<InformationBrokerEntity>, IResource
     {
         public override string[] BusinessKeyNames
         {
@@ -282,12 +284,88 @@ namespace XQYC.Business.Entity
             set { createUserKey = value; }
         }
 
+        private string createUserName = String.Empty;
+        public string CreateUserName
+        {
+            get { return createUserName; }
+            set { createUserName = value; }
+        }
+
         private DateTime createDate = DateTimeHelper.Min;
         public DateTime CreateDate
         {
             get { return createDate; }
             set { createDate = value; }
         }
+
+        private string lastUpdateUserKey = String.Empty;
+        public string LastUpdateUserKey
+        {
+            get { return lastUpdateUserKey; }
+            set { lastUpdateUserKey = value; }
+        }
+
+        private string lastUpdateUserName = String.Empty;
+        public string LastUpdateUserName
+        {
+            get { return lastUpdateUserName; }
+            set { lastUpdateUserName = value; }
+        }
+
+        private DateTime lastUpdateDate = DateTimeHelper.Min;
+        public DateTime LastUpdateDate
+        {
+            get { return lastUpdateDate; }
+            set { lastUpdateDate = value; }
+        }
+
+        private Logics isProtectedByOwner;
+        public Logics IsProtectedByOwner
+        {
+            get { return isProtectedByOwner; }
+            set { isProtectedByOwner = value; }
+        }
+
+        private int cooperateStatus;
+        public int CooperateStatus
+        {
+            get { return cooperateStatus; }
+            set { cooperateStatus = value; }
+        }
         #endregion
+
+
+        public bool IsOwning
+        {
+            get { return PermissionDataHelper.IsOwning(this); }
+        }
+
+        private List<string> ownerKeys = new List<string>();
+        public List<string> OwnerKeys
+        {
+            get
+            {
+                if (ownerKeys.Count == 0)
+                {
+                    ownerKeys.Add(CreateUserKey);
+                    ownerKeys.Add(LastUpdateUserKey);
+                    ownerKeys.Add(ServiceUserGuid.ToString());
+                    ownerKeys.Add(BusinessUserGuid.ToString());
+                    ownerKeys.Add(SettleUserGuid.ToString());
+                }
+
+                return ownerKeys;
+            }
+        }
+
+        public Guid ResourceGuid
+        {
+            get { return InformationBrokerGuid; }
+        }
+
+        public string ResourceName
+        {
+            get { return InformationBrokerName; }
+        }
     }
 }

@@ -4,6 +4,7 @@ using HiLand.Framework.FoundationLayer;
 using HiLand.General.BLL;
 using HiLand.General.Entity;
 using HiLand.Utility.Data;
+using HiLand.Utility.Enums;
 using HiLand.Utility.Reflection;
 using XQYC.Business.DAL;
 using XQYC.Business.Entity;
@@ -12,6 +13,37 @@ namespace XQYC.Business.BLL
 {
     public class EnterpriseServiceBLL : BaseBLL<EnterpriseServiceBLL, EnterpriseServiceEntity, EnterpriseServiceDAL>
     {
+        public override bool Create(EnterpriseServiceEntity model)
+        {
+            bool result = base.Create(model);
+            if (result == true && model.EnterpriseServiceStatus== Logics.True)
+            {
+                EnterpriseEntity enterpriseEntity = EnterpriseBLL.Instance.Get(model.EnterpriseGuid);
+                enterpriseEntity.CooperateStatus = FlagHelper.AddFlag(enterpriseEntity.CooperateStatus, model.EnterpriseServiceType) ;
+                EnterpriseBLL.Instance.Update(enterpriseEntity);
+            }
+            return result;
+        }
+
+        public override bool Update(EnterpriseServiceEntity model)
+        {
+            bool result = base.Update(model);
+            if (result == true)
+            {
+                EnterpriseEntity enterpriseEntity = EnterpriseBLL.Instance.Get(model.EnterpriseGuid);
+                if (model.EnterpriseServiceStatus == Logics.True)
+                {
+                    enterpriseEntity.CooperateStatus = FlagHelper.AddFlag(enterpriseEntity.CooperateStatus, model.EnterpriseServiceType);
+                }
+                else
+                {
+                    enterpriseEntity.CooperateStatus = FlagHelper.RemoveFlag(enterpriseEntity.CooperateStatus, model.EnterpriseServiceType);
+                }
+                EnterpriseBLL.Instance.Update(enterpriseEntity);
+            }
+            return result;
+        }
+
         public override EnterpriseServiceEntity Get(Guid modelID)
         {
             EnterpriseServiceEntity entityPartial = base.Get(modelID);

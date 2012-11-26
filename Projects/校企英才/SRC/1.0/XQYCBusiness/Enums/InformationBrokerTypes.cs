@@ -15,18 +15,18 @@ namespace XQYC.Business.Enums
         /// 个人
         /// </summary>
         [EnumItemDescription("zh-CN", "个人")]
-        Individual,
+        Individual=0,
 
         /// <summary>
         /// 中介
         /// </summary>
         [EnumItemDescription("zh-CN", "中介")]
-        CommonBroker,
+        CommonBroker=1,
 
         /// <summary>
         /// 学校
         /// </summary>
         [EnumItemDescription("zh-CN", "学校")]
-        School,
+        School=2,
     }
 }

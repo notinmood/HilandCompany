@@ -496,6 +496,7 @@ namespace XQYC.Business.Entity
                 if (ownerKeys.Count == 0)
                 {
                     ownerKeys.Add(CreateUserKey);
+                    ownerKeys.Add(LastUpdateUserKey);
                     ownerKeys.Add(ServiceUserGuid.ToString());
                     ownerKeys.Add(BusinessUserGuid.ToString());
                     ownerKeys.Add(SettleUserGuid.ToString());
@@ -619,8 +620,5 @@ namespace XQYC.Business.Entity
             }
         }
         #endregion
-
-
-
     }
 }

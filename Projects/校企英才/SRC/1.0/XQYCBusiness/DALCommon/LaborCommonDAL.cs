@@ -57,7 +57,7 @@ namespace XQYC.Business.DALCommon
             if (string.IsNullOrEmpty(entity.CreateUserKey))
             {
                 entity.CreateUserKey = BusinessUserBLL.CurrentUserGuid.ToString();
-                entity.CreateUserName = BusinessUserBLL.CurrentUserName;
+                entity.CreateUserName = BusinessUserBLL.CurrentUser.UserNameDisplay;
             }
 
             string commandText = string.Format(@"Insert Into [XQYCLabor] (
@@ -187,7 +187,7 @@ namespace XQYC.Business.DALCommon
         {
             entity.LastUpdateDate = DateTime.Now;
             entity.LastUpdateUserKey = BusinessUserBLL.CurrentUserGuid.ToString();
-            entity.LastUpdateUserName = BusinessUserBLL.CurrentUserName;
+            entity.LastUpdateUserName = BusinessUserBLL.CurrentUser.UserNameDisplay;
 
             string commandText = string.Format(@"Update [XQYCLabor] Set   
 					[UserGuid] = {0}UserGuid,

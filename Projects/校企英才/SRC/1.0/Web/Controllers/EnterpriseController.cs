@@ -534,7 +534,7 @@ namespace XQYC.Web.Controllers
         {
             //1.读取模板
             string fileFullPath = Server.MapPath("~/DownFiles/Templet/企业招聘简章模板.docx");
-            string targetFullPath = Server.MapPath("~/DownFiles/Templet/Jobs/企业招聘简章模板-" + GuidHelper.NewGuidString() + ".docx");
+            string targetFullPath = Server.MapPath("~/DownFiles/Templet/EnterpriseJobs/企业招聘简章模板-" + GuidHelper.NewGuidString() + ".docx");
             System.IO.File.Copy(fileFullPath, targetFullPath, true);
 
             EnterpriseJobEntity jobEntity = EnterpriseJobBLL.Instance.Get(itemKey);

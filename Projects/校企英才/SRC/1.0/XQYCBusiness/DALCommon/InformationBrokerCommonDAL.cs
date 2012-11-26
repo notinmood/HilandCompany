@@ -89,7 +89,13 @@ namespace XQYC.Business.DALCommon
 			    [SettleUserGuid],
 			    [SettleUserName],
 			    [CreateUserKey],
+			    [CreateUserName],
 			    [CreateDate],
+			    [LastUpdateUserKey],
+			    [LastUpdateUserName],
+			    [LastUpdateDate],
+			    [IsProtectedByOwner],
+			    [CooperateStatus],
 			    [PropertyNames],
 			    [PropertyValues]
             ) 
@@ -128,7 +134,13 @@ namespace XQYC.Business.DALCommon
 			    {0}SettleUserGuid,
 			    {0}SettleUserName,
 			    {0}CreateUserKey,
+			    {0}CreateUserName,
 			    {0}CreateDate,
+			    {0}LastUpdateUserKey,
+			    {0}LastUpdateUserName,
+			    {0}LastUpdateDate,
+			    {0}IsProtectedByOwner,
+			    {0}CooperateStatus,
 			    {0}PropertyNames,
 			    {0}PropertyValues
             )", ParameterNamePrefix);
@@ -176,7 +188,13 @@ namespace XQYC.Business.DALCommon
                     [SettleUserGuid] = {0}SettleUserGuid,
 				    [SettleUserName] = {0}SettleUserName,
 				    [CreateUserKey] = {0}CreateUserKey,
+				    [CreateUserName] = {0}CreateUserName,
 				    [CreateDate] = {0}CreateDate,
+				    [LastUpdateUserKey] = {0}LastUpdateUserKey,
+				    [LastUpdateUserName] = {0}LastUpdateUserName,
+				    [LastUpdateDate] = {0}LastUpdateDate,
+				    [IsProtectedByOwner] = {0}IsProtectedByOwner,
+				    [CooperateStatus] = {0}CooperateStatus,
 				    [PropertyNames] = {0}PropertyNames,
 				    [PropertyValues] = {0}PropertyValues
             Where [InformationBrokerID] = {0}InformationBrokerID", ParameterNamePrefix);
@@ -229,7 +247,13 @@ namespace XQYC.Business.DALCommon
                     GenerateParameter("SettleUserGuid",entity.SettleUserGuid),
 			        GenerateParameter("SettleUserName",entity.SettleUserName?? String.Empty),
 			        GenerateParameter("CreateUserKey",entity.CreateUserKey?? String.Empty),
+			        GenerateParameter("CreateUserName",entity.CreateUserName?? String.Empty),
 			        GenerateParameter("CreateDate",entity.CreateDate),
+			        GenerateParameter("LastUpdateUserKey",entity.LastUpdateUserKey?? String.Empty),
+			        GenerateParameter("LastUpdateUserName",entity.LastUpdateUserName?? String.Empty),
+			        GenerateParameter("LastUpdateDate",entity.LastUpdateDate),
+			        GenerateParameter("IsProtectedByOwner",entity.IsProtectedByOwner),
+			        GenerateParameter("CooperateStatus",entity.CooperateStatus),
 			        GenerateParameter("PropertyNames",entity.PropertyNames?? String.Empty),
 			        GenerateParameter("PropertyValues",entity.PropertyValues?? String.Empty)
             };
@@ -383,9 +407,33 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.CreateUserKey = reader.GetString(reader.GetOrdinal("CreateUserKey"));
                 }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CreateUserName"))
+                {
+                    entity.CreateUserName = reader.GetString(reader.GetOrdinal("CreateUserName"));
+                }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CreateDate"))
                 {
                     entity.CreateDate = reader.GetDateTime(reader.GetOrdinal("CreateDate"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "LastUpdateUserKey"))
+                {
+                    entity.LastUpdateUserKey = reader.GetString(reader.GetOrdinal("LastUpdateUserKey"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "LastUpdateUserName"))
+                {
+                    entity.LastUpdateUserName = reader.GetString(reader.GetOrdinal("LastUpdateUserName"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "LastUpdateDate"))
+                {
+                    entity.LastUpdateDate = reader.GetDateTime(reader.GetOrdinal("LastUpdateDate"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "IsProtectedByOwner"))
+                {
+                    entity.IsProtectedByOwner = (Logics)reader.GetInt32(reader.GetOrdinal("IsProtectedByOwner"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CooperateStatus"))
+                {
+                    entity.CooperateStatus = reader.GetInt32(reader.GetOrdinal("CooperateStatus"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PropertyNames"))
                 {
