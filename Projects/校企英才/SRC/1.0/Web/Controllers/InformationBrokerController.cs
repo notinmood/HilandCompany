@@ -256,7 +256,7 @@ namespace XQYC.Web.Controllers
         {
             string userValueInputted = RequestHelper.GetValue("term");
             List<AutoCompleteEntity> itemList = new List<AutoCompleteEntity>();
-            string whereClause = string.Format(" ( InformationBrokerName like '{0}%' OR InformationBrokerNameShort like '{0}%' ) AND  CanUsable={1}", userValueInputted, (int)Logics.True);
+            string whereClause = string.Format(" ( InformationBrokerName like '%{0}%' OR InformationBrokerNameShort like '%{0}%' OR HigherOrganization like '%{0}%'  ) AND  CanUsable={1}", userValueInputted, (int)Logics.True);
             List<InformationBrokerEntity> userList = InformationBrokerBLL.Instance.GetList(whereClause);
 
             foreach (InformationBrokerEntity currentLabor in userList)
@@ -264,7 +264,7 @@ namespace XQYC.Web.Controllers
                 AutoCompleteEntity item = new AutoCompleteEntity();
                 item.details = "nothing";
                 item.key = currentLabor.InformationBrokerGuid.ToString();
-                item.label = string.Format("{0}({1})", currentLabor.InformationBrokerName, currentLabor.InformationBrokerNameShort);
+                item.label = string.Format("{0}([{1}]{2})", currentLabor.InformationBrokerName, EnumHelper.GetDisplayValue(currentLabor.InformationBrokerType),currentLabor.HigherOrganization);
                 item.value = currentLabor.InformationBrokerName;
 
                 itemList.Add(item);

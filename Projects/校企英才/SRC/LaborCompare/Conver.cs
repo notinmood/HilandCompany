@@ -58,5 +58,11 @@ namespace LaborCompare
             导入企业更新企业对应的工作人员 window = new 导入企业更新企业对应的工作人员();
             window.ShowDialog();
         }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            更新信息员对应的工作人员 window = new 更新信息员对应的工作人员();
+            window.ShowDialog();
+        }
     }
 }
