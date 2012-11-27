@@ -79,7 +79,7 @@ namespace XQYC.Web.Controllers
         /// <returns></returns>
         public ActionResult IndexLaborJobFair(int id = 1)
         {
-            return InnerIndex(id, 3, "IndexLaborJobFair", "IndexLaborJobFair");//3在GeneralBasicSetting表中表示人才会场
+            return InnerIndex(id, 4, "IndexLaborJobFair", "IndexLaborJobFair");//4在GeneralBasicSetting表中表示人才会场
         }
 
         private ActionResult InnerIndex(int id, int enterpriseServiceType, string viewName,string actionName)
@@ -941,9 +941,9 @@ namespace XQYC.Web.Controllers
         /// <param name="itemTypeNumber"></param>
         /// <param name="itemTypeName"></param>
         /// <returns></returns>
-        public ActionResult ServiceItem(string itemKey, string enterpriseKey, string itemTypeNumber, string itemTypeName = StringHelper.Empty)
+        public ActionResult ServiceItem(string itemKey, string enterpriseKey, string itemTypeNumber)
         {
-            this.ViewBag.ItemTypeName = itemTypeName;
+            //
             string returnUrl = RequestHelper.GetValue("returnUrl");
             this.ViewBag.ReturnUrl = returnUrl;
 
@@ -956,6 +956,10 @@ namespace XQYC.Web.Controllers
             serviceEntity.EnterpriseGuid = GuidHelper.TryConvert(enterpriseKey);
             serviceEntity.EnterpriseInfo = EnterpriseBLL.Instance.Get(serviceEntity.EnterpriseGuid).CompanyName;
             serviceEntity.EnterpriseServiceType = Converter.ChangeType<int>(itemTypeNumber);
+
+            List<BasicSettingEntity> allServiceList = BasicSettingBLL.Instance.GetListByCategory("EnterpriseServiceType");
+            string itemTypeName = allServiceList.Find(m=>m.SettingValue==itemTypeNumber).DisplayName;
+            this.ViewBag.ItemTypeName = itemTypeName;
 
             return View(serviceEntity);
         }

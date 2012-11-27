@@ -92,6 +92,12 @@
     <Compile Include="BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="更新企业服务的工作人员.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="更新原表企业跟踪的企业guid.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="更新信息员对应的工作人员.cs">
       <SubType>Form</SubType>
     </Compile>

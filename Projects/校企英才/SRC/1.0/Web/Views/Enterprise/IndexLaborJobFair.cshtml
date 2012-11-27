@@ -47,7 +47,7 @@
     }
 
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业名称,地区范围", ConditionFieldName = "CompanyName,AreaOther", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业名称,地区范围,服务人员,开发人员", ConditionFieldName = "CompanyName,AreaOther,ServiceUserName,BusinessUserName", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合作意向", ConditionFieldName = "EnterpriseLevel", ConditionType = typeof(CommonLevels), AddonData = "enumDisplayCategory:star" });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业性质", ConditionFieldName = "BusinessType", ConditionType = typeof(EnterpriseTypes) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业状态", ConditionFieldName = "CanUsable", ConditionType = typeof(Logics) });
@@ -77,6 +77,10 @@
                 </th>
                 <th style="width: 30px">状态
                 </th>
+                <th style="width: 50px">开发人员
+                </th>
+                <th style="width: 50px">服务人员
+                </th>
                 <th>联系地址
                 </th>
             </tr>
@@ -95,6 +99,10 @@
                     <td>@entity.ContactPerson
                     </td>
                     <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
+                    </td>
+                    <td>@entity.BusinessUserName
+                    </td>
+                    <td>@entity.ServiceUserName
                     </td>
                     <td>@entity.PrincipleAddress
                     </td>

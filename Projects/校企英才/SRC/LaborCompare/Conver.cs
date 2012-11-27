@@ -64,5 +64,11 @@ namespace LaborCompare
             更新信息员对应的工作人员 window = new 更新信息员对应的工作人员();
             window.ShowDialog();
         }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            更新企业服务的工作人员 window = new 更新企业服务的工作人员();
+            window.ShowDialog();
+        }
     }
 }

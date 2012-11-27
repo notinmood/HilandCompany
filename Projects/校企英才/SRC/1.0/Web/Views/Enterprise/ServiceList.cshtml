@@ -56,7 +56,9 @@
             </th>
             <th style="width: 80px">财务人员
             </th>
-            <th>客服人员
+            <th style="width: 80px">开发人员
+            </th>
+            <th>服务人员
             </th>
         </tr>
         @foreach (BasicSettingEntity entity in Model)
@@ -102,6 +104,7 @@
                 <td>@currentSelectService.ProviderUserName</td>
                 <td>@currentSelectService.RecommendUserName</td>
                 <td>@currentSelectService.FinanceUserName</td>
+                <td>@currentSelectService.BusinessUserName</td>
                 <td>@currentSelectService.ServiceUserName</td>
             </tr>   
         }
@@ -134,7 +137,7 @@
                 var itemTypeNumber = $(this).attr("itemTypeNumber");
                 var itemTypeName = $(this).attr("itemTypeName");
                 $("#currentPopupItemGuid").val(itemKey);
-                var url = '@Url.Action("ServiceItem")?r=' + Math.random() + '&enterpriseKey=@enterpriseKey&itemKey=' + itemKey + '&itemTypeNumber=' + itemTypeNumber + '&itemTypeName=' + itemTypeName + '&returnUrl=' + encodeURIComponent('@currentUrl');
+                var url = '@Url.Action("ServiceItem")?r=' + Math.random() + '&enterpriseKey=@enterpriseKey&itemKey=' + itemKey + '&itemTypeNumber=' + itemTypeNumber + '&returnUrl=' + encodeURIComponent('@currentUrl');
                 $("#EditDIV").load(url);
             });
         });
