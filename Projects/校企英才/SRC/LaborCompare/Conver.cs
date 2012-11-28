@@ -70,5 +70,23 @@ namespace LaborCompare
             更新企业服务的工作人员 window = new 更新企业服务的工作人员();
             window.ShowDialog();
         }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            更新原表企业跟踪的企业guid window = new 更新原表企业跟踪的企业guid();
+            window.ShowDialog();
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            更新原表中介跟踪的企业guid window = new 更新原表中介跟踪的企业guid();
+            window.ShowDialog();
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            更新原表学校跟踪的企业guid window = new 更新原表学校跟踪的企业guid();
+            window.ShowDialog();
+        }
     }
 }

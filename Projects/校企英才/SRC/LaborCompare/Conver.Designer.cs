@@ -37,6 +37,9 @@
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -129,11 +132,44 @@
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(311, 177);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(236, 23);
+            this.button10.TabIndex = 9;
+            this.button10.Text = "更新原表企业跟踪的企业guid";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(311, 219);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(236, 23);
+            this.button11.TabIndex = 10;
+            this.button11.Text = "更新原表学校跟踪的企业guid";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(311, 249);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(236, 23);
+            this.button12.TabIndex = 11;
+            this.button12.Text = "更新原表中介跟踪的企业guid";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
             // Conver
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(653, 394);
+            this.Controls.Add(this.button12);
+            this.Controls.Add(this.button11);
+            this.Controls.Add(this.button10);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
@@ -160,5 +196,8 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button button12;
     }
 }

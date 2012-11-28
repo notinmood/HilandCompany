@@ -17,97 +17,105 @@
 }
 @model PermissionValidateConfig
 <style type="text/css">
-    form label
-    {
+    form label {
         display: inline;
         padding: 0 0 10px;
         font-weight: normal;
     }
 </style>
-<h2>
-    操作权限设置</h2>
-    <div id="formContainer">
-@using (Html.BeginForm())
-{
-    foreach (KeyValuePair<Guid, PermissionValidateApplication> kvpApp in Model.Applications)
+<h2>操作权限设置</h2>
+<div id="formContainer">
+    @using (Html.BeginForm())
     {
-        PermissionValidateApplication currentApp = kvpApp.Value;
-        if (currentApp.IsVisible == false)
+        foreach (KeyValuePair<Guid, PermissionValidateApplication> kvpApp in Model.Applications)
         {
-            continue;
-        }
-    <span>应用程序:</span> @currentApp.Name <br />
-    
-        int moduleNumber= 0;
-        foreach (KeyValuePair<Guid, PermissionValidateModule> kvpModule in currentApp.Modules)
-        {
-            PermissionValidateModule currentModule = kvpModule.Value;
-            if (currentModule.IsVisible == false)
+            PermissionValidateApplication currentApp = kvpApp.Value;
+            if (currentApp.IsVisible == false)
             {
                 continue;
             }
-    <span>&nbsp;&nbsp;模块:</span> @currentModule.Name <br />
+        <span>应用程序:</span> @currentApp.Name <br />
     
-            foreach (KeyValuePair<Guid, PermissionValidateSubModule> kvpSubModule in currentModule.SubModules)
+            int moduleNumber = 0;
+            foreach (KeyValuePair<Guid, PermissionValidateModule> kvpModule in currentApp.Modules)
             {
-                PermissionValidateSubModule currentSubModule = kvpSubModule.Value;
-                if (currentSubModule.IsVisible == false)
+                PermissionValidateModule currentModule = kvpModule.Value;
+                if (currentModule.IsVisible == false)
                 {
                     continue;
                 }
-    <span>&nbsp;&nbsp;&nbsp;&nbsp;子模块:</span> @currentSubModule.Name <br />
-                string blankItemValue= SystemConst.PermissionItemValuePrefix + currentSubModule.Guid.ToString() + SystemConst.PermissionItemGuidValueSeperator + "0";
-                string blankItem = string.Format("<input id=\"{0}\" type=\"hidden\" name=\"{0}\" value=\"{1}\" />", blankItemValue, "on");
-                <span>@Html.Raw(blankItem)</span>
-                
-                foreach (KeyValuePair<string, PermissionValidateOperation> kvpOperation in currentSubModule.Operations)
+        <span>&nbsp;&nbsp;模块:</span> @currentModule.Name <br />
+    
+                foreach (KeyValuePair<Guid, PermissionValidateSubModule> kvpSubModule in currentModule.SubModules)
                 {
-                    PermissionValidateOperation currentOperation = kvpOperation.Value;
-                    if (currentOperation.IsVisible == false)
+                    PermissionValidateSubModule currentSubModule = kvpSubModule.Value;
+                    if (currentSubModule.IsVisible == false)
                     {
                         continue;
                     }
-
-                    string itemText = currentOperation.Text;
-                    string itemValue = SystemConst.PermissionItemValuePrefix + currentSubModule.Guid.ToString() + SystemConst.PermissionItemGuidValueSeperator + currentOperation.Value;
-
-                    string item = string.Empty;
-                    bool targetHasPermission = BusinessPermissionBLL.Instance.HasPermission(ownerGuid, permissionMode, currentSubModule.Guid, currentOperation.Value);
-
-                    string disableString = string.Empty;
-
-
-                    string checkedString = string.Empty;
-                    if (targetHasPermission == true)
+                
+        <div class="">
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;子模块:</span> @currentSubModule.Name <input type="checkbox" class="all" value="全部"  />全部
+            <br />
+            @{        
+                    string blankItemValue = SystemConst.PermissionItemValuePrefix + currentSubModule.Guid.ToString() + SystemConst.PermissionItemGuidValueSeperator + "0";
+                    string blankItem = string.Format("<input id=\"{0}\" type=\"hidden\" name=\"{0}\" value=\"{1}\" />", blankItemValue, "on");
+                <span>@Html.Raw(blankItem)</span>
+                
+                    foreach (KeyValuePair<string, PermissionValidateOperation> kvpOperation in currentSubModule.Operations)
                     {
-                        checkedString = "checked=\"true\"";
-                    }
-                    item = string.Format("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id=\"{0}\" type=\"checkbox\" {2} {3} name=\"{0}\" /><label for=\"{0}\">{1}</label>", itemValue, itemText, disableString, checkedString);
-    <span>@Html.Raw(item)</span>
-                }
-    <br />
-            }
+                        PermissionValidateOperation currentOperation = kvpOperation.Value;
+                        if (currentOperation.IsVisible == false)
+                        {
+                            continue;
+                        }
 
-            moduleNumber++;
-            if(moduleNumber!=currentApp.Modules.Count)
-            {
-                <hr  style="border:1px dashed;"/>
+                        string itemText = currentOperation.Text;
+                        string itemValue = SystemConst.PermissionItemValuePrefix + currentSubModule.Guid.ToString() + SystemConst.PermissionItemGuidValueSeperator + currentOperation.Value;
+
+                        string item = string.Empty;
+                        bool targetHasPermission = BusinessPermissionBLL.Instance.HasPermission(ownerGuid, permissionMode, currentSubModule.Guid, currentOperation.Value);
+
+                        string disableString = string.Empty;
+
+
+                        string checkedString = string.Empty;
+                        if (targetHasPermission == true)
+                        {
+                            checkedString = "checked=\"true\"";
+                        }
+                        item = string.Format("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id=\"{0}\" type=\"checkbox\" {2} {3} name=\"{0}\" /><label for=\"{0}\">{1}</label>", itemValue, itemText, disableString, checkedString);
+                <span>@Html.Raw(item)</span>
+                    }
+            }
+        </div>
+                }
+
+                moduleNumber++;
+                if (moduleNumber != currentApp.Modules.Count)
+                {
+        <hr style="border: 1px dashed;" />
+                }
             }
         }
+
+        <input type="hidden" name="ownerGuid" value="@ownerGuid" />
+        <input type="hidden" name="ownerType" value="@ownerType" />
+        <input type="hidden" name="permissionMode" value="@permissionMode" />
+
+        <hr class="" />
+        <input type="button" id="submitButton" value="保存" class="btn btn-warning" /><a class="overlayClose"></a>
     }
-
-    <input type="hidden" name="ownerGuid" value="@ownerGuid" />
-    <input type="hidden" name="ownerType" value="@ownerType" />
-    <input type="hidden" name="permissionMode" value="@permissionMode" />
-
-    <hr class="" />
-    <input type="button" id="submitButton" value="保存" class="btn btn-warning" /><a class="overlayClose"></a>
-}
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#submitButton").click(function () {
             submitAndRedirect("#formContainer form", '@returnUrl');
+        });
+
+        $(".all").click(function () {
+            var selectedStatus = $(this).attr("checked");
+            $(":checkbox", $(this).parent("div")).attr("checked", selectedStatus);
         });
     });
 </script>

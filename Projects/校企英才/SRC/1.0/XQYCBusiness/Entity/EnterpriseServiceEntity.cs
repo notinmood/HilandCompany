@@ -215,7 +215,7 @@ namespace XQYC.Business.Entity
             {
                 if (ownerKeys.Count == 0)
                 {
-                    ownerKeys.Add(CreateUserKey);
+                    //ownerKeys.Add(CreateUserKey);
                     ownerKeys.Add(ServiceUserGuid.ToString());
                     ownerKeys.Add(BusinessUserGuid.ToString());
                     ownerKeys.Add(SettleUserGuid.ToString());

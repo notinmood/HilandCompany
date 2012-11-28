@@ -13,16 +13,16 @@ using HiLand.Utility.Data;
 
 namespace LaborCompare
 {
-    public partial class 更新原表企业跟踪的企业guid : BaseForm
+    public partial class 更新原表中介跟踪的企业guid : BaseForm
     {
-        public 更新原表企业跟踪的企业guid()
+        public 更新原表中介跟踪的企业guid()
         {
             //InitializeComponent();
         }
 
         protected override string exportFileName
         {
-            get { return "更新原表企业跟踪的企业guid.txt"; }
+            get { return "更新原表中介跟踪的企业guid.txt"; }
         }
 
         protected override void InnerDoWork(ref List<string> resultData)
@@ -31,13 +31,13 @@ namespace LaborCompare
 
             //0.1获取所有员工
             DataTable dtForEmployee = new DataTable();
-            string commandStringForEmployee = "SELECT CorpId,NewCorpGuid FROM BD_Corp";
+            string commandStringForEmployee = "SELECT CorpId,NewCorpGuid FROM BD_Medium";
             SqlDataAdapter daForEmployee = new SqlDataAdapter(commandStringForEmployee, connectionString);
             daForEmployee.Fill(dtForEmployee);
 
             //1.获取Labor表的所有数据
             DataTable dtForAll = new DataTable();
-            string commandStringForAll = "select ReplyId,CorpId from ReplyCorp";
+            string commandStringForAll = "select ReplyId,CorpId from ReplyMedium";
             SqlDataAdapter daForAll = new SqlDataAdapter(commandStringForAll, connectionString);
             daForAll.Fill(dtForAll);
 
@@ -74,7 +74,7 @@ namespace LaborCompare
                     {
                         conn.Open();
 
-                        string commString = string.Format(@"UPDATE [ReplyCorp]
+                        string commString = string.Format(@"UPDATE [ReplyMedium]
                            SET [NewCorpGuid] = '{1}'
                           WHERE [ReplyId]= {0} ",
                             ReplyId,
