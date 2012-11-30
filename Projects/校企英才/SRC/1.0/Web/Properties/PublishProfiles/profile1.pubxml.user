@@ -107,7 +107,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/26/2012 16:59:12</publishTime>
     </File>
     <File Include="bin/HiLand.General.dll">
-      <publishTime>11/30/2012 15:09:01</publishTime>
+      <publishTime>11/30/2012 18:51:40</publishTime>
     </File>
     <File Include="bin/HiLand.Utility.dll">
       <publishTime>11/26/2012 16:53:40</publishTime>
@@ -170,10 +170,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/10/2012 21:53:02</publishTime>
     </File>
     <File Include="bin/XQYC.Business.dll">
-      <publishTime>11/30/2012 17:40:37</publishTime>
+      <publishTime>11/30/2012 18:53:28</publishTime>
     </File>
     <File Include="bin/XQYC.Web.dll">
-      <publishTime>11/30/2012 17:40:39</publishTime>
+      <publishTime>11/30/2012 18:53:31</publishTime>
     </File>
     <File Include="Content/adminStyle.css">
       <publishTime>11/23/2012 16:44:12</publishTime>
@@ -1049,10 +1049,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/27/2012 17:09:18</publishTime>
     </File>
     <File Include="Views/Enterprise/IndexLaborJobFair.cshtml">
-      <publishTime>11/30/2012 17:22:38</publishTime>
+      <publishTime>11/30/2012 18:04:31</publishTime>
     </File>
     <File Include="Views/Enterprise/Item.cshtml">
-      <publishTime>11/27/2012 17:13:44</publishTime>
+      <publishTime>11/30/2012 18:38:31</publishTime>
     </File>
     <File Include="Views/Enterprise/JobItem.cshtml">
       <publishTime>11/21/2012 15:29:04</publishTime>
@@ -1244,7 +1244,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/30/2012 17:40:53</publishTime>
+      <publishTime>11/30/2012 18:53:37</publishTime>
     </File>
   </ItemGroup>
 </Project>

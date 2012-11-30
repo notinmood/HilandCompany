@@ -185,6 +185,7 @@ namespace XQYC.Web.Controllers
             targetEntity.PostCode = originalEntity.PostCode;
             targetEntity.StaffScope = originalEntity.StaffScope;
             targetEntity.Telephone = originalEntity.Telephone;
+            targetEntity.TelephoneOther = originalEntity.TelephoneOther;
             targetEntity.AreaCode = originalEntity.AreaCode;
             targetEntity.AreaOther = originalEntity.AreaOther;
             targetEntity.EnterpriseMemo = originalEntity.EnterpriseMemo;
