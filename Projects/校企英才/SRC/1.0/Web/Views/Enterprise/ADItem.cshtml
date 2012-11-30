@@ -1,0 +1,87 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility4.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Control;
+@using HiLand.General.Entity;
+@using HiLand.General;
+
+@model ForeOrderEntity
+@{
+    ViewBag.Title = "企业广告张贴信息";
+    this.Layout = null;
+    
+    string enterpriseKey= this.ViewBag.EnterpriseKey;
+    if(Model.IsEmpty==false)
+    {
+        enterpriseKey = Model.OwnerKey;
+    }
+}
+<div id="formContainer">
+<style type="text/css">
+    #formContainer table td
+    {
+        
+    }
+</style>
+    @using (Html.BeginForm())
+    { 
+        <table>
+            <tr>
+                <td style="width: 150px;">
+                    张贴开始日期:
+                </td>
+                <td>@HtmlHelperEx.DateInput(Html, "ForeOrderDate", Model.ForeOrderDate.ToShortDateString())
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 150px;">
+                    张贴结束日期:
+                </td>
+                <td>@HtmlHelperEx.DateInput(Html, "ForeOrderDateEnd", Model.ForeOrderDateEnd.ToShortDateString())
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    单价:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.ForeOrderUnitFee)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    使用数量:
+                </td>
+                <td>@Html.TextBoxFor(entity =>entity.ForeOrderCount)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    付款状态:
+                </td>
+                <td>@Html.DropDownListFor(entity =>entity.ForeOrderPaid, EnumEx.BuildSelectItemList<Logics>())
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    张贴说明:
+                </td>
+                <td>@Html.TextAreaFor(entity => entity.ForeOrderTitle)
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" id="EnterpriseKey" value="@enterpriseKey" />
+        <input type="hidden" id="ItemKey" value="@Model.ForeOrderGuid" />
+        <input type="button" id="submitButton" value="保存" class="btn btn-warning" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form", '@Url.Action("ADList", new { itemKey= enterpriseKey })');
+        });
+    });
+</script>

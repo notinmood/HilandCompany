@@ -107,7 +107,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/26/2012 16:59:12</publishTime>
     </File>
     <File Include="bin/HiLand.General.dll">
-      <publishTime>11/26/2012 16:57:08</publishTime>
+      <publishTime>11/30/2012 15:09:01</publishTime>
     </File>
     <File Include="bin/HiLand.Utility.dll">
       <publishTime>11/26/2012 16:53:40</publishTime>
@@ -170,10 +170,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/10/2012 21:53:02</publishTime>
     </File>
     <File Include="bin/XQYC.Business.dll">
-      <publishTime>11/27/2012 17:35:06</publishTime>
+      <publishTime>11/30/2012 17:40:37</publishTime>
     </File>
     <File Include="bin/XQYC.Web.dll">
-      <publishTime>11/27/2012 17:35:07</publishTime>
+      <publishTime>11/30/2012 17:40:39</publishTime>
     </File>
     <File Include="Content/adminStyle.css">
       <publishTime>11/23/2012 16:44:12</publishTime>
@@ -1012,6 +1012,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Employee/Item.cshtml">
       <publishTime>11/16/2012 15:26:18</publishTime>
     </File>
+    <File Include="Views/Enterprise/ADItem.cshtml">
+      <publishTime>11/30/2012 17:30:01</publishTime>
+    </File>
+    <File Include="Views/Enterprise/ADList.cshtml">
+      <publishTime>11/30/2012 17:29:50</publishTime>
+    </File>
+    <File Include="Views/Enterprise/ADQueryList.cshtml">
+      <publishTime>11/30/2012 17:32:45</publishTime>
+    </File>
     <File Include="Views/Enterprise/BoothItem.cshtml">
       <publishTime>11/21/2012 09:41:41</publishTime>
     </File>
@@ -1031,7 +1040,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/17/2012 17:37:47</publishTime>
     </File>
     <File Include="Views/Enterprise/Index.cshtml">
-      <publishTime>11/27/2012 17:08:50</publishTime>
+      <publishTime>11/30/2012 16:46:35</publishTime>
     </File>
     <File Include="Views/Enterprise/IndexLaborDispatch.cshtml">
       <publishTime>11/27/2012 17:06:58</publishTime>
@@ -1040,7 +1049,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/27/2012 17:09:18</publishTime>
     </File>
     <File Include="Views/Enterprise/IndexLaborJobFair.cshtml">
-      <publishTime>11/27/2012 17:09:18</publishTime>
+      <publishTime>11/30/2012 17:22:38</publishTime>
     </File>
     <File Include="Views/Enterprise/Item.cshtml">
       <publishTime>11/27/2012 17:13:44</publishTime>
@@ -1091,7 +1100,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/25/2012 10:49:28</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>11/19/2012 12:30:59</publishTime>
+      <publishTime>11/30/2012 16:21:53</publishTime>
     </File>
     <File Include="Views/Home/OnlyTest.cshtml">
       <publishTime>11/16/2012 15:26:18</publishTime>
@@ -1166,7 +1175,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/19/2012 10:26:12</publishTime>
     </File>
     <File Include="Views/Permission/Index.cshtml">
-      <publishTime>11/19/2012 10:26:11</publishTime>
+      <publishTime>11/28/2012 16:33:01</publishTime>
     </File>
     <File Include="Views/Remind/Index.cshtml">
       <publishTime>11/15/2012 11:38:23</publishTime>
@@ -1184,7 +1193,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>11/23/2012 17:03:58</publishTime>
+      <publishTime>11/30/2012 17:31:57</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutAbstract.cshtml">
       <publishTime>11/17/2012 11:22:56</publishTime>
@@ -1235,7 +1244,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/27/2012 17:35:12</publishTime>
+      <publishTime>11/30/2012 17:40:53</publishTime>
     </File>
   </ItemGroup>
 </Project>

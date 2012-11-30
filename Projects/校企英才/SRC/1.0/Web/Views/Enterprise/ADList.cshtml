@@ -1,0 +1,141 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using HiLand.General.BLL;
+@using HiLand.Utility.Web;
+
+@model List<ForeOrderEntity>
+@{
+    ViewBag.Title = "Index";
+
+    string enterpriseKey = this.ViewBag.EnterpriseKey;
+    string enterpriseName = this.ViewBag.EnterpriseName;
+    if(string.IsNullOrWhiteSpace( enterpriseName))
+    {
+        enterpriseName= EnterpriseBLL.Instance.Get(enterpriseKey).CompanyName;
+    }
+
+    string returnUrl = RequestHelper.GetValue("returnUrl");
+    bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
+    if (isUsingCompress == true && string.IsNullOrWhiteSpace(returnUrl) == false)
+    {
+        returnUrl = CompressHelper.Decompress(returnUrl);
+    }
+    if (string.IsNullOrWhiteSpace(returnUrl))
+    {
+        returnUrl = Url.Action("Index");
+    }
+
+    decimal totalForeOrderAmount = 0M;
+    decimal totalCommissionFee = 0M;
+}
+
+<h2>企业广告张贴列表(@enterpriseName)</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+        <div class="btn-group"><a href="@returnUrl" class="btn btn-warning" title="返回列表页"><i class="icon-share icon-white"></i>返回</a>@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("BoothItem", "Enterprise").Render(new { rel = "#EditDIV" })</div>
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 50px">操作
+            </th>
+            <th style="width: 80px">张贴开始时间
+            </th>
+            <th style="width: 80px">张贴结束时间
+            </th>
+            <th style="width: 50px">张贴数量
+            </th>
+            <th style="width: 50px">总费用
+            </th>
+            <th style="width: 50px">付款状态
+            </th>
+            <th>张贴说明
+            </th>
+        </tr>
+        @foreach (ForeOrderEntity entity in Model)
+        {
+            string entityGuid = entity.ForeOrderGuid.ToString();
+            totalForeOrderAmount += entity.ForeOrderTotalFee;
+            totalCommissionFee += entity.CommissionFee;
+            <tr>
+                <td>
+                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("BoothItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = entityGuid })
+                </td>
+                <td>@entity.ForeOrderDate.ToShortDateString()
+                </td>
+                <td>@entity.ForeOrderDateEnd.ToShortDateString()
+                </td>
+                <td>@entity.ForeOrderCount
+                </td>
+                <td>@entity.ForeOrderTotalFee.ToString("0.00")
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.ForeOrderPaid)
+                </td>
+                <td>@entity.ForeOrderTitle
+                </td>
+            </tr>   
+        }
+        <tr>
+            <th >合计
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>@totalForeOrderAmount.ToString("0.00")
+            </th>
+            <th>
+            <th>
+            </th>
+        </tr>
+    </table>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aEnterpriseSection").click();
+            $("#aEnterpriseSection").addClass("current");
+            $("#aEnterpriseList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                var currentItemGuid = $("#currentPopupItemGuid").val();
+                $(".modalInput").overlay().close();
+                $(".modalInput.edit." + currentItemGuid).overlay().close();
+            });
+
+            $("#newDisplayA").click(function () {
+                var url = '@Url.Action("ADItem")?r=' + Math.random() + '&itemKey=&enterpriseKey=@enterpriseKey';
+                $("#EditDIV").load(url);
+            });
+
+            $("a.edit").click(function () {
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("ADItem")?r=' + Math.random() + '&itemKey=' + itemKey + '&enterpriseKey=@enterpriseKey';
+                $("#EditDIV").load(url);
+            });
+        });
+    </script>
+</div>

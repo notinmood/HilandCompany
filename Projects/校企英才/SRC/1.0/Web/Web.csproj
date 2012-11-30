@@ -705,6 +705,9 @@
     <Content Include="Views\Enterprise\JobPictureItem.cshtml" />
     <Content Include="Views\System\TransferJobs.cshtml" />
     <Content Include="Views\Enterprise\JobQueryList.cshtml" />
+    <Content Include="Views\Enterprise\ADList.cshtml" />
+    <Content Include="Views\Enterprise\ADItem.cshtml" />
+    <Content Include="Views\Enterprise\ADQueryList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

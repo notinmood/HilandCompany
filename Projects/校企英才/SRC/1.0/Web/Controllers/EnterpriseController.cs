@@ -216,6 +216,112 @@ namespace XQYC.Web.Controllers
         }
         #endregion
 
+        #region 广告张贴
+        public ActionResult ADList(string itemKey, string itemName = StringHelper.Empty)
+        {
+            List<ForeOrderEntity> trackerList = null;
+
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                Guid itemGuid = GuidHelper.TryConvert(itemKey);
+                string whereClause = string.Format(" OwnerKey='{0}' ", itemGuid.ToString());
+                trackerList = ForeOrderBLL.Instance.GetList(whereClause);
+            }
+
+            if (string.IsNullOrWhiteSpace(itemName))
+            {
+                itemName = EnterpriseBLL.Instance.Get(itemKey).CompanyName;
+            }
+
+            this.ViewBag.EnterpriseKey = itemKey;
+            this.ViewBag.EnterpriseName = itemName;
+            return View(trackerList);
+        }
+
+        public ActionResult ADItem(string enterpriseKey, string itemKey = StringHelper.Empty)
+        {
+            ForeOrderEntity entity = ForeOrderEntity.Empty;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                entity = ForeOrderBLL.Instance.Get(itemKey);
+            }
+
+            this.ViewBag.EnterpriseKey = enterpriseKey;
+
+            return View(entity);
+        }
+
+        [HttpPost]
+        public ActionResult ADItem(string enterpriseKey, string itemKey, ForeOrderEntity originalEntity)
+        {
+            bool isSuccessful = false;
+            string displayMessage = string.Empty;
+            ForeOrderEntity targetEntity = null;
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == true)
+            {
+                targetEntity = new ForeOrderEntity();
+
+                targetEntity.OwnerKey = enterpriseKey;
+                targetEntity.OwnerName = EnterpriseBLL.Instance.Get(enterpriseKey).CompanyNameShort;
+                targetEntity.ForeOrderCategory = "AD";
+                targetEntity.RelativeKey = GuidHelper.EmptyString;
+                targetEntity.RelativeName = "广告张贴";
+                targetEntity.CreateTime = DateTime.Now;
+                targetEntity.CreateUserKey = BusinessUserBLL.CurrentUser.UserGuid.ToString();
+
+                SetTargetForeOrderEntityValue(originalEntity, ref  targetEntity);
+
+                isSuccessful = ForeOrderBLL.Instance.Create(targetEntity);
+            }
+            else
+            {
+                targetEntity = ForeOrderBLL.Instance.Get(itemKey);
+
+                SetTargetForeOrderEntityValue(originalEntity, ref  targetEntity);
+                isSuccessful = ForeOrderBLL.Instance.Update(targetEntity);
+            }
+
+            if (isSuccessful == true)
+            {
+                displayMessage = "数据保存成功";
+            }
+            else
+            {
+                displayMessage = "数据保存失败";
+            }
+
+            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+        }
+        #endregion
+
+        #region 广告张贴查询
+        public ActionResult ADQueryList(int id = 1)
+        {
+            //1.如果是点击查询控件的查询按钮，那么将查询条件作为QueryString附加在地址后面（为了在客户端保存查询条件的状体），重新发起一次请求。
+            if (this.Request.HttpMethod.ToLower().Contains("post"))
+            {
+                string targetUrlWithoutParam = Url.Action("ADQueryList", new { id = 1 });
+                string targetUrl = QueryControlHelper.GetNewQueryUrl("QueryControl", targetUrlWithoutParam);
+                return Redirect(targetUrl);
+            }
+
+            //2.通常情形下走get查询
+            int pageIndex = id;
+            int pageSize = SystemConst.CountPerPage;
+            int startIndex = (pageIndex - 1) * pageSize + 1;
+            string whereClause = string.Format(" ForeOrderCategory='{0}' ", "AD");
+
+            whereClause += " AND " + QueryControlHelper.GetQueryCondition("QueryControl");
+
+            string orderClause = "ForeOrderID DESC";
+
+            PagedEntityCollection<ForeOrderEntity> entityList = ForeOrderBLL.Instance.GetPagedCollection(startIndex, pageSize, whereClause, orderClause);
+            PagedList<ForeOrderEntity> pagedExList = new PagedList<ForeOrderEntity>(entityList.Records, entityList.PageIndex, entityList.PageSize, entityList.TotalCount);
+
+            return View(pagedExList);
+        }
+        #endregion
+
         #region 摊位预定
         public ActionResult BoothList(string itemKey, string itemName = StringHelper.Empty)
         {
@@ -298,6 +404,7 @@ namespace XQYC.Web.Controllers
             targetEntity.CanUsable = originalEntity.CanUsable;
             targetEntity.ForeOrderCount = originalEntity.ForeOrderCount;
             targetEntity.ForeOrderDate = originalEntity.ForeOrderDate;
+            targetEntity.ForeOrderDateEnd = originalEntity.ForeOrderDateEnd;
             targetEntity.ForeOrderDesc = originalEntity.ForeOrderDesc;
             targetEntity.ForeOrderMemo1 = originalEntity.ForeOrderMemo1;
             targetEntity.ForeOrderMemo2 = originalEntity.ForeOrderMemo2;

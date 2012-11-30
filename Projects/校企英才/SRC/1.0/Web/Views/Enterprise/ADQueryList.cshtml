@@ -1,0 +1,134 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using HiLand.General.BLL;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility.Web;
+@using HiLand.Utility.Enums;
+
+@model PagedList<ForeOrderEntity>
+@{
+    ViewBag.Title = "Index";
+
+    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+    bool isUsingCompress = false;
+    if (currentUrl.Length > 512)
+    {
+        isUsingCompress = true;
+        currentUrl = CompressHelper.Compress(currentUrl);
+    }
+
+    List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业名称", ConditionFieldName = "OwnerName", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "付费状态", ConditionFieldName = "ForeOrderPaid", ConditionType = typeof(Logics) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "张贴开始时间,张贴结束时间,录入时间", ConditionFieldName = "ForeOrderDate,ForeOrderDateEnd,CreateTime", ConditionType = typeof(DateTime) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "张贴开始时间,张贴结束时间,录入时间", ConditionFieldName = "ForeOrderDate,ForeOrderDateEnd,CreateTime", ConditionType = typeof(DateTime) });
+
+    decimal totalForeOrderAmount = 0M;
+}
+<h2>企业广告张贴查询</h2>
+<div id="ItemListDIV">
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.HiQuery("QueryControl").QueryConditionList(queryItemList).IsDisplayBrackets(false).Render()
+        }
+    </div>
+    <div class="OperateArea" id="OperateAreaContainer">
+        <div class="btn-group">@*@XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)*@</div>
+    </div>
+    <div class="dataContainer">
+        <table style="width: 100%" class="grid">
+            <tr>
+                <th style="width: 180px">企业名称
+                </th>
+                <th style="width: 50px">张贴开始时间
+                </th>
+                <th style="width: 50px">张贴结束时间
+                </th>
+                <th style="width: 50px">张贴数量
+                </th>
+                <th style="width: 50px">总费用
+                </th>
+                <th style="width: 50px">付款状态
+                </th>
+                <th>张贴说明
+                </th>
+            </tr>
+            @foreach (ForeOrderEntity entity in Model)
+            {
+                string entityGuid = entity.ForeOrderGuid.ToString();
+                totalForeOrderAmount += entity.ForeOrderTotalFee;
+                <tr>
+                    <td>@entity.OwnerName
+                    </td>
+                    <td>@entity.ForeOrderDate.ToShortDateString()
+                    </td>
+                    <td>@entity.ForeOrderDateEnd.ToShortDateString()
+                    </td>
+                    <td>@entity.ForeOrderCount
+                    </td>
+                    <td>@entity.ForeOrderTotalFee.ToString("0.00")
+                    </td>
+                    <td>@EnumHelper.GetDisplayValue(entity.ForeOrderPaid)
+                    </td>
+                    <td>@entity.ForeOrderTitle
+                    </td>
+                </tr>   
+            }
+            <tr>
+            <th>当前页合计
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>@totalForeOrderAmount.ToString("0.00")
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+        </tr>
+        </table>
+    </div>
+    <div class="myPager">
+        <span style="float: left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
+        &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@XQYC.Web.Models.SystemConst.CountPerPage</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)
+    </div>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aEnterpriseSection").click();
+            $("#aEnterpriseSection").addClass("current");
+            $("#aBoothQueryList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                var currentItemGuid = $("#currentPopupItemGuid").val();
+                $(".modalInput").overlay().close();
+                $(".modalInput.edit." + currentItemGuid).overlay().close();
+            });
+        });
+    </script>
+</div>
