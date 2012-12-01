@@ -77,7 +77,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/15/2012 11:52:00</publishTime>
     </File>
     <File Include="Areas/UserCenter/Views/Home/Index.cshtml">
-      <publishTime>11/16/2012 15:10:31</publishTime>
+      <publishTime>12/01/2012 14:12:35</publishTime>
     </File>
     <File Include="Areas/UserCenter/Views/Home/_ChangePasswordForManage.cshtml">
       <publishTime>11/16/2012 15:26:20</publishTime>
@@ -170,10 +170,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/10/2012 21:53:02</publishTime>
     </File>
     <File Include="bin/XQYC.Business.dll">
-      <publishTime>11/30/2012 18:53:28</publishTime>
+      <publishTime>12/01/2012 15:33:48</publishTime>
     </File>
     <File Include="bin/XQYC.Web.dll">
-      <publishTime>11/30/2012 18:53:31</publishTime>
+      <publishTime>12/01/2012 17:16:00</publishTime>
     </File>
     <File Include="Content/adminStyle.css">
       <publishTime>11/23/2012 16:44:12</publishTime>
@@ -243,6 +243,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/Images/calendar.png">
       <publishTime>08/09/2012 10:08:04</publishTime>
+    </File>
+    <File Include="Content/Images/checkbox-partial.png">
+      <publishTime>12/01/2012 15:30:54</publishTime>
+    </File>
+    <File Include="Content/Images/checkbox-unchecked.png">
+      <publishTime>12/01/2012 15:30:53</publishTime>
     </File>
     <File Include="Content/Images/close.png">
       <publishTime>11/17/2012 19:02:10</publishTime>
@@ -1030,6 +1036,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Enterprise/BoothQueryList.cshtml">
       <publishTime>11/21/2012 16:40:19</publishTime>
     </File>
+    <File Include="Views/Enterprise/BoothQueryList2.cshtml">
+      <publishTime>12/01/2012 15:31:01</publishTime>
+    </File>
     <File Include="Views/Enterprise/ContractItem.cshtml">
       <publishTime>11/16/2012 15:26:18</publishTime>
     </File>
@@ -1193,7 +1202,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>11/30/2012 17:31:57</publishTime>
+      <publishTime>12/01/2012 14:20:11</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutAbstract.cshtml">
       <publishTime>11/17/2012 11:22:56</publishTime>
@@ -1244,7 +1253,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/30/2012 18:53:37</publishTime>
+      <publishTime>12/01/2012 17:16:05</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -225,7 +225,7 @@ namespace XQYC.Web.Controllers
             if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
             {
                 Guid itemGuid = GuidHelper.TryConvert(itemKey);
-                string whereClause = string.Format(" OwnerKey='{0}' ", itemGuid.ToString());
+                string whereClause = string.Format(" OwnerKey='{0}' AND ForeOrderCategory='AD' ", itemGuid.ToString());
                 trackerList = ForeOrderBLL.Instance.GetList(whereClause);
             }
 
@@ -331,7 +331,7 @@ namespace XQYC.Web.Controllers
             if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
             {
                 Guid itemGuid = GuidHelper.TryConvert(itemKey);
-                string whereClause = string.Format(" OwnerKey='{0}' ", itemGuid.ToString());
+                string whereClause = string.Format(" OwnerKey='{0}' AND ForeOrderCategory='Booth' ", itemGuid.ToString());
                 trackerList = ForeOrderBLL.Instance.GetList(whereClause);
             }
 
