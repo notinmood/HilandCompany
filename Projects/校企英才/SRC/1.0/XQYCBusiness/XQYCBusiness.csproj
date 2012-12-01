@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\BoothForeOrderBLL.cs" />
     <Compile Include="BLL\EnterpriseJobBLL.cs" />
     <Compile Include="BLL\CostFormularBLL.cs" />
     <Compile Include="BLL\SalaryDetailsBLL.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="BLL\EnterpriseContractBLL.cs" />
     <Compile Include="BLL\EnterpriseServiceBLL.cs" />
     <Compile Include="BLL\InformationBrokerBLL.cs" />
+    <Compile Include="DALCommon\BoothForeOrderCommonDAL.cs" />
     <Compile Include="DALCommon\EnterpriseJobCommonDAL.cs" />
     <Compile Include="DALCommon\CostFormularCommonDAL.cs" />
     <Compile Include="DALCommon\ILaborContractDAL.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="DALCommon\EnterpriseContractCommonDAL.cs" />
     <Compile Include="DALCommon\EnterpriseServiceCommonDAL.cs" />
     <Compile Include="DALCommon\InformationBrokerCommonDAL.cs" />
+    <Compile Include="DAL\BoothForeOrderDAL.cs" />
     <Compile Include="DAL\EnterpriseJobDAL.cs" />
     <Compile Include="DAL\CostFormularDAL.cs" />
     <Compile Include="DAL\SalaryDetailsDAL.cs" />
@@ -87,6 +90,7 @@
     <Compile Include="DAL\EnterpriseServiceDAL.cs" />
     <Compile Include="DAL\InformationBrokerDAL.cs" />
     <Compile Include="Entity\BusinessUserEx.cs" />
+    <Compile Include="Entity\BoothForeOrderView.cs" />
     <Compile Include="Entity\EnterpriseJobEntity.cs" />
     <Compile Include="Entity\CostFormularEntity.cs" />
     <Compile Include="Entity\SalaryDetailsEntity.cs" />

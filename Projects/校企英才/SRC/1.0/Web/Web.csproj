@@ -189,6 +189,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\adminStyle.css" />
+    <Content Include="Content\Images\checkbox-partial.png" />
+    <Content Include="Content\Images\checkbox-unchecked.png" />
     <Content Include="Content\Images\notepad.png" />
     <Content Include="Content\manageImages\bg-menu-item-orange.png" />
     <Content Include="Content\manageImages\bg-menu-item-orange1.png" />
@@ -708,6 +710,7 @@
     <Content Include="Views\Enterprise\ADList.cshtml" />
     <Content Include="Views\Enterprise\ADItem.cshtml" />
     <Content Include="Views\Enterprise\ADQueryList.cshtml" />
+    <Content Include="Views\Enterprise\BoothQueryList2.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
