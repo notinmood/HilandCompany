@@ -183,7 +183,21 @@ namespace XQYC.Web.Controllers
                 displayMessage = string.Format("数据保存失败,原因为{0}", EnumHelper.GetDisplayValue(createStatus));
             }
 
-            return Redirect(returnUrl);
+            if (isSuccessful == true)
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
+                SystemStatusInfo itemSuccessful = new SystemStatusInfo();
+                itemSuccessful.SystemStatus = SystemStatuses.Failuer;
+                itemSuccessful.Message = string.Format("{0}", displayMessage);
+                infoList.Add(itemSuccessful);
+
+                this.TempData.Add("OperationResultData", infoList);
+                return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+            }
         }
 
         /// <summary>
@@ -195,11 +209,7 @@ namespace XQYC.Web.Controllers
         {
             targetEntity.UserStatus = originalEntity.UserStatus;
             targetEntity.UserNameCN = originalEntity.UserNameCN;
-            targetEntity.UserSex = originalEntity.UserSex;
-            targetEntity.UserBirthDay = originalEntity.UserBirthDay;
-
             targetEntity.UserCardID = originalEntity.UserCardID;
-            targetEntity.IDCardPlace = originalEntity.IDCardPlace;
             targetEntity.UserHeight = originalEntity.UserHeight;
             targetEntity.UserWeight = originalEntity.UserWeight;
             targetEntity.UserEducationalBackground = originalEntity.UserEducationalBackground;
@@ -226,6 +236,26 @@ namespace XQYC.Web.Controllers
             targetEntity.SocialSecurityNumber = originalEntity.SocialSecurityNumber;
             targetEntity.HouseHoldType = originalEntity.HouseHoldType;
             targetEntity.UserEducationalSchool = originalEntity.UserEducationalSchool;
+
+            IDCard idCard = IDCard.Parse(targetEntity.UserCardID);
+            
+            targetEntity.UserSex = originalEntity.UserSex;
+            if (targetEntity.UserSex == Sexes.UnSet)
+            {
+                targetEntity.UserSex = idCard.Sex;
+            }
+
+            targetEntity.UserBirthDay = originalEntity.UserBirthDay;
+            if (targetEntity.UserBirthDay == DateTimeHelper.Min)
+            {
+                targetEntity.UserBirthDay = idCard.BirthDay;
+            }
+
+            targetEntity.IDCardPlace = originalEntity.IDCardPlace;
+            if (string.IsNullOrWhiteSpace(targetEntity.IDCardPlace))
+            {
+                targetEntity.IDCardPlace = idCard.GetAddress();
+            }
 
             targetEntity.InformationBrokerUserGuid = ControlHelper.GetRealValue<Guid>("InformationBroker");
             targetEntity.InformationBrokerUserName = RequestHelper.GetValue("InformationBroker");
