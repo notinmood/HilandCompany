@@ -139,24 +139,40 @@ namespace XQYC.Web.Controllers
                 targetEntity = new EnterpriseEntity();
                 SetTargetEntityValue(entity, ref targetEntity);
                 targetEntity.EstablishedTime = DateTime.Now;
-                isSuccessful = EnterpriseBLL.Instance.Create(targetEntity);
+                EntityOperateStatuses entityOperateStatus= EntityOperateStatuses.Successful;
+                EnterpriseBLL.Instance.Create(targetEntity,out entityOperateStatus);
+                if (entityOperateStatus == EntityOperateStatuses.Successful)
+                {
+                    isSuccessful = true;
+                }
+                else
+                {
+                    isSuccessful = false;
+                    displayMessage = EnumHelper.GetDisplayValue(entityOperateStatus);
+                }
             }
             else
             {
                 targetEntity = EnterpriseBLL.Instance.Get(keyGuid);
                 SetTargetEntityValue(entity, ref targetEntity);
+                EntityOperateStatuses entityOperateStatus = EntityOperateStatuses.Successful;
+                EnterpriseBLL.Instance.Update(targetEntity,out entityOperateStatus);
 
-                isSuccessful = EnterpriseBLL.Instance.Update(targetEntity);
+                if (entityOperateStatus == EntityOperateStatuses.Successful)
+                {
+                    isSuccessful = true;
+                }
+                else
+                {
+                    isSuccessful = false;
+                    displayMessage = EnumHelper.GetDisplayValue(entityOperateStatus);
+                }
             }
 
 
             if (isSuccessful == true)
             {
                 displayMessage = "数据保存成功";
-            }
-            else
-            {
-                displayMessage = "数据保存失败";
             }
 
             return Json(new LogicStatusInfo(isSuccessful, displayMessage));
