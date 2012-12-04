@@ -18,6 +18,11 @@
     {
         enterpriseKey = Model.RelativeKey;
     }
+    
+    if(string.IsNullOrWhiteSpace( Model.TrackerUserKey))
+    {
+        Model.TrackerUserKey = BusinessUserBLL.CurrentUser.UserNameDisplay;
+    }
 }
 <div id="formContainer">
 <style type="text/css">

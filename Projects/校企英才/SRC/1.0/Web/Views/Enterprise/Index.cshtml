@@ -76,6 +76,8 @@
                 </th>
                 <th style="width: 80px">联系人员名称
                 </th>
+                <th style="width: 80px">联系电话
+                </th>
                 <th style="width: 30px">状态
                 </th>
                 <th style="width: 50px">录入人员
@@ -105,6 +107,8 @@
                     <td>@entity.CompanyName
                     </td>
                     <td>@entity.ContactPerson
+                    </td>
+                    <td> @string.Format("{0} {1}", entity.Telephone,entity.TelephoneOther )
                     </td>
                     <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
                     </td>

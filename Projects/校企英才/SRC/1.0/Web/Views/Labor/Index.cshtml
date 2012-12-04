@@ -46,168 +46,182 @@
             @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)
         </div>
     </div>
-    <div class="dataContainer">
-        <table style="width: 3700px" class="grid">
-            <tr>
-                <th style="width: 250px">
-                    <input type="checkbox" class="allCheckboxSelector" />操作
-                </th>
-                <th style="width: 80px">身份证
-                </th>
-                <th style="width: 80px">人员名称
-                </th>
-                <th style="width: 80px">人员状态
-                </th>
-                <th style="width: 80px">工作状态
-                </th>
-                <th style="width: 180px">务工企业
-                </th>
-                <th style="width: 80px">所在部门
-                </th>
-                <th style="width: 80px">所在车间
-                </th>
-                <th style="width: 80px">职工编号
-                </th>
-                <th style="width: 180px">银行账户
-                </th>
-                <th style="width: 100px">社保号
-                </th>
-                <th style="width: 80px">户口性质
-                </th>
-                <th style="width: 50px">性别
-                </th>
-                <th style="width: 50px">年龄
-                </th>
-                <th style="width: 80px">出生日期
-                </th>
-                <th style="width: 80px">联系电话
-                </th>
-                <th style="width: 80px">紧急联系电话
-                </th>
-                <th style="width: 80px">学历
-                </th>
-                <th style="width: 180px">毕业学校
-                </th>
-                <th style="width: 100px">最近合同开始时间
-                </th>
-                <th style="width: 100px">最近合同到期时间
-                </th>
-                <th style="width: 100px">最近离职时间
-                </th>
-                <th style="width: 80px">信息员
-                </th>
-                <th style="width: 80px">信息提供人员
-                </th>
-                <th style="width: 80px">推荐人员
-                </th>
-                <th style="width: 80px">财务人员
-                </th>
-                <th style="width: 80px">业务人员
-                </th>
-                <th style="width: 80px">安置人员
-                </th>
-                <th style="width: 80px">客服人员
-                </th>
-                <th style="width: 80px">备注1
-                </th>
-                <th style="width: 80px">备注2
-                </th>
-                <th style="width: 80px">备注3
-                </th>
-                <th style="width: 80px">备注4
-                </th>
-                <th>备注5
-                </th>
-            </tr>
 
-            @foreach (LaborEntity entity in Model)
-            {
-                string entityGuid = entity.UserGuid.ToString();
-                <tr>
-                    <td>
-                        @if (entity.IsOwning == true)
-                        {
-                            <input type="checkbox" name="itemCheckboxSelector" class="checkboxSelector" value="@entityGuid"   />
-                            @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) <span>|</span>
-                            @Html.HiA().CssClassName("modalInput password " + @entityGuid).Value("<i class=\"icon-asterisk\"></i>口令").ACA("Password", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) <span>|</span>
-                            @Html.HiA().CssClassName("contract").Value("<i class=\"icon-file\"></i>合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() <span>|</span>
-                            @Html.HiA().CssClassName("bankCard").Value("<i class=\"icon-retweet\"></i>银行账户").ACA("BankCardList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()
-                        }
-                        else
-                        {
-                            <span>尚无操作此条数据的权限</span>
-                        }
-                    </td>
-                    <td>@entity.UserCardID
-                    </td>
-                    <td>@entity.UserNameCN
-                    </td>
-                    <td>@EnumHelper.GetDisplayValue(entity.UserStatus)
-                    </td>
-                    <td>@EnumHelper.GetDisplayValue(entity.LaborWorkStatus)
-                    </td>
-                    <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.CurrentEnterpriseName, 13))
-                    </td>
-                    <td>@entity.CurrentLaborDepartment
-                    </td>
-                    <td>@entity.CurrentLaborWorkShop
-                    </td>
-                    <td>@entity.LaborCode
-                    </td>
-                    <td>@entity.CurrentBank.AccountNumber
-                    </td>
-                    <td>@entity.SocialSecurityNumber
-                    </td>
-                    <td>@EnumHelper.GetDisplayValue(entity.HouseHoldType)
-                    </td>
-                    <td>@EnumHelper.GetDisplayValue(entity.UserSex)
-                    </td>
-                    <td>@entity.UserAge
-                    </td>
-                    <td>@DateTimeHelper.ToSaftShortDateString(entity.UserBirthDay)
-                    </td>
-                    <td>@entity.UserMobileNO
-                    </td>
-                    <td>@entity.UrgentTelephone
-                    </td>
-                    <td>@EnumHelper.GetDisplayValue(entity.UserEducationalBackground)
-                    </td>
-                    <td>@entity.UserEducationalSchool
-                    </td>
-                    <td>@DateTimeHelper.ToSaftShortDateString(entity.CurrentContractStartDate)
-                    </td>
-                    <td>@DateTimeHelper.ToSaftShortDateString(entity.CurrentContractStopDate)
-                    </td>
-                    <td>@DateTimeHelper.ToSaftShortDateString(entity.CurrentContractDiscontinueDate)
-                    </td>
-                    <td>@entity.InformationBrokerUserName
-                    </td>
-                    <td>@entity.ProviderUserName
-                    </td>
-                    <td>@entity.RecommendUserName
-                    </td>
-                    <td>@entity.FinanceUserName
-                    </td>
-                    <td>@entity.BusinessUserName
-                    </td>
-                    <td>@entity.SettleUserName
-                    </td>
-                    <td>@entity.ServiceUserName
-                    </td>
-                    <td>@entity.Memo1
-                    </td>
-                    <td>@entity.Memo2
-                    </td>
-                    <td>@entity.Memo3
-                    </td>
-                    <td>@entity.Memo4
-                    </td>
-                    <td>@entity.Memo5
-                    </td>
-                </tr>   
-            }
-
-        </table>
+    <div id="MyTable_tableLayout">
+        <div id="MyTable_tableFix">
+            <table id="MyTable_tableFixClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableHead">
+            <table id="MyTable_tableHeadClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableColumn">
+            <table id="MyTable_tableColumnClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableData">
+            <table id="MyTable" style="width: 3700px" class="grid" border="1" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th style="width: 250px">
+                            <input type="checkbox" class="allCheckboxSelector" />操作
+                        </th>
+                        <th style="width: 80px">人员名称
+                        </th>
+                        <th style="width: 80px">身份证
+                        </th>
+                        <th style="width: 80px">人员状态
+                        </th>
+                        <th style="width: 80px">工作状态
+                        </th>
+                        <th style="width: 180px">务工企业
+                        </th>
+                        <th style="width: 80px">所在部门
+                        </th>
+                        <th style="width: 80px">所在车间
+                        </th>
+                        <th style="width: 80px">职工编号
+                        </th>
+                        <th style="width: 180px">银行账户
+                        </th>
+                        <th style="width: 100px">社保号
+                        </th>
+                        <th style="width: 80px">户口性质
+                        </th>
+                        <th style="width: 50px">性别
+                        </th>
+                        <th style="width: 50px">年龄
+                        </th>
+                        <th style="width: 80px">出生日期
+                        </th>
+                        <th style="width: 80px">联系电话
+                        </th>
+                        <th style="width: 80px">紧急联系电话
+                        </th>
+                        <th style="width: 80px">学历
+                        </th>
+                        <th style="width: 180px">毕业学校
+                        </th>
+                        <th style="width: 100px">最近合同开始时间
+                        </th>
+                        <th style="width: 100px">最近合同到期时间
+                        </th>
+                        <th style="width: 100px">最近离职时间
+                        </th>
+                        <th style="width: 80px">信息员
+                        </th>
+                        <th style="width: 80px">信息提供人员
+                        </th>
+                        <th style="width: 80px">推荐人员
+                        </th>
+                        <th style="width: 80px">财务人员
+                        </th>
+                        <th style="width: 80px">业务人员
+                        </th>
+                        <th style="width: 80px">安置人员
+                        </th>
+                        <th style="width: 80px">客服人员
+                        </th>
+                        <th style="width: 80px">备注1
+                        </th>
+                        <th style="width: 80px">备注2
+                        </th>
+                        <th style="width: 80px">备注3
+                        </th>
+                        <th style="width: 80px">备注4
+                        </th>
+                        <th>备注5
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (LaborEntity entity in Model)
+                    {
+                        string entityGuid = entity.UserGuid.ToString();
+                        <tr>
+                            <td>
+                                @if (entity.IsOwning == true)
+                                {
+                                    <input type="checkbox" name="itemCheckboxSelector" class="checkboxSelector" value="@entityGuid"   />
+                                    @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) <span>|</span>
+                                    @Html.HiA().CssClassName("modalInput password " + @entityGuid).Value("<i class=\"icon-asterisk\"></i>口令").ACA("Password", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) <span>|</span>
+                                    @Html.HiA().CssClassName("contract").Value("<i class=\"icon-file\"></i>合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() <span>|</span>
+                                    @Html.HiA().CssClassName("bankCard").Value("<i class=\"icon-retweet\"></i>银行账户").ACA("BankCardList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()
+                                }
+                                else
+                                {
+                                    <span>尚无操作此条数据的权限</span>
+                                }
+                            </td>
+                            <td>@entity.UserNameCN
+                            </td>
+                            <td>@entity.UserCardID
+                            </td>
+                            <td>@EnumHelper.GetDisplayValue(entity.UserStatus)
+                            </td>
+                            <td>@EnumHelper.GetDisplayValue(entity.LaborWorkStatus)
+                            </td>
+                            <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.CurrentEnterpriseName, 13))
+                            </td>
+                            <td>@entity.CurrentLaborDepartment
+                            </td>
+                            <td>@entity.CurrentLaborWorkShop
+                            </td>
+                            <td>@entity.LaborCode
+                            </td>
+                            <td>@entity.CurrentBank.AccountNumber
+                            </td>
+                            <td>@entity.SocialSecurityNumber
+                            </td>
+                            <td>@EnumHelper.GetDisplayValue(entity.HouseHoldType)
+                            </td>
+                            <td>@EnumHelper.GetDisplayValue(entity.UserSex)
+                            </td>
+                            <td>@entity.UserAge
+                            </td>
+                            <td>@DateTimeHelper.ToSaftShortDateString(entity.UserBirthDay)
+                            </td>
+                            <td>@entity.UserMobileNO
+                            </td>
+                            <td>@entity.UrgentTelephone
+                            </td>
+                            <td>@EnumHelper.GetDisplayValue(entity.UserEducationalBackground)
+                            </td>
+                            <td>@entity.UserEducationalSchool
+                            </td>
+                            <td>@DateTimeHelper.ToSaftShortDateString(entity.CurrentContractStartDate)
+                            </td>
+                            <td>@DateTimeHelper.ToSaftShortDateString(entity.CurrentContractStopDate)
+                            </td>
+                            <td>@DateTimeHelper.ToSaftShortDateString(entity.CurrentContractDiscontinueDate)
+                            </td>
+                            <td>@entity.InformationBrokerUserName
+                            </td>
+                            <td>@entity.ProviderUserName
+                            </td>
+                            <td>@entity.RecommendUserName
+                            </td>
+                            <td>@entity.FinanceUserName
+                            </td>
+                            <td>@entity.BusinessUserName
+                            </td>
+                            <td>@entity.SettleUserName
+                            </td>
+                            <td>@entity.ServiceUserName
+                            </td>
+                            <td>@entity.Memo1
+                            </td>
+                            <td>@entity.Memo2
+                            </td>
+                            <td>@entity.Memo3
+                            </td>
+                            <td>@entity.Memo4
+                            </td>
+                            <td>@entity.Memo5
+                            </td>
+                        </tr>   
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="myPager">
         <span style="float: left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
@@ -279,6 +293,10 @@
                 $(":checkbox", $(this).parents("table")).attr("checked", selectedStatus);
             });
         });
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/fixTable.js")" ></script>
+    <script type="text/javascript">
+        fixTable("MyTable", 2, "100%", 400);
     </script>
 </div>
 

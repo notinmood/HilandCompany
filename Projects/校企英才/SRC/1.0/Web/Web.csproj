@@ -397,6 +397,7 @@
     <Content Include="Content\ztree\js\jquery.ztree.exedit-3.3.min.js" />
     <Content Include="Content\ztree\js\jquery.ztree.exhide-3.3.js" />
     <Content Include="Content\ztree\js\jquery.ztree.exhide-3.3.min.js" />
+    <Content Include="Scripts\fixTable.js" />
     <Content Include="Upload\Product\OnlyPlaceHolder.txt" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\date.js" />
@@ -666,6 +667,7 @@
     <Content Include="Content\twitter-bootstrap\js\application.js.bak" />
     <Content Include="Content\twitter-bootstrap\js\README.md" />
     <Content Include="DownFiles\Templet\企业招聘简章模板.docx" />
+    <Content Include="DownFiles\Soft\FirefoxSetup.zip" />
     <None Include="Properties\PublishProfiles\profile1.pubxml" />
     <Content Include="Views\Permission\Data.cshtml" />
     <Content Include="Views\FreePermission\RoleSelector.cshtml" />

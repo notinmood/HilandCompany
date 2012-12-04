@@ -49,7 +49,6 @@
     When using ajaxForm, the ajaxSubmit function will be invoked for you
     at the appropriate time.
 */
-
 /**
  * Feature detection
  */
