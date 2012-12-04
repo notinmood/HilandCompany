@@ -1,6 +1,7 @@
 ﻿@using XQYC.Business.Entity;
 @using HiLand.General.Entity;
 @using HiLand.Utility.Data;
+@using HiLand.Utility.Controls;
 
 @{
     ViewBag.Title = "Home Page";
@@ -34,36 +35,31 @@
     <div>最近一次的登录时间为：@CurrentUser.UserLastDateTime.ToString()</div>
     <div>最近一次的登录IP为：@CurrentUser.UserLastIP</div>
 </div>
-
 <div class="moduleStyle moduleStyle1">
     <h5>最新招工信息(最近一月内录入的招工信息为: @enterpriseJobCount )
     </h5>
     @foreach (EnterpriseJobEntity item in enterpriseJobLastList)
     {
         string stringData = string.Format("【{0}】{1} {2}", item.CreateTime.ToShortDateString(), item.EnterpriseName, item.EnterpriseJobTitle);
-        <div><span title="@stringData">@StringHelper.SubString(stringData, 40)</span></div>
+        <div>@Html.Raw(ControlUtil.TitledAndTrimedSpan(stringData, 40))</div>
     }
 </div>
-
-
 <div class="moduleStyle moduleStyle1">
     <h5>提醒摘要(您共有 @remindCount 条信息未读)
     </h5>
     @foreach (RemindEntity item in remindList)
     {
         string stringData = string.Format("【{0}】{1}", item.CreateDate.ToShortDateString(), item.RemindTitle);
-        <div><span title="@stringData">@StringHelper.SubString(stringData, 40)</span></div>
+        <div>@Html.Raw(ControlUtil.TitledAndTrimedSpan(stringData, 40))</div>
     }
 </div>
-
-
 <div class="moduleStyle moduleStyle1">
     <h5>最新劳务人员信息(最近一月内录入的人数为: @laborRegisterCount)
     </h5>
     @foreach (LaborEntity item in laborLastestList)
     {
         string stringData = string.Format("【{0}】的信息于【{1}】录入系统", item.UserNameCN, item.UserRegisterDate.ToShortDateString());
-        <div><span title="@stringData">@StringHelper.SubString(stringData, 40)</span></div>
+        <div>@Html.Raw(ControlUtil.TitledAndTrimedSpan(stringData, 40))</div>
     }
 </div>
 <div class="moduleStyle moduleStyle1">
@@ -72,7 +68,7 @@
     @foreach (LaborContractEntity item in laborLastContractList)
     {
         string stringData = string.Format("【{0}】于【{1}】在【{2}】入职", item.Labor.UserNameCN, item.LaborContractStartDate.ToShortDateString(), item.Enterprise.CompanyNameShort);
-        <div><span title="@stringData">@StringHelper.SubString(stringData, 40)</span></div>
+        <div>@Html.Raw(ControlUtil.TitledAndTrimedSpan(stringData, 40))</div>
     }
 </div>
 <div class="moduleStyle moduleStyle1">
@@ -81,7 +77,7 @@
     @foreach (LaborContractEntity item in laborDiscontinueContractList)
     {
         string stringData = string.Format("【{0}】于【{1}】在【{2}】离职", item.Labor.UserNameCN, item.LaborContractDiscontinueDate.ToShortDateString(), item.Enterprise.CompanyNameShort);
-        <div><span title="@stringData">@StringHelper.SubString(stringData, 40)</span></div>
+        <div>@Html.Raw(ControlUtil.TitledAndTrimedSpan(stringData, 40))</div>
     }
 </div>
 <div class="clear"></div>

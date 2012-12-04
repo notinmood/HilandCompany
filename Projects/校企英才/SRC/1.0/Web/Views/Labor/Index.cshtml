@@ -9,6 +9,7 @@
 @using HiLand.Utility.Data;
 @using XQYC.Business.Entity;
 @using XQYC.Web.Models;
+@using HiLand.Utility.Controls;
 
 @model PagedList<LaborEntity>
 @{
@@ -145,7 +146,7 @@
                     </td>
                     <td>@EnumHelper.GetDisplayValue(entity.LaborWorkStatus)
                     </td>
-                    <td>@entity.CurrentEnterpriseName
+                    <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.CurrentEnterpriseName, 13))
                     </td>
                     <td>@entity.CurrentLaborDepartment
                     </td>
