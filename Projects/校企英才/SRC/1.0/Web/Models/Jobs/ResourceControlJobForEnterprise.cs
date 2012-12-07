@@ -16,14 +16,14 @@ namespace XQYC.Web.Models.Jobs
             if (SystemTaskInConfig != null)
             {
                 //对得到的时间，做一天的修正处理
-                fromCreatedToSignedProtectedDays = Converter.ChangeType(SystemTaskInConfig.GetAddonItemValue("fromCreatedToSignedProtectedDays"), 3) + 1;
-                fromUpdatedToSignedProtectedDays = Converter.ChangeType(SystemTaskInConfig.GetAddonItemValue("fromUpdatedToSignedProtectedDays"), 1) + 1;
-                fromContractEndToResignedProtectedDays = Converter.ChangeType(SystemTaskInConfig.GetAddonItemValue("fromContractEndToResignedProtectedDays"), 7) + 1;
+                fromCreatedToSignedProtectedDays = Converter.ChangeType(SystemTaskInConfig.GetAddonItemValue("fromCreatedToSignedProtectedDays"), 3) - 1;
+                fromUpdatedToSignedProtectedDays = Converter.ChangeType(SystemTaskInConfig.GetAddonItemValue("fromUpdatedToSignedProtectedDays"), 1) - 1;
+                fromContractEndToResignedProtectedDays = Converter.ChangeType(SystemTaskInConfig.GetAddonItemValue("fromContractEndToResignedProtectedDays"), 7) - 1;
             }
 
             //1. 释放录入及其修改后在一段时间内都未能形成签约的企业的保护
-            string sqlClauseForSignProtected = string.Format("update [GeneralEnterprise] set IsProtectedByOwner ={0} where (CooperateStatus= 0 OR CooperateStatus is null ) AND CreateDate< '{1}' AND LastUpdateDate<'{2}' ",
-                (int)Logics.True, DateTime.Today.AddDays(-fromCreatedToSignedProtectedDays), DateTime.Today.AddDays(-fromUpdatedToSignedProtectedDays));
+            string sqlClauseForSignProtected = string.Format("update [GeneralEnterprise] set IsProtectedByOwner ={0} where (CooperateStatus= 0 OR CooperateStatus is null ) AND CreateDate< '{1}' AND ( LastUpdateDate<'{2}' OR LastUpdateDate is null ) ",
+                (int)Logics.False, DateTime.Today.AddDays(-fromCreatedToSignedProtectedDays), DateTime.Today.AddDays(-fromUpdatedToSignedProtectedDays));
 
             int rowCountForCreateUpdateProtected = EnterpriseBLL.Instance.ExcuteNonQuery(sqlClauseForSignProtected);
 

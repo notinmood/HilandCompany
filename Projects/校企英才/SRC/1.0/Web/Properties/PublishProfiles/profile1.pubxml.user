@@ -77,7 +77,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/15/2012 11:52:00</publishTime>
     </File>
     <File Include="Areas/UserCenter/Views/Home/Index.cshtml">
-      <publishTime>12/01/2012 14:12:35</publishTime>
+      <publishTime>12/04/2012 13:33:41</publishTime>
     </File>
     <File Include="Areas/UserCenter/Views/Home/_ChangePasswordForManage.cshtml">
       <publishTime>11/16/2012 15:26:20</publishTime>
@@ -101,19 +101,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/24/2009 16:44:54</publishTime>
     </File>
     <File Include="bin/HiLand.Framework.dll">
-      <publishTime>11/26/2012 16:57:06</publishTime>
+      <publishTime>12/04/2012 10:28:01</publishTime>
     </File>
     <File Include="bin/HiLand.Framework4.dll">
-      <publishTime>11/26/2012 16:59:12</publishTime>
+      <publishTime>12/04/2012 16:45:30</publishTime>
     </File>
     <File Include="bin/HiLand.General.dll">
-      <publishTime>11/30/2012 18:51:40</publishTime>
+      <publishTime>12/04/2012 11:04:22</publishTime>
     </File>
     <File Include="bin/HiLand.Utility.dll">
-      <publishTime>11/26/2012 16:53:40</publishTime>
+      <publishTime>12/04/2012 10:28:00</publishTime>
     </File>
     <File Include="bin/HiLand.Utility4.dll">
-      <publishTime>11/26/2012 16:57:08</publishTime>
+      <publishTime>12/04/2012 16:45:28</publishTime>
     </File>
     <File Include="bin/Ionic.Zip.dll">
       <publishTime>02/15/2012 21:59:34</publishTime>
@@ -170,10 +170,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/10/2012 21:53:02</publishTime>
     </File>
     <File Include="bin/XQYC.Business.dll">
-      <publishTime>12/01/2012 15:33:48</publishTime>
+      <publishTime>12/04/2012 16:48:08</publishTime>
     </File>
     <File Include="bin/XQYC.Web.dll">
-      <publishTime>12/01/2012 17:16:00</publishTime>
+      <publishTime>12/04/2012 16:48:10</publishTime>
     </File>
     <File Include="Content/adminStyle.css">
       <publishTime>11/23/2012 16:44:12</publishTime>
@@ -856,6 +856,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/ztree/js/jquery.ztree.exhide-3.3.min.js">
       <publishTime>08/28/2012 20:54:28</publishTime>
     </File>
+    <File Include="DownFiles/Soft/FirefoxSetup.zip">
+      <publishTime>12/04/2012 13:32:05</publishTime>
+    </File>
     <File Include="DownFiles/Templet/企业招聘简章模板.docx">
       <publishTime>11/23/2012 18:58:07</publishTime>
     </File>
@@ -882,6 +885,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Scripts/facebox.js">
       <publishTime>08/09/2012 10:08:42</publishTime>
+    </File>
+    <File Include="Scripts/fixTable.js">
+      <publishTime>12/04/2012 15:51:06</publishTime>
     </File>
     <File Include="Scripts/jquery-1.4.4-vsdoc.js">
       <publishTime>08/06/2012 16:58:53</publishTime>
@@ -914,13 +920,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/09/2012 10:08:42</publishTime>
     </File>
     <File Include="Scripts/jQuery.form.3.15.js">
-      <publishTime>09/15/2012 18:02:03</publishTime>
+      <publishTime>12/04/2012 14:45:31</publishTime>
     </File>
     <File Include="Scripts/jQuery.gbfSubmit.js">
       <publishTime>09/15/2012 17:59:33</publishTime>
     </File>
     <File Include="Scripts/jQuery.hiland.general.js">
-      <publishTime>10/05/2012 15:59:47</publishTime>
+      <publishTime>12/04/2012 15:09:00</publishTime>
     </File>
     <File Include="Scripts/jquery.jcarousel.js">
       <publishTime>08/09/2012 10:08:42</publishTime>
@@ -1049,7 +1055,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/17/2012 17:37:47</publishTime>
     </File>
     <File Include="Views/Enterprise/Index.cshtml">
-      <publishTime>11/30/2012 16:46:35</publishTime>
+      <publishTime>12/04/2012 16:09:16</publishTime>
     </File>
     <File Include="Views/Enterprise/IndexLaborDispatch.cshtml">
       <publishTime>11/27/2012 17:06:58</publishTime>
@@ -1085,7 +1091,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/27/2012 17:28:11</publishTime>
     </File>
     <File Include="Views/Enterprise/TrackerItem.cshtml">
-      <publishTime>11/16/2012 15:26:18</publishTime>
+      <publishTime>12/04/2012 16:12:33</publishTime>
     </File>
     <File Include="Views/Enterprise/TrackerList.cshtml">
       <publishTime>11/16/2012 14:33:04</publishTime>
@@ -1109,7 +1115,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/25/2012 10:49:28</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>11/30/2012 16:21:53</publishTime>
+      <publishTime>12/04/2012 09:32:36</publishTime>
     </File>
     <File Include="Views/Home/OnlyTest.cshtml">
       <publishTime>11/16/2012 15:26:18</publishTime>
@@ -1154,10 +1160,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/21/2012 15:16:25</publishTime>
     </File>
     <File Include="Views/Labor/Index.cshtml">
-      <publishTime>11/27/2012 15:39:55</publishTime>
+      <publishTime>12/04/2012 16:01:29</publishTime>
     </File>
     <File Include="Views/Labor/Item.cshtml">
-      <publishTime>11/16/2012 15:26:18</publishTime>
+      <publishTime>12/04/2012 11:09:41</publishTime>
     </File>
     <File Include="Views/Labor/SalaryBatch.cshtml">
       <publishTime>11/17/2012 18:38:03</publishTime>
@@ -1253,7 +1259,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/01/2012 17:16:05</publishTime>
+      <publishTime>12/04/2012 16:48:14</publishTime>
     </File>
   </ItemGroup>
 </Project>
