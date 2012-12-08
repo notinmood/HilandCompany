@@ -26,8 +26,8 @@ namespace XQYC.Web.Models.Jobs
             }
 
             //1. 释放录入及其修改后在一段时间内都未能形成签约的信息员的保护
-            string sqlClauseForSignProtected = string.Format("update [XQYCInformationBroker] set IsProtectedByOwner ={0} where LaborWorkStatus={1} AND CreateDate< '{2}' AND LastUpdateDate<'{3}' ",
-                (int)Logics.True, (int)LaborWorkStatuses.NewWorker, DateTime.Today.AddDays(-fromCreatedToSignedProtectedDays), DateTime.Today.AddDays(-fromUpdatedToSignedProtectedDays));
+            string sqlClauseForSignProtected = string.Format("update [XQYCInformationBroker] set IsProtectedByOwner ={0} where CanUsable={1} AND CreateDate< '{2}' AND LastUpdateDate<'{3}' ",
+                (int)Logics.True, (int)Logics.True, DateTime.Today.AddDays(-fromCreatedToSignedProtectedDays), DateTime.Today.AddDays(-fromUpdatedToSignedProtectedDays));
 
             int rowCountForCreateUpdateProtected = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForSignProtected);
 

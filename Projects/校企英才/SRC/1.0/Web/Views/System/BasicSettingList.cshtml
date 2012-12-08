@@ -34,7 +34,7 @@
             string entityGuid = entity.SettingID.ToString();
             <tr>
                 <td>
-                    <a href="#"  class="modalInput edit "+ @entityGuid rel="#EditDIV" itemKey="@entity.SettingID" ><i class="icon-edit"></i>编辑</a>
+                    <a href="#"  class="modalInput edit @entityGuid" rel="#EditDIV" itemKey="@entity.SettingID" ><i class="icon-edit"></i>编辑</a>
                 </td>
                 <td>@entity.DisplayName
                 </td>

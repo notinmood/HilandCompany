@@ -66,8 +66,19 @@
     <div class="OperateArea" id="OperateAreaContainer">
         <div class="btn-group"></div>
     </div>
-    <div class="dataContainer">
-        <table class="grid">
+    <div id="MyTable_tableLayout">
+        <div id="MyTable_tableFix">
+            <table id="MyTable_tableFixClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableHead">
+            <table id="MyTable_tableHeadClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableColumn">
+            <table id="MyTable_tableColumnClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableData">
+            <table id="MyTable" style="width: 1500px" class="grid" border="1" cellspacing="0" cellpadding="0">
+                <thead>
             <tr>
                 <th style="width: 220px">操作
                 </th>
@@ -75,15 +86,17 @@
                 </th>
                 <th style="width: 80px">联系人员名称
                 </th>
-                <th style="width: 30px">状态
+                <th style="width: 50px">状态
                 </th>
-                <th style="width: 50px">开发人员
+                <th style="width: 80px">开发人员
                 </th>
-                <th style="width: 50px">服务人员
+                <th style="width: 80px">服务人员
                 </th>
                 <th>联系地址
                 </th>
             </tr>
+                    </thead>
+                <tbody>
             @foreach (EnterpriseServiceEntity entity in Model)
             {
                 string entityGuid = entity.EnterpriseGuid.ToString();
@@ -116,7 +129,9 @@
                     </td>
                 </tr>   
             }
-        </table>
+        </tbody>
+            </table>
+        </div>
     </div>
     <div class="myPager">
         <span style="float: left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
@@ -142,9 +157,7 @@
             });
 
             $("a.overlayClose").live("click", function () {
-                var currentItemGuid = $("#currentPopupItemGuid").val();
-                $(".modalInput").overlay().close();
-                $(".modalInput.edit." + currentItemGuid).overlay().close();
+                window.location.reload();
             });
 
             $("#newDisplayA").click(function () {
@@ -161,5 +174,9 @@
                 $("#EditDIV").load(url);
             });
         });
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/fixTable.js")" ></script>
+    <script type="text/javascript">
+        fixTable("MyTable", 2, "100%", 400);
     </script>
 </div>

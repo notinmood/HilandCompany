@@ -17,9 +17,9 @@
 
     string enterpriseKey = this.ViewBag.EnterpriseKey;
     string enterpriseName = this.ViewBag.EnterpriseName;
-    if(string.IsNullOrWhiteSpace( enterpriseName))
+    if (string.IsNullOrWhiteSpace(enterpriseName))
     {
-        enterpriseName= EnterpriseBLL.Instance.Get(enterpriseKey).CompanyName;
+        enterpriseName = EnterpriseBLL.Instance.Get(enterpriseKey).CompanyName;
     }
 
     string returnUrl = RequestHelper.GetValue("returnUrl");
@@ -57,11 +57,11 @@
             string entityGuid = entity.TrackerGuid.ToString();
             <tr>
                 <td>
-                    @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("TrackerItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.TrackerGuid }) | 
+                    @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("TrackerItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.TrackerGuid }) | 
                 </td>
                 <td>@entity.CreateTime.ToShortDateString()
                 </td>
-                <td>@entity.TrackerTime.ToShortDateString()
+                <td>@DateTimeHelper.ToSaftShortDateString(entity.TrackerTime)
                 </td>
                 <td>@entity.TrackerUserKey
                 </td>
