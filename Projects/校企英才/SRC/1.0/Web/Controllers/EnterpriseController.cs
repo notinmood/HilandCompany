@@ -139,8 +139,8 @@ namespace XQYC.Web.Controllers
                 targetEntity = new EnterpriseEntity();
                 SetTargetEntityValue(entity, ref targetEntity);
                 targetEntity.EstablishedTime = DateTime.Now;
-                EntityOperateStatuses entityOperateStatus= EntityOperateStatuses.Successful;
-                EnterpriseBLL.Instance.Create(targetEntity,out entityOperateStatus);
+                EntityOperateStatuses entityOperateStatus = EntityOperateStatuses.Successful;
+                EnterpriseBLL.Instance.Create(targetEntity, out entityOperateStatus);
                 if (entityOperateStatus == EntityOperateStatuses.Successful)
                 {
                     isSuccessful = true;
@@ -156,7 +156,7 @@ namespace XQYC.Web.Controllers
                 targetEntity = EnterpriseBLL.Instance.Get(keyGuid);
                 SetTargetEntityValue(entity, ref targetEntity);
                 EntityOperateStatuses entityOperateStatus = EntityOperateStatuses.Successful;
-                EnterpriseBLL.Instance.Update(targetEntity,out entityOperateStatus);
+                EnterpriseBLL.Instance.Update(targetEntity, out entityOperateStatus);
 
                 if (entityOperateStatus == EntityOperateStatuses.Successful)
                 {
@@ -205,6 +205,23 @@ namespace XQYC.Web.Controllers
             targetEntity.AreaCode = originalEntity.AreaCode;
             targetEntity.AreaOther = originalEntity.AreaOther;
             targetEntity.EnterpriseMemo = originalEntity.EnterpriseMemo;
+        }
+
+        /// <summary>
+        /// 释放对企业的锁定
+        /// </summary>
+        /// <param name="itemKey"></param>
+        /// <returns></returns>
+        public ActionResult ReleaseEnterprise(string itemKey)
+        {
+            EnterpriseBLL.Instance.ReleaseEnterprise(GuidHelper.TryConvert(itemKey));
+            string url = RequestHelper.GetValue("returnUrl");
+            bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
+            if (isUsingCompress == true)
+            {
+                url = CompressHelper.Decompress(url);
+            }
+            return Redirect(url);
         }
 
         /// <summary>
