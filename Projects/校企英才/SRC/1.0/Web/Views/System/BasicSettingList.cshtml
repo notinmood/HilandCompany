@@ -25,6 +25,9 @@
             <th style="width: 80px">
                  参数值
             </th>
+            <th style="width: 80px">
+                 排序号
+            </th>
             <th>
                状态
             </th>
@@ -39,6 +42,8 @@
                 <td>@entity.DisplayName
                 </td>
                 <td>@entity.SettingValue
+                </td>
+                <td>@entity.OrderNumber
                 </td>
                 <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
                 </td>

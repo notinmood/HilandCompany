@@ -99,14 +99,15 @@ namespace XQYC.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult BasicSetting(int settingID, string SettingValue)
+        public ActionResult BasicSetting(int settingID, BasicSettingEntity settingInfo)
         {
             LogicStatusInfo statusInfo = new LogicStatusInfo();
             BasicSettingEntity basicSettingEntity = BasicSettingEntity.Empty;
             if (settingID > 0)
             {
                 basicSettingEntity = BasicSettingBLL.Instance.Get(settingID);
-                basicSettingEntity.SettingValue = SettingValue;
+                basicSettingEntity.SettingValue = settingInfo.SettingValue;
+                basicSettingEntity.OrderNumber = settingInfo.OrderNumber;
                 statusInfo.IsSuccessful = BasicSettingBLL.Instance.Update(basicSettingEntity);
             }
 

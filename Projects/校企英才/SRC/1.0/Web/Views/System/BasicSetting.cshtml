@@ -9,8 +9,8 @@
     { 
         <span>Display Name:@Model.DisplayName</span>
         <br />
-        <span>Setting Value:</span>
-        <input type="text" name="SettingValue" value="@Model.SettingValue" />
+        <span>设置项数值:</span>@Html.TextBoxFor(m=>m.SettingValue)<br />
+        <span>设置项序号:</span>@Html.TextBoxFor(m=>m.OrderNumber)
         <input  type="hidden" name="SettingID" value="@Model.SettingID"/>
         <input type="button" id="submitButton" value="Save" class="btn btn-warning" /><a id="overlayClose" class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
     }

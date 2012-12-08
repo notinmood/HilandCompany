@@ -13,6 +13,7 @@
 @using System.Web.UI.WebControls;
 @using HiLand.General.BLL;
 @using HiLand.Framework4.Permission;
+@using HiLand.Utility.Controls;
 
 @model PagedList<EnterpriseEntity>
 @{
@@ -85,7 +86,7 @@
                         </th>
                         <th style="width: 220px">企业名称
                         </th>
-                        <th style="width: 100px">联系人员名称
+                        <th style="width: 100px">联系人
                         </th>
                         <th style="width: 100px">联系电话
                         </th>
@@ -122,9 +123,9 @@
                                     <span>尚无操作此条数据的权限</span>
                                 }
                             </td>
-                            <td>@entity.CompanyName
+                            <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.CompanyName, 15))
                             </td>
-                            <td>@entity.ContactPerson
+                            <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.ContactPerson, 6))
                             </td>
                             <td>@string.Format("{0} {1}", entity.Telephone, entity.TelephoneOther)
                             </td>

@@ -12,6 +12,7 @@
 @using HiLand.Framework.BusinessCore.BLL;
 @using HiLand.Utility.Web;
 @using XQYC.Business.Enums;
+@using HiLand.Utility.Controls;
 
 @model PagedList<LaborContractEntity>
 @{
@@ -77,7 +78,7 @@
                     </td>
                     <td>@entity.Labor.UserCardID
                     </td>
-                    <td>@entity.Enterprise.CompanyNameShort
+                    <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.Enterprise.CompanyNameShort,15))
                     </td>
                     <td>@entity.LaborDepartment
                     </td>

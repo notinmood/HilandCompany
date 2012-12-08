@@ -12,6 +12,7 @@
 @using HiLand.Utility.Enums;
 @using System.Web.UI.WebControls;
 @using HiLand.General.BLL;
+@using HiLand.Utility.Controls;
 
 @model PagedList<EnterpriseServiceEntity>
 @{
@@ -79,57 +80,57 @@
         <div id="MyTable_tableData">
             <table id="MyTable" style="width: 1500px" class="grid" border="1" cellspacing="0" cellpadding="0">
                 <thead>
-            <tr>
-                <th style="width: 220px">操作
-                </th>
-                <th style="width: 220px">企业名称
-                </th>
-                <th style="width: 80px">联系人员名称
-                </th>
-                <th style="width: 50px">状态
-                </th>
-                <th style="width: 80px">开发人员
-                </th>
-                <th style="width: 80px">服务人员
-                </th>
-                <th>联系地址
-                </th>
-            </tr>
-                    </thead>
+                    <tr>
+                        <th style="width: 220px">操作
+                        </th>
+                        <th style="width: 220px">企业名称
+                        </th>
+                        <th style="width: 100px">联系人
+                        </th>
+                        <th style="width: 50px">状态
+                        </th>
+                        <th style="width: 80px">开发人员
+                        </th>
+                        <th style="width: 80px">服务人员
+                        </th>
+                        <th>联系地址
+                        </th>
+                    </tr>
+                </thead>
                 <tbody>
-            @foreach (EnterpriseServiceEntity entity in Model)
-            {
-                string entityGuid = entity.EnterpriseGuid.ToString();
-                <tr>
-                    <td>
-                        @if (entity.IsOwning == true)
-                        {
-                            @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseGuid }) <span>|</span>
-                            @Html.HiA().CssClassName("user").Value("<i class=\"icon-user\"></i>用户").ACA("UserList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() <span>|</span>
-                            @Html.HiA().CssClassName("tracker").Value("<i class=\"icon-time\"></i>回访").ACA("TrackerList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()<span>|</span>
-                            @Html.HiA().CssClassName("booth").Value("<i class=\"icon-road\"></i>摊位").ACA("BoothList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()<span>|</span>
-                            @Html.HiA().CssClassName("AD").Value("<i class=\"icon-print\"></i>广告").ACA("ADList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()
-                        }
-                        else
-                        {
-                            <span>尚无操作此条数据的权限</span>
-                        }
-                    </td>
-                    <td>@entity.CompanyName
-                    </td>
-                    <td>@entity.ContactPerson
-                    </td>
-                    <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
-                    </td>
-                    <td>@entity.BusinessUserName
-                    </td>
-                    <td>@entity.ServiceUserName
-                    </td>
-                    <td>@entity.PrincipleAddress
-                    </td>
-                </tr>   
-            }
-        </tbody>
+                    @foreach (EnterpriseServiceEntity entity in Model)
+                    {
+                        string entityGuid = entity.EnterpriseGuid.ToString();
+                        <tr>
+                            <td>
+                                @if (entity.IsOwning == true)
+                                {
+                                    @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseGuid }) <span>|</span>
+                                    @Html.HiA().CssClassName("user").Value("<i class=\"icon-user\"></i>用户").ACA("UserList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() <span>|</span>
+                                    @Html.HiA().CssClassName("tracker").Value("<i class=\"icon-time\"></i>回访").ACA("TrackerList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()<span>|</span>
+                                    @Html.HiA().CssClassName("booth").Value("<i class=\"icon-road\"></i>摊位").ACA("BoothList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()<span>|</span>
+                                    @Html.HiA().CssClassName("AD").Value("<i class=\"icon-print\"></i>广告").ACA("ADList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()
+                                }
+                                else
+                                {
+                                    <span>尚无操作此条数据的权限</span>
+                                }
+                            </td>
+                            <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.CompanyName, 15))
+                            </td>
+                            <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.ContactPerson, 6))
+                            </td>
+                            <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
+                            </td>
+                            <td>@entity.BusinessUserName
+                            </td>
+                            <td>@entity.ServiceUserName
+                            </td>
+                            <td>@entity.PrincipleAddress
+                            </td>
+                        </tr>   
+                    }
+                </tbody>
             </table>
         </div>
     </div>

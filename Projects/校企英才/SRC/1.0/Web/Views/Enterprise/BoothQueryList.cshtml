@@ -12,6 +12,7 @@
 @using HiLand.Framework.BusinessCore.BLL;
 @using HiLand.Utility.Web;
 @using HiLand.Utility.Enums;
+@using HiLand.Utility.Controls;
 
 @model PagedList<ForeOrderEntity>
 @{
@@ -76,7 +77,7 @@
                 totalForeOrderAmount += entity.ForeOrderTotalFee;
                 totalCommissionFee += entity.CommissionFee;
                 <tr>
-                    <td>@entity.OwnerName
+                    <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.OwnerName,15))
                     </td>
                     <td>@entity.ForeOrderDate.ToShortDateString()
                     </td>

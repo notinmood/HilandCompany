@@ -12,6 +12,7 @@
 @using HiLand.Framework.BusinessCore.BLL;
 @using HiLand.Utility.Web;
 @using HiLand.Utility.Enums;
+@using HiLand.Utility.Controls;
 
 @model PagedList<EnterpriseContractEntity>
 @{
@@ -64,7 +65,7 @@
             {
                 string entityGuid = entity.ContractGuid.ToString();
                 <tr>
-                    <td>@entity.EnterpriseInfo
+                    <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.EnterpriseInfo,15))
                     </td>
                     <td>@entity.ContractStartDate.ToShortDateString()
                     </td>
