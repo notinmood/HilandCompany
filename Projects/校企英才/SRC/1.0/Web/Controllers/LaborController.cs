@@ -146,6 +146,14 @@ namespace XQYC.Web.Controllers
             {
                 returnUrl = Url.Action("Index");
             }
+            else
+            {
+                bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
+                if (isUsingCompress == true)
+                {
+                    returnUrl = CompressHelper.Decompress(returnUrl);
+                }
+            }
 
             LaborEntity targetEntity = null;
             if (GuidHelper.IsInvalidOrEmpty(itemKey))

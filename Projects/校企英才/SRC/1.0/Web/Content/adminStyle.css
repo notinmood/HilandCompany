@@ -186,7 +186,7 @@ a.remove-link:hover {
 #sidebar #main-nav ul li a {
                 padding: 8px 15px;
                 display: block;
-                color: #aaa;
+                color: #333;
                 font-size: 13px;
                 line-height: 1.2em;
                 }

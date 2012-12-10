@@ -72,24 +72,34 @@ namespace XQYC.Business.DALCommon
 			    [SalaryPayStatus],
 			    [EnterpriseManageFeeReal],
 			    [EnterpriseManageFeeCalculated],
+			    [EnterpriseManageFeeCalculatedFix],
 			    [EnterpriseInsuranceReal],
 			    [EnterpriseInsuranceCalculated],
+			    [EnterpriseInsuranceCalculatedFix],
 			    [EnterpriseReserveFundReal],
 			    [EnterpriseReserveFundCalculated],
+			    [EnterpriseReserveFundCalculatedFix],
 			    [PersonManageFeeReal],
 			    [PersonManageFeeCalculated],
+			    [PersonManageFeeCalculatedFix],
 			    [PersonInsuranceReal],
 			    [PersonInsuranceCalculated],
+			    [PersonInsuranceCalculatedFix],
 			    [PersonReserveFundReal],
 			    [PersonReserveFundCalculated],
+			    [PersonReserveFundCalculatedFix],
 			    [EnterpriseMixCostReal],
 			    [EnterpriseMixCostCalculated],
+			    [EnterpriseMixCostCalculatedFix],
 			    [PersonMixCostReal],
 			    [PersonMixCostCalculated],
+			    [PersonMixCostCalculatedFix],
 			    [EnterpriseOtherCostReal],
 			    [EnterpriseOtherCostCalculated],
+			    [EnterpriseOtherCostCalculatedFix],
 			    [PersonOtherCostReal],
 			    [PersonOtherCostCalculated],
+			    [PersonOtherCostCalculatedFix],
 			    [SalaryTaxReal],
 			    [SalaryTaxCalculated],			    
                 [SalaryMemo],
@@ -115,24 +125,34 @@ namespace XQYC.Business.DALCommon
 			    {0}SalaryPayStatus,
 			    {0}EnterpriseManageFeeReal,
 			    {0}EnterpriseManageFeeCalculated,
+			    {0}EnterpriseManageFeeCalculatedFix,
 			    {0}EnterpriseInsuranceReal,
 			    {0}EnterpriseInsuranceCalculated,
+			    {0}EnterpriseInsuranceCalculatedFix,
 			    {0}EnterpriseReserveFundReal,
 			    {0}EnterpriseReserveFundCalculated,
+			    {0}EnterpriseReserveFundCalculatedFix,
 			    {0}PersonManageFeeReal,
 			    {0}PersonManageFeeCalculated,
+			    {0}PersonManageFeeCalculatedFix,
 			    {0}PersonInsuranceReal,
 			    {0}PersonInsuranceCalculated,
+			    {0}PersonInsuranceCalculatedFix,
 			    {0}PersonReserveFundReal,
 			    {0}PersonReserveFundCalculated,
+			    {0}PersonReserveFundCalculatedFix,
 			    {0}EnterpriseMixCostReal,
 			    {0}EnterpriseMixCostCalculated,
+			    {0}EnterpriseMixCostCalculatedFix,
 			    {0}PersonMixCostReal,
 			    {0}PersonMixCostCalculated,
+			    {0}PersonMixCostCalculatedFix,
 			    {0}EnterpriseOtherCostReal,
 			    {0}EnterpriseOtherCostCalculated,
+			    {0}EnterpriseOtherCostCalculatedFix,
 			    {0}PersonOtherCostReal,
 			    {0}PersonOtherCostCalculated,
+			    {0}PersonOtherCostCalculatedFix,
 			    {0}SalaryTaxReal,
 			    {0}SalaryTaxCalculated,
 			    {0}SalaryMemo,
@@ -167,24 +187,34 @@ namespace XQYC.Business.DALCommon
 				[SalaryPayStatus] = {0}SalaryPayStatus,
 				[EnterpriseManageFeeReal] = {0}EnterpriseManageFeeReal,
 				[EnterpriseManageFeeCalculated] = {0}EnterpriseManageFeeCalculated,
+				[EnterpriseManageFeeCalculatedFix] = {0}EnterpriseManageFeeCalculatedFix,
 				[EnterpriseInsuranceReal] = {0}EnterpriseInsuranceReal,
 				[EnterpriseInsuranceCalculated] = {0}EnterpriseInsuranceCalculated,
+				[EnterpriseInsuranceCalculatedFix] = {0}EnterpriseInsuranceCalculatedFix,
 				[EnterpriseReserveFundReal] = {0}EnterpriseReserveFundReal,
 				[EnterpriseReserveFundCalculated] = {0}EnterpriseReserveFundCalculated,
+				[EnterpriseReserveFundCalculatedFix] = {0}EnterpriseReserveFundCalculatedFix,
 				[PersonManageFeeReal] = {0}PersonManageFeeReal,
 				[PersonManageFeeCalculated] = {0}PersonManageFeeCalculated,
+				[PersonManageFeeCalculatedFix] = {0}PersonManageFeeCalculatedFix,
 				[PersonInsuranceReal] = {0}PersonInsuranceReal,
 				[PersonInsuranceCalculated] = {0}PersonInsuranceCalculated,
+				[PersonInsuranceCalculatedFix] = {0}PersonInsuranceCalculatedFix,
 				[PersonReserveFundReal] = {0}PersonReserveFundReal,
 				[PersonReserveFundCalculated] = {0}PersonReserveFundCalculated,
+				[PersonReserveFundCalculatedFix] = {0}PersonReserveFundCalculatedFix,
 				[EnterpriseMixCostReal] = {0}EnterpriseMixCostReal,
 				[EnterpriseMixCostCalculated] = {0}EnterpriseMixCostCalculated,
+				[EnterpriseMixCostCalculatedFix] = {0}EnterpriseMixCostCalculatedFix,
 				[PersonMixCostReal] = {0}PersonMixCostReal,
 				[PersonMixCostCalculated] = {0}PersonMixCostCalculated,
+				[PersonMixCostCalculatedFix] = {0}PersonMixCostCalculatedFix,
 				[EnterpriseOtherCostReal] = {0}EnterpriseOtherCostReal,
 				[EnterpriseOtherCostCalculated] = {0}EnterpriseOtherCostCalculated,
+				[EnterpriseOtherCostCalculatedFix] = {0}EnterpriseOtherCostCalculatedFix,
 				[PersonOtherCostReal] = {0}PersonOtherCostReal,
 				[PersonOtherCostCalculated] = {0}PersonOtherCostCalculated,
+				[PersonOtherCostCalculatedFix] = {0}PersonOtherCostCalculatedFix,
 				[SalaryTaxReal] = {0}SalaryTaxReal,
 				[SalaryTaxCalculated] = {0}SalaryTaxCalculated,
 				[SalaryMemo] = {0}SalaryMemo,
@@ -225,24 +255,34 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("SalaryPayStatus",entity.SalaryPayStatus),
 			    GenerateParameter("EnterpriseManageFeeReal",entity.EnterpriseManageFeeReal),
 			    GenerateParameter("EnterpriseManageFeeCalculated",entity.EnterpriseManageFeeCalculated),
+			    GenerateParameter("EnterpriseManageFeeCalculatedFix",entity.EnterpriseManageFeeCalculatedFix),
 			    GenerateParameter("EnterpriseInsuranceReal",entity.EnterpriseInsuranceReal),
 			    GenerateParameter("EnterpriseInsuranceCalculated",entity.EnterpriseInsuranceCalculated),
+			    GenerateParameter("EnterpriseInsuranceCalculatedFix",entity.EnterpriseInsuranceCalculatedFix),
 			    GenerateParameter("EnterpriseReserveFundReal",entity.EnterpriseReserveFundReal),
 			    GenerateParameter("EnterpriseReserveFundCalculated",entity.EnterpriseReserveFundCalculated),
+			    GenerateParameter("EnterpriseReserveFundCalculatedFix",entity.EnterpriseReserveFundCalculatedFix),
 			    GenerateParameter("PersonManageFeeReal",entity.PersonManageFeeReal),
 			    GenerateParameter("PersonManageFeeCalculated",entity.PersonManageFeeCalculated),
+			    GenerateParameter("PersonManageFeeCalculatedFix",entity.PersonManageFeeCalculatedFix),
 			    GenerateParameter("PersonInsuranceReal",entity.PersonInsuranceReal),
 			    GenerateParameter("PersonInsuranceCalculated",entity.PersonInsuranceCalculated),
+			    GenerateParameter("PersonInsuranceCalculatedFix",entity.PersonInsuranceCalculatedFix),
 			    GenerateParameter("PersonReserveFundReal",entity.PersonReserveFundReal),
 			    GenerateParameter("PersonReserveFundCalculated",entity.PersonReserveFundCalculated),
+			    GenerateParameter("PersonReserveFundCalculatedFix",entity.PersonReserveFundCalculatedFix),
 			    GenerateParameter("EnterpriseMixCostReal",entity.EnterpriseMixCostReal),
 			    GenerateParameter("EnterpriseMixCostCalculated",entity.EnterpriseMixCostCalculated),
+			    GenerateParameter("EnterpriseMixCostCalculatedFix",entity.EnterpriseMixCostCalculatedFix),
 			    GenerateParameter("PersonMixCostReal",entity.PersonMixCostReal),
 			    GenerateParameter("PersonMixCostCalculated",entity.PersonMixCostCalculated),
+			    GenerateParameter("PersonMixCostCalculatedFix",entity.PersonMixCostCalculatedFix),
 			    GenerateParameter("EnterpriseOtherCostReal",entity.EnterpriseOtherCostReal),
 			    GenerateParameter("EnterpriseOtherCostCalculated",entity.EnterpriseOtherCostCalculated),
+			    GenerateParameter("EnterpriseOtherCostCalculatedFix",entity.EnterpriseOtherCostCalculatedFix),
 			    GenerateParameter("PersonOtherCostReal",entity.PersonOtherCostReal),
 			    GenerateParameter("PersonOtherCostCalculated",entity.PersonOtherCostCalculated),
+			    GenerateParameter("PersonOtherCostCalculatedFix",entity.PersonOtherCostCalculatedFix),
                 GenerateParameter("SalaryTaxReal",entity.SalaryTaxReal),
 			    GenerateParameter("SalaryTaxCalculated",entity.SalaryTaxCalculated),
 			    GenerateParameter("SalaryMemo",entity.SalaryMemo?? String.Empty),
@@ -332,6 +372,10 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.EnterpriseManageFeeCalculated = reader.GetDecimal(reader.GetOrdinal("EnterpriseManageFeeCalculated"));
                 }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseManageFeeCalculatedFix"))
+                {
+                    entity.EnterpriseManageFeeCalculatedFix = reader.GetDecimal(reader.GetOrdinal("EnterpriseManageFeeCalculatedFix"));
+                }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseInsuranceReal"))
                 {
                     entity.EnterpriseInsuranceReal = reader.GetDecimal(reader.GetOrdinal("EnterpriseInsuranceReal"));
@@ -339,6 +383,10 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseInsuranceCalculated"))
                 {
                     entity.EnterpriseInsuranceCalculated = reader.GetDecimal(reader.GetOrdinal("EnterpriseInsuranceCalculated"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseInsuranceCalculatedFix"))
+                {
+                    entity.EnterpriseInsuranceCalculatedFix = reader.GetDecimal(reader.GetOrdinal("EnterpriseInsuranceCalculatedFix"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseReserveFundReal"))
                 {
@@ -348,6 +396,10 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.EnterpriseReserveFundCalculated = reader.GetDecimal(reader.GetOrdinal("EnterpriseReserveFundCalculated"));
                 }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseReserveFundCalculatedFix"))
+                {
+                    entity.EnterpriseReserveFundCalculatedFix = reader.GetDecimal(reader.GetOrdinal("EnterpriseReserveFundCalculatedFix"));
+                }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonManageFeeReal"))
                 {
                     entity.PersonManageFeeReal = reader.GetDecimal(reader.GetOrdinal("PersonManageFeeReal"));
@@ -355,6 +407,10 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonManageFeeCalculated"))
                 {
                     entity.PersonManageFeeCalculated = reader.GetDecimal(reader.GetOrdinal("PersonManageFeeCalculated"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonManageFeeCalculatedFix"))
+                {
+                    entity.PersonManageFeeCalculatedFix = reader.GetDecimal(reader.GetOrdinal("PersonManageFeeCalculatedFix"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonInsuranceReal"))
                 {
@@ -364,6 +420,10 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.PersonInsuranceCalculated = reader.GetDecimal(reader.GetOrdinal("PersonInsuranceCalculated"));
                 }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonInsuranceCalculatedFix"))
+                {
+                    entity.PersonInsuranceCalculatedFix = reader.GetDecimal(reader.GetOrdinal("PersonInsuranceCalculatedFix"));
+                }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonReserveFundReal"))
                 {
                     entity.PersonReserveFundReal = reader.GetDecimal(reader.GetOrdinal("PersonReserveFundReal"));
@@ -371,6 +431,10 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonReserveFundCalculated"))
                 {
                     entity.PersonReserveFundCalculated = reader.GetDecimal(reader.GetOrdinal("PersonReserveFundCalculated"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonReserveFundCalculatedFix"))
+                {
+                    entity.PersonReserveFundCalculatedFix = reader.GetDecimal(reader.GetOrdinal("PersonReserveFundCalculatedFix"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseMixCostReal"))
                 {
@@ -380,6 +444,10 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.EnterpriseMixCostCalculated = reader.GetDecimal(reader.GetOrdinal("EnterpriseMixCostCalculated"));
                 }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseMixCostCalculatedFix"))
+                {
+                    entity.EnterpriseMixCostCalculatedFix = reader.GetDecimal(reader.GetOrdinal("EnterpriseMixCostCalculatedFix"));
+                }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonMixCostReal"))
                 {
                     entity.PersonMixCostReal = reader.GetDecimal(reader.GetOrdinal("PersonMixCostReal"));
@@ -387,6 +455,10 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonMixCostCalculated"))
                 {
                     entity.PersonMixCostCalculated = reader.GetDecimal(reader.GetOrdinal("PersonMixCostCalculated"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonMixCostCalculatedFix"))
+                {
+                    entity.PersonMixCostCalculatedFix = reader.GetDecimal(reader.GetOrdinal("PersonMixCostCalculatedFix"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseOtherCostReal"))
                 {
@@ -396,6 +468,10 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.EnterpriseOtherCostCalculated = reader.GetDecimal(reader.GetOrdinal("EnterpriseOtherCostCalculated"));
                 }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseOtherCostCalculatedFix"))
+                {
+                    entity.EnterpriseOtherCostCalculatedFix = reader.GetDecimal(reader.GetOrdinal("EnterpriseOtherCostCalculatedFix"));
+                }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonOtherCostReal"))
                 {
                     entity.PersonOtherCostReal = reader.GetDecimal(reader.GetOrdinal("PersonOtherCostReal"));
@@ -403,6 +479,10 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonOtherCostCalculated"))
                 {
                     entity.PersonOtherCostCalculated = reader.GetDecimal(reader.GetOrdinal("PersonOtherCostCalculated"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonOtherCostCalculatedFix"))
+                {
+                    entity.PersonOtherCostCalculatedFix = reader.GetDecimal(reader.GetOrdinal("PersonOtherCostCalculatedFix"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SalaryTaxReal"))
                 {

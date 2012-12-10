@@ -226,6 +226,16 @@ namespace XQYC.Business.Entity
             set { salaryPayStatus = value; }
         }
 
+        private decimal personBorrow;
+        /// <summary>
+        /// 个人从单位的借款（给人员发放薪资的时候，需要扣除掉）
+        /// </summary>
+        public decimal PersonBorrow
+        {
+            get { return personBorrow; }
+            set { personBorrow = value; }
+        }
+
         private decimal enterpriseManageFeeReal;
         public decimal EnterpriseManageFeeReal
         {
@@ -236,8 +246,25 @@ namespace XQYC.Business.Entity
         private decimal enterpriseManageFeeCalculated;
         public decimal EnterpriseManageFeeCalculated
         {
-            get { return enterpriseManageFeeCalculated; }
+            get
+            {
+                if (enterpriseManageFeeCalculatedFix == 0)
+                {
+                    return enterpriseManageFeeCalculated;
+                }
+                else
+                {
+                    return enterpriseManageFeeCalculatedFix;
+                }
+            }
             set { enterpriseManageFeeCalculated = value; }
+        }
+
+        private decimal enterpriseManageFeeCalculatedFix;
+        public decimal EnterpriseManageFeeCalculatedFix
+        {
+            get { return enterpriseManageFeeCalculatedFix; }
+            set { enterpriseManageFeeCalculatedFix = value; }
         }
 
         private decimal enterpriseInsuranceReal;
@@ -250,8 +277,25 @@ namespace XQYC.Business.Entity
         private decimal enterpriseInsuranceCalculated;
         public decimal EnterpriseInsuranceCalculated
         {
-            get { return enterpriseInsuranceCalculated; }
+            get
+            {
+                if (enterpriseInsuranceCalculatedFix == 0)
+                {
+                    return enterpriseInsuranceCalculated;
+                }
+                else
+                {
+                    return enterpriseInsuranceCalculatedFix;
+                }
+            }
             set { enterpriseInsuranceCalculated = value; }
+        }
+
+        private decimal enterpriseInsuranceCalculatedFix;
+        public decimal EnterpriseInsuranceCalculatedFix
+        {
+            get { return enterpriseInsuranceCalculatedFix; }
+            set { enterpriseInsuranceCalculatedFix = value; }
         }
 
         private decimal enterpriseReserveFundReal;
@@ -264,8 +308,25 @@ namespace XQYC.Business.Entity
         private decimal enterpriseReserveFundCalculated;
         public decimal EnterpriseReserveFundCalculated
         {
-            get { return enterpriseReserveFundCalculated; }
+            get
+            {
+                if (enterpriseReserveFundCalculatedFix == 0)
+                {
+                    return enterpriseReserveFundCalculated;
+                }
+                else
+                {
+                    return enterpriseReserveFundCalculatedFix;
+                }
+            }
             set { enterpriseReserveFundCalculated = value; }
+        }
+
+        private decimal enterpriseReserveFundCalculatedFix;
+        public decimal EnterpriseReserveFundCalculatedFix
+        {
+            get { return enterpriseReserveFundCalculatedFix; }
+            set { enterpriseReserveFundCalculatedFix = value; }
         }
 
         private decimal personManageFeeReal;
@@ -278,8 +339,25 @@ namespace XQYC.Business.Entity
         private decimal personManageFeeCalculated;
         public decimal PersonManageFeeCalculated
         {
-            get { return personManageFeeCalculated; }
+            get
+            {
+                if (personManageFeeCalculatedFix == 0)
+                {
+                    return personManageFeeCalculated;
+                }
+                else
+                {
+                    return personManageFeeCalculatedFix;
+                }
+            }
             set { personManageFeeCalculated = value; }
+        }
+
+        private decimal personManageFeeCalculatedFix;
+        public decimal PersonManageFeeCalculatedFix
+        {
+            get { return personManageFeeCalculatedFix; }
+            set { personManageFeeCalculatedFix = value; }
         }
 
         private decimal personInsuranceReal;
@@ -292,8 +370,25 @@ namespace XQYC.Business.Entity
         private decimal personInsuranceCalculated;
         public decimal PersonInsuranceCalculated
         {
-            get { return personInsuranceCalculated; }
+            get
+            {
+                if (personInsuranceCalculatedFix == 0)
+                {
+                    return personInsuranceCalculated;
+                }
+                else
+                {
+                    return personInsuranceCalculatedFix;
+                }
+            }
             set { personInsuranceCalculated = value; }
+        }
+
+        private decimal personInsuranceCalculatedFix;
+        public decimal PersonInsuranceCalculatedFix
+        {
+            get { return personInsuranceCalculatedFix; }
+            set { personInsuranceCalculatedFix = value; }
         }
 
         private decimal personReserveFundReal;
@@ -306,8 +401,25 @@ namespace XQYC.Business.Entity
         private decimal personReserveFundCalculated;
         public decimal PersonReserveFundCalculated
         {
-            get { return personReserveFundCalculated; }
+            get
+            {
+                if (personReserveFundCalculatedFix == 0)
+                {
+                    return personReserveFundCalculated;
+                }
+                else
+                {
+                    return personReserveFundCalculatedFix;
+                }
+            }
             set { personReserveFundCalculated = value; }
+        }
+
+        private decimal personReserveFundCalculatedFix;
+        public decimal PersonReserveFundCalculatedFix
+        {
+            get { return personReserveFundCalculatedFix; }
+            set { personReserveFundCalculatedFix = value; }
         }
 
         private decimal enterpriseMixCostReal;
@@ -320,8 +432,25 @@ namespace XQYC.Business.Entity
         private decimal enterpriseMixCostCalculated;
         public decimal EnterpriseMixCostCalculated
         {
-            get { return enterpriseMixCostCalculated; }
+            get
+            {
+                if (enterpriseMixCostCalculatedFix == 0)
+                {
+                    return enterpriseMixCostCalculated;
+                }
+                else
+                {
+                    return enterpriseMixCostCalculatedFix;
+                }
+            }
             set { enterpriseMixCostCalculated = value; }
+        }
+
+        private decimal enterpriseMixCostCalculatedFix;
+        public decimal EnterpriseMixCostCalculatedFix
+        {
+            get { return enterpriseMixCostCalculatedFix; }
+            set { enterpriseMixCostCalculatedFix = value; }
         }
 
         private decimal personMixCostReal;
@@ -334,8 +463,25 @@ namespace XQYC.Business.Entity
         private decimal personMixCostCalculated;
         public decimal PersonMixCostCalculated
         {
-            get { return personMixCostCalculated; }
+            get
+            {
+                if (personMixCostCalculatedFix == 0)
+                {
+                    return personMixCostCalculated;
+                }
+                else
+                {
+                    return personMixCostCalculatedFix;
+                }
+            }
             set { personMixCostCalculated = value; }
+        }
+
+        private decimal personMixCostCalculatedFix;
+        public decimal PersonMixCostCalculatedFix
+        {
+            get { return personMixCostCalculatedFix; }
+            set { personMixCostCalculatedFix = value; }
         }
 
         private decimal enterpriseOtherCostReal;
@@ -348,18 +494,25 @@ namespace XQYC.Business.Entity
         private decimal enterpriseOtherCostCalculated;
         public decimal EnterpriseOtherCostCalculated
         {
-            get { return enterpriseOtherCostCalculated; }
+            get
+            {
+                if (enterpriseOtherCostCalculatedFix == 0)
+                {
+                    return enterpriseOtherCostCalculated;
+                }
+                else
+                {
+                    return enterpriseOtherCostCalculatedFix;
+                }
+            }
             set { enterpriseOtherCostCalculated = value; }
         }
 
-        private decimal personBorrow;
-        /// <summary>
-        /// 个人从单位的借款（给人员发放薪资的时候，需要扣除掉）
-        /// </summary>
-        public decimal PersonBorrow
+        private decimal enterpriseOtherCostCalculatedFix;
+        public decimal EnterpriseOtherCostCalculatedFix
         {
-            get { return personBorrow; }
-            set { personBorrow = value; }
+            get { return enterpriseOtherCostCalculatedFix; }
+            set { enterpriseOtherCostCalculatedFix = value; }
         }
 
         private decimal personOtherCostReal;
@@ -375,8 +528,25 @@ namespace XQYC.Business.Entity
         private decimal personOtherCostCalculated;
         public decimal PersonOtherCostCalculated
         {
-            get { return personOtherCostCalculated; }
+            get
+            {
+                if (personOtherCostCalculatedFix == 0)
+                {
+                    return personOtherCostCalculated;
+                }
+                else
+                {
+                    return personOtherCostCalculatedFix;
+                }
+            }
             set { personOtherCostCalculated = value; }
+        }
+
+        private decimal personOtherCostCalculatedFix;
+        public decimal PersonOtherCostCalculatedFix
+        {
+            get { return personOtherCostCalculatedFix; }
+            set { personOtherCostCalculatedFix = value; }
         }
 
         /// <summary>
@@ -423,7 +593,7 @@ namespace XQYC.Business.Entity
             set { salaryMemo = value; }
         }
 
-        private Logics isCheckPast= Logics.True;
+        private Logics isCheckPast = Logics.True;
         public Logics IsCheckPast
         {
             get { return isCheckPast; }

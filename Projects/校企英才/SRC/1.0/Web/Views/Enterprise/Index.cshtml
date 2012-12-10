@@ -79,7 +79,7 @@
             <table id="MyTable_tableColumnClone" border="1" cellspacing="0" cellpadding="0"></table>
         </div>
         <div id="MyTable_tableData">
-            <table id="MyTable" style="width: 1500px" class="grid" border="1" cellspacing="0" cellpadding="0">
+            <table id="MyTable" style="width: 1800px" class="grid" border="1" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
                         <th style="width: 250px">操作
@@ -90,7 +90,9 @@
                         </th>
                         <th style="width: 100px">联系电话
                         </th>
-                        <th style="width: 50px">状态
+                        <th style="width: 100px">企业状态
+                        </th>
+                        <th style="width: 100px">合作状态
                         </th>
                         <th style="width: 100px">录入人员
                         </th>
@@ -130,6 +132,8 @@
                             <td>@string.Format("{0} {1}", entity.Telephone, entity.TelephoneOther)
                             </td>
                             <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
+                            </td>
+                            <td>@EnumHelper.GetDisplayValue(entity.IsCooperated)
                             </td>
                             <td>@entity.CreateUserName
                             </td>
