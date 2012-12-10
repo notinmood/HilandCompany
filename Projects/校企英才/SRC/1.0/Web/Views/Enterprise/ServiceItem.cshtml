@@ -52,6 +52,18 @@
                 <td>@Html.DropDownListFor(entity => entity.EnterpriseServiceStatus, EnumEx.BuildSelectItemList<Logics>())
                 </td>
             </tr>
+             <tr>
+                <td>企业联系人:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.EnterpriseServiceContactPerson)
+                </td>
+            </tr>
+             <tr>
+                <td>企业联系方式:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.EnterpriseServiceContactTelephone)
+                </td>
+            </tr>
             <tr>
                 <td>信息提供人员:
                 </td>

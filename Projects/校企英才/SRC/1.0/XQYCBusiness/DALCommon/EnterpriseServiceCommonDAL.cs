@@ -64,6 +64,8 @@ namespace XQYC.Business.DALCommon
 			    [EnterpriseInfo],
 			    [EnterpriseServiceType],
 			    [EnterpriseServiceStatus],
+                [EnterpriseServiceContactPerson],
+			    [EnterpriseServiceContactTelephone],
 			    [EnterpriseServiceCreateDate],
 			    [EnterpriseServiceCreateUserKey],
                 [EnterpriseServiceStartDate],
@@ -89,6 +91,8 @@ namespace XQYC.Business.DALCommon
 			    {0}EnterpriseInfo,
 			    {0}EnterpriseServiceType,
 			    {0}EnterpriseServiceStatus,
+                {0}EnterpriseServiceContactPerson,
+			    {0}EnterpriseServiceContactTelephone,
 			    {0}EnterpriseServiceCreateDate,
 			    {0}EnterpriseServiceCreateUserKey,
                 {0}EnterpriseServiceStartDate,
@@ -123,6 +127,8 @@ namespace XQYC.Business.DALCommon
 					[EnterpriseInfo] = {0}EnterpriseInfo,
 					[EnterpriseServiceType] = {0}EnterpriseServiceType,
 					[EnterpriseServiceStatus] = {0}EnterpriseServiceStatus,
+                    [EnterpriseServiceContactPerson] = {0}EnterpriseServiceContactPerson,
+				    [EnterpriseServiceContactTelephone] = {0}EnterpriseServiceContactTelephone,
 					[EnterpriseServiceCreateDate] = {0}EnterpriseServiceCreateDate,
 					[EnterpriseServiceCreateUserKey] = {0}EnterpriseServiceCreateUserKey,
                     [EnterpriseServiceStartDate] = {0}EnterpriseServiceStartDate,
@@ -163,6 +169,8 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("EnterpriseInfo",entity.EnterpriseInfo?? String.Empty),
 			    GenerateParameter("EnterpriseServiceType",entity.EnterpriseServiceType),
 			    GenerateParameter("EnterpriseServiceStatus",(int)entity.EnterpriseServiceStatus),
+                GenerateParameter("EnterpriseServiceContactPerson",entity.EnterpriseServiceContactPerson?? String.Empty),
+			    GenerateParameter("EnterpriseServiceContactTelephone",entity.EnterpriseServiceContactTelephone?? String.Empty),
 			    GenerateParameter("EnterpriseServiceCreateDate",entity.EnterpriseServiceCreateDate),
 			    GenerateParameter("EnterpriseServiceCreateUserKey",entity.EnterpriseServiceCreateUserKey?? String.Empty),
                 GenerateParameter("EnterpriseServiceStartDate",entity.EnterpriseServiceStartDate),
@@ -219,6 +227,14 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseServiceStatus"))
                 {
                     entity.EnterpriseServiceStatus = (Logics)reader.GetInt32(reader.GetOrdinal("EnterpriseServiceStatus"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseServiceContactPerson"))
+                {
+                    entity.EnterpriseServiceContactPerson = reader.GetString(reader.GetOrdinal("EnterpriseServiceContactPerson"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseServiceContactTelephone"))
+                {
+                    entity.EnterpriseServiceContactTelephone = reader.GetString(reader.GetOrdinal("EnterpriseServiceContactTelephone"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseServiceCreateDate"))
                 {

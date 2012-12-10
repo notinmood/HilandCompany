@@ -1190,6 +1190,9 @@ namespace XQYC.Web.Controllers
             targetEntity.EnterpriseServiceType = originalEntity.EnterpriseServiceType;
             targetEntity.EnterpriseInfo = originalEntity.EnterpriseInfo;
             targetEntity.EnterpriseGuid = originalEntity.EnterpriseGuid;
+            targetEntity.EnterpriseServiceContactPerson = originalEntity.EnterpriseServiceContactPerson;
+            targetEntity.EnterpriseServiceContactTelephone = originalEntity.EnterpriseServiceContactTelephone;
+
             targetEntity.FinanceUserName = RequestHelper.GetValue("FinanceUser");
             targetEntity.FinanceUserGuid = RequestHelper.GetValue<Guid>("FinanceUser_Value");
             targetEntity.ProviderUserName = RequestHelper.GetValue("ProviderUser");

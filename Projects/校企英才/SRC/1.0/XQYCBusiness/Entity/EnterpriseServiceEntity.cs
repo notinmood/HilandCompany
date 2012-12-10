@@ -75,6 +75,20 @@ namespace XQYC.Business.Entity
             set { enterpriseServiceStatus = value; }
         }
 
+        private string enterpriseServiceContactPerson = String.Empty;
+        public string EnterpriseServiceContactPerson
+        {
+            get { return enterpriseServiceContactPerson; }
+            set { enterpriseServiceContactPerson = value; }
+        }
+
+        private string enterpriseServiceContactTelephone = String.Empty;
+        public string EnterpriseServiceContactTelephone
+        {
+            get { return enterpriseServiceContactTelephone; }
+            set { enterpriseServiceContactTelephone = value; }
+        }
+
         private DateTime enterpriseServiceCreateDate = DateTimeHelper.Min;
         public DateTime EnterpriseServiceCreateDate
         {
