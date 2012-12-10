@@ -170,10 +170,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/10/2012 21:53:02</publishTime>
     </File>
     <File Include="bin/XQYC.Business.dll">
-      <publishTime>12/10/2012 18:40:34</publishTime>
+      <publishTime>12/10/2012 19:01:56</publishTime>
     </File>
     <File Include="bin/XQYC.Web.dll">
-      <publishTime>12/10/2012 18:40:36</publishTime>
+      <publishTime>12/10/2012 19:01:58</publishTime>
     </File>
     <File Include="Content/adminStyle.css">
       <publishTime>12/10/2012 18:16:21</publishTime>
@@ -1085,10 +1085,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/08/2012 15:14:31</publishTime>
     </File>
     <File Include="Views/Enterprise/ServiceItem.cshtml">
-      <publishTime>11/27/2012 17:24:42</publishTime>
+      <publishTime>12/10/2012 18:58:07</publishTime>
     </File>
     <File Include="Views/Enterprise/ServiceList.cshtml">
-      <publishTime>11/27/2012 17:28:11</publishTime>
+      <publishTime>12/10/2012 19:00:22</publishTime>
     </File>
     <File Include="Views/Enterprise/TrackerItem.cshtml">
       <publishTime>12/04/2012 16:12:33</publishTime>
@@ -1259,7 +1259,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/10/2012 18:40:42</publishTime>
+      <publishTime>12/10/2012 19:02:03</publishTime>
     </File>
   </ItemGroup>
 </Project>

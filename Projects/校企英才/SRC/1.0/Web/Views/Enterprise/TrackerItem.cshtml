@@ -7,6 +7,7 @@
 @using XQYC.Business.Entity;
 @using XQYC.Web.Control;
 @using HiLand.General.Entity;
+@using HiLand.Utility.Data;
 
 @model TrackerEntity
 @{
@@ -22,6 +23,11 @@
     if(string.IsNullOrWhiteSpace( Model.TrackerUserKey))
     {
         Model.TrackerUserKey = BusinessUserBLL.CurrentUser.UserNameDisplay;
+    }
+    
+    if(Model.TrackerTime== DateTimeHelper.Min)
+    {
+        Model.TrackerTime= DateTime.Today;
     }
 }
 <div id="formContainer">
@@ -45,14 +51,14 @@
                 <td>
                     回访人员:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.TrackerUserKey)
+                <td>@Html.TextBoxFor(entity => entity.TrackerUserKey,new {@readonly="true"})
                 </td>
             </tr>
             <tr>
                 <td>
                     回访时间:
                 </td>
-                <td>@HtmlHelperEx.DateInput(Html, "TrackerTime", Model.TrackerTime.ToShortDateString())
+                <td>@Html.TextBoxFor(entity => entity.TrackerTime,new {@readonly="true"})
                 </td>
             </tr>
             <tr>
