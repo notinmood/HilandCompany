@@ -1670,7 +1670,7 @@ namespace XQYC.Web.Controllers
             if (GuidHelper.IsInvalidOrEmpty(itemKey) == true)
             {
                 targetEntity = new BankEntity();
-                targetEntity.UserGuid = RequestHelper.GetValue<Guid>("UserKey");
+                //targetEntity.UserGuid = RequestHelper.GetValue<Guid>("UserKey");
 
                 SetBankCardEntityValue(originalEntity, ref  targetEntity);
 
@@ -1698,11 +1698,12 @@ namespace XQYC.Web.Controllers
 
         private void SetBankCardEntityValue(BankEntity originalEntity, ref BankEntity targetEntity)
         {
+            targetEntity.UserGuid = originalEntity.UserGuid;
             targetEntity.AccountName = originalEntity.AccountName;
             targetEntity.AccountNumber = originalEntity.AccountNumber;
             targetEntity.AccountStatus = originalEntity.AccountStatus;
             targetEntity.BankAddress = originalEntity.BankAddress;
-            targetEntity.BankGuid = originalEntity.BankGuid;
+            //targetEntity.BankGuid = originalEntity.BankGuid;
             targetEntity.BankName = originalEntity.BankName;
             targetEntity.CanUsable = originalEntity.CanUsable;
             targetEntity.IsPrimary = originalEntity.IsPrimary;
