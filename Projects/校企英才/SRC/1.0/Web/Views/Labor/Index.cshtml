@@ -23,7 +23,7 @@
     }
 
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业,人员名称,身份证号,信息提供人,推荐人员,服务人员,财务人员,业务人员,安置人员", ConditionFieldName = "CurrentEnterpriseName,UserNameCN,UserCardID,ProviderUserName,RecommendUserName,ServiceUserName,FinanceUserName,BusinessUserName,SettleUserName", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业,人员名称,身份证号,工作技能,信息提供人,推荐人员,服务人员,财务人员,业务人员,安置人员", ConditionFieldName = "CurrentEnterpriseName,UserNameCN,UserCardID,WorkSkill,ProviderUserName,RecommendUserName,ServiceUserName,FinanceUserName,BusinessUserName,SettleUserName", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员性别", ConditionFieldName = "UserSex", ConditionType = typeof(HiLand.Utility.Enums.Sexes) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "工作状态", ConditionFieldName = "LaborWorkStatus", ConditionType = typeof(XQYC.Business.Enums.LaborWorkStatuses) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "录入时间", ConditionFieldName = "UserRegisterDate", ConditionType = typeof(DateTime) });
@@ -58,7 +58,7 @@
             <table id="MyTable_tableColumnClone" border="1" cellspacing="0" cellpadding="0"></table>
         </div>
         <div id="MyTable_tableData">
-            <table id="MyTable" style="width: 3700px" class="grid" border="1" cellspacing="0" cellpadding="0">
+            <table id="MyTable" style="width: 3800px" class="grid" border="1" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
                         <th style="width: 250px">
@@ -94,21 +94,21 @@
                         </th>
                         <th style="width: 80px">联系电话
                         </th>
-                        <th style="width: 80px">紧急联系电话
+                        <th style="width: 100px">紧急联系电话
                         </th>
                         <th style="width: 80px">学历
                         </th>
                         <th style="width: 180px">毕业学校
                         </th>
-                        <th style="width: 100px">最近合同开始时间
+                        <th style="width: 130px">最近合同开始时间
                         </th>
-                        <th style="width: 100px">最近合同到期时间
+                        <th style="width: 130px">最近合同到期时间
                         </th>
                         <th style="width: 100px">最近离职时间
                         </th>
                         <th style="width: 80px">信息员
                         </th>
-                        <th style="width: 80px">信息提供人员
+                        <th style="width: 100px">信息提供人员
                         </th>
                         <th style="width: 80px">推荐人员
                         </th>

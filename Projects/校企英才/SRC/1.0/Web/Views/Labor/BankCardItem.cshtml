@@ -64,7 +64,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#submitButton").click(function () {
-            submitAndRedirect("#formContainer form", '@Url.Action("BankCardList", new { itemKey = userKey })');
+            submitAndRedirect("#formContainer form");
         });
     });
 </script>
