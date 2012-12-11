@@ -713,6 +713,7 @@
     <Content Include="Views\Enterprise\ADItem.cshtml" />
     <Content Include="Views\Enterprise\ADQueryList.cshtml" />
     <Content Include="Views\Enterprise\BoothQueryList2.cshtml" />
+    <Content Include="Views\Labor\SalaryCalculateFix.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

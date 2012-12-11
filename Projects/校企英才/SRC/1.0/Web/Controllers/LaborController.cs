@@ -1012,6 +1012,56 @@ namespace XQYC.Web.Controllers
         }
 
         /// <summary>
+        /// 对劳务人员薪资计算数据的修正
+        /// </summary>
+        /// <param name="itemKey">工资summary的Guid</param>
+        /// <returns></returns>
+        public ActionResult SalaryCalculateFix(string itemKey)
+        {
+            SalarySummaryEntity salarySummaryEntity = SalarySummaryBLL.Instance.Get(itemKey);
+
+            return View(salarySummaryEntity);
+        }
+
+        /// <summary>
+        /// 对劳务人员薪资计算数据的修正
+        /// </summary>
+        /// <param name="itemKey">工资summary的Guid</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SalaryCalculateFix(string itemKey, SalarySummaryEntity salarySummaryEntity)
+        {
+            SalarySummaryEntity originalEntity = SalarySummaryBLL.Instance.Get(itemKey);
+
+            //对几个计算数据的修正值进行赋值
+            originalEntity.EnterpriseInsuranceCalculatedFix = salarySummaryEntity.EnterpriseInsuranceCalculatedFix;
+            originalEntity.EnterpriseManageFeeCalculatedFix = salarySummaryEntity.EnterpriseManageFeeCalculatedFix;
+            originalEntity.EnterpriseMixCostCalculatedFix = salarySummaryEntity.EnterpriseMixCostCalculatedFix;
+            originalEntity.EnterpriseOtherCostCalculatedFix = salarySummaryEntity.EnterpriseOtherCostCalculatedFix;
+            originalEntity.EnterpriseReserveFundCalculatedFix = salarySummaryEntity.EnterpriseReserveFundCalculatedFix;
+            originalEntity.PersonInsuranceCalculatedFix = salarySummaryEntity.PersonInsuranceCalculatedFix;
+            originalEntity.PersonManageFeeCalculatedFix = salarySummaryEntity.PersonManageFeeCalculatedFix;
+            originalEntity.PersonMixCostCalculatedFix = salarySummaryEntity.PersonMixCostCalculatedFix;
+            originalEntity.PersonOtherCostCalculatedFix = salarySummaryEntity.PersonOtherCostCalculatedFix;
+            originalEntity.PersonReserveFundCalculatedFix = salarySummaryEntity.PersonReserveFundCalculatedFix;
+
+            string displayMessage = string.Empty;
+            bool isSuccessful = SalarySummaryBLL.Instance.Update(originalEntity);
+
+            if (isSuccessful == true)
+            {
+                displayMessage = "数据保存成功";
+            }
+            else
+            {
+                displayMessage = "数据保存失败";
+            }
+
+            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+        }
+
+
+        /// <summary>
         /// 添加某人的工资Summary
         /// </summary>
         /// <returns></returns>

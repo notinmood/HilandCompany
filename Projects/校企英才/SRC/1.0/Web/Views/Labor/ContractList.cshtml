@@ -123,7 +123,7 @@
                 $(".modal").width("650px");
                 var itemKey = $(this).attr("itemKey");
                 $("#currentPopupItemGuid").val(itemKey);
-                var url = $.UrlUtil('@Url.Action("ContractItem")').concat("itemKey", itemKey).concat("userKey", "@itemKey").show(true);
+                var url = '@Url.Action("ContractItem")?r=' + Math.random() + '&itemKey=' + itemKey + '&userKey=@itemKey';
                 $("#EditDIV").load(url);
             });
         });
