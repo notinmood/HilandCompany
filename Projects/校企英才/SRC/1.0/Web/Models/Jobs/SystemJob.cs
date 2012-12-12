@@ -40,7 +40,7 @@ namespace XQYC.Web.Models.Jobs
 
         private void Log()
         {
-            LogEntity entity = new LogEntity();
+            BusinessLogEntity entity = new BusinessLogEntity();
             entity.LogCategory = LogCategoryName;
             entity.LogDate = DateTime.Now;
             entity.Logger = this.TaskNameInConfig;
@@ -49,7 +49,7 @@ namespace XQYC.Web.Models.Jobs
             entity.LogStatus = Logics.True;
             entity.LogThread = string.Empty;
 
-            LogBLL.Instance.Create(entity);
+            BusinessLogBLL.Instance.Create(entity);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace XQYC.Web.Models.Jobs
 
         private bool IsExcuted()
         {
-            Logics logic = LogBLL.Instance.GetLogStatus(TaskNameInConfig, DateTime.Today);
+            Logics logic = BusinessLogBLL.Instance.GetLogStatus(TaskNameInConfig, DateTime.Today);
             return Converter.ToBoolean(logic);
         }
     }

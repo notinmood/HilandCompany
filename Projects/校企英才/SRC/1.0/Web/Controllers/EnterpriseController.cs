@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
+using Castle.DynamicProxy;
 using HiLand.Framework.BusinessCore;
 using HiLand.Framework.BusinessCore.BLL;
 using HiLand.Framework4.Permission.Attributes;
@@ -132,7 +133,7 @@ namespace XQYC.Web.Controllers
         {
             bool isSuccessful = false;
             string displayMessage = string.Empty;
-
+            
             EnterpriseEntity targetEntity = null;
             if (GuidHelper.IsInvalidOrEmpty(keyGuid))
             {

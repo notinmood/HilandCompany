@@ -58,7 +58,7 @@
             <table id="MyTable_tableColumnClone" border="1" cellspacing="0" cellpadding="0"></table>
         </div>
         <div id="MyTable_tableData">
-            <table id="MyTable" style="width: 3800px" class="grid" border="1" cellspacing="0" cellpadding="0">
+            <table id="MyTable" style="width: 4000px" class="grid" border="1" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
                         <th style="width: 250px">
@@ -95,6 +95,8 @@
                         <th style="width: 80px">联系电话
                         </th>
                         <th style="width: 100px">紧急联系电话
+                        </th>
+                        <th style="width: 100px">工作技能
                         </th>
                         <th style="width: 80px">学历
                         </th>
@@ -182,6 +184,8 @@
                             <td>@entity.UserMobileNO
                             </td>
                             <td>@entity.UrgentTelephone
+                            </td>
+                            <td>@entity.WorkSkill
                             </td>
                             <td>@EnumHelper.GetDisplayValue(entity.UserEducationalBackground)
                             </td>
