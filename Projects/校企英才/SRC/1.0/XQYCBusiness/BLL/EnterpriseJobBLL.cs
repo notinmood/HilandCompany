@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using HiLand.Framework.BusinessCore.BLL;
 using HiLand.Framework.FoundationLayer;
 using HiLand.General.BLL;
 using HiLand.General.Entity;
+using HiLand.Utility.Data;
+using HiLand.Utility.Entity;
 using HiLand.Utility.Enums;
+using HiLand.Utility.Setting;
 using XQYC.Business.DAL;
 using XQYC.Business.Entity;
 using XQYC.Business.Enums;
@@ -13,6 +17,22 @@ namespace XQYC.Business.BLL
 {
     public class EnterpriseJobBLL : BaseBLL<EnterpriseJobBLL, EnterpriseJobEntity, EnterpriseJobDAL>
     {
+        public override bool Create(EnterpriseJobEntity model)
+        {
+            bool isSuccessful = base.Create(model);
+
+            RecordOperateLog(model, null, string.Format("创建企业招工简章信息{0}", isSuccessful == true ? "成功" : "失败"));
+            return isSuccessful;
+        }
+
+        public override bool Update(EnterpriseJobEntity model)
+        {
+            EnterpriseJobEntity originalModel = Get(model.EnterpriseJobGuid, true);
+            bool isSuccessful = base.Update(model);
+            RecordOperateLog(model, originalModel, string.Format("修改企业招工简章信息{0}", isSuccessful == true ? "成功" : "失败"));
+            return isSuccessful;
+        }
+
         /// <summary>
         /// 获取最新列表
         /// </summary>
@@ -45,6 +65,60 @@ namespace XQYC.Business.BLL
         public List<ImageEntity> GetImages(Guid JobGuid)
         {
             return ImageBLL.Instance.GetList(Guid.Empty, JobGuid);
+        }
+
+        private static void RecordOperateLog(EnterpriseJobEntity newModel, EnterpriseJobEntity originalModel, string logTitle)
+        {
+            if (Config.IsRecordOperateLog == true)
+            {
+                try
+                {
+                    OperateLogEntity logEntity = new OperateLogEntity();
+                    logEntity.CanUsable = Logics.True;
+                    logEntity.LogCategory = "EnterpriseJob";
+                    logEntity.LogDate = DateTime.Now;
+                    if (originalModel == null)
+                    {
+                        logEntity.LogOperateName = OperateTypes.Create.ToString();
+                    }
+                    else
+                    {
+                        logEntity.LogOperateName = OperateTypes.Update.ToString();
+                    }
+                    logEntity.LogStatus = (int)Logics.True;
+                    logEntity.LogType = 0;
+                    logEntity.LogUserKey = BusinessUserBLL.CurrentUserGuid.ToString();
+                    logEntity.LogUserName = BusinessUserBLL.CurrentUser.UserNameDisplay;
+                    logEntity.RelativeKey = newModel.EnterpriseJobGuid.ToString();
+                    logEntity.RelativeName = newModel.EnterpriseName;
+                    logEntity.LogTitle = logTitle;
+
+                    if (originalModel != null)
+                    {
+                        List<string> compareResult = new List<string>();
+                        string[] excludePropertyArray = new string[]{"LastUpdateUserKey",
+                            "LastUpdateUserName",
+                            "LastUpdateDate",
+                            "PropertyNames",
+                            "PropertyValues"
+                        };
+                        EntityHelper.Compare(originalModel, newModel, out compareResult, excludePropertyArray);
+                        if (compareResult != null && compareResult.Count > 0)
+                        {
+                            logEntity.LogMessage = CollectionHelper.Concat(";", compareResult as IEnumerable<String>);
+                        }
+                        else
+                        {
+                            logEntity.LogMessage = "没有修改任何信息";
+                        }
+                    }
+
+                    OperateLogBLL.Instance.Create(logEntity);
+                }
+                catch
+                {
+                }
+            }
         }
     }
 }
