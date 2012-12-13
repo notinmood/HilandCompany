@@ -1720,11 +1720,6 @@ namespace XQYC.Web.Controllers
             if (GuidHelper.IsInvalidOrEmpty(itemKey) == true)
             {
                 targetEntity = new BankEntity();
-<<<<<<< HEAD
-                //targetEntity.UserGuid = RequestHelper.GetValue<Guid>("UserKey");
-
-=======
->>>>>>> 6c43d2d... 修改银行信息
                 SetBankCardEntityValue(originalEntity, ref  targetEntity);
                 isSuccessful = BankBLL.Instance.Create(targetEntity);
             }
@@ -1754,10 +1749,6 @@ namespace XQYC.Web.Controllers
             targetEntity.AccountNumber = originalEntity.AccountNumber;
             targetEntity.AccountStatus = originalEntity.AccountStatus;
             targetEntity.BankAddress = originalEntity.BankAddress;
-<<<<<<< HEAD
-            //targetEntity.BankGuid = originalEntity.BankGuid;
-=======
->>>>>>> 6c43d2d... 修改银行信息
             targetEntity.BankName = originalEntity.BankName;
             targetEntity.CanUsable = originalEntity.CanUsable;
             targetEntity.IsPrimary = originalEntity.IsPrimary;

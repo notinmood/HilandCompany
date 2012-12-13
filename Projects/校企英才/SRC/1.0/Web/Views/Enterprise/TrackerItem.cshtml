@@ -20,9 +20,9 @@
         enterpriseKey = Model.RelativeKey;
     }
     
-    if(string.IsNullOrWhiteSpace( Model.TrackerUserKey))
+    if (string.IsNullOrWhiteSpace(Model.TrackerUserName))
     {
-        Model.TrackerUserKey = BusinessUserBLL.CurrentUser.UserNameDisplay;
+        Model.TrackerUserName = BusinessUserBLL.CurrentUser.UserNameDisplay;
     }
     
     if(Model.TrackerTime== DateTimeHelper.Min)
@@ -51,7 +51,7 @@
                 <td>
                     回访人员:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.TrackerUserKey,new {@readonly="true"})
+                <td>@Html.TextBoxFor(entity => entity.TrackerUserName,new {@readonly="true"})
                 </td>
             </tr>
             <tr>

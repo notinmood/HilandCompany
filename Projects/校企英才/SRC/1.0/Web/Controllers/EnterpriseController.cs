@@ -170,7 +170,6 @@ namespace XQYC.Web.Controllers
                 }
             }
 
-
             if (isSuccessful == true)
             {
                 displayMessage = "数据保存成功";
@@ -825,14 +824,15 @@ namespace XQYC.Web.Controllers
                 targetEntity = new TrackerEntity();
 
                 targetEntity.RelativeKey = enterpriseKey;
+                targetEntity.RelativeName = EnterpriseBLL.Instance.Get(enterpriseKey).CompanyName;
                 targetEntity.TrackerCategory = "EnterpriseTracker";
                 targetEntity.CreateTime = DateTime.Now;
                 targetEntity.CreateUserKey = BusinessUserBLL.CurrentUser.UserGuid.ToString();
+                targetEntity.CreateUserName = BusinessUserBLL.CurrentUser.UserNameDisplay;
 
                 SetTargetContractEntityValue(originalEntity, ref  targetEntity);
 
                 isSuccessful = TrackerBLL.Instance.Create(targetEntity);
-
             }
             else
             {
@@ -861,7 +861,7 @@ namespace XQYC.Web.Controllers
             targetEntity.TrackerTime = originalEntity.TrackerTime;
             targetEntity.TrackerTitle = originalEntity.TrackerTitle;
             targetEntity.TrackerType = originalEntity.TrackerType;
-            targetEntity.TrackerUserKey = originalEntity.TrackerUserKey;
+            targetEntity.TrackerUserName = originalEntity.TrackerUserName;
         }
         #endregion
 
