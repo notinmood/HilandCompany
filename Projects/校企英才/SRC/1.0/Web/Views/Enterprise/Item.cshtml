@@ -15,6 +15,26 @@
     this.Layout = null;
 }
 <div id="formContainer">
+    <style type="text/css">
+        #main-content ul,
+        #main-content ol {
+            padding: 0 0 0 18px;
+        }
+
+            #main-content ul li {
+                background: url() center left no-repeat;
+                padding: 0px;
+            }
+
+        #main-content ol {
+            padding: 0px;
+        }
+
+            #main-content ol li {
+                list-style: none;
+                padding: 0;
+            }
+    </style>
     @using (Html.BeginForm())
     { 
         <table>
@@ -73,8 +93,10 @@
                 </td>
                 <td>@Html.TextBoxFor(entity => entity.Fax)
                 </td>
-                <td></td>
-                <td></td>
+                <td>企业状态:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.CanUsable, EnumEx.BuildSelectItemList<Logics>())
+                </td>
             </tr>
             <tr>
                 <td style="width: 120px;">Email:
@@ -97,13 +119,41 @@
                 </td>
             </tr>
             <tr>
-                <td>合作意向:
+                <td>综合意向:
                 </td>
                 <td>@Html.DropDownListFor(entity => entity.EnterpriseLevel, EnumEx.BuildSelectItemList<CommonLevels>("star"))
                 </td>
-                <td>企业状态:
+                <td>招工意向:
                 </td>
-                <td>@Html.DropDownListFor(entity => entity.CanUsable, EnumEx.BuildSelectItemList<Logics>())
+                <td>@Html.DropDownListFor(entity => entity.EnterpriseLevel1, EnumEx.BuildSelectItemList<CommonLevels>("star"))
+                </td>
+            </tr>
+            <tr>
+                <td>招聘会意向:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.EnterpriseLevel2, EnumEx.BuildSelectItemList<CommonLevels>("star"))
+                </td>
+                <td>简章意向:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.EnterpriseLevel3, EnumEx.BuildSelectItemList<CommonLevels>("star"))
+                </td>
+            </tr>
+            <tr>
+                <td>张贴意向:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.EnterpriseLevel4, EnumEx.BuildSelectItemList<CommonLevels>("star"))
+                </td>
+                <td>网络意向:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.EnterpriseLevel5, EnumEx.BuildSelectItemList<CommonLevels>("star"))
+                </td>
+            </tr>
+            <tr>
+                <td>所属人:
+                </td>
+                <td>@HtmlHelperEx.XQYCEmployeeChooser(Html, "ManageUser", Model.ManageUserName, Model.ManageUserKey.ToString())
+                </td>
+                <td>
                 </td>
             </tr>
             <tr>
@@ -114,14 +164,14 @@
             </tr>
         </table>
         <input type="hidden" id="KeyGuid" value="@Model.EnterpriseGuid" />
-        <input type="button" id="submitButton" value="保存" class="btn btn-warning" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+        <input type="submit" id="submitButton" value="保存" class="btn btn-warning" /><a class="overlayClose" title="请暂时使用敲击键盘'ESC'键关闭本弹窗"></a>
     }
 </div>
-<script type="text/javascript">
+@*<script type="text/javascript">
     $(document).ready(function () {
         $("#submitButton").click(function () {
             submitAndRedirect("#formContainer form");
         });
     });
-</script>
+</script>*@
 

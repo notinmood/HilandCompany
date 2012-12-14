@@ -49,8 +49,8 @@
     }
 
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业名称,地区范围,录入人员,最后修改人", ConditionFieldName = "CompanyName,AreaOther,CreateUserName,LastUpdateUserName", ConditionType = typeof(string) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合作意向", ConditionFieldName = "EnterpriseLevel", ConditionType = typeof(CommonLevels), AddonData = "enumDisplayCategory:star" });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业名称,地区范围,负责人,录入人员,最后修改人", ConditionFieldName = "CompanyName,AreaOther,ManageUserName,CreateUserName,LastUpdateUserName", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "综合意向,招工意向,招聘会意向,简章意向,张贴意向,网络意向", ConditionFieldName = "EnterpriseLevel,EnterpriseLevel1,EnterpriseLevel2,EnterpriseLevel3,EnterpriseLevel4,EnterpriseLevel5", ConditionType = typeof(CommonLevels), AddonData = "enumDisplayCategory:star" });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业性质", ConditionFieldName = "BusinessType", ConditionType = typeof(EnterpriseTypes) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业状态", ConditionFieldName = "CanUsable", ConditionType = typeof(Logics) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "行业类型", ConditionFieldName = "IndustryKey", ConditionType = typeof(string), ConditionValueItems = industryTypeItemList });
@@ -79,7 +79,7 @@
             <table id="MyTable_tableColumnClone" border="1" cellspacing="0" cellpadding="0"></table>
         </div>
         <div id="MyTable_tableData">
-            <table id="MyTable" style="width: 1800px" class="grid" border="1" cellspacing="0" cellpadding="0">
+            <table id="MyTable" style="width: 3000px" class="grid" border="1" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
                         <th style="width: 250px">操作
@@ -90,9 +90,27 @@
                         </th>
                         <th style="width: 100px">联系电话
                         </th>
+                        <th style="width: 100px">手机
+                        </th>
+                        <th style="width: 150px">邮箱
+                        </th>
+                        <th style="width: 100px">综合意向
+                        </th>
+                        <th style="width: 100px">招工意向
+                        </th>
+                        <th style="width: 100px">招聘会意向
+                        </th>
+                        <th style="width: 100px">简章意向
+                        </th>
+                        <th style="width: 100px">张贴意向
+                        </th>
+                        <th style="width: 100px">网络意向
+                        </th>
                         <th style="width: 100px">企业状态
                         </th>
                         <th style="width: 100px">合作状态
+                        </th>
+                        <th style="width: 100px">负责人
                         </th>
                         <th style="width: 100px">录入人员
                         </th>
@@ -129,11 +147,29 @@
                             </td>
                             <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.ContactPerson, 6))
                             </td>
-                            <td>@string.Format("{0} {1}", entity.Telephone, entity.TelephoneOther)
+                            <td>@entity.Telephone
+                            </td>
+                            <td>@entity.TelephoneOther
+                            </td>
+                            <td>@entity.Email
+                            </td>
+                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel,"star")
+                            </td>
+                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel1,"star")
+                            </td>
+                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel2,"star")
+                            </td>
+                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel3,"star")
+                            </td>
+                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel4,"star")
+                            </td>
+                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel5,"star")
                             </td>
                             <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
                             </td>
                             <td>@EnumHelper.GetDisplayValue(entity.IsCooperated)
+                            </td>
+                            <td>@entity.ManageUserName
                             </td>
                             <td>@entity.CreateUserName
                             </td>
@@ -183,7 +219,7 @@
 
             $("#newDisplayA").click(function () {
                 $(".modal").width("650px");
-                var url = '@Url.Action("Item")' + '?keyGuid=&r=' + Math.random();
+                var url = '@Url.Action("Item")' + '?keyGuid=&r=' + Math.random() + '&returnUrl=' + encodeURIComponent('@currentUrl') + '&isUsingCompress=@isUsingCompress';
                 $("#EditDIV").load(url);
             });
 
@@ -191,7 +227,7 @@
                 $(".modal").width("650px");
                 var itemKey = $(this).attr("itemKey");
                 $("#currentPopupItemGuid").val(itemKey);
-                var url = '@Url.Action("Item")' + '?keyGuid=' + itemKey + '&r=' + Math.random();
+                var url = '@Url.Action("Item")' + '?keyGuid=' + itemKey + '&r=' + Math.random() + '&returnUrl=' + encodeURIComponent('@currentUrl') + '&isUsingCompress=@isUsingCompress';
                 $("#EditDIV").load(url);
             });
         });

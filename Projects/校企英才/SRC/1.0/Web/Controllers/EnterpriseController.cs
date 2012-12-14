@@ -133,6 +133,12 @@ namespace XQYC.Web.Controllers
         {
             bool isSuccessful = false;
             string displayMessage = string.Empty;
+            string returnUrl = RequestHelper.GetValue("returnUrl");
+            bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
+            if (isUsingCompress == true)
+            {
+                returnUrl = CompressHelper.Decompress(returnUrl);
+            }
             
             EnterpriseEntity targetEntity = null;
             if (GuidHelper.IsInvalidOrEmpty(keyGuid))
@@ -175,7 +181,9 @@ namespace XQYC.Web.Controllers
                 displayMessage = "数据保存成功";
             }
 
-            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+
+            return Redirect(returnUrl);
+            //return Json(new LogicStatusInfo(isSuccessful, displayMessage));
         }
 
         /// <summary>
@@ -205,6 +213,27 @@ namespace XQYC.Web.Controllers
             targetEntity.AreaCode = originalEntity.AreaCode;
             targetEntity.AreaOther = originalEntity.AreaOther;
             targetEntity.EnterpriseMemo = originalEntity.EnterpriseMemo;
+
+            targetEntity.EnterpriseLevel1 = originalEntity.EnterpriseLevel1;
+            targetEntity.EnterpriseLevel2 = originalEntity.EnterpriseLevel2;
+            targetEntity.EnterpriseLevel3 = originalEntity.EnterpriseLevel3;
+            targetEntity.EnterpriseLevel4 = originalEntity.EnterpriseLevel4;
+            targetEntity.EnterpriseLevel5 = originalEntity.EnterpriseLevel5;
+            targetEntity.EnterpriseLevel6 = originalEntity.EnterpriseLevel6;
+            targetEntity.EnterpriseLevel7 = originalEntity.EnterpriseLevel7;
+
+            targetEntity.ManageUserName = RequestHelper.GetValue("ManageUser");
+            targetEntity.ManageUserKey = RequestHelper.GetValue<Guid>("ManageUser_Value").ToString();
+
+            if (string.IsNullOrWhiteSpace(targetEntity.ManageUserName))
+            {
+                targetEntity.ManageUserName = BusinessUserBLL.CurrentUserNameDisplay;
+            }
+
+            if (GuidHelper.IsInvalidOrEmpty(targetEntity.ManageUserKey))
+            {
+                targetEntity.ManageUserKey = BusinessUserBLL.CurrentUserGuid.ToString();
+            }
         }
 
         /// <summary>
@@ -1116,7 +1145,6 @@ namespace XQYC.Web.Controllers
         /// <returns></returns>
         public ActionResult ServiceItem(string itemKey, string enterpriseKey, string itemTypeNumber)
         {
-            //
             string returnUrl = RequestHelper.GetValue("returnUrl");
             this.ViewBag.ReturnUrl = returnUrl;
 
