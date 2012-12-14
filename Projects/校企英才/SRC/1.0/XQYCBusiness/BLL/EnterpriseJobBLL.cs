@@ -22,7 +22,6 @@ namespace XQYC.Business.BLL
             bool isSuccessful = base.Create(model);
 
             OperateLogBLL.RecordOperateLog(string.Format("创建企业招工简章信息{0}", isSuccessful == true ? "成功" : "失败"), "EnterpriseJob", model.EnterpriseJobGuid.ToString(), model.EnterpriseName, model, null);
-            //RecordOperateLog(model, null, string.Format("创建企业招工简章信息{0}", isSuccessful == true ? "成功" : "失败"));
             return isSuccessful;
         }
 
@@ -30,7 +29,6 @@ namespace XQYC.Business.BLL
         {
             EnterpriseJobEntity originalModel = Get(model.EnterpriseJobGuid, true);
             bool isSuccessful = base.Update(model);
-            //RecordOperateLog(model, originalModel, string.Format("修改企业招工简章信息{0}", isSuccessful == true ? "成功" : "失败"));
             OperateLogBLL.RecordOperateLog(string.Format("修改企业招工简章信息{0}", isSuccessful == true ? "成功" : "失败"), "EnterpriseJob", model.EnterpriseJobGuid.ToString(), model.EnterpriseName, model, originalModel);
             return isSuccessful;
         }
@@ -68,59 +66,5 @@ namespace XQYC.Business.BLL
         {
             return ImageBLL.Instance.GetList(Guid.Empty, JobGuid);
         }
-
-        //private static void RecordOperateLog(EnterpriseJobEntity newModel, EnterpriseJobEntity originalModel, string logTitle)
-        //{
-        //    if (Config.IsRecordOperateLog == true)
-        //    {
-        //        try
-        //        {
-        //            OperateLogEntity logEntity = new OperateLogEntity();
-        //            logEntity.CanUsable = Logics.True;
-        //            logEntity.LogCategory = "EnterpriseJob";
-        //            logEntity.LogDate = DateTime.Now;
-        //            if (originalModel == null)
-        //            {
-        //                logEntity.LogOperateName = OperateTypes.Create.ToString();
-        //            }
-        //            else
-        //            {
-        //                logEntity.LogOperateName = OperateTypes.Update.ToString();
-        //            }
-        //            logEntity.LogStatus = (int)Logics.True;
-        //            logEntity.LogType = 0;
-        //            logEntity.LogUserKey = BusinessUserBLL.CurrentUserGuid.ToString();
-        //            logEntity.LogUserName = BusinessUserBLL.CurrentUser.UserNameDisplay;
-        //            logEntity.RelativeKey = newModel.EnterpriseJobGuid.ToString();
-        //            logEntity.RelativeName = newModel.EnterpriseName;
-        //            logEntity.LogTitle = logTitle;
-
-        //            if (originalModel != null)
-        //            {
-        //                List<string> compareResult = new List<string>();
-        //                string[] excludePropertyArray = new string[]{"LastUpdateUserKey",
-        //                    "LastUpdateUserName",
-        //                    "LastUpdateDate",
-        //                    "PropertyNames",
-        //                    "PropertyValues"
-        //                };
-        //                EntityHelper.Compare(originalModel, newModel, out compareResult, excludePropertyArray);
-        //                if (compareResult != null && compareResult.Count > 0)
-        //                {
-        //                    logEntity.LogMessage = CollectionHelper.Concat(";", compareResult as IEnumerable<String>);
-        //                }
-        //                else
-        //                {
-        //                    logEntity.LogMessage = "没有修改任何信息";
-        //                }
-        //            }
-
-        //            OperateLogBLL.Instance.Create(logEntity);
-        //        }
-        //        catch
-        //        {
-        //        }
-        //    }
-        //}
     }
 }
