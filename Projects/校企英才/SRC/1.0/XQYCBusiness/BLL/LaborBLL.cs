@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using HiLand.Framework.BusinessCore;
 using HiLand.Framework.BusinessCore.BLL;
 using HiLand.Framework.FoundationLayer;
+using HiLand.General.BLL;
+using HiLand.General.Entity;
 using HiLand.Utility.Data;
+using HiLand.Utility.Entity;
 using HiLand.Utility.Enums;
 using HiLand.Utility.Reflection;
+using HiLand.Utility.Setting;
 using XQYC.Business.DAL;
 using XQYC.Business.Entity;
 using XQYC.Business.Enums;
@@ -33,6 +37,7 @@ namespace XQYC.Business.BLL
             if (createStatus == CreateUserRoleStatuses.Successful)
             {
                 bool isSuccessful = base.Create(model);
+                OperateLogBLL.RecordOperateLog(string.Format("创建劳务人员信息{0}", isSuccessful == true ? "成功" : "失败"), "Labor", model.UserGuid.ToString(), model.UserNameDisplay, model, null);
                 if (isSuccessful == true)
                 {
                     return CreateUserRoleStatuses.Successful;
@@ -50,6 +55,7 @@ namespace XQYC.Business.BLL
 
         public override bool Update(LaborEntity model)
         {
+            LaborEntity originalModel = Get(model.UserGuid, true);
             bool isSuccessful = BusinessUserBLL.UpdateUser(model);
             if (isSuccessful == true)
             {
@@ -57,8 +63,20 @@ namespace XQYC.Business.BLL
                 model.IsProtectedByOwner = Logics.True;
                 isSuccessful = base.Update(model);
             }
+            OperateLogBLL.RecordOperateLog(string.Format("修改劳务人员信息{0}", isSuccessful == true ? "成功" : "失败"), "Labor", model.UserGuid.ToString(), model.UserNameDisplay, model, originalModel);
 
             return isSuccessful;
+        }
+
+        public override LaborEntity Get(Guid modelID, bool isForceUseNoCache)
+        {
+            BusinessUser businessUser = BusinessUserBLL.Get(modelID, isForceUseNoCache);
+            LaborEntity entity = Converter.InheritedEntityConvert<BusinessUser, LaborEntity>(businessUser);
+            LaborEntity entityPartial = base.Get(modelID, isForceUseNoCache);
+
+            entity = ReflectHelper.CopyMemberValue<LaborEntity, LaborEntity>(entityPartial, entity, true);
+
+            return entity;
         }
 
         public override LaborEntity Get(string modelID)
