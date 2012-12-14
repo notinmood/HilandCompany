@@ -300,23 +300,6 @@ namespace XQYC.Web.Controllers
             List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
             string returnUrl = RequestHelper.CurrentFullUrl;
 
-            //Guid providerUserGuid = ControlHelper.GetRealValue<Guid>("ProviderUser");
-            //string providerUserName = RequestHelper.GetValue("ProviderUser");
-            //Guid recommendUserGuid = ControlHelper.GetRealValue<Guid>("RecommendUser");
-            //string recommendUserName = RequestHelper.GetValue("RecommendUser");
-            //Guid financeUserGuid = ControlHelper.GetRealValue<Guid>("FinanceUser");
-            //string financeUserName = RequestHelper.GetValue("FinanceUser");
-            //Guid serviceUserGuid = ControlHelper.GetRealValue<Guid>("ServiceUser");
-            //string serviceUserName = RequestHelper.GetValue("ServiceUser");
-
-            //string businessUserName = RequestHelper.GetValue("BusinessUser");
-            //Guid businessUserGuid = ControlHelper.GetRealValue<Guid>("BusinessUser");
-            //string settleUserName = RequestHelper.GetValue("SettleUser");
-            //Guid settleUserGuid = ControlHelper.GetRealValue<Guid>("SettleUser");
-
-            //Guid informationBrokerUserGuid = ControlHelper.GetRealValue<Guid>("InformationBroker");
-            //string informationBrokerUserName = RequestHelper.GetValue("InformationBroker");
-
             int headerRowNumber = RequestHelper.GetValue<int>("headerRowNumber", 1);
 
             HttpPostedFile postedFile = RequestHelper.CurrentRequest.Files["fileSelector"];
@@ -400,22 +383,6 @@ namespace XQYC.Web.Controllers
                             laborEntity.Password = SystemConst.InitialUserPassword;
                             laborEntity.UserType = UserTypes.CommonUser;
                             laborEntity.UserRegisterDate = DateTime.Now;
-
-                            /*目前不集中设置各个服务角色的信息，这些数据都从Excel导入进来*/
-                            //laborEntity.ProviderUserGuid = providerUserGuid;
-                            //laborEntity.ProviderUserName = providerUserName;
-                            //laborEntity.RecommendUserGuid = recommendUserGuid;
-                            //laborEntity.RecommendUserName = recommendUserName;
-                            //laborEntity.FinanceUserGuid = financeUserGuid;
-                            //laborEntity.FinanceUserName = financeUserName;
-                            //laborEntity.ServiceUserGuid = serviceUserGuid;
-                            //laborEntity.ServiceUserName = serviceUserName;
-                            //laborEntity.InformationBrokerUserGuid = informationBrokerUserGuid;
-                            //laborEntity.InformationBrokerUserName = informationBrokerUserName;
-                            //laborEntity.BusinessUserGuid = businessUserGuid;
-                            //laborEntity.BusinessUserName = businessUserName;
-                            //laborEntity.SettleUserGuid = settleUserGuid;
-                            //laborEntity.SettleUserName = settleUserName;
 
                             //从Excel导入的各个服务角色的姓名，以下将其转换为guid
                             laborEntity.ProviderUserGuid = GetEmployeeGuid(employeeList, laborEntity.ProviderUserName);

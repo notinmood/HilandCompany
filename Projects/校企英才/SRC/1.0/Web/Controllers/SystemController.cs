@@ -123,7 +123,7 @@ namespace XQYC.Web.Controllers
         /// <param name="isSuccessful"></param>
         /// <param name="displayInformation"></param>
         /// <returns></returns>
-        public ActionResult OperationResult(bool isSuccessful, string displayInformation, string returnUrl = StringHelper.Empty)
+        public ActionResult OperationResult(bool isSuccessful, string displayInformation, string returnUrl = StringHelper.Empty, bool isUsingCompress= false)
         {
             SystemStatusInfo statusInfo = new SystemStatusInfo();
             if (isSuccessful == true)
@@ -140,7 +140,7 @@ namespace XQYC.Web.Controllers
             statusInfos.Add(statusInfo);
 
             this.TempData.Add("OperationResultData", statusInfos);
-            return RedirectToAction("OperationResults", new { returnUrl = returnUrl });
+            return RedirectToAction("OperationResults", new { returnUrl = returnUrl, isUsingCompress = isUsingCompress });
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace XQYC.Web.Controllers
         ///     List<SystemStatusInfo> statusInfos = new List<SystemStatusInfo>();
         ///     this.TempData.Add("OperationResultData", statusInfos);
         /// </remarks>
-        public ActionResult OperationResults(string returnUrl = StringHelper.Empty)
+        public ActionResult OperationResults(string returnUrl = StringHelper.Empty, bool isUsingCompress = false)
         {
             List<SystemStatusInfo> statusInfos = new List<SystemStatusInfo>();
             object tempData = this.TempData["OperationResultData"];
@@ -165,6 +165,7 @@ namespace XQYC.Web.Controllers
             }
 
             this.ViewData["returnUrl"] = returnUrl;
+            this.ViewData["isUsingCompress"] = isUsingCompress;
             return View("OperationResult", statusInfos);
         }
 

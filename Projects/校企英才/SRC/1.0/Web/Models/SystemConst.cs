@@ -25,6 +25,11 @@ namespace XQYC.Web.Models
             {
                 countPerPageForLaborList = Converter.ChangeType(args.NewData.SettingValue, 10);
             }
+
+            if (args.NewData.SettingKey == "MaxEnterpriseCountOfManager")
+            {
+                maxEnterpriseCountOfManager = Converter.ChangeType(args.NewData.SettingValue, 10);
+            }
         }
 
         public const string PermissionItemValuePrefix = "SubModuleGuid::";
@@ -77,22 +82,22 @@ namespace XQYC.Web.Models
             }
         }
 
-        //private static List<BasicSettingEntity> costList = null;
-        ///// <summary>
-        ///// 配置表中，费用项列表
-        ///// </summary>
-        //public static List<BasicSettingEntity> CostList
-        //{
-        //    get
-        //    {
-        //        if (costList == null)
-        //        {
-        //            costList = BasicSettingBLL.Instance.GetListByCategory("CostItem");
-        //        }
+        private static int maxEnterpriseCountOfManager = 0;
+        /// <summary>
+        /// 配置表中，费用项列表
+        /// </summary>
+        public static int MaxEnterpriseCountOfManager
+        {
+            get
+            {
+                if (maxEnterpriseCountOfManager == 0)
+                {
+                    maxEnterpriseCountOfManager = Converter.ChangeType(BasicSettingBLL.Instance.GetBySettingKey("MaxEnterpriseCountOfManager").SettingValue, 5);
+                }
 
-        //        return costList;
-        //    }
-        //}
+                return maxEnterpriseCountOfManager;
+            }
+        }
 
         private static string initialUserPassword = string.Empty;
         /// <summary>

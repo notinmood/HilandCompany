@@ -11,6 +11,7 @@ using HiLand.General.BLL;
 using HiLand.General.Entity;
 using HiLand.Utility.Data;
 using HiLand.Utility.Entity;
+using HiLand.Utility.Entity.Status;
 using HiLand.Utility.Enums;
 using HiLand.Utility.IO;
 using HiLand.Utility.Paging;
@@ -135,14 +136,25 @@ namespace XQYC.Web.Controllers
             string displayMessage = string.Empty;
             string returnUrl = RequestHelper.GetValue("returnUrl");
             bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
-            if (isUsingCompress == true)
-            {
-                returnUrl = CompressHelper.Decompress(returnUrl);
-            }
             
             EnterpriseEntity targetEntity = null;
             if (GuidHelper.IsInvalidOrEmpty(keyGuid))
             {
+                //判断是否达到资源负责人可以控制的最大资源数量
+                int realEnterpriseCountOfManager= EnterpriseBLL.Instance.GetTotalCountOfManager(BusinessUserBLL.CurrentUserGuid.ToString());
+                int maxEnterpriseCountOfManager = SystemConst.MaxEnterpriseCountOfManager;
+                if (realEnterpriseCountOfManager > maxEnterpriseCountOfManager)
+                {
+                    List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
+                    SystemStatusInfo itemSuccessful = new SystemStatusInfo();
+                    itemSuccessful.SystemStatus = SystemStatuses.Warnning;
+                    itemSuccessful.Message = string.Format("你目前拥有的企业数量为{0}，已经超出了业务允许的最大数量{1}，请释放一些企业后再进行录入。",realEnterpriseCountOfManager,maxEnterpriseCountOfManager);
+                    infoList.Add(itemSuccessful);
+
+                    this.TempData.Add("OperationResultData", infoList);
+                    return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl, isUsingCompress = isUsingCompress });
+                }
+
                 targetEntity = new EnterpriseEntity();
                 SetTargetEntityValue(entity, ref targetEntity);
                 targetEntity.EstablishedTime = DateTime.Now;
@@ -181,7 +193,10 @@ namespace XQYC.Web.Controllers
                 displayMessage = "数据保存成功";
             }
 
-
+            if (isUsingCompress == true)
+            {
+                returnUrl = CompressHelper.Decompress(returnUrl);
+            }
             return Redirect(returnUrl);
             //return Json(new LogicStatusInfo(isSuccessful, displayMessage));
         }

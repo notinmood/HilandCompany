@@ -1,10 +1,17 @@
 ﻿@using HiLand.Utility.Entity.Status;
 @using HiLand.Utility.Enums;
+@using HiLand.Utility.Data;
+
 @model List<SystemStatusInfo>
 @{
     ViewBag.Title = "操作结果";
 
     string returnUrl = this.ViewData["returnUrl"].ToString();
+    bool isUsingCompress = Convert.ToBoolean(this.ViewData["isUsingCompress"].ToString());
+    if(isUsingCompress==true)
+    {
+        returnUrl = CompressHelper.Decompress(returnUrl);
+    }
 
     List<SystemStatusInfo> statusList = new List<SystemStatusInfo>();
     if (Model != null)
