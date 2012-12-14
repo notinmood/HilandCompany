@@ -1,0 +1,167 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Models;
+@using HiLand.Utility.Enums;
+@using System.Web.UI.WebControls;
+@using HiLand.General.BLL;
+@using HiLand.Framework4.Permission;
+@using HiLand.Utility.Controls;
+
+@model PagedList<OperateLogEntity>
+@{
+    ViewBag.Title = "Index";
+
+    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+    bool isUsingCompress = false;
+    if (currentUrl.Length > 512)
+    {
+        isUsingCompress = true;
+        currentUrl = CompressHelper.Compress(currentUrl);
+    }
+
+    List<string> categoryList = OperateLogBLL.Instance.GetCategoryList();
+    List<ListItem> categoryItemList = new List<ListItem>();
+    categoryItemList.Add(new ListItem("Please Choose", ""));
+    for (int i = 0; i < categoryList.Count; i++)
+    {
+        string categoryItem = categoryList[i];
+        ListItem listItem = new ListItem();
+        listItem.Text = categoryItem;
+        listItem.Value = categoryItem;
+
+        categoryItemList.Add(listItem);
+    }
+
+    List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "目标名称,操作人员", ConditionFieldName = "RelativeName,LogUserName", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "类别", ConditionFieldName = "LogCategory", ConditionType = typeof(string), ConditionValueItems = categoryItemList });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "操作时间", ConditionFieldName = "LogDate", ConditionType = typeof(DateTime) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "操作时间", ConditionFieldName = "LogDate", ConditionType = typeof(DateTime) });
+}
+
+<h2>操作痕迹列表</h2>
+<div id="ItemListDIV">
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.HiQuery("QueryControl").QueryConditionList(queryItemList).IsDisplayBrackets(false).Render()
+        }
+    </div>
+    <div class="OperateArea" id="OperateAreaContainer">
+        <div class="btn-group">@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV" }) </div>
+    </div>
+    <div id="MyTable_tableLayout">
+        <div id="MyTable_tableFix">
+            <table id="MyTable_tableFixClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableHead">
+            <table id="MyTable_tableHeadClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableColumn">
+            <table id="MyTable_tableColumnClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableData">
+            <table id="MyTable" style="width: 1800px" class="grid" border="1" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th style="width: 50px">操作
+                        </th>
+                        <th style="width: 220px">目标名称
+                        </th>
+                        <th style="width: 100px">操作方式
+                        </th>
+                        <th style="width: 100px">类别
+                        </th>
+                        <th style="width: 100px">操作人
+                        </th>
+                        <th style="width: 150px">操作时间
+                        </th>
+                        <th style="width: 150px">标题
+                        </th>
+                        <th>操作内容
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (OperateLogEntity entity in Model)
+                    {
+                        string entityGuid = entity.LogGuid.ToString();
+                        <tr>
+                            <td>
+                                @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>查看").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.LogGuid }) <span>|</span>
+                            </td>
+                            <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.RelativeName, 15))
+                            </td>
+                            <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.LogOperateName, 6))
+                            </td>
+                            <td>@entity.LogCategory
+                            </td>
+                            <td>@entity.LogUserName
+                            </td>
+                            <td>@entity.LogDate
+                            </td>
+                            <td>@entity.LogTitle
+                            </td>
+                            <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.LogMessage,100))
+                            </td>
+                        </tr>   
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="myPager">
+        <span style="float: left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
+        &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@SystemConst.CountPerPage</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)
+    </div>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aEnterpriseSection").click();
+            $("#aEnterpriseSection").addClass("current");
+            $("#aEnterpriseList").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                window.location.reload();
+            });
+
+            $("#newDisplayA").click(function () {
+                $(".modal").width("650px");
+                var url = '@Url.Action("Item")' + '?keyGuid=&r=' + Math.random();
+                $("#EditDIV").load(url);
+            });
+
+            $("a.edit").click(function () {
+                $(".modal").width("650px");
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("Item")' + '?keyGuid=' + itemKey + '&r=' + Math.random();
+                $("#EditDIV").load(url);
+            });
+        });
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/fixTable.js")" ></script>
+    <script type="text/javascript">
+        fixTable("MyTable", 2, "100%", 400);
+    </script>
+</div>

@@ -16,11 +16,14 @@ using HiLand.Utility.Entity.Status;
 using HiLand.Utility.Enums;
 using HiLand.Utility.Event;
 using HiLand.Utility.IO;
+using HiLand.Utility.Paging;
 using HiLand.Utility.Web;
 using HiLand.Utility4.Data;
 using HiLand.Utility4.MVC;
 using HiLand.Utility4.MVC.Controls;
+using Webdiyer.WebControls.Mvc;
 using XQYC.Business.BLL;
+using XQYC.Web.Models;
 
 namespace XQYC.Web.Controllers
 {
@@ -211,6 +214,7 @@ namespace XQYC.Web.Controllers
             return View();
         }
 
+        //TODO:xieran20121214 工作移交时，其他新资源所有者的移交
         //TODO:xieran20121123 工作移交时，考虑发送系统通知给每个内部员工
         /// <summary>
         /// 工作移交
@@ -379,6 +383,30 @@ namespace XQYC.Web.Controllers
             int rowCountForLabor = rowCountForLaborBusinessUser + rowCountForLaborServiceUser + rowCountForLaborProviderUser +
                 rowCountForLaborRecommendUser + rowCountForLaborFinanceUser + rowCountForLaborSettleUser;
             return rowCountForLabor;
+        }
+
+        public ActionResult OperateLogList(int id = 1)
+        {
+            //1.如果是点击查询控件的查询按钮，那么将查询条件作为QueryString附加在地址后面（为了在客户端保存查询条件的状体），重新发起一次请求。
+            if (this.Request.HttpMethod.ToLower().Contains("post"))
+            {
+                string targetUrlWithoutParam = Url.Action("OperateLogList", new { id = 1 });
+                string targetUrl = QueryControlHelper.GetNewQueryUrl("QueryControl", targetUrlWithoutParam);
+                return Redirect(targetUrl);
+            }
+
+            //2.通常情形下走get查询
+            int pageIndex = id;
+            int pageSize = SystemConst.CountPerPage;
+            int startIndex = (pageIndex - 1) * pageSize + 1;
+            string whereClause = " 1=1 ";
+            string orderClause = "LogID DESC";
+            whereClause += " AND " + QueryControlHelper.GetQueryCondition("QueryControl");
+
+            PagedEntityCollection<OperateLogEntity> entityList = OperateLogBLL.Instance.GetPagedCollection(startIndex, pageSize, whereClause, orderClause);
+            PagedList<OperateLogEntity> pagedExList = new PagedList<OperateLogEntity>(entityList.Records, entityList.PageIndex, entityList.PageSize, entityList.TotalCount);
+
+            return View(pagedExList);
         }
     }
 }
