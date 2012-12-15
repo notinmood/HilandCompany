@@ -143,7 +143,7 @@ namespace XQYC.Web.Controllers
                 //判断是否达到资源负责人可以控制的最大资源数量
                 int realEnterpriseCountOfManager= EnterpriseBLL.Instance.GetTotalCountOfManager(BusinessUserBLL.CurrentUserGuid.ToString());
                 int maxEnterpriseCountOfManager = SystemConst.MaxEnterpriseCountOfManager;
-                if (realEnterpriseCountOfManager > maxEnterpriseCountOfManager)
+                if (realEnterpriseCountOfManager >= maxEnterpriseCountOfManager)
                 {
                     List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
                     SystemStatusInfo itemSuccessful = new SystemStatusInfo();

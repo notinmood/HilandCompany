@@ -338,6 +338,9 @@ namespace XQYC.Web.Controllers
 
         private static int UpdateEnterpriseData(Guid sourceUserGuid, Guid targetUserGuid, string targetUserName)
         {
+            string sqlClauseForLaborManageUser = string.Format("UPDATE [XQYCEnterpriseService] SET [ManageUserKey] = '{0}',[ManageUserName] = '{1}' WHERE [ManageUserKey]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+            int rowCountForLaborManageUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborManageUser);
+
             string sqlClauseForLaborBusinessUser = string.Format("UPDATE [XQYCEnterpriseService] SET [BusinessUserGuid] = '{0}',[BusinessUserName] = '{1}' WHERE [BusinessUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
             int rowCountForLaborBusinessUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborBusinessUser);
 
