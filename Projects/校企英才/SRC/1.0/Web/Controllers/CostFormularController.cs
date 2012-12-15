@@ -11,6 +11,9 @@ using XQYC.Business.Entity;
 
 namespace XQYC.Web.Controllers
 {
+    /// <summary>
+    /// 费用控制器
+    /// </summary>
     [PermissionAuthorize]
     public class CostFormularController : Controller
     {
