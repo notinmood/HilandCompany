@@ -256,7 +256,7 @@
             $("#newDisplayA").click(function () {
                 $(".modal").width("650px");
                 var itemKey = "";
-                var url = '@Url.Action("Item")' + '?r=' + Math.random() + '&itemKey=' + itemKey + '&returnUrl=@currentUrl';
+                var url = '@Url.Action("Item")' + '?r=' + Math.random() + '&itemKey=' + itemKey + '&returnUrl='+encodeURIComponent('@currentUrl') + '&isUsingCompress=@isUsingCompress';
                 $("#EditDIV").load(url);
             });
 

@@ -57,7 +57,11 @@
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所在地区", ConditionFieldName = "AreaCode", ConditionType = typeof(string), ConditionValueItems = areaItemList });
 }
 
-<h2>企业列表</h2>
+<h2 style="display:inline-block">企业列表</h2>
+<ul class="nav nav-tabs" style="display:inline-block;padding:2px 0 0 0;">
+    <li id="liAllData" class="active"><a href="@Url.Action("Index")">全部数据</a></li>
+    <li id="liSelftData"><a  href="@Url.Action("Index")?isSelfData=true">自我数据</a></li>
+</ul>
 <div id="ItemListDIV">
     <div>
         @using (Html.BeginForm())
@@ -153,17 +157,17 @@
                             </td>
                             <td>@entity.Email
                             </td>
-                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel,"star")
+                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel, "star")
                             </td>
-                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel1,"star")
+                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel1, "star")
                             </td>
-                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel2,"star")
+                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel2, "star")
                             </td>
-                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel3,"star")
+                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel3, "star")
                             </td>
-                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel4,"star")
+                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel4, "star")
                             </td>
-                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel5,"star")
+                            <td>@EnumHelper.GetDisplayValue(entity.EnterpriseLevel5, "star")
                             </td>
                             <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
                             </td>
@@ -230,6 +234,13 @@
                 var url = '@Url.Action("Item")' + '?keyGuid=' + itemKey + '&r=' + Math.random() + '&returnUrl=' + encodeURIComponent('@currentUrl') + '&isUsingCompress=@isUsingCompress';
                 $("#EditDIV").load(url);
             });
+
+
+            if (document.URL.toLowerCase().indexOf("isselfdata=true") > 0) {
+                $("#liSelftData").addClass("active");
+                $("#liAllData").removeClass("active");
+            }
+            
         });
     </script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/fixTable.js")" ></script>

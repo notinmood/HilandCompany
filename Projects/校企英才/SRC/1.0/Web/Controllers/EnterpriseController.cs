@@ -32,10 +32,11 @@ namespace XQYC.Web.Controllers
         #region 企业基本信息
         public ActionResult Index(int id = 1)
         {
+            bool isSelfData = RequestHelper.GetValue("isSelfData", false);
             //1.如果是点击查询控件的查询按钮，那么将查询条件作为QueryString附加在地址后面（为了在客户端保存查询条件的状体），重新发起一次请求。
             if (this.Request.HttpMethod.ToLower().Contains("post"))
             {
-                string targetUrlWithoutParam = Url.Action("Index", new { id = 1 });
+                string targetUrlWithoutParam = Url.Action("Index", new { id = 1, isSelfData = isSelfData });
                 string targetUrl = QueryControlHelper.GetNewQueryUrl("QueryControl", targetUrlWithoutParam);
                 return Redirect(targetUrl);
             }
@@ -45,6 +46,11 @@ namespace XQYC.Web.Controllers
             int pageSize = SystemConst.CountPerPage;
             int startIndex = (pageIndex - 1) * pageSize + 1;
             string whereClause = " 1=1 ";
+            
+            if (isSelfData == true)
+            {
+                whereClause += string.Format(" AND ManageUserKey='{0}' ", BusinessUserBLL.CurrentUserGuid);
+            }
             string orderClause = "EnterpriseID DESC";
             whereClause += " AND " + QueryControlHelper.GetQueryCondition("QueryControl");
 
@@ -136,19 +142,19 @@ namespace XQYC.Web.Controllers
             string displayMessage = string.Empty;
             string returnUrl = RequestHelper.GetValue("returnUrl");
             bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
-            
+
             EnterpriseEntity targetEntity = null;
             if (GuidHelper.IsInvalidOrEmpty(keyGuid))
             {
                 //判断是否达到资源负责人可以控制的最大资源数量
-                int realEnterpriseCountOfManager= EnterpriseBLL.Instance.GetTotalCountOfManager(BusinessUserBLL.CurrentUserGuid.ToString());
+                int realEnterpriseCountOfManager = EnterpriseBLL.Instance.GetTotalCountOfManager(BusinessUserBLL.CurrentUserGuid.ToString());
                 int maxEnterpriseCountOfManager = SystemConst.MaxEnterpriseCountOfManager;
                 if (realEnterpriseCountOfManager >= maxEnterpriseCountOfManager)
                 {
                     List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
                     SystemStatusInfo itemSuccessful = new SystemStatusInfo();
                     itemSuccessful.SystemStatus = SystemStatuses.Warnning;
-                    itemSuccessful.Message = string.Format("你目前拥有的企业数量为{0}，已经超出了业务允许的最大数量{1}，请释放一些企业后再进行录入。",realEnterpriseCountOfManager,maxEnterpriseCountOfManager);
+                    itemSuccessful.Message = string.Format("你目前拥有的企业数量为{0}，已经超出了业务允许的最大数量{1}，请释放一些企业后再进行录入。", realEnterpriseCountOfManager, maxEnterpriseCountOfManager);
                     infoList.Add(itemSuccessful);
 
                     this.TempData.Add("OperationResultData", infoList);
