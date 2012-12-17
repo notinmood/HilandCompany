@@ -489,6 +489,10 @@ namespace XQYC.Business.Entity
         }
 
         private List<string> ownerKeys = new List<string>();
+        //Hack:xieran20121217 需要同步更新LaborController/Index内的查询条件
+        /// <summary>
+        /// 
+        /// </summary>
         public List<string> OwnerKeys
         {
             get

@@ -38,10 +38,11 @@ namespace XQYC.Web.Controllers
         #region 基本信息
         public ActionResult Index(int id = 1)
         {
+            bool isSelfData = RequestHelper.GetValue("isSelfData", false);
             //1.如果是点击查询控件的查询按钮，那么将查询条件作为QueryString附加在地址后面（为了在客户端保存查询条件的状体），重新发起一次请求。
             if (this.Request.HttpMethod.ToLower().Contains("post"))
             {
-                string targetUrlWithoutParam = Url.Action("Index", new { id = 1 });
+                string targetUrlWithoutParam = Url.Action("Index", new { id = 1, isSelfData = isSelfData });
                 string targetUrl = QueryControlHelper.GetNewQueryUrl("LaborQuery", targetUrlWithoutParam);
                 return Redirect(targetUrl);
             }
@@ -51,6 +52,10 @@ namespace XQYC.Web.Controllers
             int pageSize = SystemConst.CountPerPageForLaborList;
             int startIndex = (pageIndex - 1) * pageSize + 1;
             string whereClause = " 1=1 ";
+            if (isSelfData == true)
+            {
+                whereClause += string.Format(" AND ( ServiceUserGuid='{0}' OR BusinessUserGuid='{0}' OR SettleUserGuid='{0}' ) ",BusinessUserBLL.CurrentUserGuid);
+            }
 
             ////--数据权限----------------------------------------------------------------------
             //whereClause += " AND ( ";

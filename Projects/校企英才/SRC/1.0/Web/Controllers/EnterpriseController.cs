@@ -92,10 +92,11 @@ namespace XQYC.Web.Controllers
 
         private ActionResult InnerIndex(int id, int enterpriseServiceType, string viewName, string actionName)
         {
+            bool isSelfData = RequestHelper.GetValue("isSelfData", false);
             //1.如果是点击查询控件的查询按钮，那么将查询条件作为QueryString附加在地址后面（为了在客户端保存查询条件的状体），重新发起一次请求。
             if (this.Request.HttpMethod.ToLower().Contains("post"))
             {
-                string targetUrlWithoutParam = Url.Action(actionName, new { id = 1 });
+                string targetUrlWithoutParam = Url.Action(actionName, new { id = 1, isSelfData = isSelfData });
                 string targetUrl = QueryControlHelper.GetNewQueryUrl("QueryControl", targetUrlWithoutParam);
                 return Redirect(targetUrl);
             }
@@ -105,6 +106,10 @@ namespace XQYC.Web.Controllers
             int pageSize = SystemConst.CountPerPage;
             int startIndex = (pageIndex - 1) * pageSize + 1;
             string whereClause = string.Format(" EnterpriseServiceType={0} AND EnterpriseServiceStatus={1} ", enterpriseServiceType, (int)Logics.True);
+            if (isSelfData == true)
+            {
+                whereClause += string.Format(" AND ( ServiceUserGuid='{0}'  OR BusinessUserGuid='{0}' OR SettleUserGuid='{0}' ", BusinessUserBLL.CurrentUserGuid);
+            }
             string orderClause = "EnterpriseID DESC";
             whereClause += " AND " + QueryControlHelper.GetQueryCondition("QueryControl");
 
