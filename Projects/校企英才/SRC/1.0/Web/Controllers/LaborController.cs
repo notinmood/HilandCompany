@@ -640,29 +640,44 @@ namespace XQYC.Web.Controllers
             if (GuidHelper.IsInvalidOrEmpty(itemKey) == true)
             {
                 targetEntity = new LaborContractEntity();
-                targetEntity.LaborUserGuid = RequestHelper.GetValue<Guid>("UserKey");
+                targetEntity.LaborUserGuid = RequestHelper.GetValue<Guid>(PassingParamValueSourceTypes.Form, "UserKey");
                 targetEntity.OperateDate = DateTime.Now;
                 targetEntity.OperateUserGuid = BusinessUserBLL.CurrentUser.UserGuid;
 
                 SetTargetContractEntityValue(originalEntity, ref  targetEntity);
-
-                isSuccessful = LaborContractBLL.Instance.Create(targetEntity);
+                if (targetEntity.EnterpriseGuid == Guid.Empty)
+                {
+                    isSuccessful = false;
+                    displayMessage = "请在智能提示的企业列表中选择企业信息后保存。";
+                }
+                else
+                {
+                    isSuccessful = LaborContractBLL.Instance.Create(targetEntity);
+                }
             }
             else
             {
                 targetEntity = LaborContractBLL.Instance.Get(itemKey);
 
                 SetTargetContractEntityValue(originalEntity, ref  targetEntity);
-                isSuccessful = LaborContractBLL.Instance.Update(targetEntity);
+                if (targetEntity.EnterpriseGuid == Guid.Empty)
+                {
+                    isSuccessful = false;
+                    displayMessage = "请在智能提示的企业列表中选择企业信息后保存。";
+                }
+                else
+                {
+                    isSuccessful = LaborContractBLL.Instance.Update(targetEntity);
+                }
             }
 
             if (isSuccessful == true)
             {
-                displayMessage = "数据保存成功";
+                displayMessage = "数据保存成功。"+ displayMessage;
             }
             else
             {
-                displayMessage = "数据保存失败";
+                displayMessage = "数据保存失败。" + displayMessage;
             }
 
             return Json(new LogicStatusInfo(isSuccessful, displayMessage));
@@ -2045,32 +2060,42 @@ namespace XQYC.Web.Controllers
             {
                 targetEntity = new LaborContractEntity();
                 SetTargetContractEntityValue(originalEntity, ref  targetEntity);
-                targetEntity.OperateDate = DateTime.Now;
-                targetEntity.OperateUserGuid = BusinessUserBLL.CurrentUser.UserGuid;
-
-                try
+                if (targetEntity.EnterpriseGuid == Guid.Empty)
                 {
-                    List<string> laborGuidList = JsonHelper.DeSerialize<List<string>>(itemKeys);
-                    if (laborGuidList.Count == 1 && laborGuidList[0].ToLower() == "on")
+                    isSuccessful = false;
+                    displayMessage = "请在智能提示的企业列表中选择企业信息后保存。";
+                }
+                else
+                {
+                    targetEntity.OperateDate = DateTime.Now;
+                    targetEntity.OperateUserGuid = BusinessUserBLL.CurrentUser.UserGuid;
+
+                    try
                     {
-                        isSuccessful = false;
-                        displayMessage = "请先选择至少一个劳务人员，然后在为其派工，谢谢！";
-                    }
-                    else
-                    {
-                        foreach (string item in laborGuidList)
+                        List<string> laborGuidList = JsonHelper.DeSerialize<List<string>>(itemKeys);
+                        if (laborGuidList.Count == 1 && laborGuidList[0].ToLower() == "on")
                         {
-                            Guid laborGuid = Converter.ChangeType<Guid>(item);
-                            if (laborGuid != Guid.Empty)
+                            isSuccessful = false;
+                            displayMessage = "请先选择至少一个劳务人员，然后在为其派工，谢谢！";
+                        }
+                        else
+                        {
+                            foreach (string item in laborGuidList)
                             {
-                                targetEntity.LaborUserGuid = laborGuid;
-                                isSuccessful = LaborContractBLL.Instance.Create(targetEntity);
+                                Guid laborGuid = Converter.ChangeType<Guid>(item);
+                                if (laborGuid != Guid.Empty)
+                                {
+                                    targetEntity.LaborContractGuid = GuidHelper.NewGuid();
+                                    targetEntity.LaborUserGuid = laborGuid;
+
+                                    isSuccessful = LaborContractBLL.Instance.Create(targetEntity);
+                                }
                             }
                         }
                     }
+                    catch
+                    { }
                 }
-                catch
-                { }
             }
 
             if (isSuccessful == true)
