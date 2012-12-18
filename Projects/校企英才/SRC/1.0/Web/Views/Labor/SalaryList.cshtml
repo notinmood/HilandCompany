@@ -45,7 +45,7 @@
     <div class="OperateArea" id="OperateAreaContainer">
         <div class="btn-group">
             @Html.HiA("newDisplayA").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("SalaryItem", "Labor").Render(new { rel = "#EditDIV" })
-            @Html.HiA("salaryListCheck").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-refresh icon-white\"></i>应付薪资人员校验").ACA("SalaryListCheck", "Labor").RouteValue(new { enterpriseKey = enterpriseKey, salaryMonth = salaryMonth }).Render()
+            @Html.HiA("salaryListCheck").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-refresh icon-white\"></i>应付薪资人员校验").ACA("SalaryListCheck", "Labor").RouteValue(new { enterpriseKey = enterpriseKey, salaryMonth = salaryMonth }).Render(new { rel = "#EditDIV" })
             @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)
         </div>
     </div>
@@ -223,6 +223,13 @@
                 var enterpriseKey = "@enterpriseKey";
                 var salaryMonth = "@salaryMonth";
                 var url = '@Url.Action("SalaryItem")' + '?r=' + Math.random() + '&enterpriseKey=' + enterpriseKey + '&salaryMonth=' + salaryMonth;
+                $("#EditDIV").load(url);
+            });
+
+            $("#salaryListCheck").click(function () {
+                var enterpriseKey = "@enterpriseKey";
+                var salaryMonth = "@salaryMonth";
+                var url = '@Url.Action("SalaryListCheck")' + '?r=' + Math.random() + '&enterpriseKey=' + enterpriseKey + '&salaryMonth=' + salaryMonth;
                 $("#EditDIV").load(url);
             });
 

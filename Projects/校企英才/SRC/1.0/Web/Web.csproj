@@ -722,6 +722,7 @@
     <Content Include="Views\Enterprise\BoothQueryList2.cshtml" />
     <Content Include="Views\Labor\SalaryCalculateFix.cshtml" />
     <Content Include="Views\System\OperateLogList.cshtml" />
+    <Content Include="Views\Labor\SalaryListCheck.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

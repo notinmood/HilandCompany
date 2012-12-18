@@ -1568,6 +1568,16 @@ namespace XQYC.Web.Controllers
         /// <returns></returns>
         public ActionResult SalaryListCheck()
         {
+            return View();
+        }
+
+        /// <summary>
+        /// 薪资人数的应付数与实付数校验
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SalaryListCheck(bool isOnlyPlaceHolder= true)
+        {
             List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
             string returnUrl = Url.Action("SalaryListPreSelector");
 

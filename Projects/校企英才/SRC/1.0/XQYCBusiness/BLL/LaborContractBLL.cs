@@ -165,5 +165,29 @@ namespace XQYC.Business.BLL
             string whereClause = string.Format(" LaborContractStartDate >='{0}' AND LaborContractStartDate<='{1}' ", startDate, endDate);
             return base.GetTotalCount(whereClause);
         }
+
+        /// <summary>
+        /// 根据开始结束日期及其企业guid获取此间在职的人员信息
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="enterpriseGuid"></param>
+        /// <returns></returns>
+        public List<LaborContractEntity> GetList(DateTime startDate, DateTime endDate, Guid enterpriseGuid)
+        {
+            DateTime minDate = DateTimeHelper.Min;
+            string whereClause = string.Format(@"LaborContractStartDate is not null AND LaborContractStartDate>'{0}' AND (
+	            ( LaborContractStartDate<='{1}' AND ('{1}'<=LaborContractStopDate OR LaborContractStopDate='{0}' OR LaborContractStopDate is null) ) OR 
+	            ( LaborContractStartDate<='{2}' AND ('{2}'<=LaborContractStopDate OR LaborContractStopDate='{0}' OR LaborContractStopDate is null) ) OR
+	            ( LaborContractStartDate>'{1}' AND ('{2}'>LaborContractStopDate OR LaborContractStopDate='{0}' OR LaborContractStopDate is null))
+	            ) ",minDate,startDate,endDate);
+
+            if (enterpriseGuid != Guid.Empty)
+            {
+                whereClause += string.Format(" AND EnterpriseGuid='{0}' ",enterpriseGuid);
+            }
+
+            return base.GetList(whereClause);
+        }
     }
 }
