@@ -29,11 +29,11 @@
     @using (Html.BeginForm())
     { 
         <table>
-            
+
             <tr>
                 <td style="width: 150px;">企业:<i class="icon-comment" title="自动完成功能：当在输入框中输入2个字符后，系统就会查询符合条件的数据。请从下拉列表中选择目标信息。"></i>
                 </td>
-                <td>@HtmlHelperEx.XQYCAutoCompleteEnterprise(Html, "EnterpriseName", laborContractEntity.Enterprise.CompanyName, laborContractEntity.EnterpriseGuid.ToString()) 
+                <td>@HtmlHelperEx.XQYCAutoCompleteEnterprise(Html, "EnterpriseName", laborContractEntity.Enterprise.CompanyName, laborContractEntity.EnterpriseGuid.ToString())
                 </td>
                 <td style="width: 150px;">劳务人员工号:
                 </td>
@@ -70,24 +70,42 @@
                 <td>@Html.DropDownListFor(entity => entity.LaborContractStatus, EnumEx.BuildSelectItemList<LaborWorkStatuses>())
                 </td>
             </tr>
-             <tr>
+            <tr>
                 <td>合同内容:
                 </td>
                 <td>@Html.TextBoxFor(entity => entity.LaborContractDetails)
                 </td>
-                <td>企业担负费用类型:
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>企业综合费用类型:
                 </td>
-                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html,CostKinds.MixCost,CostTypes.Enterprise, "EnterpriseMixCostFormularKey", Model.EnterpriseMixCostFormularKey)
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.MixCost, CostTypes.Enterprise, "EnterpriseMixCostFormularKey", Model.EnterpriseMixCostFormularKey)
+                </td>
+                <td>企业管理费类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.ManageFee, CostTypes.Enterprise, "EnterpriseManageFeeFormularKey", Model.EnterpriseManageFeeFormularKey)
+                </td>
+            </tr>
+            <tr>
+                <td>企业保险类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.Insurance, CostTypes.Enterprise, "EnterpriseInsuranceFormularKey", Model.EnterpriseInsuranceFormularKey)
+                </td>
+                <td>企业公积金类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.ReserveFund, CostTypes.Enterprise, "EnterpriseReserveFundFormularKey", Model.EnterpriseReserveFundFormularKey)
                 </td>
             </tr>
             <tr>
                 <td>个人保险类型:
                 </td>
-                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html,CostKinds.Insurance,CostTypes.Person, "PersonInsuranceFormularKey", Model.PersonInsuranceFormularKey)
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.Insurance, CostTypes.Person, "PersonInsuranceFormularKey", Model.PersonInsuranceFormularKey)
                 </td>
                 <td>个人公积金类型:
                 </td>
-                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html,CostKinds.ReserveFund,CostTypes.Person, "PersonReserveFundFormularKey", Model.PersonReserveFundFormularKey)
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.ReserveFund, CostTypes.Person, "PersonReserveFundFormularKey", Model.PersonReserveFundFormularKey)
                 </td>
             </tr>
             <tr>

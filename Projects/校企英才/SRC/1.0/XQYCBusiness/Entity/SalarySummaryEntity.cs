@@ -25,7 +25,7 @@ namespace XQYC.Business.Entity
          */
 
         /*
-            各种工资实付，应付名称直接的关系：1.先扣除罚款 2.扣除保险等各种费用中个人应该承担的部分 3.扣除个税
+            各种工资实付，应付名称直接的关系： 1.扣除保险等各种费用中个人应该承担的部分 2.扣除个税 3.先扣除罚款 4.扣除各种借款
          * 1.SalaryGrossPay 未扣减费用前的毛工资
          * 2.SalaryNeedPayBeforeCost 
          * 3.SalaryNeedPayBeforeTax
@@ -133,16 +133,13 @@ namespace XQYC.Business.Entity
         }
 
         /// <summary>
-        /// 应付工资（扣除保险公积金等前的应付工资）（SalaryGrossPay和SalaryRebate的差额）
+        /// 应付工资（扣除保险公积金等前的应付工资）
         /// </summary>
-        /// <remarks>
-        /// 因为SalaryRebate已经用负值表示表示了，所以其跟SalaryGrossPay相加即可
-        /// </remarks>
         public decimal SalaryNeedPayBeforeCost
         {
             get
             {
-                return SalaryGrossPay + SalaryRebate;
+                return SalaryGrossPay;
             }
         }
 
@@ -160,11 +157,14 @@ namespace XQYC.Business.Entity
         /// <summary>
         /// 最后到劳务人员手中的应付费用
         /// </summary>
+        /// <remarks>
+        /// 因为SalaryRebate已经用负值表示表示了，所以其相加即可
+        /// </remarks>
         public decimal SalaryNeedPayToLabor
         {
             get
             {
-                return SalaryNeedPayBeforeTax - SalaryTax - PersonBorrow;
+                return SalaryNeedPayBeforeTax - SalaryTax + SalaryRebate - PersonBorrow;
             }
         }
 
