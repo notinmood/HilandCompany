@@ -57,7 +57,7 @@
         </table>
         @*<input type="hidden" id="UserKey" value="@userKey" />*@
         @Html.HiddenFor(entity=>entity.UserGuid)
-        <input type="hidden" id="ItemKey" value="@Model.BankGuid" />
+        <input type="hidden" id="ItemKey" name="ItemKey" value="@Model.BankGuid" />
         <input type="button" id="submitButton" value="保存" class="btn btn-warning" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
     }
 </div>

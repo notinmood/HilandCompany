@@ -40,7 +40,7 @@
                 </td>
             </tr>
         </table>
-        <input type="hidden" id="ItemKey" value="@Model.SalaryDetailsGuid" />
+        <input type="hidden" id="ItemKey" name="ItemKey" value="@Model.SalaryDetailsGuid" />
         @Html.HiddenFor(entity=>entity.SalaryDetailsID)
         @Html.HiddenFor(entity=>entity.SalaryDetailsGuid)
         @Html.HiddenFor(entity=>entity.SalarySummaryKey)

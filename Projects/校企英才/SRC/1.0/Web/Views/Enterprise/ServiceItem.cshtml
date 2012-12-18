@@ -107,8 +107,8 @@
                 </td>
             </tr>
         </table>
-        <input type="hidden" id="ItemKey" value="@Model.EnterpriseServiceGuid" />
-        <input type="hidden" id="returnUrl" value="@returnUrl" />
+        <input type="hidden" id="ItemKey" name="ItemKey" value="@Model.EnterpriseServiceGuid" />
+        <input type="hidden" id="returnUrl" name="returnUrl" value="@returnUrl" />
         @Html.HiddenFor(entity => entity.EnterpriseGuid)
         @Html.HiddenFor(entity => entity.EnterpriseInfo)
         @Html.HiddenFor(entity => entity.EnterpriseServiceType)

@@ -1595,33 +1595,43 @@ namespace XQYC.Web.Controllers
             }
 
             DateTime salaryDateFirstDay = DateTime.Today;
-            if (string.IsNullOrWhiteSpace(salaryMonth))
+            DateTime salaryDateStart = DateTime.Today;
+            DateTime salaryDateEnd = DateTime.Today;
+
+            salaryDateStart = RequestHelper.GetValue<DateTime>("JobingDateStart", DateTimeHelper.Min);
+            salaryDateEnd = RequestHelper.GetValue<DateTime>("JobingDateEnd", DateTimeHelper.Min);
+            if (salaryDateStart == DateTimeHelper.Min && salaryDateEnd == DateTimeHelper.Min)
             {
-                SystemStatusInfo itemError = new SystemStatusInfo();
-                itemError.SystemStatus = SystemStatuses.Warnning;
-                itemError.Message = "你没有选定薪资月份，请选择。";
-                infoList.Add(itemError);
-                this.TempData.Add("OperationResultData", infoList);
-                return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
-            }
-            else
-            {
-                salaryMonth = HttpUtility.UrlDecode(salaryMonth);
-                string salaryDateString = salaryMonth + "/1";
-                salaryDateFirstDay = DateTimeHelper.Parse(salaryDateString, DateFormats.YMD);
+                if (string.IsNullOrWhiteSpace(salaryMonth))
+                {
+                    SystemStatusInfo itemError = new SystemStatusInfo();
+                    itemError.SystemStatus = SystemStatuses.Warnning;
+                    itemError.Message = "你没有选定薪资月份，请选择。";
+                    infoList.Add(itemError);
+                    this.TempData.Add("OperationResultData", infoList);
+                    return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+                }
+                else
+                {
+                    salaryMonth = HttpUtility.UrlDecode(salaryMonth);
+                    string salaryDateString = salaryMonth + "/1";
+                    salaryDateFirstDay = DateTimeHelper.Parse(salaryDateString, DateFormats.YMD);
+
+                    salaryDateStart = DateTimeHelper.GetFirstDateOfMonth(salaryDateFirstDay);
+                    salaryDateEnd = DateTimeHelper.GetLastDateOfMonth(salaryDateFirstDay);
+                }
             }
 
-            //TODO:xieran20121101 因为要遍历企业中所有的人员，性能有可能不高，后续需要调整算法或者实现方式（异步？）
-            List<LaborEntity> laborList = LaborBLL.Instance.GetLaborsByEnterprise(new Guid(enterpriseKey));
+            List<LaborContractEntity> laborContractList= LaborContractBLL.Instance.GetList(salaryDateStart, salaryDateEnd, new Guid(enterpriseKey));
             List<LaborEntity> unMatchedLaborList = new List<LaborEntity>();
             List<SalarySummaryEntity> salarySummaryList = SalarySummaryBLL.Instance.GetList(enterpriseKey, salaryDateFirstDay);
-            for (int j = laborList.Count - 1; j >= 0; j--)
+            for (int j = laborContractList.Count - 1; j >= 0; j--)
             {
-                LaborEntity laborItem = laborList[j];
+                LaborContractEntity laborItem = laborContractList[j];
                 bool isMatch = false;
                 for (int i = 0; i < salarySummaryList.Count; i++)
                 {
-                    if (laborItem.UserGuid.ToString() == salarySummaryList[i].LaborKey)
+                    if (laborItem.LaborUserGuid.ToString() == salarySummaryList[i].LaborKey)
                     {
                         isMatch = true;
                         break;
@@ -1630,7 +1640,7 @@ namespace XQYC.Web.Controllers
 
                 if (isMatch == false)
                 {
-                    unMatchedLaborList.Add(laborItem);
+                    unMatchedLaborList.Add(laborItem.Labor);
                 }
             }
 

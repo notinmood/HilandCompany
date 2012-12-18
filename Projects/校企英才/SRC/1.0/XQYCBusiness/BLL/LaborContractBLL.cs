@@ -176,11 +176,11 @@ namespace XQYC.Business.BLL
         public List<LaborContractEntity> GetList(DateTime startDate, DateTime endDate, Guid enterpriseGuid)
         {
             DateTime minDate = DateTimeHelper.Min;
-            string whereClause = string.Format(@"LaborContractStartDate is not null AND LaborContractStartDate>'{0}' AND (
-	            ( LaborContractStartDate<='{1}' AND ('{1}'<=LaborContractStopDate OR LaborContractStopDate='{0}' OR LaborContractStopDate is null) ) OR 
-	            ( LaborContractStartDate<='{2}' AND ('{2}'<=LaborContractStopDate OR LaborContractStopDate='{0}' OR LaborContractStopDate is null) ) OR
-	            ( LaborContractStartDate>'{1}' AND ('{2}'>LaborContractStopDate OR LaborContractStopDate='{0}' OR LaborContractStopDate is null))
-	            ) ",minDate,startDate,endDate);
+            string whereClause = string.Format(@"(
+	            ( LaborContractStartDate>='{1}' AND (LaborContractStartDate<='{2}') ) OR 
+	            ( LaborContractDiscontinueDate>='{1}' AND (LaborContractDiscontinueDate<='{2}') ) OR
+	            ( LaborContractStartDate<'{1}' AND (LaborContractDiscontinueDate>'{2}' OR LaborContractDiscontinueDate is null OR LaborContractDiscontinueDate='{0}' ))
+	            ) ", minDate,startDate,endDate);
 
             if (enterpriseGuid != Guid.Empty)
             {
