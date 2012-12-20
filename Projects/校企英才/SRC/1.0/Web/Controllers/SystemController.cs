@@ -34,6 +34,10 @@ namespace XQYC.Web.Controllers
             return View();
         }
 
+        public ActionResult NoPermissionDisplayPage()
+        {
+            return View();
+        }
 
         public ActionResult SoftVersion()
         {
@@ -123,7 +127,7 @@ namespace XQYC.Web.Controllers
         /// <param name="isSuccessful"></param>
         /// <param name="displayInformation"></param>
         /// <returns></returns>
-        public ActionResult OperationResult(bool isSuccessful, string displayInformation, string returnUrl = StringHelper.Empty, bool isUsingCompress= false)
+        public ActionResult OperationResult(bool isSuccessful, string displayInformation, string returnUrl = StringHelper.Empty, bool isUsingCompress = false)
         {
             SystemStatusInfo statusInfo = new SystemStatusInfo();
             if (isSuccessful == true)
@@ -210,18 +214,19 @@ namespace XQYC.Web.Controllers
         /// 工作移交
         /// </summary>
         /// <returns></returns>
+        [PermissionAuthorize]
         public ActionResult TransferJobs()
         {
             return View();
         }
 
-        //TODO:xieran20121214 工作移交时，其他新资源所有者的移交
         //TODO:xieran20121123 工作移交时，考虑发送系统通知给每个内部员工
         /// <summary>
         /// 工作移交
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [PermissionAuthorize]
         public ActionResult TransferJobs(bool onlyPlaceHolder = true)
         {
             List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
@@ -242,11 +247,7 @@ namespace XQYC.Web.Controllers
             }
             else
             {
-                string laborData = RequestHelper.GetValue("cbxLaborData").ToLower();
-                string enterpriseData = RequestHelper.GetValue("cbxEnterpriseData").ToLower();
-                string informationBrokerData = RequestHelper.GetValue("cbxInformationBrokerData").ToLower();
-
-                if (laborData == "on")
+                #region 劳务人员移交
                 {
                     int rowCount = UpdateLaborData(sourceUserGuid, targetUserGuid, targetUserName);
 
@@ -265,8 +266,9 @@ namespace XQYC.Web.Controllers
                         infoList.Add(itemError);
                     }
                 }
+                #endregion
 
-                if (enterpriseData == "on")
+                #region 企业移交
                 {
                     int rowCount = UpdateEnterpriseData(sourceUserGuid, targetUserGuid, targetUserName);
 
@@ -285,8 +287,9 @@ namespace XQYC.Web.Controllers
                         infoList.Add(itemError);
                     }
                 }
+                #endregion
 
-                if (informationBrokerData == "on")
+                #region 信息员移交
                 {
                     int rowCount = UpdateInformationBrokerData(sourceUserGuid, targetUserGuid, targetUserName);
 
@@ -305,6 +308,7 @@ namespace XQYC.Web.Controllers
                         infoList.Add(itemError);
                     }
                 }
+                #endregion
             }
 
             this.TempData.Add("OperationResultData", infoList);
@@ -313,79 +317,181 @@ namespace XQYC.Web.Controllers
 
         private static int UpdateInformationBrokerData(Guid sourceUserGuid, Guid targetUserGuid, string targetUserName)
         {
-            string sqlClauseForLaborBusinessUser = string.Format("UPDATE [XQYCInformationBroker] SET [BusinessUserGuid] = '{0}',[BusinessUserName] = '{1}' WHERE [BusinessUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborBusinessUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborBusinessUser);
+            string businessUser = RequestHelper.GetValue("cbxInformationBrokerBusinessUser").ToLower();
+            string serviceUser = RequestHelper.GetValue("cbxInformationBrokerServiceUser").ToLower();
+            string settleUser = RequestHelper.GetValue("cbxInformationBrokerSettleUser").ToLower();
+            string providerUser = RequestHelper.GetValue("cbxInformationBrokerProviderUser").ToLower();
+            string recommendUser = RequestHelper.GetValue("cbxInformationBrokerRecommendUser").ToLower();
+            string financeUser = RequestHelper.GetValue("cbxInformationBrokerFinanceUser").ToLower();
 
-            string sqlClauseForLaborServiceUser = string.Format("UPDATE [XQYCInformationBroker] SET [ServiceUserGuid] = '{0}',[ServiceUserName] = '{1}' WHERE [ServiceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborServiceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborServiceUser);
+            int rowCountForSettleUser = 0;
+            int rowCountForServiceUser = 0;
+            int rowCountForBusinessUser = 0;
+            int rowCountForProviderUser = 0;
+            int rowCountForRecommendUser = 0;
+            int rowCountForFinanceUser = 0;
 
-            string sqlClauseForLaborProviderUser = string.Format("UPDATE [XQYCInformationBroker] SET [ProviderUserGuid] = '{0}',[ProviderUserName] = '{1}' WHERE [ProviderUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborProviderUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborProviderUser);
+            if (businessUser == "on")
+            {
+                string sqlClauseForLaborBusinessUser = string.Format("UPDATE [XQYCInformationBroker] SET [BusinessUserGuid] = '{0}',[BusinessUserName] = '{1}' WHERE [BusinessUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForBusinessUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborBusinessUser);
+            }
 
-            string sqlClauseForLaborRecommendUser = string.Format("UPDATE [XQYCInformationBroker] SET [RecommendUserGuid] = '{0}',[RecommendUserName] = '{1}' WHERE [RecommendUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborRecommendUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborRecommendUser);
 
-            string sqlClauseForLaborFinanceUser = string.Format("UPDATE [XQYCInformationBroker] SET [FinanceUserGuid] = '{0}',[FinanceUserName] = '{1}' WHERE [FinanceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborFinanceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborFinanceUser);
+            if (serviceUser == "on")
+            {
+                string sqlClauseForLaborServiceUser = string.Format("UPDATE [XQYCInformationBroker] SET [ServiceUserGuid] = '{0}',[ServiceUserName] = '{1}' WHERE [ServiceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForServiceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborServiceUser);
+            }
 
-            string sqlClauseForLaborSettleUser = string.Format("UPDATE [XQYCInformationBroker] SET [SettleUserGuid] = '{0}',[SettleUserName] = '{1}' WHERE [SettleUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborSettleUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborSettleUser);
+            if (serviceUser == "on")
+            {
+                string sqlClauseForLaborProviderUser = string.Format("UPDATE [XQYCInformationBroker] SET [ProviderUserGuid] = '{0}',[ProviderUserName] = '{1}' WHERE [ProviderUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForProviderUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborProviderUser);
+            }
 
-            int rowCountForLabor = rowCountForLaborBusinessUser + rowCountForLaborServiceUser + rowCountForLaborProviderUser +
-                rowCountForLaborRecommendUser + rowCountForLaborFinanceUser + rowCountForLaborSettleUser;
+            if (serviceUser == "on")
+            {
+                string sqlClauseForLaborRecommendUser = string.Format("UPDATE [XQYCInformationBroker] SET [RecommendUserGuid] = '{0}',[RecommendUserName] = '{1}' WHERE [RecommendUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForRecommendUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborRecommendUser);
+            }
+
+            if (serviceUser == "on")
+            {
+                string sqlClauseForLaborFinanceUser = string.Format("UPDATE [XQYCInformationBroker] SET [FinanceUserGuid] = '{0}',[FinanceUserName] = '{1}' WHERE [FinanceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForFinanceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborFinanceUser);
+            }
+
+            if (serviceUser == "on")
+            {
+                string sqlClauseForLaborSettleUser = string.Format("UPDATE [XQYCInformationBroker] SET [SettleUserGuid] = '{0}',[SettleUserName] = '{1}' WHERE [SettleUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForSettleUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborSettleUser);
+            }
+
+            int rowCountForLabor = rowCountForBusinessUser + rowCountForServiceUser + rowCountForProviderUser +
+                rowCountForRecommendUser + rowCountForFinanceUser + rowCountForSettleUser;
             return rowCountForLabor;
         }
 
         private static int UpdateEnterpriseData(Guid sourceUserGuid, Guid targetUserGuid, string targetUserName)
         {
-            string sqlClauseForLaborManageUser = string.Format("UPDATE [XQYCEnterpriseService] SET [ManageUserKey] = '{0}',[ManageUserName] = '{1}' WHERE [ManageUserKey]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborManageUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborManageUser);
+            string manageUser = RequestHelper.GetValue("cbxEnterpriseManageUser").ToLower();
+            string businessUser = RequestHelper.GetValue("cbxLaborBusinessUser").ToLower();
+            string serviceUser = RequestHelper.GetValue("cbxLaborServiceUser").ToLower();
+            string settleUser = RequestHelper.GetValue("cbxLaborSettleUser").ToLower();
+            string providerUser = RequestHelper.GetValue("cbxLaborProviderUser").ToLower();
+            string recommendUser = RequestHelper.GetValue("cbxLaborRecommendUser").ToLower();
+            string financeUser = RequestHelper.GetValue("cbxLaborFinanceUser").ToLower();
 
-            string sqlClauseForLaborBusinessUser = string.Format("UPDATE [XQYCEnterpriseService] SET [BusinessUserGuid] = '{0}',[BusinessUserName] = '{1}' WHERE [BusinessUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborBusinessUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborBusinessUser);
+            int rowCountForManageUser = 0;
+            int rowCountForSettleUser = 0;
+            int rowCountForServiceUser = 0;
+            int rowCountForBusinessUser = 0;
+            int rowCountForProviderUser = 0;
+            int rowCountForRecommendUser = 0;
+            int rowCountForFinanceUser = 0;
 
-            string sqlClauseForLaborServiceUser = string.Format("UPDATE [XQYCEnterpriseService] SET [ServiceUserGuid] = '{0}',[ServiceUserName] = '{1}' WHERE [ServiceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborServiceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborServiceUser);
+            if (manageUser == "on")
+            {
+                string sqlClauseForLaborManageUser = string.Format("UPDATE [GeneralEnterprise] SET [ManageUserKey] = '{0}',[ManageUserName] = '{1}' WHERE [ManageUserKey]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForManageUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborManageUser);
+            }
 
-            string sqlClauseForLaborProviderUser = string.Format("UPDATE [XQYCEnterpriseService] SET [ProviderUserGuid] = '{0}',[ProviderUserName] = '{1}' WHERE [ProviderUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborProviderUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborProviderUser);
+            if (businessUser == "on")
+            {
+                string sqlClauseForLaborBusinessUser = string.Format("UPDATE [XQYCEnterpriseService] SET [BusinessUserGuid] = '{0}',[BusinessUserName] = '{1}' WHERE [BusinessUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForBusinessUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborBusinessUser);
+            }
 
-            string sqlClauseForLaborRecommendUser = string.Format("UPDATE [XQYCEnterpriseService] SET [RecommendUserGuid] = '{0}',[RecommendUserName] = '{1}' WHERE [RecommendUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborRecommendUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborRecommendUser);
+            if (serviceUser == "on")
+            {
+                string sqlClauseForLaborServiceUser = string.Format("UPDATE [XQYCEnterpriseService] SET [ServiceUserGuid] = '{0}',[ServiceUserName] = '{1}' WHERE [ServiceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForServiceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborServiceUser);
+            }
 
-            string sqlClauseForLaborFinanceUser = string.Format("UPDATE [XQYCEnterpriseService] SET [FinanceUserGuid] = '{0}',[FinanceUserName] = '{1}' WHERE [FinanceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborFinanceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborFinanceUser);
+            if (providerUser == "on")
+            {
+                string sqlClauseForLaborProviderUser = string.Format("UPDATE [XQYCEnterpriseService] SET [ProviderUserGuid] = '{0}',[ProviderUserName] = '{1}' WHERE [ProviderUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForProviderUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborProviderUser);
+            }
 
-            string sqlClauseForLaborSettleUser = string.Format("UPDATE [XQYCEnterpriseService] SET [SettleUserGuid] = '{0}',[SettleUserName] = '{1}' WHERE [SettleUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborSettleUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborSettleUser);
+            if (recommendUser == "on")
+            {
+                string sqlClauseForLaborRecommendUser = string.Format("UPDATE [XQYCEnterpriseService] SET [RecommendUserGuid] = '{0}',[RecommendUserName] = '{1}' WHERE [RecommendUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForRecommendUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborRecommendUser);
+            }
 
-            int rowCountForLabor = rowCountForLaborBusinessUser + rowCountForLaborServiceUser + rowCountForLaborProviderUser +
-                rowCountForLaborRecommendUser + rowCountForLaborFinanceUser + rowCountForLaborSettleUser;
+            if (financeUser == "on")
+            {
+                string sqlClauseForLaborFinanceUser = string.Format("UPDATE [XQYCEnterpriseService] SET [FinanceUserGuid] = '{0}',[FinanceUserName] = '{1}' WHERE [FinanceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForFinanceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborFinanceUser);
+            }
+
+            if (settleUser == "on")
+            {
+                string sqlClauseForLaborSettleUser = string.Format("UPDATE [XQYCEnterpriseService] SET [SettleUserGuid] = '{0}',[SettleUserName] = '{1}' WHERE [SettleUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForSettleUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborSettleUser);
+            }
+
+            int rowCountForLabor = rowCountForManageUser + rowCountForBusinessUser + rowCountForServiceUser + rowCountForProviderUser +
+                rowCountForRecommendUser + rowCountForFinanceUser + rowCountForSettleUser;
             return rowCountForLabor;
         }
 
         private static int UpdateLaborData(Guid sourceUserGuid, Guid targetUserGuid, string targetUserName)
         {
-            string sqlClauseForLaborBusinessUser = string.Format("UPDATE [XQYCLabor] SET [BusinessUserGuid] = '{0}',[BusinessUserName] = '{1}' WHERE [BusinessUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborBusinessUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborBusinessUser);
+            string businessUser = RequestHelper.GetValue("cbxLaborBusinessUser").ToLower();
+            string serviceUser = RequestHelper.GetValue("cbxLaborServiceUser").ToLower();
+            string settleUser = RequestHelper.GetValue("cbxLaborSettleUser").ToLower();
+            string providerUser = RequestHelper.GetValue("cbxLaborProviderUser").ToLower();
+            string recommendUser = RequestHelper.GetValue("cbxLaborRecommendUser").ToLower();
+            string financeUser = RequestHelper.GetValue("cbxLaborFinanceUser").ToLower();
 
-            string sqlClauseForLaborServiceUser = string.Format("UPDATE [XQYCLabor] SET [ServiceUserGuid] = '{0}',[ServiceUserName] = '{1}' WHERE [ServiceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborServiceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborServiceUser);
+            int rowCountForSettleUser = 0;
+            int rowCountForServiceUser = 0;
+            int rowCountForBusinessUser = 0;
+            int rowCountForProviderUser = 0;
+            int rowCountForRecommendUser = 0;
+            int rowCountForFinanceUser = 0;
 
-            string sqlClauseForLaborProviderUser = string.Format("UPDATE [XQYCLabor] SET [ProviderUserGuid] = '{0}',[ProviderUserName] = '{1}' WHERE [ProviderUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborProviderUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborProviderUser);
+            if (businessUser == "on")
+            {
+                string sqlClauseForLaborBusinessUser = string.Format("UPDATE [XQYCLabor] SET [BusinessUserGuid] = '{0}',[BusinessUserName] = '{1}' WHERE [BusinessUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForBusinessUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborBusinessUser);
+            }
 
-            string sqlClauseForLaborRecommendUser = string.Format("UPDATE [XQYCLabor] SET [RecommendUserGuid] = '{0}',[RecommendUserName] = '{1}' WHERE [RecommendUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborRecommendUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborRecommendUser);
+            if (serviceUser == "on")
+            {
+                string sqlClauseForLaborServiceUser = string.Format("UPDATE [XQYCLabor] SET [ServiceUserGuid] = '{0}',[ServiceUserName] = '{1}' WHERE [ServiceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForServiceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborServiceUser);
+            }
 
-            string sqlClauseForLaborFinanceUser = string.Format("UPDATE [XQYCLabor] SET [FinanceUserGuid] = '{0}',[FinanceUserName] = '{1}' WHERE [FinanceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborFinanceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborFinanceUser);
+            if (providerUser == "on")
+            {
+                string sqlClauseForLaborProviderUser = string.Format("UPDATE [XQYCLabor] SET [ProviderUserGuid] = '{0}',[ProviderUserName] = '{1}' WHERE [ProviderUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForProviderUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborProviderUser);
+            }
 
-            string sqlClauseForLaborSettleUser = string.Format("UPDATE [XQYCLabor] SET [SettleUserGuid] = '{0}',[SettleUserName] = '{1}' WHERE [SettleUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
-            int rowCountForLaborSettleUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborSettleUser);
+            if (recommendUser == "on")
+            {
+                string sqlClauseForLaborRecommendUser = string.Format("UPDATE [XQYCLabor] SET [RecommendUserGuid] = '{0}',[RecommendUserName] = '{1}' WHERE [RecommendUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForRecommendUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborRecommendUser);
+            }
 
-            int rowCountForLabor = rowCountForLaborBusinessUser + rowCountForLaborServiceUser + rowCountForLaborProviderUser +
-                rowCountForLaborRecommendUser + rowCountForLaborFinanceUser + rowCountForLaborSettleUser;
+            if (financeUser == "on")
+            {
+                string sqlClauseForLaborFinanceUser = string.Format("UPDATE [XQYCLabor] SET [FinanceUserGuid] = '{0}',[FinanceUserName] = '{1}' WHERE [FinanceUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForFinanceUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborFinanceUser);
+            }
+
+            if (settleUser == "on")
+            {
+                string sqlClauseForLaborSettleUser = string.Format("UPDATE [XQYCLabor] SET [SettleUserGuid] = '{0}',[SettleUserName] = '{1}' WHERE [SettleUserGuid]= '{2}' ", targetUserGuid, targetUserName, sourceUserGuid);
+                rowCountForSettleUser = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForLaborSettleUser);
+            }
+
+            int rowCountForLabor = rowCountForBusinessUser + rowCountForServiceUser + rowCountForProviderUser +
+                rowCountForRecommendUser + rowCountForFinanceUser + rowCountForSettleUser;
             return rowCountForLabor;
         }
 

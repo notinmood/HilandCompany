@@ -6,25 +6,25 @@
 
 }
 <style type="text/css">
-        #main-content ul,
-        #main-content ol {
-            padding: 0 0 0 18px;
-        }
+    #main-content ul,
+    #main-content ol {
+        padding: 0 0 0 18px;
+    }
 
-            #main-content ul li {
-                background: url() center left no-repeat;
-                padding: 0px;
-            }
-
-        #main-content ol {
+        #main-content ul li {
+            background: url() center left no-repeat;
             padding: 0px;
         }
 
-            #main-content ol li {
-                list-style: none;
-                padding: 0;
-            }
-    </style>
+    #main-content ol {
+        padding: 0px;
+    }
+
+        #main-content ol li {
+            list-style: none;
+            padding: 0;
+        }
+</style>
 <h2>工作移交
 </h2>
 @using (Html.BeginForm())
@@ -39,23 +39,44 @@
         <tr>
             <td>劳务人员信息:
             </td>
-            <td> <input type="checkbox" name="cbxLaborData" />
+            <td>
+                <div style="display: inline-block">
+                    <input type="checkbox" id="cbxLaborServiceUser" name="cbxLaborServiceUser" /><label style="display: inline" for="cbxLaborServiceUser">客服人员</label>
+                    <input type="checkbox" id="cbxLaborBusinessUser" name="cbxLaborBusinessUser" /><label style="display: inline" for="cbxLaborBusinessUser">业务人员</label>
+                    <input type="checkbox" id="cbxLaborSettleUser" name="cbxLaborSettleUser" /><label style="display: inline" for="cbxLaborSettleUser">安置人员</label>
+                    <input type="checkbox" id="cbxLaborProviderUser" name="cbxLaborProviderUser" /><label style="display: inline" for="cbxLaborProviderUser">信息提供人员</label>
+                    <input type="checkbox" id="cbxLaborRecommendUser" name="cbxLaborRecommendUser" /><label style="display: inline" for="cbxLaborRecommendUser">推荐人员</label>
+                    <input type="checkbox" id="cbxLaborFinanceUser" name="cbxLaborFinanceUser" /><label style="display: inline" for="cbxLaborFinanceUser">财务人员</label>
+                </div>
             </td>
         </tr>
         <tr>
             <td>企业信息:
             </td>
-            <td><input type="checkbox" name="cbxEnterpriseData" />
+            <td>
+                <input type="checkbox" id="cbxEnterpriseManageUser" name="cbxEnterpriseManageUser" /><label style="display: inline" for="cbxEnterpriseManageUser">负责人</label>
+                <input type="checkbox" id="cbxEnterpriseServiceUser" name="cbxEnterpriseServiceUser" /><label style="display: inline" for="cbxEnterpriseServiceUser">客服人员</label>
+                <input type="checkbox" id="cbxEnterpriseBusinessUser" name="cbxEnterpriseBusinessUser" /><label style="display: inline" for="cbxEnterpriseBusinessUser">业务人员</label>
+                <input type="checkbox" id="cbxEnterpriseSettleUser" name="cbxEnterpriseSettleUser" /><label style="display: inline" for="cbxEnterpriseSettleUser">安置人员</label>
+                <input type="checkbox" id="cbxEnterpriseProviderUser" name="cbxEnterpriseProviderUser" /><label style="display: inline" for="cbxEnterpriseProviderUser">信息提供人员</label>
+                <input type="checkbox" id="cbxEnterpriseRecommendUser" name="cbxEnterpriseRecommendUser" /><label style="display: inline" for="cbxEnterpriseRecommendUser">推荐人员</label>
+                <input type="checkbox" id="cbxEnterpriseFinanceUser" name="cbxEnterpriseFinanceUser" /><label style="display: inline" for="cbxEnterpriseFinanceUser">财务人员</label>
             </td>
         </tr>
         <tr>
             <td>信息员:
             </td>
-            <td><input type="checkbox" name="cbxInformationBrokerData" />
+            <td>
+                <input type="checkbox" id="cbxInformationBrokerServiceUser" name="cbxInformationBrokerServiceUser" /><label style="display: inline" for="cbxInformationBrokerServiceUser">客服人员</label>
+                <input type="checkbox" id="cbxInformationBrokerBusinessUser" name="cbxInformationBrokerBusinessUser" /><label style="display: inline" for="cbxInformationBrokerBusinessUser">业务人员</label>
+                <input type="checkbox" id="cbxInformationBrokerSettleUser" name="cbxInformationBrokerSettleUser" /><label style="display: inline" for="cbxInformationBrokerSettleUser">安置人员</label>
+                <input type="checkbox" id="cbxInformationBrokerProviderUser" name="cbxInformationBrokerProviderUser" /><label style="display: inline" for="cbxInformationBrokerProviderUser">信息提供人员</label>
+                <input type="checkbox" id="cbxInformationBrokerRecommendUser" name="cbxInformationBrokerRecommendUser" /><label style="display: inline" for="cbxInformationBrokerRecommendUser">推荐人员</label>
+                <input type="checkbox" id="cbxInformationBrokerFinanceUser" name="cbxInformationBrokerFinanceUser" /><label style="display: inline" for="cbxInformationBrokerFinanceUser">财务人员</label>
             </td>
         </tr>
     </table>
-    <input type="submit" name="submit" id="submit"  class="btn btn-warning" value="移交" />
+    <input type="submit" name="submit" id="submit" class="btn btn-warning" value="移交" />
 }
 <script type="text/javascript">
     $(document).ready(function () {
@@ -64,8 +85,7 @@
         $("#aTransferJobs").addClass("current");
 
         $("#submit").click(function () {
-            if (confirm("工作移交对系统内数据的影响是不可恢复的，您确认要移交数据吗？") == false)
-            {
+            if (confirm("工作移交对系统内数据的影响是不可恢复的，您确认要移交数据吗？") == false) {
                 return false;
             }
         });
