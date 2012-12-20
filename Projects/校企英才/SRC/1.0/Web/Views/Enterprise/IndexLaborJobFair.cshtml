@@ -191,7 +191,7 @@
                 $(".modal").width("650px");
                 var itemKey = $(this).attr("itemKey");
                 $("#currentPopupItemGuid").val(itemKey);
-                var url = '@Url.Action("Item")' + '?keyGuid=' + itemKey + '&r=' + Math.random();
+                var url = '@Url.Action("Item")' + '?keyGuid=' + itemKey + '&r=' + Math.random() + '&returnUrl=' + encodeURIComponent('@currentUrl') + '&isUsingCompress=@isUsingCompress';;
                 $("#EditDIV").load(url);
             });
 
