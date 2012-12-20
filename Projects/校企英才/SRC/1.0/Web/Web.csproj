@@ -209,6 +209,7 @@
     <Content Include="Content\twitter-bootstrap\css\bootstrap-responsive.css" />
     <Content Include="Content\twitter-bootstrap\css\bootstrap.css" />
     <Content Include="Content\twitter-bootstrap\css\bootstrapExpress.css" />
+    <Content Include="Content\twitter-bootstrap\css\bootstrapCopy.css" />
     <Content Include="Content\twitter-bootstrap\css\docs.css" />
     <Content Include="Content\twitter-bootstrap\ico\apple-touch-icon-114-precomposed.png" />
     <Content Include="Content\twitter-bootstrap\ico\apple-touch-icon-57-precomposed.png" />
@@ -405,6 +406,8 @@
     <Content Include="Content\ztree\js\jquery.ztree.exhide-3.3.js" />
     <Content Include="Content\ztree\js\jquery.ztree.exhide-3.3.min.js" />
     <Content Include="Scripts\fixTable.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Upload\Product\OnlyPlaceHolder.txt" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\date.js" />
@@ -671,7 +674,6 @@
     <Content Include="DownFiles\Templet\劳务人员工资导入模板.xls" />
     <Content Include="DownFiles\Templet\银行开卡数据导入模板.xls" />
     <Content Include="Areas\APIs\Views\Web.config" />
-    <Content Include="Content\twitter-bootstrap\js\application.js.bak" />
     <Content Include="Content\twitter-bootstrap\js\README.md" />
     <Content Include="DownFiles\Templet\企业招聘简章模板.docx" />
     <Content Include="DownFiles\Soft\FirefoxSetup.zip" />
@@ -723,6 +725,7 @@
     <Content Include="Views\Labor\SalaryCalculateFix.cshtml" />
     <Content Include="Views\System\OperateLogList.cshtml" />
     <Content Include="Views\Labor\SalaryListCheck.cshtml" />
+    <Content Include="Views\Test\BootstrapDropDownTest.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

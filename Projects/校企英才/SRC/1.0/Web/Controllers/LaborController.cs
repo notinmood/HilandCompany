@@ -39,10 +39,11 @@ namespace XQYC.Web.Controllers
         public ActionResult Index(int id = 1)
         {
             bool isSelfData = RequestHelper.GetValue("isSelfData", false);
+            string workStatus = RequestHelper.GetValue("workStatus", string.Empty);
             //1.如果是点击查询控件的查询按钮，那么将查询条件作为QueryString附加在地址后面（为了在客户端保存查询条件的状体），重新发起一次请求。
             if (this.Request.HttpMethod.ToLower().Contains("post"))
             {
-                string targetUrlWithoutParam = Url.Action("Index", new { id = 1, isSelfData = isSelfData });
+                string targetUrlWithoutParam = Url.Action("Index", new { id = 1, isSelfData = isSelfData, workStatus = workStatus });
                 string targetUrl = QueryControlHelper.GetNewQueryUrl("LaborQuery", targetUrlWithoutParam);
                 return Redirect(targetUrl);
             }
@@ -54,7 +55,26 @@ namespace XQYC.Web.Controllers
             string whereClause = " 1=1 ";
             if (isSelfData == true)
             {
-                whereClause += string.Format(" AND ( ServiceUserGuid='{0}' OR BusinessUserGuid='{0}' OR SettleUserGuid='{0}' ) ",BusinessUserBLL.CurrentUserGuid);
+                whereClause += string.Format(" AND ( ServiceUserGuid='{0}' OR BusinessUserGuid='{0}' OR SettleUserGuid='{0}' ) ", BusinessUserBLL.CurrentUserGuid);
+            }
+
+            if (string.IsNullOrWhiteSpace(workStatus) == false)
+            {
+                switch (workStatus.ToLower())
+                {
+                    case "new":
+                        whereClause += string.Format(" AND LaborWorkStatus={0} ", (int)LaborWorkStatuses.NewWorker);
+                        break;
+                    case "on":
+                        whereClause += string.Format(" AND LaborWorkStatus={0} ", (int)LaborWorkStatuses.Worked);
+                        break;
+                    case "off":
+                        whereClause += string.Format(" AND ( LaborWorkStatus={0} OR LaborWorkStatus={1} OR LaborWorkStatus={2} )", (int)LaborWorkStatuses.NormalStop, (int)LaborWorkStatuses.UnNormalEnterpriseStop, (int)LaborWorkStatuses.UnNormalPersenalStop);
+                        break;
+                    default:
+                        break;
+                }
+
             }
 
             ////--数据权限----------------------------------------------------------------------
@@ -251,7 +271,7 @@ namespace XQYC.Web.Controllers
             targetEntity.UserEducationalSchool = originalEntity.UserEducationalSchool;
 
             IDCard idCard = IDCard.Parse(targetEntity.UserCardID);
-            
+
             targetEntity.UserSex = originalEntity.UserSex;
             if (targetEntity.UserSex == Sexes.UnSet)
             {
@@ -673,7 +693,7 @@ namespace XQYC.Web.Controllers
 
             if (isSuccessful == true)
             {
-                displayMessage = "数据保存成功。"+ displayMessage;
+                displayMessage = "数据保存成功。" + displayMessage;
             }
             else
             {
@@ -785,7 +805,7 @@ namespace XQYC.Web.Controllers
             dic["LaborContractDiscontinueDesc"] = "合同终止原因";
 
             Stream excelStream = ExcelHelper.WriteExcel(laborList, dic);
-            return File(excelStream, ContentTypes.GetContentType("xls"), string.Format( "劳务人员合同信息-{0}.xls",DateTime.Today.ToShortDateString()));
+            return File(excelStream, ContentTypes.GetContentType("xls"), string.Format("劳务人员合同信息-{0}.xls", DateTime.Today.ToShortDateString()));
         }
         #endregion
 
@@ -995,7 +1015,7 @@ namespace XQYC.Web.Controllers
             dic["SalaryNeedPayToLabor"] = "实付";
 
             Stream excelStream = ExcelHelper.WriteExcel(laborList, dic);
-            return File(excelStream, ContentTypes.GetContentType("xls"), string.Format("劳务人员薪资信息-{0}.xls",DateTime.Now.ToShortDateString()));
+            return File(excelStream, ContentTypes.GetContentType("xls"), string.Format("劳务人员薪资信息-{0}.xls", DateTime.Now.ToShortDateString()));
         }
 
         /// <summary>
@@ -1389,7 +1409,7 @@ namespace XQYC.Web.Controllers
                             {
                                 SalaryDetailsEntity salaryDetailsEntity = new SalaryDetailsEntity();
                                 salaryDetailsEntity.SalarySummaryKey = salarySummaryGuid.ToString();
-                                
+
                                 decimal salaryItemValue = Converter.ChangeType<decimal>(cellValue);
                                 string columnNameEdited = columnName;
                                 string nagetiveString = "[负值]";
@@ -1591,7 +1611,7 @@ namespace XQYC.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult SalaryListCheck(bool isOnlyPlaceHolder= true)
+        public ActionResult SalaryListCheck(bool isOnlyPlaceHolder = true)
         {
             List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
             string returnUrl = Url.Action("SalaryListPreSelector");
@@ -1637,7 +1657,7 @@ namespace XQYC.Web.Controllers
                 }
             }
 
-            List<LaborContractEntity> laborContractList= LaborContractBLL.Instance.GetList(salaryDateStart, salaryDateEnd, new Guid(enterpriseKey));
+            List<LaborContractEntity> laborContractList = LaborContractBLL.Instance.GetList(salaryDateStart, salaryDateEnd, new Guid(enterpriseKey));
             List<LaborEntity> unMatchedLaborList = new List<LaborEntity>();
             List<SalarySummaryEntity> salarySummaryList = SalarySummaryBLL.Instance.GetList(enterpriseKey, salaryDateFirstDay);
             for (int j = laborContractList.Count - 1; j >= 0; j--)

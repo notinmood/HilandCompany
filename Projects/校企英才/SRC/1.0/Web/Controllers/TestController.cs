@@ -127,5 +127,10 @@ namespace XQYC.Web.Controllers
             return File(salaryStream, ContentTypes.GetContentType("xls"), fileDownloadName);
             //DownloadHelper.Down(salaryStream,"xls", fileDownloadName);
         }
+
+        public ActionResult BootstrapDropDownTest()
+        {
+            return View();
+        }
     }
 }

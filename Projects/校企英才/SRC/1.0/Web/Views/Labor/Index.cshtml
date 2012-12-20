@@ -30,10 +30,17 @@
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "录入时间", ConditionFieldName = "UserRegisterDate", ConditionType = typeof(DateTime) });
 }
 
-<h2 style="display:inline-block">劳务人员列表</h2>
-<ul class="nav nav-tabs" style="display:inline-block;padding:2px 0 0 0;">
+<h2 style="display: inline-block">劳务人员列表</h2>
+<ul class="nav nav-tabs" style="display: inline-block; padding: 2px 0 0 0;">
     <li id="liAllData" class="active"><a href="@Url.Action("Index")">全部数据</a></li>
-    <li id="liSelftData"><a  href="@Url.Action("Index")?isSelfData=true">自我数据</a></li>
+    <li id="liSelftData" class="dropdown"><a href="#liSelftData" class="dropdown-toggle" data-toggle="dropdown">自我数据<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="@Url.Action("Index")?isSelfData=true">全部自我数据</a></li>
+            <li><a href="@Url.Action("Index")?isSelfData=true&workStatus=new">新人</a></li>
+            <li><a href="@Url.Action("Index")?isSelfData=true&workStatus=on">在职人员</a></li>
+            <li><a href="@Url.Action("Index")?isSelfData=true&workStatus=off">离职人员</a></li>
+        </ul>
+    </li>
 </ul>
 <div id="ItemListDIV">
     <div>
@@ -260,7 +267,7 @@
             $("#newDisplayA").click(function () {
                 $(".modal").width("650px");
                 var itemKey = "";
-                var url = '@Url.Action("Item")' + '?r=' + Math.random() + '&itemKey=' + itemKey + '&returnUrl='+encodeURIComponent('@currentUrl') + '&isUsingCompress=@isUsingCompress';
+                var url = '@Url.Action("Item")' + '?r=' + Math.random() + '&itemKey=' + itemKey + '&returnUrl=' + encodeURIComponent('@currentUrl') + '&isUsingCompress=@isUsingCompress';
                 $("#EditDIV").load(url);
             });
 
@@ -284,7 +291,7 @@
                 $(".modal").width("650px");
                 var itemKey = $(this).attr("itemKey");
                 $("#currentPopupItemGuid").val(itemKey);
-                var url = '@Url.Action("Item")' + '?r=' + Math.random() + '&itemKey=' + itemKey + '&returnUrl=' +encodeURIComponent('@currentUrl')+'&isUsingCompress=@isUsingCompress';
+                var url = '@Url.Action("Item")' + '?r=' + Math.random() + '&itemKey=' + itemKey + '&returnUrl=' + encodeURIComponent('@currentUrl') + '&isUsingCompress=@isUsingCompress';
                 $("#EditDIV").load(url);
             });
 
