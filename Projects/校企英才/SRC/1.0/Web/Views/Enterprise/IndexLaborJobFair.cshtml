@@ -54,12 +54,14 @@
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业状态", ConditionFieldName = "CanUsable", ConditionType = typeof(Logics) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "行业类型", ConditionFieldName = "IndustryKey", ConditionType = typeof(string), ConditionValueItems = industryTypeItemList });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所在地区", ConditionFieldName = "AreaCode", ConditionType = typeof(string), ConditionValueItems = areaItemList });
+
+    int rowNumber = 0;
 }
 
 <h2 style="display:inline-block">人才市场企业列表</h2>
 <ul class="nav nav-tabs" style="display:inline-block;padding:2px 0 0 0;">
-    <li id="liAllData" class="active"><a href="@Url.Action("Index")">全部数据</a></li>
-    <li id="liSelftData"><a  href="@Url.Action("Index")?isSelfData=true">自我数据</a></li>
+    <li id="liAllData" class="active"><a href="@Url.Action("IndexLaborJobFair")">全部数据</a></li>
+    <li id="liSelftData"><a  href="@Url.Action("IndexLaborJobFair")?isSelfData=true">自我数据</a></li>
 </ul>
 <div id="ItemListDIV">
     <div>
@@ -85,7 +87,7 @@
             <table id="MyTable" style="width: 1500px" class="grid" border="1" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
-                        <th style="width: 220px">操作
+                        <th style="width: 150px">操作
                         </th>
                         <th style="width: 220px">企业名称
                         </th>
@@ -104,22 +106,36 @@
                 <tbody>
                     @foreach (EnterpriseServiceEntity entity in Model)
                     {
+                        rowNumber++;
+                        string dropupClass = string.Empty;
+                        if (rowNumber > Model.Count - 3)
+                        {
+                            dropupClass = "dropup";
+                        }
                         string entityGuid = entity.EnterpriseGuid.ToString();
                         <tr>
                             <td>
                                 @if (entity.IsOwning == true)
                                 {
-                                    @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseGuid }) <span>|</span>
-                                    @Html.HiA().CssClassName("user").Value("<i class=\"icon-user\"></i>用户").ACA("UserList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() <span>|</span>
-                                    @Html.HiA().CssClassName("tracker").Value("<i class=\"icon-time\"></i>回访").ACA("TrackerList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()<span>|</span>
-                                    @Html.HiA().CssClassName("booth").Value("<i class=\"icon-road\"></i>摊位").ACA("BoothList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()<span>|</span>
-                                    @Html.HiA().CssClassName("AD").Value("<i class=\"icon-print\"></i>广告").ACA("ADList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()
+                                    <div class="btn-group @dropupClass" style="display:inline-block">
+                                    @Html.HiA().CssClassName("modalInput btn edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseGuid })
+                                    <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                    <li>@Html.HiA().CssClassName("user").Value("<i class=\"icon-user\"></i>用户").ACA("UserList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()</li>
+                                    <li>@Html.HiA().CssClassName("tracker").Value("<i class=\"icon-time\"></i>回访").ACA("TrackerList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()</li>
+                                    <li>@Html.HiA().CssClassName("booth").Value("<i class=\"icon-road\"></i>摊位").ACA("BoothList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()</li>
+                                    <li>@Html.HiA().CssClassName("AD").Value("<i class=\"icon-print\"></i>广告").ACA("ADList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()</li>
+                               </ul>
+                                    </div> 
                                 }
                                 else
                                 {
                                     <span>尚无操作此条数据的权限</span>
                                 }
-                            </td>
+                            
+                                        </td>
                             <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.CompanyName, 15))
                             </td>
                             <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.ContactPerson, 6))

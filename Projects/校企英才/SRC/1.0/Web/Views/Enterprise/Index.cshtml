@@ -55,12 +55,20 @@
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业状态", ConditionFieldName = "CanUsable", ConditionType = typeof(Logics) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "行业类型", ConditionFieldName = "IndustryKey", ConditionType = typeof(string), ConditionValueItems = industryTypeItemList });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所在地区", ConditionFieldName = "AreaCode", ConditionType = typeof(string), ConditionValueItems = areaItemList });
+
+    int rowNumber = 0;
 }
 
-<h2 style="display:inline-block">企业列表</h2>
-<ul class="nav nav-tabs" style="display:inline-block;padding:2px 0 0 0;">
+<h2 style="display: inline-block">企业列表</h2>
+<ul class="nav nav-tabs" style="display: inline-block; padding: 2px 0 0 0;">
     <li id="liAllData" class="active"><a href="@Url.Action("Index")">全部数据</a></li>
-    <li id="liSelftData"><a  href="@Url.Action("Index")?isSelfData=true">自我数据</a></li>
+    <li id="liSelftData" class="dropdown"><a href="#liSelftData" class="dropdown-toggle" data-toggle="dropdown">自我数据<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="@Url.Action("Index")?isSelfData=true">全部自我数据</a></li>
+            <li><a href="@Url.Action("Index")?isSelfData=true&cooperateStatus=off">未合作企业</a></li>
+            <li><a href="@Url.Action("Index")?isSelfData=true&cooperateStatus=on">已合作企业</a></li>
+        </ul>
+    </li>
 </ul>
 <div id="ItemListDIV">
     <div>
@@ -86,7 +94,7 @@
             <table id="MyTable" style="width: 3000px" class="grid" border="1" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
-                        <th style="width: 250px">操作
+                        <th style="width: 150px">操作
                         </th>
                         <th style="width: 220px">企业名称
                         </th>
@@ -131,16 +139,29 @@
                 <tbody>
                     @foreach (EnterpriseEntity entity in Model)
                     {
+                        rowNumber++;
+                        string dropupClass = string.Empty;
+                        if (rowNumber > Model.Count - 3)
+                        {
+                            dropupClass = "dropup";
+                        }
                         string entityGuid = entity.EnterpriseGuid.ToString();
                         <tr>
                             <td>
                                 @if (PermissionDataHelper.IsOwning(entity) == true)
                                 {
-                                    @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseGuid }) <span>|</span>
-                                    @Html.HiA().CssClassName("modalInput release " + @entityGuid).Value("<i class=\"icon-edit\"></i>释放").ACA("ReleaseEnterprise", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() <span>|</span>
-                                    @Html.HiA().CssClassName("user").Value("<i class=\"icon-user\"></i>用户").ACA("UserList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() <span>|</span>
-                                    @Html.HiA().CssClassName("tracker").Value("<i class=\"icon-time\"></i>回访").ACA("TrackerList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()<span>|</span>
-                                    @Html.HiA().CssClassName("service").Value("<i class=\"icon-random\"></i>合作方式").ACA("ServiceList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()
+                                    <div class="btn-group @dropupClass" style="display:inline-block">
+                                        @Html.HiA().CssClassName("modalInput btn edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseGuid }) 
+                                        <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>@Html.HiA().CssClassName("modalInput release " + @entityGuid).Value("<i class=\"icon-edit\"></i>释放").ACA("ReleaseEnterprise", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() </li>
+                                            <li>@Html.HiA().CssClassName("user").Value("<i class=\"icon-user\"></i>用户").ACA("UserList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() </li>
+                                            <li>@Html.HiA().CssClassName("tracker").Value("<i class=\"icon-time\"></i>回访").ACA("TrackerList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()</li>
+                                            <li>@Html.HiA().CssClassName("service").Value("<i class=\"icon-random\"></i>合作方式").ACA("ServiceList", "Enterprise").RouteValue(new { itemKey = @entity.EnterpriseGuid, itemName = @entity.CompanyName, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()</li>
+                                        </ul>
+                                    </div>
                                 }
                                 else
                                 {
@@ -240,7 +261,7 @@
                 $("#liSelftData").addClass("active");
                 $("#liAllData").removeClass("active");
             }
-            
+
         });
     </script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/fixTable.js")" ></script>

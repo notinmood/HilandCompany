@@ -28,6 +28,8 @@
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "工作状态", ConditionFieldName = "LaborWorkStatus", ConditionType = typeof(XQYC.Business.Enums.LaborWorkStatuses) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "录入时间", ConditionFieldName = "UserRegisterDate", ConditionType = typeof(DateTime) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "录入时间", ConditionFieldName = "UserRegisterDate", ConditionType = typeof(DateTime) });
+
+    int rowNumber = 0;
 }
 
 <h2 style="display: inline-block">劳务人员列表</h2>
@@ -72,8 +74,8 @@
             <table id="MyTable" style="width: 4000px" class="grid" border="1" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
-                        <th style="width: 250px">
-                            <input type="checkbox" class="allCheckboxSelector" />操作
+                        <th style="width: 150px">
+                            @*<input type="checkbox" class="allCheckboxSelector" />*@操作
                         </th>
                         <th style="width: 80px">人员名称
                         </th>
@@ -148,16 +150,29 @@
                 <tbody>
                     @foreach (LaborEntity entity in Model)
                     {
+                        rowNumber++;
+                        string dropupClass=string.Empty;
+                        if (rowNumber > Model.Count-3)
+                        {
+                            dropupClass = "dropup";
+                        }
                         string entityGuid = entity.UserGuid.ToString();
                         <tr>
                             <td>
                                 @if (entity.IsOwning == true)
                                 {
-                                    <input type="checkbox" name="itemCheckboxSelector" class="checkboxSelector" value="@entityGuid"   />
-                                    @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) <span>|</span>
-                                    @Html.HiA().CssClassName("modalInput password " + @entityGuid).Value("<i class=\"icon-asterisk\"></i>口令").ACA("Password", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid }) <span>|</span>
-                                    @Html.HiA().CssClassName("contract").Value("<i class=\"icon-file\"></i>合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() <span>|</span>
-                                    @Html.HiA().CssClassName("bankCard").Value("<i class=\"icon-retweet\"></i>银行账户").ACA("BankCardList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()
+                                    <input type="checkbox" name="itemCheckboxSelector" class="checkboxSelector" value="@entityGuid"/>
+                                    <div class="btn-group @dropupClass" style="display:inline-block">
+                                        @Html.HiA().CssClassName("modalInput btn edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid })
+                                        <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu" style="z-index:5">
+                                            <li>@Html.HiA().CssClassName("modalInput password " + @entityGuid).Value("<i class=\"icon-asterisk\"></i>口令").ACA("Password", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid })</li>
+                                            <li>@Html.HiA().CssClassName("contract").Value("<i class=\"icon-file\"></i>合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()</li>
+                                            <li>@Html.HiA().CssClassName("bankCard").Value("<i class=\"icon-retweet\"></i>银行账户").ACA("BankCardList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()</li>
+                                        </ul>
+                                    </div>
                                 }
                                 else
                                 {

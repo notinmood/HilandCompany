@@ -33,10 +33,11 @@ namespace XQYC.Web.Controllers
         public ActionResult Index(int id = 1)
         {
             bool isSelfData = RequestHelper.GetValue("isSelfData", false);
+            string cooperateStatus = RequestHelper.GetValue("cooperateStatus", string.Empty);
             //1.如果是点击查询控件的查询按钮，那么将查询条件作为QueryString附加在地址后面（为了在客户端保存查询条件的状体），重新发起一次请求。
             if (this.Request.HttpMethod.ToLower().Contains("post"))
             {
-                string targetUrlWithoutParam = Url.Action("Index", new { id = 1, isSelfData = isSelfData });
+                string targetUrlWithoutParam = Url.Action("Index", new { id = 1, isSelfData = isSelfData, cooperateStatus = cooperateStatus });
                 string targetUrl = QueryControlHelper.GetNewQueryUrl("QueryControl", targetUrlWithoutParam);
                 return Redirect(targetUrl);
             }
@@ -51,6 +52,18 @@ namespace XQYC.Web.Controllers
             {
                 whereClause += string.Format(" AND ManageUserKey='{0}' ", BusinessUserBLL.CurrentUserGuid);
             }
+            switch (cooperateStatus.ToLower())
+            {
+                case "on":
+                    whereClause += string.Format(" AND CooperateStatus>0 ");
+                    break;
+                case "off":
+                    whereClause += string.Format(" AND (CooperateStatus=0 OR CooperateStatus is null ) ");
+                    break;
+                default:
+                    break;
+            }
+
             string orderClause = "EnterpriseID DESC";
             whereClause += " AND " + QueryControlHelper.GetQueryCondition("QueryControl");
 
@@ -108,7 +121,7 @@ namespace XQYC.Web.Controllers
             string whereClause = string.Format(" EnterpriseServiceType={0} AND EnterpriseServiceStatus={1} ", enterpriseServiceType, (int)Logics.True);
             if (isSelfData == true)
             {
-                whereClause += string.Format(" AND ( ServiceUserGuid='{0}'  OR BusinessUserGuid='{0}' OR SettleUserGuid='{0}' ", BusinessUserBLL.CurrentUserGuid);
+                whereClause += string.Format(" AND ( ServiceUserGuid='{0}'  OR BusinessUserGuid='{0}' OR SettleUserGuid='{0}') ", BusinessUserBLL.CurrentUserGuid);
             }
             string orderClause = "EnterpriseID DESC";
             whereClause += " AND " + QueryControlHelper.GetQueryCondition("QueryControl");
