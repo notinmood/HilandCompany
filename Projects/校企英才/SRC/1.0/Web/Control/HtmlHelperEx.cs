@@ -147,7 +147,8 @@ namespace XQYC.Web.Control
                 nodeList.Add(node);
             }
 
-            List<EmployeeEntity> employeeList = EmployeeBLL.Instance.GetListBySQL("SELECT 	EMP.*,CU.* FROM XQYCEmployee EMP LEFT JOIN CoreUser CU ON EMP.UserGuid= CU.UserGuid");
+            string sqlClause = string.Format("SELECT 	EMP.*,CU.* FROM XQYCEmployee EMP LEFT JOIN CoreUser CU ON EMP.UserGuid= CU.UserGuid WHERE CU.UserStatus={0}", (int)UserStatuses.Normal);
+            List<EmployeeEntity> employeeList = EmployeeBLL.Instance.GetListBySQL(sqlClause);
             foreach (EmployeeEntity item in employeeList)
             {
                 ZTreeNodeEntity node = new ZTreeNodeEntity();

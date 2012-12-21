@@ -173,7 +173,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/20/2012 17:05:30</publishTime>
     </File>
     <File Include="bin/XQYC.Web.dll">
-      <publishTime>12/20/2012 17:05:32</publishTime>
+      <publishTime>12/20/2012 18:18:25</publishTime>
     </File>
     <File Include="Content/adminStyle.css">
       <publishTime>12/15/2012 10:42:39</publishTime>
@@ -1283,7 +1283,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/20/2012 18:02:44</publishTime>
+      <publishTime>12/20/2012 18:18:28</publishTime>
     </File>
   </ItemGroup>
 </Project>
