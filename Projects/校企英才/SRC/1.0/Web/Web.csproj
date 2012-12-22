@@ -109,6 +109,9 @@
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\..\..\..\..\..\HiLand\SRC\WebResourceCollection\bin\System.Web.Optimization.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -143,7 +146,13 @@
   <ItemGroup>
     <Compile Include="Areas\APIs\APIsAreaRegistration.cs" />
     <Compile Include="Areas\APIs\Controllers\ContactController.cs" />
+    <Compile Include="Areas\APIs\Controllers\HomeController.cs" />
+    <Compile Include="Areas\APIs\Controllers\ProductController.cs" />
     <Compile Include="Areas\APIs\Controllers\MemberController.cs" />
+    <Compile Include="Areas\APIs\Models\ApiModel.cs" />
+    <Compile Include="Areas\APIs\Models\IProductRepository.cs" />
+    <Compile Include="Areas\APIs\Models\Product.cs" />
+    <Compile Include="Areas\APIs\Models\ProductRepository.cs" />
     <Compile Include="Areas\EnterpriseConsole\Controllers\AccountController.cs" />
     <Compile Include="Areas\EnterpriseConsole\Controllers\EnterpriseController.cs" />
     <Compile Include="Areas\EnterpriseConsole\Controllers\LaborController.cs" />
@@ -482,7 +491,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\APIs\Models\" />
     <Folder Include="Areas\APIs\Views\Shared\" />
     <Folder Include="Areas\EnterpriseConsole\Models\" />
     <Folder Include="Areas\InformationBrokerConsole\Models\" />
@@ -677,6 +685,7 @@
     <Content Include="Content\twitter-bootstrap\js\README.md" />
     <Content Include="DownFiles\Templet\企业招聘简章模板.docx" />
     <Content Include="DownFiles\Soft\FirefoxSetup.zip" />
+    <Content Include="Areas\APIs\Views\Home\Help.cshtml" />
     <None Include="Properties\PublishProfiles\profile1.pubxml" />
     <Content Include="Views\Permission\Data.cshtml" />
     <Content Include="Views\FreePermission\RoleSelector.cshtml" />

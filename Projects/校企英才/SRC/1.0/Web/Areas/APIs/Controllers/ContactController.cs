@@ -53,7 +53,5 @@ namespace XQYC.Web.Areas.APIs.Controllers
         {
             return contacts.Where(item => item.Sex == sex);
         }
-
-
     }
 }

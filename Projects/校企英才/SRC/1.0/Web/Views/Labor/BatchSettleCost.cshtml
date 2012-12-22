@@ -36,9 +36,23 @@
     { 
         <table>
             <tr>
-                <td>企业担负费用类型:
+                <td>企业综合费用类型:
                 </td>
                 <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.MixCost, CostTypes.Enterprise, "EnterpriseMixCostFormularKey", Model.EnterpriseMixCostFormularKey)
+                </td>
+                <td>企业管理费类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.ManageFee, CostTypes.Enterprise, "EnterpriseManageFeeFormularKey", Model.EnterpriseManageFeeFormularKey)
+                </td>
+            </tr>
+            <tr>
+                <td>企业保险类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.Insurance, CostTypes.Enterprise, "EnterpriseInsuranceFormularKey", Model.EnterpriseInsuranceFormularKey)
+                </td>
+                 <td>企业公积金类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.ReserveFund, CostTypes.Enterprise, "EnterpriseReserveFundFormularKey", Model.EnterpriseReserveFundFormularKey)
                 </td>
             </tr>
             <tr>
@@ -46,8 +60,6 @@
                 </td>
                 <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.Insurance, CostTypes.Person, "PersonInsuranceFormularKey", Model.PersonInsuranceFormularKey)
                 </td>
-            </tr>
-            <tr>
                 <td>个人公积金类型:
                 </td>
                 <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.ReserveFund, CostTypes.Person, "PersonReserveFundFormularKey", Model.PersonReserveFundFormularKey)

@@ -287,7 +287,7 @@
             });
 
             $("#batchSettleWork").click(function () {
-                $(".modal").width("350px");
+                $(".modal").width("650px");
                 var itemKeys = JSON.stringify($("input:checked").map(function () { return $(this).val(); }).get(), null, null);
                 $("#currentPopupItemGuid").val(itemKeys);
                 var url = '@Url.Action("BatchSettleWork")' + '?r=' + Math.random() + '&itemKeys=' + itemKeys;
@@ -295,7 +295,7 @@
             });
 
             $("#batchSettleCost").click(function () {
-                $(".modal").width("350px");
+                $(".modal").width("650px");
                 var itemKeys = JSON.stringify($("input:checked").map(function () { return $(this).val(); }).get(), null, null);
                 $("#currentPopupItemGuid").val(itemKeys);
                 var url = '@Url.Action("BatchSettleCost")' + '?r=' + Math.random() + '&itemKeys=' + itemKeys;
