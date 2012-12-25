@@ -67,6 +67,7 @@ namespace XQYC.Business.DALCommon
 			    [CreateDate],
 			    [SalaryGrossPay],
 			    [SalaryRebate],
+                [SalaryRebateBeforeTax],
                 [PersonBorrow],
 			    [IsCostCalculated],
 			    [SalaryPayStatus],
@@ -120,6 +121,7 @@ namespace XQYC.Business.DALCommon
 			    {0}CreateDate,
 			    {0}SalaryGrossPay,
 			    {0}SalaryRebate,
+                {0}SalaryRebateBeforeTax,
                 {0}PersonBorrow,
 			    {0}IsCostCalculated,
 			    {0}SalaryPayStatus,
@@ -182,6 +184,7 @@ namespace XQYC.Business.DALCommon
 				[CreateDate] = {0}CreateDate,
 				[SalaryGrossPay] = {0}SalaryGrossPay,
 				[SalaryRebate] = {0}SalaryRebate,
+                [SalaryRebateBeforeTax]= {0}SalaryRebateBeforeTax,
                 [PersonBorrow] = {0}PersonBorrow,
 				[IsCostCalculated] = {0}IsCostCalculated,
 				[SalaryPayStatus] = {0}SalaryPayStatus,
@@ -250,6 +253,7 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("CreateDate",entity.CreateDate),
 			    GenerateParameter("SalaryGrossPay",entity.SalaryGrossPay),
 			    GenerateParameter("SalaryRebate",entity.SalaryRebate),
+                GenerateParameter("SalaryRebateBeforeTax",entity.SalaryRebateBeforeTax),
                 GenerateParameter("PersonBorrow",entity.PersonBorrow),
 			    GenerateParameter("IsCostCalculated",entity.IsCostCalculated),
 			    GenerateParameter("SalaryPayStatus",entity.SalaryPayStatus),
@@ -349,6 +353,10 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SalaryRebate"))
                 {
                     entity.SalaryRebate = reader.GetDecimal(reader.GetOrdinal("SalaryRebate"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SalaryRebateBeforeTax"))
+                {
+                    entity.SalaryRebateBeforeTax = reader.GetDecimal(reader.GetOrdinal("SalaryRebateBeforeTax"));
                 }
 
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonBorrow"))

@@ -16,7 +16,7 @@ namespace XQYC.Web.Areas.APIs
         {
             context.MapRoute(
                 "APIs_default",
-                "APIs/{controller}/{action}/{id}",
+                "API/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
         }

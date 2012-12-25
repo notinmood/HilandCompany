@@ -100,14 +100,21 @@ namespace XQYC.Business.BLL
         /// </summary>
         /// <param name="laborName">人员姓名</param>
         /// <param name="laborCode">劳工编号</param>
+        /// <param name="laborCardID">劳务人员身份证号</param>
         /// <param name="enterpriseKey">企业Guid信息</param>
         /// <returns></returns>
-        public LaborEntity Get(string laborName, string laborCode, string enterpriseKey)
+        public LaborEntity Get(string laborName, string laborCode,string laborCardID, string enterpriseKey)
         {
             string whereClause = string.Format(" UserNameCN='{0}' AND CurrentEnterpriseKey='{1}' ", laborName, enterpriseKey);
+            
             if (string.IsNullOrWhiteSpace(laborCode) == false)
             {
                 whereClause += string.Format(" AND LaborCode='{0}'  ", laborCode);
+            }
+
+            if (string.IsNullOrWhiteSpace(laborCardID) == false)
+            {
+                whereClause += string.Format(" AND UserCardID='{0}'  ", laborCardID);
             }
 
             List<LaborEntity> list = this.GetList(whereClause);

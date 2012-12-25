@@ -497,6 +497,7 @@
     <Folder Include="Areas\LaborConsole\Models\" />
     <Folder Include="Areas\UserCenter\Models\" />
     <Folder Include="Areas\UserCenter\Views\Shared\" />
+    <Folder Include="DownFiles\Soft\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Employee\Index.cshtml" />
@@ -684,7 +685,6 @@
     <Content Include="Areas\APIs\Views\Web.config" />
     <Content Include="Content\twitter-bootstrap\js\README.md" />
     <Content Include="DownFiles\Templet\企业招聘简章模板.docx" />
-    <Content Include="DownFiles\Soft\FirefoxSetup.zip" />
     <Content Include="Areas\APIs\Views\Home\Help.cshtml" />
     <None Include="Properties\PublishProfiles\profile1.pubxml" />
     <Content Include="Views\Permission\Data.cshtml" />

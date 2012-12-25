@@ -1378,6 +1378,7 @@ namespace XQYC.Web.Controllers
 
                         string LaborUserNameCNForSalarySummary = string.Empty;
                         string LaborUserCodeForSalarySummary = string.Empty;
+                        string LaborUserCardIDForSalarySummary = string.Empty;
 
                         Guid salarySummaryGuid = GuidHelper.NewGuid();
                         SalarySummaryEntity salarySummaryEntity = new SalarySummaryEntity();
@@ -1413,11 +1414,26 @@ namespace XQYC.Web.Controllers
                                 decimal salaryItemValue = Converter.ChangeType<decimal>(cellValue);
                                 string columnNameEdited = columnName;
                                 string nagetiveString = "[负值]";
+                                string rebateBeforTaxString = "[先扣]";
+                                string rebaseString = "[后扣]";
+                                bool isRebateBeforeTax = false;
+
                                 if (columnName.Contains(nagetiveString))
                                 {
                                     salaryItemValue = 0 - Math.Abs(salaryItemValue);
                                     columnNameEdited = columnName.Remove(columnName.IndexOf(nagetiveString), nagetiveString.Length);
+                                    if (columnName.Contains(rebateBeforTaxString))
+                                    {
+                                        columnNameEdited = columnNameEdited.Remove(columnNameEdited.IndexOf(rebateBeforTaxString), rebateBeforTaxString.Length);
+                                        isRebateBeforeTax = true;
+                                    }
+
+                                    if (columnName.Contains(rebaseString))
+                                    {
+                                        columnNameEdited = columnNameEdited.Remove(columnNameEdited.IndexOf(rebaseString), rebaseString.Length);
+                                    }
                                 }
+
                                 salaryDetailsEntity.SalaryItemKey = columnNameEdited;
 
                                 switch (propertyName)
@@ -1428,9 +1444,24 @@ namespace XQYC.Web.Controllers
                                     case "LaborCode":
                                         LaborUserCodeForSalarySummary = cellValue.ToString();
                                         break;
+                                    case "UserCardID":
+                                        LaborUserCardIDForSalarySummary = cellValue.ToString();
+                                        break;
                                     case "EnterpriseMixCost":
                                         salarySummaryEntity.EnterpriseMixCostReal = salaryItemValue;
                                         SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.EnterpriseMixCost);
+                                        break;
+                                    case "EnterpriseInsurance":
+                                        salarySummaryEntity.EnterpriseInsuranceReal = salaryItemValue;
+                                        SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.EnterpriseInsurance);
+                                        break;
+                                    case "EnterpriseReserveFund":
+                                        salarySummaryEntity.EnterpriseReserveFundReal = salaryItemValue;
+                                        SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.EnterpriseReserveFund);
+                                        break;
+                                    case "EnterpriseManageFee":
+                                        salarySummaryEntity.EnterpriseManageFeeReal = salaryItemValue;
+                                        SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.EnterpriseManageFee);
                                         break;
                                     case "PersonMixCost":
                                         salarySummaryEntity.PersonMixCostReal = salaryItemValue;
@@ -1464,7 +1495,15 @@ namespace XQYC.Web.Controllers
                                         }
                                         else
                                         {
-                                            salarySummaryEntity.SalaryRebate += salaryItemValue;
+                                            if (isRebateBeforeTax == true)
+                                            {
+                                                salarySummaryEntity.SalaryRebateBeforeTax += salaryItemValue;
+                                            }
+                                            else
+                                            {
+                                                salarySummaryEntity.SalaryRebate += salaryItemValue;
+                                            }
+
                                             SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.Rebate);
                                         }
                                         break;
@@ -1475,7 +1514,7 @@ namespace XQYC.Web.Controllers
                         if (string.IsNullOrWhiteSpace(LaborUserNameCNForSalarySummary))
                         {
                             userCountFailure++;
-                            userListFailure += string.Format("{0}({1}({2})请确认此用户的用户名称不可以为空), <br />", dataRowNumberInExcel, LaborUserNameCNForSalarySummary, LaborUserCodeForSalarySummary);
+                            userListFailure += string.Format("{0}({1}({2})({3})请确认此用户的用户名称不可以为空), <br />", dataRowNumberInExcel, LaborUserNameCNForSalarySummary, LaborUserCodeForSalarySummary, LaborUserCardIDForSalarySummary);
                             //物理删除掉已经插入的无效的salaryDetails数据
                             SalaryDetailsBLL.Instance.DeleteList(salarySummaryEntity.SalarySummaryGuid);
                         }
@@ -1483,7 +1522,7 @@ namespace XQYC.Web.Controllers
                         {
                             //根据人员姓名和工号，确认劳务人员的UserGuid
                             bool isMatchedLabor = false;
-                            LaborEntity laborEntity = LaborBLL.Instance.Get(LaborUserNameCNForSalarySummary, LaborUserCodeForSalarySummary, enterpriseGuid.ToString());
+                            LaborEntity laborEntity = LaborBLL.Instance.Get(LaborUserNameCNForSalarySummary, LaborUserCodeForSalarySummary, LaborUserCardIDForSalarySummary, enterpriseGuid.ToString());
                             if (laborEntity.IsEmpty)
                             {
                                 isMatchedLabor = false;
@@ -1537,7 +1576,7 @@ namespace XQYC.Web.Controllers
                             else
                             {
                                 userCountFailure++;
-                                userListFailure += string.Format("{0}({1}({2})请确认此用户的用户名称和工号是否跟系统内的数据一致), <br />", dataRowNumberInExcel, LaborUserNameCNForSalarySummary, LaborUserCodeForSalarySummary);
+                                userListFailure += string.Format("{0}({1}({2})({3})请确认此用户的用户名称、工号和身份证号是否跟系统内的数据一致), <br />", dataRowNumberInExcel, LaborUserNameCNForSalarySummary, LaborUserCodeForSalarySummary, LaborUserCardIDForSalarySummary);
                                 //物联删除掉已经插入的无效的salaryDetails数据
                                 SalaryDetailsBLL.Instance.DeleteList(salarySummaryEntity.SalarySummaryGuid);
                             }
@@ -1633,28 +1672,28 @@ namespace XQYC.Web.Controllers
             DateTime salaryDateStart = DateTime.Today;
             DateTime salaryDateEnd = DateTime.Today;
 
+            if (string.IsNullOrWhiteSpace(salaryMonth))
+            {
+                SystemStatusInfo itemError = new SystemStatusInfo();
+                itemError.SystemStatus = SystemStatuses.Warnning;
+                itemError.Message = "你没有选定薪资月份，请选择。";
+                infoList.Add(itemError);
+                this.TempData.Add("OperationResultData", infoList);
+                return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+            }
+            else
+            {
+                salaryMonth = HttpUtility.UrlDecode(salaryMonth);
+                string salaryDateString = salaryMonth + "/1";
+                salaryDateFirstDay = DateTimeHelper.Parse(salaryDateString, DateFormats.YMD);
+            }
+
             salaryDateStart = RequestHelper.GetValue<DateTime>("JobingDateStart", DateTimeHelper.Min);
             salaryDateEnd = RequestHelper.GetValue<DateTime>("JobingDateEnd", DateTimeHelper.Min);
             if (salaryDateStart == DateTimeHelper.Min && salaryDateEnd == DateTimeHelper.Min)
             {
-                if (string.IsNullOrWhiteSpace(salaryMonth))
-                {
-                    SystemStatusInfo itemError = new SystemStatusInfo();
-                    itemError.SystemStatus = SystemStatuses.Warnning;
-                    itemError.Message = "你没有选定薪资月份，请选择。";
-                    infoList.Add(itemError);
-                    this.TempData.Add("OperationResultData", infoList);
-                    return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
-                }
-                else
-                {
-                    salaryMonth = HttpUtility.UrlDecode(salaryMonth);
-                    string salaryDateString = salaryMonth + "/1";
-                    salaryDateFirstDay = DateTimeHelper.Parse(salaryDateString, DateFormats.YMD);
-
-                    salaryDateStart = DateTimeHelper.GetFirstDateOfMonth(salaryDateFirstDay);
-                    salaryDateEnd = DateTimeHelper.GetLastDateOfMonth(salaryDateFirstDay);
-                }
+                salaryDateStart = DateTimeHelper.GetFirstDateOfMonth(salaryDateFirstDay);
+                salaryDateEnd = DateTimeHelper.GetLastDateOfMonth(salaryDateFirstDay);
             }
 
             List<LaborContractEntity> laborContractList = LaborContractBLL.Instance.GetList(salaryDateStart, salaryDateEnd, new Guid(enterpriseKey));
@@ -1683,7 +1722,7 @@ namespace XQYC.Web.Controllers
             {
                 SystemStatusInfo statusItem = new SystemStatusInfo();
                 statusItem.SystemStatus = SystemStatuses.Success;
-                statusItem.Message = "实付人员数量与应付人员数量相同！";
+                statusItem.Message = "没有应付而未付的人员！";
                 infoList.Add(statusItem);
                 this.TempData.Add("OperationResultData", infoList);
                 return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });

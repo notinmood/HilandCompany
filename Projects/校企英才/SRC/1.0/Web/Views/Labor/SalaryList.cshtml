@@ -65,15 +65,13 @@
                     <tr>
                         <th style="width: 120px">操作
                         </th>
-                         <th style="width: 60px">姓名
+                        <th style="width: 60px">姓名
                         </th>
                         <th style="width: 80px">工号
                         </th>
                         <th style="width: 60px">账期
                         </th>
                         <th style="width: 80px">校验状态
-                        </th>
-                        <th style="width: 80px">付款状态
                         </th>
                         <th style="width: 120px">银行账号
                         </th>
@@ -123,10 +121,42 @@
                         string entityGuid = entity.SalarySummaryGuid.ToString();
                         decimal salaryGrossPay = entity.SalaryGrossPay;
                         decimal salaryrebate = entity.SalaryRebate;
+
+                        bool isCheckOk = true;
+                        if (entity.EnterpriseManageFeeCalculated != entity.EnterpriseManageFeeReal)
+                        {
+                            isCheckOk = false;
+                        }
+
+                        if (entity.EnterpriseInsuranceCalculated != entity.EnterpriseInsuranceReal)
+                        {
+                            isCheckOk = false;
+                        }
+
+                        if (entity.EnterpriseMixCostCalculated != entity.EnterpriseMixCostReal)
+                        {
+                            isCheckOk = false;
+                        }
+
+                        if (entity.EnterpriseReserveFundCalculated != entity.EnterpriseReserveFundReal)
+                        {
+                            isCheckOk = false;
+                        }
+
+                        if (entity.PersonInsuranceCalculated != entity.PersonInsuranceReal)
+                        {
+                            isCheckOk = false;
+                        }
+
+                        if (entity.PersonReserveFundCalculated != entity.PersonReserveFundReal)
+                        {
+                            isCheckOk = false;
+                        }
+                        
                         <tr>
                             <td>
                                 @Html.HiA().CssClassName("salaryDetailsList").Value("<i class=\"icon-align-justify\"></i>详情").ACA("SalaryDetailsList", "Labor").RouteValue(new { itemKey = entity.SalarySummaryGuid, returnUrl = currentUrl }).Render()
-                                @Html.HiA().CssClassName("modalInput salaryCalculateFix "  + @entityGuid).Value("<i class=\"icon-pencil\"></i>修正").ACA("SalaryCalculateFix", "Labor").Render(new { rel = "#EditDIV", itemKey = entity.SalarySummaryGuid })
+                                @Html.HiA().CssClassName("modalInput salaryCalculateFix " + @entityGuid).Value("<i class=\"icon-pencil\"></i>修正").ACA("SalaryCalculateFix", "Labor").Render(new { rel = "#EditDIV", itemKey = entity.SalarySummaryGuid })
                             </td>
                             <td>@entity.LaborName
                             </td>
@@ -137,10 +167,14 @@
                                 @entity.SalaryDate.ToString("yyyyMM")
                             </td>
                             <td>
-                                @EnumHelper.GetDisplayValue(entity.IsCheckPast)
-                            </td>
-                            <td>
-                                @EnumHelper.GetDisplayValue(entity.SalaryPayStatus)
+                                @if (isCheckOk == true)
+                                { 
+                                <span class="checkSpan">通过</span>
+                                }
+                                else
+                                {
+                                <span class="checkSpan">未通过</span>
+                                }
                             </td>
                             <td>@entity.Labor.CurrentBankAccountNumber
                             </td>
@@ -239,6 +273,13 @@
                 $("#currentPopupItemGuid").val(itemKey);
                 var url = $.UrlUtil('@Url.Action("salaryCalculateFix")').concat("itemKey", itemKey).show(true);
                 $("#EditDIV").load(url);
+            });
+
+            $(".checkSpan").each(function (i,element) {
+                if ($(this).text() == "未通过")
+                {
+                    $(this).parents("tr").css({"backgroundColor":"#c00"});
+                }
             });
         });
     </script>

@@ -124,12 +124,25 @@ namespace XQYC.Business.Entity
         /// 各种费用扣减（各种罚款等，不包括保险公积金等）
         /// </summary>
         /// <remarks>
-        /// 扣减的各种费用直接用负值表示
+        /// 扣减的各种费用直接用负值表示;税后扣减的扣费项目
         /// </remarks>
         public decimal SalaryRebate
         {
             get { return salaryRebate; }
             set { salaryRebate = value; }
+        }
+
+        private decimal salaryRebateBeforeTax;
+        /// <summary>
+        /// 各种费用扣减（各种罚款等，不包括保险公积金等）
+        /// </summary>
+        /// <remarks>
+        /// 扣减的各种费用直接用负值表示；税前扣减的扣费项目
+        /// </remarks>
+        public decimal SalaryRebateBeforeTax
+        {
+            get { return salaryRebateBeforeTax; }
+            set { salaryRebateBeforeTax = value; }
         }
 
         /// <summary>
@@ -139,7 +152,7 @@ namespace XQYC.Business.Entity
         {
             get
             {
-                return SalaryGrossPay;
+                return SalaryGrossPay + SalaryRebateBeforeTax;
             }
         }
 

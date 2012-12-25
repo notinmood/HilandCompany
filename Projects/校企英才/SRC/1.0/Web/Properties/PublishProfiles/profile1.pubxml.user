@@ -10,6 +10,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <TimeStampOfAssociatedLegacyPublishXmlFile />
   </PropertyGroup>
   <ItemGroup>
+    <File Include="Areas/APIs/Views/Home/Help.cshtml">
+      <publishTime>12/21/2012 11:09:18</publishTime>
+    </File>
     <File Include="Areas/APIs/Views/Web.config">
       <publishTime>10/31/2012 10:56:43</publishTime>
     </File>
@@ -157,6 +160,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/System.Web.Mvc.dll">
       <publishTime>07/10/2012 21:51:54</publishTime>
     </File>
+    <File Include="bin/System.Web.Optimization.dll">
+      <publishTime>10/03/2012 22:58:26</publishTime>
+    </File>
     <File Include="bin/System.Web.Razor.dll">
       <publishTime>07/10/2012 21:53:02</publishTime>
     </File>
@@ -173,7 +179,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/20/2012 17:05:30</publishTime>
     </File>
     <File Include="bin/XQYC.Web.dll">
-      <publishTime>12/20/2012 18:18:25</publishTime>
+      <publishTime>12/25/2012 09:03:50</publishTime>
     </File>
     <File Include="Content/adminStyle.css">
       <publishTime>12/15/2012 10:42:39</publishTime>
@@ -1154,10 +1160,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/17/2012 18:39:18</publishTime>
     </File>
     <File Include="Views/Labor/BatchSettleCost.cshtml">
-      <publishTime>12/18/2012 16:54:43</publishTime>
+      <publishTime>12/22/2012 16:03:03</publishTime>
     </File>
     <File Include="Views/Labor/BatchSettleWork.cshtml">
-      <publishTime>12/18/2012 16:55:02</publishTime>
+      <publishTime>12/22/2012 16:02:22</publishTime>
     </File>
     <File Include="Views/Labor/ContractItem.cshtml">
       <publishTime>12/18/2012 16:38:15</publishTime>
@@ -1169,7 +1175,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/08/2012 15:10:24</publishTime>
     </File>
     <File Include="Views/Labor/Index.cshtml">
-      <publishTime>12/20/2012 13:54:15</publishTime>
+      <publishTime>12/22/2012 15:57:45</publishTime>
     </File>
     <File Include="Views/Labor/Item.cshtml">
       <publishTime>12/18/2012 16:55:24</publishTime>
@@ -1190,7 +1196,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/18/2012 17:45:05</publishTime>
     </File>
     <File Include="Views/Labor/SalaryList.cshtml">
-      <publishTime>12/18/2012 09:58:03</publishTime>
+      <publishTime>12/22/2012 16:09:05</publishTime>
     </File>
     <File Include="Views/Labor/SalaryListCheck.cshtml">
       <publishTime>12/18/2012 10:07:24</publishTime>
@@ -1283,7 +1289,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/20/2012 18:18:28</publishTime>
+      <publishTime>12/25/2012 09:03:56</publishTime>
     </File>
   </ItemGroup>
 </Project>
