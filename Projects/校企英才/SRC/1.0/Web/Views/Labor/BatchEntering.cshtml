@@ -31,7 +31,7 @@
             padding: 0;
         }
 </style>
-@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", name = "myForm", id = "myForm" }))
 { 
     <table>
         <tr>
@@ -45,8 +45,11 @@
                 <input type="file" name="fileSelector" /></td>
         </tr>
     </table>
-    <input type="submit" class="btn btn-warning" value="导入" />
+    <input type="submit" name="submitButton" id="submitButton" rel="#EditDIV" class="modalInput btn btn-warning" value="导入" />
 }
+<div class="modal modalFix" id="EditDIV">
+    数据导入中请等待
+</div>
 <p>（说明：导入数据的Excel模板，请到“设置/模板下载”内获取）</p>
 
 <script type="text/javascript">
@@ -54,5 +57,21 @@
         $("#aLaborBasicSection").click();
         $("#aLaborBasicSection").addClass("current");
         $("#aBatchEntering").addClass("current");
+
+        $(".modalInput").overlay({
+            mask: {
+                color: '#ebecff',
+                loadSpeed: 200,
+                opacity: 0.9
+            },
+            closeOnClick: false,
+            onBeforeLoad: function () {
+                return confirm("是否将数据导入系统（一旦导入无法撤回）?");
+            }
+        });
+
+        $("#submitButton").click(function () {
+            $("#myForm").submit();
+        })
     });
 </script>
