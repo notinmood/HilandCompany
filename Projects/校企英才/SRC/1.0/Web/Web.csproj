@@ -207,6 +207,7 @@
     <Content Include="Content\adminStyle.css" />
     <Content Include="Content\Images\checkbox-partial.png" />
     <Content Include="Content\Images\checkbox-unchecked.png" />
+    <Content Include="Content\Images\Loading.gif" />
     <Content Include="Content\Images\notepad.png" />
     <Content Include="Content\manageImages\bg-menu-item-orange.png" />
     <Content Include="Content\manageImages\bg-menu-item-orange1.png" />
