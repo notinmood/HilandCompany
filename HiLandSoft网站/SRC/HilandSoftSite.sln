@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HilandSoftSiteWeb", "HilandSoftSiteWeb\HilandSoftSiteWeb.csproj", "{B2681390-01B0-4D4F-AFBF-8D839671DC5C}"
 EndProject
 Global

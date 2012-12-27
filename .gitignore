@@ -30,3 +30,6 @@ TestResults
 DataNeedImported/
 EnterpriseJobs/
 Upload/
+backup/
+upgradereport*.*
+upgradelog*.*
