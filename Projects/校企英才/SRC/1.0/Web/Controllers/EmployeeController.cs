@@ -83,7 +83,7 @@ namespace XQYC.Web.Controllers
             string displayMessage = string.Empty;
 
             EmployeeEntity targetEntity = null;
-            if (string.IsNullOrWhiteSpace(keyGuid))
+            if (GuidHelper.IsInvalidOrEmpty(keyGuid))
             {
                 targetEntity = new EmployeeEntity();
                 SetTargetEntityValue(entity, ref targetEntity);
