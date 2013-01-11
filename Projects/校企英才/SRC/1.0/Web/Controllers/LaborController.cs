@@ -1582,8 +1582,22 @@ namespace XQYC.Web.Controllers
                             }
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        //try
+                        //{
+                        //    BusinessLogEntity log = new BusinessLogEntity();
+                        //    log.LogCategory = "BatchSalaryImport";
+                        //    log.LogMessage = ExceptionHelper.GetExceptionMessage(ex);
+                        //    log.LogDate = DateTime.Now;
+
+                        //    BusinessLogBLL.Instance.Create(log);
+                        //}
+                        //catch 
+                        //{ 
+                        //    //do nothing;
+                        //}
+
                         userCountFailure++;
                         userListFailure += i + ", ";
                     }

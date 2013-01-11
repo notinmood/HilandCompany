@@ -33,13 +33,15 @@
         <tr>
             <td style="width: 250px;">移交人:@HtmlHelperEx.XQYCEmployeeChooser(Html, "SourceUser", "", "")
             </td>
-            <td>目标人:@HtmlHelperEx.XQYCEmployeeChooser(Html, "TargetUser", "", "")
+            <td style="width: 250px;">目标人:@HtmlHelperEx.XQYCEmployeeChooser(Html, "TargetUser", "", "") </td>
+                <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.17.custom.min.js")"></script>   
+            <td> 企业<i class="icon-comment" title="自动完成功能：当在输入框中输入2个字符后，系统就会查询符合条件的数据。请从下拉列表中选择目标信息。"></i>:@HtmlHelperEx.XQYCAutoCompleteEnterprise(Html, "EnterpriseName") 
             </td>
         </tr>
         <tr>
             <td>劳务人员信息:
             </td>
-            <td>
+            <td colspan="2">
                 <div style="display: inline-block">
                     <input type="checkbox" id="cbxLaborServiceUser" name="cbxLaborServiceUser" /><label style="display: inline" for="cbxLaborServiceUser">客服人员</label>
                     <input type="checkbox" id="cbxLaborBusinessUser" name="cbxLaborBusinessUser" /><label style="display: inline" for="cbxLaborBusinessUser">业务人员</label>
@@ -53,7 +55,7 @@
         <tr>
             <td>企业信息:
             </td>
-            <td>
+            <td colspan="2">
                 <input type="checkbox" id="cbxEnterpriseManageUser" name="cbxEnterpriseManageUser" /><label style="display: inline" for="cbxEnterpriseManageUser">负责人</label>
                 <input type="checkbox" id="cbxEnterpriseServiceUser" name="cbxEnterpriseServiceUser" /><label style="display: inline" for="cbxEnterpriseServiceUser">客服人员</label>
                 <input type="checkbox" id="cbxEnterpriseBusinessUser" name="cbxEnterpriseBusinessUser" /><label style="display: inline" for="cbxEnterpriseBusinessUser">业务人员</label>
@@ -66,7 +68,7 @@
         <tr>
             <td>信息员:
             </td>
-            <td>
+            <td colspan="2">
                 <input type="checkbox" id="cbxInformationBrokerServiceUser" name="cbxInformationBrokerServiceUser" /><label style="display: inline" for="cbxInformationBrokerServiceUser">客服人员</label>
                 <input type="checkbox" id="cbxInformationBrokerBusinessUser" name="cbxInformationBrokerBusinessUser" /><label style="display: inline" for="cbxInformationBrokerBusinessUser">业务人员</label>
                 <input type="checkbox" id="cbxInformationBrokerSettleUser" name="cbxInformationBrokerSettleUser" /><label style="display: inline" for="cbxInformationBrokerSettleUser">安置人员</label>
