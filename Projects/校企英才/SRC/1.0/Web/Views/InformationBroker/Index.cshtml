@@ -17,6 +17,12 @@
 @{
     ViewBag.Title = "Index";
     string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+    bool isUsingCompress = false;
+    if (currentUrl.Length > 512)
+    {
+        isUsingCompress = true;
+        currentUrl = CompressHelper.Compress(currentUrl);
+    }
 
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "信息员名称", ConditionFieldName = "InformationBrokerName", ConditionType = typeof(string) });
@@ -38,7 +44,7 @@
     </div>
     <table width="98%" class="grid">
         <tr>
-            <th style="width: 120px">操作
+            <th style="width: 150px">操作
             </th>
             <th style="width: 80px">信息员名称
             </th>
@@ -65,7 +71,8 @@
             <tr>
                 <td>
                     @Html.HiA().CssClassName("modalInput edit " + @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "InformationBroker").Render(new { rel = "#EditDIV", itemKey = @entity.InformationBrokerGuid }) | 
-                    @Html.HiA().CssClassName("modalInput user " + @entityGuid).Value("<i class=\"icon-user\"></i>用户").ACA("UserList", "InformationBroker").RouteValue(new { itemKey = @entity.InformationBrokerGuid, returnUrl = currentUrl }).Render() 
+                    @Html.HiA().CssClassName("modalInput user " + @entityGuid).Value("<i class=\"icon-user\"></i>用户").ACA("UserList", "InformationBroker").RouteValue(new { itemKey = @entity.InformationBrokerGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() 
+                    @Html.HiA().CssClassName("modalInput delete " + @entityGuid).Value("<i class=\"icon-remove\"></i>删除").ACA("Delete", "InformationBroker").RouteValue(new { itemKey = @entity.InformationBrokerGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()
                 </td>
                 <td>@entity.InformationBrokerName
                 </td>

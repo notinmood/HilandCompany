@@ -15,6 +15,14 @@
 @{
     ViewBag.Title = "Index";
 
+    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+    bool isUsingCompress = false;
+    if (currentUrl.Length > 512)
+    {
+        isUsingCompress = true;
+        currentUrl = CompressHelper.Compress(currentUrl);
+    }
+
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "人员名称,账号", ConditionFieldName = "UserNameCN,UserName", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "状态", ConditionFieldName = "UserStatus", ConditionType = typeof(UserStatuses) });
@@ -34,7 +42,7 @@
     </div>
     <table width="98%" class="grid">
         <tr>
-            <th style="width: 350px">操作
+            <th style="width: 420px">操作
             </th>
             <th style="width: 120px">账号
             </th>
@@ -55,7 +63,8 @@
                     @Html.HiA().CssClassName("modalInput role "+ @entityGuid).Value("<i class=\"icon-th-large\"></i>角色").ACA("RoleSelector", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) | 
                     @Html.HiA().CssClassName("modalInput permissionData "+ @entityGuid).Value("<i class=\"icon-ban-circle\"></i>数据权限").ACA("PermissionData", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) | 
                     @Html.HiA().CssClassName("modalInput permissionAllow "+ @entityGuid).Value("<i class=\"icon-ok-circle\"></i>允许权限").ACA("PermissionAllow", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) | 
-                    @Html.HiA().CssClassName("modalInput permissionDeny "+ @entityGuid).Value("<i class=\"icon-remove-circle\"></i>拒绝权限").ACA("PermissionDeny", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN })
+                    @Html.HiA().CssClassName("modalInput permissionDeny "+ @entityGuid).Value("<i class=\"icon-remove-circle\"></i>拒绝权限").ACA("PermissionDeny", "Employee").Render(new { rel = "#EditDIV", itemGuid = @entity.UserGuid, itemName = @entity.UserNameCN }) |
+                    @Html.HiA().CssClassName("modalInput delete " + @entityGuid).Value("<i class=\"icon-remove\"></i>删除").ACA("Delete", "Employee").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() 
                 </td>
                 <td>@entity.UserName
                 </td>

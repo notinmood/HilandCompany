@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using HiLand.Framework.BusinessCore.BLL;
 using HiLand.Framework.BusinessCore.Enum;
 using HiLand.Framework4.Permission.Attributes;
 using HiLand.Utility.Data;
@@ -138,6 +139,31 @@ namespace XQYC.Web.Controllers
 
             targetEntity.UserSex = originalEntity.UserSex;
             targetEntity.UserTitle = originalEntity.UserTitle;
+        }
+
+        /// <summary>
+        /// 删除员工
+        /// </summary>
+        /// <param name="itemKey"></param>
+        /// <returns></returns>
+        public ActionResult Delete(string itemKey)
+        {
+            if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
+            {
+                bool isSuccessful = EmployeeBLL.Instance.Delete(itemKey); 
+               if (isSuccessful == true)
+               {
+                   BusinessUserBLL.DeleteUser(GuidHelper.TryConvert(itemKey));
+               }
+            }
+
+            string url = RequestHelper.GetValue("returnUrl");
+            bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
+            if (isUsingCompress == true)
+            {
+                url = CompressHelper.Decompress(url);
+            }
+            return Redirect(url);
         }
 
         /// <summary>

@@ -10,6 +10,14 @@
 @model List<BusinessDepartment>
 @{
     ViewBag.Title = "部门基本信息";
+
+    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+    bool isUsingCompress = false;
+    if (currentUrl.Length > 512)
+    {
+        isUsingCompress = true;
+        currentUrl = CompressHelper.Compress(currentUrl);
+    }
 }
 
 <h2>部门基本信息</h2>
@@ -19,7 +27,7 @@
     </div>
     <table width="98%" class="grid">
         <tr>
-            <th style="width: 150px">操作
+            <th style="width: 200px">操作
             </th>
             <th style="width: 120px">部门名称
             </th>
@@ -39,7 +47,8 @@
                 <td>
                     @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("Item", "Department").Render(new { rel = "#EditDIV", itemKey = @entity.DepartmentGuid }) | 
                     @Html.HiA().CssClassName("modalInput newSub "+ @entityGuid).Value("<i class=\"icon-indent-left\"></i>子部门").ACA("Item", "Department").Render(new { rel = "#EditDIV", parentKey = @entity.DepartmentGuid }) | 
-                    @Html.HiA().CssClassName("modalInput permission "+ @entityGuid).Value("<i class=\"icon-ok-circle\"></i>权限").ACA("Permission", "Department").Render(new { rel = "#EditDIV", itemGuid = @entity.DepartmentGuid, itemName = @entity.DepartmentName })
+                    @Html.HiA().CssClassName("modalInput permission "+ @entityGuid).Value("<i class=\"icon-ok-circle\"></i>权限").ACA("Permission", "Department").Render(new { rel = "#EditDIV", itemGuid = @entity.DepartmentGuid, itemName = @entity.DepartmentName }) |
+                    @Html.HiA().CssClassName("modalInput delete " + @entityGuid).Value("<i class=\"icon-remove\"></i>删除").ACA("Delete", "Department").RouteValue(new { itemKey = @entity.DepartmentGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() 
                 </td>
                 <td>@Html.Raw(StringHelper.Repeate(">", entity.DepartmentLevel) + entity.DepartmentName)
                 </td>

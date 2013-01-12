@@ -223,10 +223,10 @@ namespace XQYC.Web.Controllers
             else
             {
                 List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
-                SystemStatusInfo itemSuccessful = new SystemStatusInfo();
-                itemSuccessful.SystemStatus = SystemStatuses.Failuer;
-                itemSuccessful.Message = string.Format("{0}", displayMessage);
-                infoList.Add(itemSuccessful);
+                SystemStatusInfo itemStatus = new SystemStatusInfo();
+                itemStatus.SystemStatus = SystemStatuses.Failuer;
+                itemStatus.Message = string.Format("{0}", displayMessage);
+                infoList.Add(itemStatus);
 
                 this.TempData.Add("OperationResultData", infoList);
                 return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
@@ -306,11 +306,22 @@ namespace XQYC.Web.Controllers
             targetEntity.SettleUserGuid = RequestHelper.GetValue<Guid>("SettleUser_Value");
         }
 
-
-        //public ActionResult DeleteItem(string itemKey)
-        //{
-        //    LaborBLL.Instance.Delete(itemKey);
-        //}
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="itemKey"></param>
+        /// <returns></returns>
+        public ActionResult Delete(string itemKey)
+        {
+            LaborBLL.Instance.Delete(itemKey);
+            string url = RequestHelper.GetValue("returnUrl");
+            bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
+            if (isUsingCompress == true)
+            {
+                url = CompressHelper.Decompress(url);
+            }
+            return Redirect(url);
+        }
 
         /// <summary>
         /// 劳务人员批量录入

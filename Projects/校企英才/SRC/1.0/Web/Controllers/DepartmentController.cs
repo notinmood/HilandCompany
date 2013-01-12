@@ -54,25 +54,20 @@ namespace XQYC.Web.Controllers
             string displayMessage = string.Empty;
 
             BusinessDepartment department = null;
-            if (string.IsNullOrWhiteSpace(keyGuid))
+            if (GuidHelper.IsInvalidOrEmpty(keyGuid))
             {
                 department = new BusinessDepartment();
                 department.DepartmentGuid = GuidHelper.NewGuid();
                 department.DepartmentParentGuid = Converter.TryToGuid(parentKey);
-
                 SetTargetEntityValue(entity, ref department);
-
                 isSuccessful = BusinessDepartmentBLL.Instance.Create(department);
             }
             else
             {
                 department = BusinessDepartmentBLL.Instance.Get(keyGuid);
-
                 SetTargetEntityValue(entity,ref department);
-
                 isSuccessful = BusinessDepartmentBLL.Instance.Update(department);
             }
-
 
             if (isSuccessful == true)
             {
@@ -110,5 +105,21 @@ namespace XQYC.Web.Controllers
             return RedirectToAction("Index", "Permission", new { ownerGuid = departmentGuid, ownerName = departmentName, ownerType = ExecutorTypes.Department, permissionMode = PermissionModes.Allow, returenUrl = returnUrl });
         }
 
+        /// <summary>
+        /// 删除部门
+        /// </summary>
+        /// <param name="itemKey"></param>
+        /// <returns></returns>
+        public ActionResult Delete(string itemKey)
+        {
+            BusinessDepartmentBLL.Instance.Delete(itemKey);
+            string url = RequestHelper.GetValue("returnUrl");
+            bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
+            if (isUsingCompress == true)
+            {
+                url = CompressHelper.Decompress(url);
+            }
+            return Redirect(url);
+        }
     }
 }

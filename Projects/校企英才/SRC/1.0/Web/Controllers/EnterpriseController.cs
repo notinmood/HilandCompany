@@ -221,8 +221,23 @@ namespace XQYC.Web.Controllers
             {
                 returnUrl = CompressHelper.Decompress(returnUrl);
             }
-            return Redirect(returnUrl);
-            //return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+
+            if (isSuccessful == true)
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
+                SystemStatusInfo itemStatus = new SystemStatusInfo();
+                itemStatus.SystemStatus = SystemStatuses.Failuer;
+                itemStatus.Message = string.Format("{0}", displayMessage);
+                infoList.Add(itemStatus);
+
+                this.TempData.Add("OperationResultData", infoList);
+                return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+                //return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+            }
         }
 
         /// <summary>
@@ -283,6 +298,23 @@ namespace XQYC.Web.Controllers
         public ActionResult ReleaseEnterprise(string itemKey)
         {
             EnterpriseBLL.Instance.ReleaseEnterprise(GuidHelper.TryConvert(itemKey));
+            string url = RequestHelper.GetValue("returnUrl");
+            bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
+            if (isUsingCompress == true)
+            {
+                url = CompressHelper.Decompress(url);
+            }
+            return Redirect(url);
+        }
+
+        /// <summary>
+        /// 删除企业
+        /// </summary>
+        /// <param name="itemKey"></param>
+        /// <returns></returns>
+        public ActionResult DeleteEnterprise(string itemKey)
+        {
+            EnterpriseBLL.Instance.Delete(itemKey);
             string url = RequestHelper.GetValue("returnUrl");
             bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
             if (isUsingCompress == true)

@@ -249,6 +249,23 @@ namespace XQYC.Web.Controllers
         }
 
         /// <summary>
+        /// 删除信息员
+        /// </summary>
+        /// <param name="itemKey"></param>
+        /// <returns></returns>
+        public ActionResult Delete(string itemKey)
+        {
+            InformationBrokerBLL.Instance.Delete(itemKey);
+            string url = RequestHelper.GetValue("returnUrl");
+            bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
+            if (isUsingCompress == true)
+            {
+                url = CompressHelper.Decompress(url);
+            }
+            return Redirect(url);
+        }
+
+        /// <summary>
         /// 信息员自动完成的数据
         /// </summary>
         /// <returns></returns>
