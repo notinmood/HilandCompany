@@ -306,6 +306,12 @@ namespace XQYC.Web.Controllers
             targetEntity.SettleUserGuid = RequestHelper.GetValue<Guid>("SettleUser_Value");
         }
 
+
+        //public ActionResult DeleteItem(string itemKey)
+        //{
+        //    LaborBLL.Instance.Delete(itemKey);
+        //}
+
         /// <summary>
         /// 劳务人员批量录入
         /// </summary>

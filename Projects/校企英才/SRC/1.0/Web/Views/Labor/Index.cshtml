@@ -31,7 +31,6 @@
 
     int rowNumber = 0;
 }
-
 <h2 style="display: inline-block">劳务人员列表</h2>
 <ul class="nav nav-tabs" style="display: inline-block; padding: 2px 0 0 0;">
     <li id="liAllData" class="active"><a href="@Url.Action("Index")">全部数据</a></li>
@@ -152,7 +151,7 @@
                     {
                         rowNumber++;
                         string dropupClass=string.Empty;
-                        if (rowNumber > Model.Count-3)
+                        if (Model.Count>3 && rowNumber > Model.Count-3)
                         {
                             dropupClass = "dropup";
                         }
@@ -248,6 +247,13 @@
                             <td>@entity.Memo5
                             </td>
                         </tr>   
+                    }
+
+                    @if (Model.Count < 4)
+                    { 
+                        <tr></tr>
+                        <tr></tr>
+                        <tr></tr>
                     }
                 </tbody>
             </table>

@@ -210,5 +210,24 @@ namespace XQYC.Business.BLL
             result = base.GetListBySQL(sqlClause);
             return result;
         }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="modelID"></param>
+        /// <returns></returns>
+        public override bool Delete(string modelID)
+        {
+            bool isSuccessful = base.Delete(modelID);
+            if (isSuccessful == true)
+            { 
+                //TODO:xieran20130112 如果删除劳务人员成功，那么其对应的其他信息（工资等）均需要删除
+                if (GuidHelper.IsInvalidOrEmpty(modelID) == false)
+                {
+                    BusinessUserBLL.DeleteUser(GuidHelper.TryConvert(modelID));
+                }
+            }
+            return isSuccessful;
+        }
     }
 }

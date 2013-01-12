@@ -108,7 +108,7 @@
                     {
                         rowNumber++;
                         string dropupClass = string.Empty;
-                        if (rowNumber > Model.Count - 3)
+                        if (Model.Count > 3 && rowNumber > Model.Count - 3)
                         {
                             dropupClass = "dropup";
                         }
@@ -148,6 +148,12 @@
                             <td>@entity.PrincipleAddress
                             </td>
                         </tr>   
+                    }
+                    @if (Model.Count < 4)
+                    { 
+                        <tr></tr>
+                        <tr></tr>
+                        <tr></tr>
                     }
                 </tbody>
             </table>
