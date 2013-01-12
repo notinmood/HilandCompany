@@ -1,4 +1,7 @@
 ﻿using System;
+using HiLand.Framework.FoundationLayer;
+using HiLand.Utility.Attributes;
+using HiLand.Utility.Data;
 
 namespace XQYC.Business.Entity
 {
@@ -25,6 +28,25 @@ namespace XQYC.Business.Entity
             get { return foo; }
             set { foo = value; }
         }
+        #endregion
+
+        #region 扩展属性
+        /// <summary>
+        /// 每个员工可以管理企业的最大数量
+        /// </summary>
+        [NonCopyMember]
+        public int MaxEnterpriseCountOfManager
+        {
+            get
+            {
+                return Converter.ChangeType(((IModelExtensible)this).ExtensiableRepository.GetExtentibleProperty("MaxEnterpriseCountOfManager"), 0);
+            }
+            set
+            {
+                ((IModelExtensible)this).ExtensiableRepository.SetExtentibleProperty("MaxEnterpriseCountOfManager", value.ToString());
+            }
+        }
+
         #endregion
     }
 }

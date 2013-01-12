@@ -139,6 +139,8 @@ namespace XQYC.Web.Controllers
 
             targetEntity.UserSex = originalEntity.UserSex;
             targetEntity.UserTitle = originalEntity.UserTitle;
+
+            targetEntity.MaxEnterpriseCountOfManager = originalEntity.MaxEnterpriseCountOfManager;
         }
 
         /// <summary>
