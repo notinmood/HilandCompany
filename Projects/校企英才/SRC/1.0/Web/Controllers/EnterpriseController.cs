@@ -1281,6 +1281,7 @@ namespace XQYC.Web.Controllers
             }
 
             return Redirect(returnUrl);
+            //return Json(new LogicStatusInfo(isSuccessful, displayMessage));
         }
 
         /// <summary>

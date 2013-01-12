@@ -91,7 +91,7 @@
             <table id="MyTable_tableColumnClone" border="1" cellspacing="0" cellpadding="0"></table>
         </div>
         <div id="MyTable_tableData">
-            <table id="MyTable" style="width: 3000px" class="grid" border="1" cellspacing="0" cellpadding="0">
+            <table id="MyTable" style="width: 3200px" class="grid" border="1" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
                         <th style="width: 150px">操作
@@ -126,7 +126,7 @@
                         </th>
                         <th style="width: 100px">企业状态
                         </th>
-                        <th style="width: 100px">合作状态
+                        <th style="width: 200px">合作状态
                         </th>
                         <th style="width: 100px">最后修改人
                         </th>
@@ -146,6 +146,28 @@
                             dropupClass = "dropup";
                         }
                         string entityGuid = entity.EnterpriseGuid.ToString();
+
+                        string cooperateString = string.Empty;
+                        if (FlagHelper.ContainsFlag(entity.CooperateStatus, 1))
+                        {
+                            cooperateString += "劳务派遣;";
+                        }
+
+                        if (FlagHelper.ContainsFlag(entity.CooperateStatus, 2))
+                        {
+                            cooperateString += "代理招聘;";
+                        }
+
+                        if (FlagHelper.ContainsFlag(entity.CooperateStatus, 4))
+                        {
+                            cooperateString += "人才市场;";
+                        }
+
+                        if (FlagHelper.ContainsFlag(entity.CooperateStatus, 8))
+                        {
+                            cooperateString += "百伯网用户;";
+                        }
+                        
                         <tr>
                             <td>
                                 @if (PermissionDataHelper.IsOwning(entity) == true)
@@ -199,7 +221,7 @@
                             </td>
                             <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
                             </td>
-                            <td>@EnumHelper.GetDisplayValue(entity.IsCooperated)
+                            <td>@cooperateString
                             </td>
                             <td>@entity.LastUpdateUserName
                             </td>
