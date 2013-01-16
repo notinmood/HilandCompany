@@ -906,7 +906,7 @@ namespace XQYC.Web.Controllers
 
         public ActionResult TrackerItem(string enterpriseKey, string itemKey = StringHelper.Empty)
         {
-            TrackerEntity entity = TrackerEntity.Empty;
+            TrackerEntity entity = new TrackerEntity(); //TrackerEntity.Empty;
             if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
             {
                 entity = TrackerBLL.Instance.Get(itemKey);

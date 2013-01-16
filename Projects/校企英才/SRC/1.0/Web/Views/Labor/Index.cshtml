@@ -134,6 +134,8 @@
                         </th>
                         <th style="width: 80px">客服人员
                         </th>
+                        <th style="width: 100px">录入时间
+                        </th>
                         <th style="width: 80px">备注1
                         </th>
                         <th style="width: 80px">备注2
@@ -170,7 +172,7 @@
                                             <li>@Html.HiA().CssClassName("modalInput password " + @entityGuid).Value("<i class=\"icon-asterisk\"></i>口令").ACA("Password", "Labor").Render(new { rel = "#EditDIV", itemKey = @entity.UserGuid })</li>
                                             <li>@Html.HiA().CssClassName("contract").Value("<i class=\"icon-file\"></i>合同").ACA("ContractList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()</li>
                                             <li>@Html.HiA().CssClassName("bankCard").Value("<i class=\"icon-retweet\"></i>银行账户").ACA("BankCardList", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()</li>
-                                            <li>@Html.HiA().CssClassName("modalInput delete " + @entityGuid).Value("<i class=\"icon-remove\"></i>删除").ACA("DeleteEnterprise", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() </li>
+                                            <li>@Html.HiA().CssClassName("modalInput delete " + @entityGuid).Value("<i class=\"icon-remove\"></i>删除").ACA("Delete", "Labor").RouteValue(new { itemKey = @entity.UserGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render() </li>
                                         </ul>
                                     </div>
                                 }
@@ -236,6 +238,8 @@
                             <td>@entity.SettleUserName
                             </td>
                             <td>@entity.ServiceUserName
+                            </td>
+                            <td>@DateTimeHelper.ToSaftShortDateString(entity.UserRegisterDate)
                             </td>
                             <td>@entity.Memo1
                             </td>
