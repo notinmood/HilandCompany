@@ -682,6 +682,12 @@ namespace XQYC.Web.Controllers
                 targetEntity.OperateUserGuid = BusinessUserBLL.CurrentUser.UserGuid;
 
                 SetTargetContractEntityValue(originalEntity, ref  targetEntity);
+
+                if (targetEntity.LaborContractStopDate < targetEntity.LaborContractStartDate)
+                { 
+                    return Json(new LogicStatusInfo(false, "合同结束时间不能早于合同开始时间，谢谢！"));
+                }
+
                 if (targetEntity.EnterpriseGuid == Guid.Empty)
                 {
                     isSuccessful = false;
@@ -697,6 +703,17 @@ namespace XQYC.Web.Controllers
                 targetEntity = LaborContractBLL.Instance.Get(itemKey);
 
                 SetTargetContractEntityValue(originalEntity, ref  targetEntity);
+
+                if (targetEntity.LaborContractStopDate < targetEntity.LaborContractStartDate)
+                {
+                    return Json(new LogicStatusInfo(false, "合同结束时间不能早于合同开始时间，谢谢！"));
+                }
+
+                if (targetEntity.LaborContractDiscontinueDate < targetEntity.LaborContractStartDate)
+                {
+                    return Json(new LogicStatusInfo(false, "合同终止时间不能早于合同开始时间，谢谢！"));
+                }
+
                 if (targetEntity.EnterpriseGuid == Guid.Empty)
                 {
                     isSuccessful = false;
@@ -726,7 +743,19 @@ namespace XQYC.Web.Controllers
             targetEntity.LaborContractDetails = originalEntity.LaborContractDetails;
             targetEntity.EnterpriseContractGuid = originalEntity.EnterpriseContractGuid;
             targetEntity.LaborContractStartDate = originalEntity.LaborContractStartDate;
-            targetEntity.LaborContractStopDate = originalEntity.LaborContractStopDate;
+            
+            if (originalEntity.LaborContractStopDate == DateTimeHelper.Min)
+            {
+                if (originalEntity.LaborContractStartDate != DateTimeHelper.Min)
+                {
+                    targetEntity.LaborContractStopDate = originalEntity.LaborContractStartDate.AddYears(2).AddDays(-1);
+                }
+            }
+            else
+            {
+                targetEntity.LaborContractStopDate = originalEntity.LaborContractStopDate;
+            }
+
             targetEntity.LaborContractStatus = originalEntity.LaborContractStatus;
 
             targetEntity.LaborCode = originalEntity.LaborCode;
