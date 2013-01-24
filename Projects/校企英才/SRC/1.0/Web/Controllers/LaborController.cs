@@ -266,6 +266,9 @@ namespace XQYC.Web.Controllers
             targetEntity.Memo4 = originalEntity.Memo4;
             targetEntity.Memo5 = originalEntity.Memo5;
 
+            targetEntity.DispatchType = originalEntity.DispatchType;
+            targetEntity.ComeFromType = originalEntity.ComeFromType;
+
             targetEntity.SocialSecurityNumber = originalEntity.SocialSecurityNumber;
             targetEntity.HouseHoldType = originalEntity.HouseHoldType;
             targetEntity.UserEducationalSchool = originalEntity.UserEducationalSchool;

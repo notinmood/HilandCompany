@@ -81,6 +81,16 @@
                 </td>
             </tr>
             <tr>
+                <td>来源:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.ComeFromType, EnumEx.BuildSelectItemList<ComeFromTypes>())
+                </td>
+                <td>派遣方式:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.DispatchType, EnumEx.BuildSelectItemList<DispatchTypes>())
+                </td>
+            </tr>
+            <tr>
                 <td>身份证号:
                 </td>
                 <td>@Html.TextBoxFor(entity => entity.UserCardID)

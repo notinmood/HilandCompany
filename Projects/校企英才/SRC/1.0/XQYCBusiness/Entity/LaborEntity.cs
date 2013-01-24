@@ -466,6 +466,26 @@ namespace XQYC.Business.Entity
             get { return memo5; }
             set { memo5 = value; }
         }
+
+        private DispatchTypes dispatchType= DispatchTypes.UnSet;
+        /// <summary>
+        /// 劳务派遣类型
+        /// </summary>
+        public DispatchTypes DispatchType
+        {
+            get { return dispatchType; }
+            set { dispatchType = value; }
+        }
+
+        private ComeFromTypes comeFromType= ComeFromTypes.ManageWrite;
+        /// <summary>
+        /// 劳务人员来源类型
+        /// </summary>
+        public ComeFromTypes ComeFromType
+        {
+            get { return comeFromType; }
+            set { comeFromType = value; }
+        }
         #endregion
 
         public Guid ResourceGuid

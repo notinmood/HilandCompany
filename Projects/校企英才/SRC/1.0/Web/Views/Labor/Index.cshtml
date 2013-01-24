@@ -85,6 +85,10 @@
                         </th>
                         <th style="width: 80px">工作状态
                         </th>
+                        <th style="width: 80px">派遣方式
+                        </th>
+                        <th style="width: 80px">来源方式
+                        </th>
                         <th style="width: 180px">务工企业
                         </th>
                         <th style="width: 80px">所在部门
@@ -189,6 +193,10 @@
                             <td>@EnumHelper.GetDisplayValue(entity.UserStatus)
                             </td>
                             <td>@EnumHelper.GetDisplayValue(entity.LaborWorkStatus)
+                            </td>
+                            <td>@EnumHelper.GetDisplayValue(entity.DispatchType)
+                            </td>
+                            <td>@EnumHelper.GetDisplayValue(entity.ComeFromType)
                             </td>
                             <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.CurrentEnterpriseName, 13))
                             </td>
