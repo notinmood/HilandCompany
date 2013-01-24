@@ -737,6 +737,7 @@
     <Content Include="Views\Labor\SalaryListCheck.cshtml" />
     <Content Include="Views\Test\BootstrapDropDownTest.cshtml" />
     <Content Include="Views\System\NoPermissionDisplayPage.cshtml" />
+    <Content Include="Views\Labor\SalaryBalanceCheck.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

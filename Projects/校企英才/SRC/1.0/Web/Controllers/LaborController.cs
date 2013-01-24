@@ -1801,6 +1801,36 @@ namespace XQYC.Web.Controllers
                 return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
             }
         }
+
+        /// <summary>
+        /// 劳务人员结算查询
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SalaryBalanceCheck(int id = 1)
+        {
+            //1.如果是点击查询控件的查询按钮，那么将查询条件作为QueryString附加在地址后面（为了在客户端保存查询条件的状体），重新发起一次请求。
+            if (this.Request.HttpMethod.ToLower().Contains("post"))
+            {
+                string targetUrlWithoutParam = Url.Action("SalaryBalanceCheck", new { id = 1 });
+                string targetUrl = QueryControlHelper.GetNewQueryUrl("QueryControl", targetUrlWithoutParam);
+                return Redirect(targetUrl);
+            }
+
+            //2.通常情形下走get查询
+            int pageIndex = id;
+            int pageSize = SystemConst.CountPerPage;
+            int startIndex = (pageIndex - 1) * pageSize + 1;
+            string whereClause = " 1=1 ";
+
+            whereClause += " AND " + QueryControlHelper.GetQueryCondition("QueryControl");
+
+            string orderClause = "SalarySummaryID DESC";
+
+            PagedEntityCollection<SalarySummaryEntity> entityList = SalarySummaryBLL.Instance.GetPagedCollection(startIndex, pageSize, whereClause, orderClause);
+            PagedList<SalarySummaryEntity> pagedExList = new PagedList<SalarySummaryEntity>(entityList.Records, entityList.PageIndex, entityList.PageSize, entityList.TotalCount);
+           
+            return View(pagedExList);
+        }
         #endregion
 
         #region 银行卡

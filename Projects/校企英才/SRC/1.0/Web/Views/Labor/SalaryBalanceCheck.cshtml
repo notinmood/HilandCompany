@@ -1,0 +1,225 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Models;
+@using HiLand.Utility.Controls;
+
+@model PagedList<SalarySummaryEntity>
+@{
+    ViewBag.Title = "Index";
+    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+    bool isUsingCompress = false;
+    if (currentUrl.Length > 512)
+    {
+        isUsingCompress = true;
+        currentUrl = CompressHelper.Compress(currentUrl);
+    }
+
+    List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业,人员名称,身份证号,企业信息提供人,企业开发人员,劳务人员服务人员,劳务人员业务人员,劳务人员安置人员", ConditionFieldName = "CompanyName,UserNameCN,UserCardID,ES.ProviderUserName,GE.ManageUserName,LA.ServiceUserName,LA.BusinessUserName,LA.SettleUserName", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业,人员名称,身份证号,企业信息提供人,企业开发人员,劳务人员服务人员,劳务人员业务人员,劳务人员安置人员", ConditionFieldName = "CompanyName,UserNameCN,UserCardID,ES.ProviderUserName,GE.ManageUserName,LA.ServiceUserName,LA.BusinessUserName,LA.SettleUserName", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "结算月份", ConditionFieldName = "SalaryDate", ConditionType = typeof(DateTime), AddonData = "dateFormat:yyyy/mm/01" });
+
+    int rowNumber = 0;
+}
+<h2 style="display: inline-block">结算查询</h2>
+<div id="ItemListDIV">
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.HiQuery("QueryControl").QueryConditionList(queryItemList).IsDisplayBrackets(false).Render()
+        }
+    </div>
+    <div class="OperateArea" id="OperateAreaContainer">
+        <div class="btn-group">
+            @*@XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)*@
+        </div>
+    </div>
+
+    <div id="MyTable_tableLayout">
+        <div id="MyTable_tableFix">
+            <table id="MyTable_tableFixClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableHead">
+            <table id="MyTable_tableHeadClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableColumn">
+            <table id="MyTable_tableColumnClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableData">
+            <table id="MyTable" style="width: 3000px" class="grid" border="1" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th style="width: 80px">人员名称
+                        </th>
+                        <th style="width: 80px">身份证
+                        </th>
+                        <th style="width: 180px">务工企业
+                        </th>
+                        <th style="width: 80px">结算月份
+                        </th>
+                        <th style="width: 100px">合同开始时间
+                        </th>
+                        <th style="width: 100px">合同结束时间
+                        </th>
+                        <th style="width: 100px">合同解除时间
+                        </th>
+                        <th style="width: 80px">管理费
+                        </th>
+                        <th style="width: 120px">企业信息提供人
+                        </th>
+                        <th style="width: 120px">企业开发人员
+                        </th>
+                        <th style="width: 130px">劳务人员客服人员
+                        </th>
+                        <th style="width: 130px">劳务人员安置人员
+                        </th>
+                        <th>劳务人员业务人员
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (SalarySummaryEntity entity in Model)
+                    {
+                        rowNumber++;
+                        string dropupClass=string.Empty;
+                        if (Model.Count>3 && rowNumber > Model.Count-3)
+                        {
+                            dropupClass = "dropup";
+                        }
+                        string entityGuid = entity.SalarySummaryGuid.ToString();
+                        List<EnterpriseServiceEntity> serviceList= XQYC.Business.BLL.EnterpriseServiceBLL.Instance.GetListByEnterprise(GuidHelper.TryConvert( entity.EnterpriseKey));
+                        EnterpriseServiceEntity laborDispatchService= EnterpriseServiceEntity.Empty;
+                        if(serviceList!=null && serviceList.Count>0)
+                        {
+                        laborDispatchService= serviceList.FirstOrDefault(e=>e.EnterpriseServiceType== 1);
+                        }
+                        <tr>
+                            <td>@entity.Labor.UserNameCN
+                            </td>
+                            <td>@entity.Labor.UserCardID
+                            </td>
+                            <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.Enterprise.CompanyName, 13))
+                            </td>
+                            <td>
+                                @entity.SalaryDate.ToString("yyyy/MM")
+                            </td>
+                            <td>@DateTimeHelper.ToSaftShortDateString(entity.Labor.CurrentContractStartDate)
+                            </td>
+                            <td>@DateTimeHelper.ToSaftShortDateString(entity.Labor.CurrentContractStopDate)
+                            </td>
+                            <td>@DateTimeHelper.ToSaftShortDateString(entity.Labor.CurrentContractDiscontinueDate)
+                            </td>
+                            <td>@entity.EnterpriseManageFeeReal
+                            </td>
+                            <td>@laborDispatchService.ProviderUserName
+                            </td>
+                            <td>@entity.Enterprise.ManageUserName
+                            </td>
+                            <td>@entity.Labor.ServiceUserName
+                            </td>
+                            <td>@entity.Labor.SettleUserName
+                            </td>
+                            <td>@entity.Labor.BusinessUserName
+                            </td>
+                        </tr>   
+                    }
+
+                    @if (Model.Count < 4)
+                    { 
+                        <tr></tr>
+                        <tr></tr>
+                        <tr></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="myPager">
+        <span style="float: left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
+        &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@SystemConst.CountPerPage</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)
+    </div>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aLaborSalarySection").click();
+            $("#aLaborSalarySection").addClass("current");
+            $("#aSalaryBalanceCheck").addClass("current");
+
+            $(".modalInput").overlay({
+                mask: {
+                    color: '#ebecff',
+                    loadSpeed: 200,
+                    opacity: 0.9
+                },
+                closeOnClick: false
+            });
+
+            $("a.overlayClose").live("click", function () {
+                window.location.reload();
+            });
+
+            $("#newDisplayA").click(function () {
+                $(".modal").width("650px");
+                var itemKey = "";
+                var url = '@Url.Action("Item")' + '?r=' + Math.random() + '&itemKey=' + itemKey + '&returnUrl=' + encodeURIComponent('@currentUrl') + '&isUsingCompress=@isUsingCompress';
+                $("#EditDIV").load(url);
+            });
+
+            $("#batchSettleWork").click(function () {
+                $(".modal").width("650px");
+                var itemKeys = JSON.stringify($("input:checked").map(function () { return $(this).val(); }).get(), null, null);
+                $("#currentPopupItemGuid").val(itemKeys);
+                var url = '@Url.Action("BatchSettleWork")' + '?r=' + Math.random() + '&itemKeys=' + itemKeys;
+                $("#EditDIV").load(url);
+            });
+
+            $("#batchSettleCost").click(function () {
+                $(".modal").width("650px");
+                var itemKeys = JSON.stringify($("input:checked").map(function () { return $(this).val(); }).get(), null, null);
+                $("#currentPopupItemGuid").val(itemKeys);
+                var url = '@Url.Action("BatchSettleCost")' + '?r=' + Math.random() + '&itemKeys=' + itemKeys;
+                $("#EditDIV").load(url);
+            });
+
+            $("a.edit").click(function () {
+                $(".modal").width("650px");
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("Item")' + '?r=' + Math.random() + '&itemKey=' + itemKey + '&returnUrl=' + encodeURIComponent('@currentUrl') + '&isUsingCompress=@isUsingCompress';
+                $("#EditDIV").load(url);
+            });
+
+            $("a.password").click(function () {
+                $(".modal").width("350px");
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("Password")' + '?r=' + Math.random() + '&itemKey=' + itemKey;
+                $("#EditDIV").load(url);
+            });
+
+            $(".allCheckboxSelector").click(function () {
+                var selectedStatus = $(this).attr("checked");
+                $(":checkbox", $(this).parents("table")).attr("checked", selectedStatus);
+            });
+
+            if (document.URL.toLowerCase().indexOf("isselfdata=true") > 0) {
+                $("#liSelftData").addClass("active");
+                $("#liAllData").removeClass("active");
+            }
+        });
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/fixTable.js")" ></script>
+    <script type="text/javascript">
+        fixTable("MyTable", 3, "100%", 400);
+    </script>
+</div>
