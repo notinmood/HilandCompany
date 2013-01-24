@@ -115,7 +115,12 @@
 
         $(".all").click(function () {
             var selectedStatus = $(this).attr("checked");
-            $(":checkbox", $(this).parent("div")).attr("checked", selectedStatus);
+            if (selectedStatus == "checked") {
+                $(":checkbox", $(this).parent("div")).attr("checked", true);
+            }
+            else {
+                $(":checkbox", $(this).parent("div")).attr("checked", false);
+            }
         });
     });
 </script>

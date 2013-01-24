@@ -75,7 +75,7 @@
                 <thead>
                     <tr>
                         <th style="width: 150px">
-                            @*<input type="checkbox" class="allCheckboxSelector" />*@操作
+                            <input type="checkbox" class="allCheckboxSelector" />操作
                         </th>
                         <th style="width: 80px">人员名称
                         </th>
@@ -332,7 +332,12 @@
 
             $(".allCheckboxSelector").click(function () {
                 var selectedStatus = $(this).attr("checked");
-                $(":checkbox", $(this).parents("table")).attr("checked", selectedStatus);
+                if (selectedStatus == "checked") {
+                    $(":checkbox", $("#MyTable_tableColumnClone")).attr("checked", true);
+                }
+                else {
+                    $(":checkbox", $("#MyTable_tableColumnClone")).attr("checked", false);
+                }
             });
 
             if (document.URL.toLowerCase().indexOf("isselfdata=true") > 0) {
