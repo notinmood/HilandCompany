@@ -687,7 +687,7 @@ namespace XQYC.Web.Controllers
                 SetTargetContractEntityValue(originalEntity, ref  targetEntity);
 
                 if (targetEntity.LaborContractStopDate < targetEntity.LaborContractStartDate)
-                { 
+                {
                     return Json(new LogicStatusInfo(false, "合同结束时间不能早于合同开始时间，谢谢！"));
                 }
 
@@ -746,7 +746,7 @@ namespace XQYC.Web.Controllers
             targetEntity.LaborContractDetails = originalEntity.LaborContractDetails;
             targetEntity.EnterpriseContractGuid = originalEntity.EnterpriseContractGuid;
             targetEntity.LaborContractStartDate = originalEntity.LaborContractStartDate;
-            
+
             if (originalEntity.LaborContractStopDate == DateTimeHelper.Min)
             {
                 if (originalEntity.LaborContractStartDate != DateTimeHelper.Min)
@@ -811,18 +811,59 @@ namespace XQYC.Web.Controllers
             int startIndex = (pageIndex - 1) * pageSize + 1;
             string whereClause = " 1=1 ";
 
-            ////--数据权限----------------------------------------------------------------------
-            //whereClause += " AND ( ";
-            //whereClause += string.Format(" {0} ", PermissionDataHelper.GetFilterCondition("FinanceUserGuid"));
-            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ProviderUserGuid"));
-            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("RecommendUserGuid"));
-            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("ServiceUserGuid"));
-            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("BusinessUserGuid"));
-            //whereClause += string.Format(" OR {0} ", PermissionDataHelper.GetFilterCondition("SettleUserGuid"));
-            //whereClause += " ) ";
-            ////--end--------------------------------------------------------------------------
-
             whereClause += " AND " + QueryControlHelper.GetQueryCondition("QueryControl");
+
+            //处理在职时间段问题
+            DateTime jobingDateStart = DateTimeHelper.Min;
+            DateTime jobingDateEnd = DateTimeHelper.Min;
+            if (whereClause.Contains("JobingDateStart"))
+            {
+                string jobingDateStringAll = whereClause.Substring(whereClause.IndexOf("JobingDateStart"));
+                string jobingDateStringNoLeftBlacket = jobingDateStringAll.Substring(jobingDateStringAll.IndexOf("'") + 1);
+                string jobingDateString = jobingDateStringNoLeftBlacket.Substring(0, jobingDateStringNoLeftBlacket.IndexOf("'"));
+                jobingDateStart = Converter.ChangeType<DateTime>(jobingDateString, DateTimeHelper.Min);
+            }
+
+            if (whereClause.Contains("JobingDateEnd"))
+            {
+                string jobingDateStringAll = whereClause.Substring(whereClause.IndexOf("JobingDateEnd"));
+                string jobingDateStringNoLeftBlacket = jobingDateStringAll.Substring(jobingDateStringAll.IndexOf("'") + 1);
+                string jobingDateString = jobingDateStringNoLeftBlacket.Substring(0, jobingDateStringNoLeftBlacket.IndexOf("'"));
+                jobingDateEnd = Converter.ChangeType<DateTime>(jobingDateString, DateTimeHelper.Min);
+            }
+
+            if ((jobingDateStart != DateTimeHelper.Min && jobingDateEnd == DateTimeHelper.Min) || (jobingDateStart == DateTimeHelper.Min && jobingDateEnd != DateTimeHelper.Min))
+            {
+                List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
+                string returnUrl = Url.Action("ContractQueryList", new { id = 1 });
+                SystemStatusInfo itemError = new SystemStatusInfo();
+                itemError.SystemStatus = SystemStatuses.Warnning;
+                itemError.Message = "请同时选择在职时间开始和在职时间结束！";
+                infoList.Add(itemError);
+                this.TempData.Add("OperationResultData", infoList);
+                return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+            }
+
+            if (jobingDateStart != DateTimeHelper.Min && jobingDateEnd != DateTimeHelper.Min)
+            {
+                whereClause = whereClause.Substring(0, whereClause.IndexOf("JobingDateStart"));
+                if (whereClause.IndexOf("JobingDateEnd") >= 0)
+                {
+                    whereClause = whereClause.Substring(0, whereClause.IndexOf("JobingDateEnd"));
+                }
+
+                whereClause= whereClause.TrimEnd().ToLower();
+
+                if (whereClause.EndsWith("and") || whereClause.EndsWith("or"))
+                {
+                    string whereClauseForJobing = string.Format(@" (
+                    	            ( LaborContractStartDate>='{1}' AND (LaborContractStartDate<='{2}') ) OR 
+                    	            ( LaborContractDiscontinueDate>='{1}' AND (LaborContractDiscontinueDate<='{2}') ) OR
+                    	            ( LaborContractStartDate<'{1}' AND (LaborContractDiscontinueDate>'{2}' OR LaborContractDiscontinueDate is null OR LaborContractDiscontinueDate='{0}' ))
+                    	            ) ", DateTimeHelper.Min, jobingDateStart, jobingDateEnd);
+                    whereClause += whereClauseForJobing;
+                }
+            }
 
             string orderClause = "LaborContractID DESC";
 
@@ -1831,7 +1872,7 @@ namespace XQYC.Web.Controllers
 
             PagedEntityCollection<SalarySummaryEntity> entityList = SalarySummaryBLL.Instance.GetPagedCollection(startIndex, pageSize, whereClause, orderClause);
             PagedList<SalarySummaryEntity> pagedExList = new PagedList<SalarySummaryEntity>(entityList.Records, entityList.PageIndex, entityList.PageSize, entityList.TotalCount);
-           
+
             return View(pagedExList);
         }
         #endregion

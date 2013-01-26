@@ -146,6 +146,7 @@
   <ItemGroup>
     <Compile Include="Areas\APIs\APIsAreaRegistration.cs" />
     <Compile Include="Areas\APIs\Controllers\ContactController.cs" />
+    <Compile Include="Areas\APIs\Controllers\GeneralServiceController.cs" />
     <Compile Include="Areas\APIs\Controllers\HomeController.cs" />
     <Compile Include="Areas\APIs\Controllers\ProductController.cs" />
     <Compile Include="Areas\APIs\Controllers\MemberController.cs" />

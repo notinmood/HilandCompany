@@ -47,7 +47,7 @@ namespace XQYC.Web.Controllers
             int pageSize = SystemConst.CountPerPage;
             int startIndex = (pageIndex - 1) * pageSize + 1;
             string whereClause = " 1=1 ";
-            
+
             if (isSelfData == true)
             {
                 whereClause += string.Format(" AND ManageUserKey='{0}' ", BusinessUserBLL.CurrentUserGuid);
@@ -165,7 +165,7 @@ namespace XQYC.Web.Controllers
             if (GuidHelper.IsInvalidOrEmpty(keyGuid))
             {
                 //判断是否达到资源负责人可以控制的最大资源数量
-                int realEnterpriseCountOfManager = EnterpriseBLL.Instance.GetTotalCountOfManager(BusinessUserBLL.CurrentUserGuid.ToString());
+                int realEnterpriseCountOfManager = EnterpriseBLL.Instance.GetTotalCountOfManager(BusinessUserBLL.CurrentUserGuid.ToString(), true);
                 int maxEnterpriseCountOfManager = EmployeeBLL.Instance.Get(BusinessUserBLL.CurrentUserGuid).MaxEnterpriseCountOfManager;
                 if (maxEnterpriseCountOfManager <= 0)
                 {

@@ -29,8 +29,8 @@
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业,人员名称,身份证号", ConditionFieldName = "CompanyName,UserNameCN,UserCardID", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合同状态", ConditionFieldName = "LaborContractStatus", ConditionType = typeof(LaborWorkStatuses) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "离职时间,合同开始时间,合同结束时间", ConditionFieldName = "LaborContractDiscontinueDate,LaborContractStartDate,LaborContractStopDate", ConditionType = typeof(DateTime) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "离职时间,合同开始时间,合同结束时间", ConditionFieldName = "LaborContractDiscontinueDate,LaborContractStartDate,LaborContractStopDate", ConditionType = typeof(DateTime) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "离职时间,合同开始时间,合同结束时间,在职时间", ConditionFieldName = "LaborContractDiscontinueDate,LaborContractStartDate,LaborContractStopDate,JobingDateStart", ConditionType = typeof(DateTime) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "离职时间,合同开始时间,合同结束时间,在职时间", ConditionFieldName = "LaborContractDiscontinueDate,LaborContractStartDate,LaborContractStopDate,JobingDateEnd", ConditionType = typeof(DateTime) });
 }
 <h2>劳务人员合同查询</h2>
 <div id="ItemListDIV">
