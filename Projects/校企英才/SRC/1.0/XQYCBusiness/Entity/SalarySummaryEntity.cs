@@ -261,20 +261,20 @@ namespace XQYC.Business.Entity
         {
             get
             {
-                if (enterpriseManageFeeCalculatedFix == 0)
+                if (enterpriseManageFeeCalculatedFix.HasValue == true)
                 {
-                    return enterpriseManageFeeCalculated;
+                    return enterpriseManageFeeCalculatedFix.Value;
                 }
                 else
                 {
-                    return enterpriseManageFeeCalculatedFix;
+                    return enterpriseManageFeeCalculated;
                 }
             }
             set { enterpriseManageFeeCalculated = value; }
         }
 
-        private decimal enterpriseManageFeeCalculatedFix;
-        public decimal EnterpriseManageFeeCalculatedFix
+        private decimal? enterpriseManageFeeCalculatedFix = null;
+        public decimal? EnterpriseManageFeeCalculatedFix
         {
             get { return enterpriseManageFeeCalculatedFix; }
             set { enterpriseManageFeeCalculatedFix = value; }
@@ -292,20 +292,20 @@ namespace XQYC.Business.Entity
         {
             get
             {
-                if (enterpriseInsuranceCalculatedFix == 0)
+                if (enterpriseInsuranceCalculatedFix.HasValue == true)
                 {
-                    return enterpriseInsuranceCalculated;
+                    return enterpriseInsuranceCalculatedFix.Value;
                 }
                 else
                 {
-                    return enterpriseInsuranceCalculatedFix;
+                    return enterpriseInsuranceCalculated;
                 }
             }
             set { enterpriseInsuranceCalculated = value; }
         }
 
-        private decimal enterpriseInsuranceCalculatedFix;
-        public decimal EnterpriseInsuranceCalculatedFix
+        private decimal? enterpriseInsuranceCalculatedFix= null;
+        public decimal? EnterpriseInsuranceCalculatedFix
         {
             get { return enterpriseInsuranceCalculatedFix; }
             set { enterpriseInsuranceCalculatedFix = value; }
@@ -323,20 +323,20 @@ namespace XQYC.Business.Entity
         {
             get
             {
-                if (enterpriseReserveFundCalculatedFix == 0)
+                if (enterpriseReserveFundCalculatedFix.HasValue == true)
                 {
-                    return enterpriseReserveFundCalculated;
+                    return enterpriseReserveFundCalculatedFix.Value;
                 }
                 else
                 {
-                    return enterpriseReserveFundCalculatedFix;
+                    return enterpriseReserveFundCalculated;
                 }
             }
             set { enterpriseReserveFundCalculated = value; }
         }
 
-        private decimal enterpriseReserveFundCalculatedFix;
-        public decimal EnterpriseReserveFundCalculatedFix
+        private decimal? enterpriseReserveFundCalculatedFix = null;
+        public decimal? EnterpriseReserveFundCalculatedFix
         {
             get { return enterpriseReserveFundCalculatedFix; }
             set { enterpriseReserveFundCalculatedFix = value; }
@@ -354,20 +354,20 @@ namespace XQYC.Business.Entity
         {
             get
             {
-                if (personManageFeeCalculatedFix == 0)
+                if (personManageFeeCalculatedFix.HasValue == true)
                 {
-                    return personManageFeeCalculated;
+                    return personManageFeeCalculatedFix.Value;
                 }
                 else
                 {
-                    return personManageFeeCalculatedFix;
+                    return personManageFeeCalculated;
                 }
             }
             set { personManageFeeCalculated = value; }
         }
 
-        private decimal personManageFeeCalculatedFix;
-        public decimal PersonManageFeeCalculatedFix
+        private decimal? personManageFeeCalculatedFix = null;
+        public decimal? PersonManageFeeCalculatedFix
         {
             get { return personManageFeeCalculatedFix; }
             set { personManageFeeCalculatedFix = value; }
@@ -385,20 +385,20 @@ namespace XQYC.Business.Entity
         {
             get
             {
-                if (personInsuranceCalculatedFix == 0)
+                if (personInsuranceCalculatedFix.HasValue == true)
                 {
-                    return personInsuranceCalculated;
+                    return personInsuranceCalculatedFix.Value;
                 }
                 else
                 {
-                    return personInsuranceCalculatedFix;
+                    return personInsuranceCalculated;
                 }
             }
             set { personInsuranceCalculated = value; }
         }
 
-        private decimal personInsuranceCalculatedFix;
-        public decimal PersonInsuranceCalculatedFix
+        private decimal? personInsuranceCalculatedFix = null;
+        public decimal? PersonInsuranceCalculatedFix
         {
             get { return personInsuranceCalculatedFix; }
             set { personInsuranceCalculatedFix = value; }
@@ -416,20 +416,20 @@ namespace XQYC.Business.Entity
         {
             get
             {
-                if (personReserveFundCalculatedFix == 0)
+                if (personReserveFundCalculatedFix.HasValue == true)
                 {
-                    return personReserveFundCalculated;
+                    return personReserveFundCalculatedFix.Value;
                 }
                 else
                 {
-                    return personReserveFundCalculatedFix;
+                    return personReserveFundCalculated;
                 }
             }
             set { personReserveFundCalculated = value; }
         }
 
-        private decimal personReserveFundCalculatedFix;
-        public decimal PersonReserveFundCalculatedFix
+        private decimal? personReserveFundCalculatedFix = null;
+        public decimal? PersonReserveFundCalculatedFix
         {
             get { return personReserveFundCalculatedFix; }
             set { personReserveFundCalculatedFix = value; }
@@ -447,20 +447,20 @@ namespace XQYC.Business.Entity
         {
             get
             {
-                if (enterpriseMixCostCalculatedFix == 0)
+                if (enterpriseMixCostCalculatedFix.HasValue == true)
                 {
-                    return enterpriseMixCostCalculated;
+                    return enterpriseMixCostCalculatedFix.Value;
                 }
                 else
                 {
-                    return enterpriseMixCostCalculatedFix;
+                    return enterpriseMixCostCalculated;
                 }
             }
             set { enterpriseMixCostCalculated = value; }
         }
 
-        private decimal enterpriseMixCostCalculatedFix;
-        public decimal EnterpriseMixCostCalculatedFix
+        private decimal? enterpriseMixCostCalculatedFix = null;
+        public decimal? EnterpriseMixCostCalculatedFix
         {
             get { return enterpriseMixCostCalculatedFix; }
             set { enterpriseMixCostCalculatedFix = value; }
@@ -478,20 +478,20 @@ namespace XQYC.Business.Entity
         {
             get
             {
-                if (personMixCostCalculatedFix == 0)
+                if (personMixCostCalculatedFix.HasValue == true)
                 {
-                    return personMixCostCalculated;
+                    return personMixCostCalculatedFix.Value;
                 }
                 else
                 {
-                    return personMixCostCalculatedFix;
+                    return personMixCostCalculated;
                 }
             }
             set { personMixCostCalculated = value; }
         }
 
-        private decimal personMixCostCalculatedFix;
-        public decimal PersonMixCostCalculatedFix
+        private decimal? personMixCostCalculatedFix = null;
+        public decimal? PersonMixCostCalculatedFix
         {
             get { return personMixCostCalculatedFix; }
             set { personMixCostCalculatedFix = value; }
@@ -509,20 +509,20 @@ namespace XQYC.Business.Entity
         {
             get
             {
-                if (enterpriseOtherCostCalculatedFix == 0)
+                if (enterpriseOtherCostCalculatedFix.HasValue == true)
                 {
-                    return enterpriseOtherCostCalculated;
+                    return enterpriseOtherCostCalculatedFix.Value;
                 }
                 else
                 {
-                    return enterpriseOtherCostCalculatedFix;
+                    return enterpriseOtherCostCalculated;
                 }
             }
             set { enterpriseOtherCostCalculated = value; }
         }
 
-        private decimal enterpriseOtherCostCalculatedFix;
-        public decimal EnterpriseOtherCostCalculatedFix
+        private decimal? enterpriseOtherCostCalculatedFix = null;
+        public decimal? EnterpriseOtherCostCalculatedFix
         {
             get { return enterpriseOtherCostCalculatedFix; }
             set { enterpriseOtherCostCalculatedFix = value; }
@@ -543,20 +543,20 @@ namespace XQYC.Business.Entity
         {
             get
             {
-                if (personOtherCostCalculatedFix == 0)
+                if (personOtherCostCalculatedFix.HasValue == true)
                 {
-                    return personOtherCostCalculated;
+                    return personOtherCostCalculatedFix.Value;
                 }
                 else
                 {
-                    return personOtherCostCalculatedFix;
+                    return personOtherCostCalculated;
                 }
             }
             set { personOtherCostCalculated = value; }
         }
 
-        private decimal personOtherCostCalculatedFix;
-        public decimal PersonOtherCostCalculatedFix
+        private decimal? personOtherCostCalculatedFix = null;
+        public decimal? PersonOtherCostCalculatedFix
         {
             get { return personOtherCostCalculatedFix; }
             set { personOtherCostCalculatedFix = value; }
