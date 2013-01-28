@@ -127,6 +127,23 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#submitButton").click(function () {
+            var laborContractStartDateValue = $("#LaborContractStartDate").val();
+            if (laborContractStartDateValue == "")
+            {
+                alert("请选择合同开始时间！");
+                return false;
+            }
+
+            var laborContractStatusValue = $("#LaborContractStatus").val();
+            var laborContractDiscontinueDateValue = $("#LaborContractDiscontinueDate").val();
+            if (laborContractStatusValue == "UnNormalEnterpriseStop" || laborContractStartDateValue == "UnNormalPersenalStop")
+            {
+                if (laborContractDiscontinueDateValue == "") {
+                    alert("请选择合同终止时间！");
+                    return false;
+                }
+            }
+
             submitAndRedirect("#formContainer form");
         });
     });

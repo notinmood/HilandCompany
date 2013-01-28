@@ -132,5 +132,10 @@ namespace XQYC.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult DateControlTest()
+        {
+            return View();
+        }
     }
 }

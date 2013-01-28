@@ -121,7 +121,20 @@ namespace XQYC.Web.Control
             List<string> cssList = new List<string>();
             cssList.Add(UrlHelperEx.UrlHelper.Content("~/Content/ztree/css/zTreeStyle/zTreeStyle.css"));
             string employeeJson = GetDepartmentEmployeeNodesJson();
-            return html.HiTreeSelect(name).JavaScriptFiles(scriptList).StyleSheetFiles(cssList).Text(text).Value(value).IsInPopupWindow(true).DataSelectType(DataSelectTypes.Radio).StaticDataNodes(employeeJson).Render();
+            bool allowSelect = true;
+            if (BusinessUserBLL.CurrentUser.UserType == UserTypes.SuperAdmin 
+                || value == string.Empty 
+                || value == GuidHelper.EmptyString 
+                || BusinessUserBLL.CurrentUserGuid.ToString().ToLower() == value.ToLower())
+            {
+                allowSelect = true;
+            }
+            else
+            {
+                allowSelect = false;
+            }
+
+            return html.HiTreeSelect(name).JavaScriptFiles(scriptList).IsAllowSelect(allowSelect).StyleSheetFiles(cssList).Text(text).Value(value).IsInPopupWindow(true).DataSelectType(DataSelectTypes.Radio).StaticDataNodes(employeeJson).Render();
         }
 
         /// <summary>
