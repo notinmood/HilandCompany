@@ -30,8 +30,7 @@
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业名称", ConditionFieldName = "EnterpriseName", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "简章标题", ConditionFieldName = "EnterpriseJobTitle", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "状态", ConditionFieldName = "CanUsable", ConditionType = typeof(Logics) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "创建时间", ConditionFieldName = "CreateTime", ConditionType = typeof(DateTime) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "创建时间", ConditionFieldName = "CreateTime", ConditionType = typeof(DateTime) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "创建时间", ConditionFieldName = "CreateTime", ConditionType = typeof(DateTime), AddonData = "isRegionSelector:true" });
 }
 <h2>企业招聘简章查询</h2>
 <div id="ItemListDIV">

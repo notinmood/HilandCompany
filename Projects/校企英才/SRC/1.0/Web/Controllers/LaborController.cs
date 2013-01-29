@@ -816,17 +816,17 @@ namespace XQYC.Web.Controllers
             //处理在职时间段问题
             DateTime jobingDateStart = DateTimeHelper.Min;
             DateTime jobingDateEnd = DateTimeHelper.Min;
-            if (whereClause.Contains("JobingDateStart"))
+            if (whereClause.Contains("JobingDate"))
             {
-                string jobingDateStringAll = whereClause.Substring(whereClause.IndexOf("JobingDateStart"));
+                string jobingDateStringAll = whereClause.Substring(whereClause.IndexOf("JobingDate"));
                 string jobingDateStringNoLeftBlacket = jobingDateStringAll.Substring(jobingDateStringAll.IndexOf("'") + 1);
                 string jobingDateString = jobingDateStringNoLeftBlacket.Substring(0, jobingDateStringNoLeftBlacket.IndexOf("'"));
                 jobingDateStart = Converter.ChangeType<DateTime>(jobingDateString, DateTimeHelper.Min);
             }
 
-            if (whereClause.Contains("JobingDateEnd"))
+            if (whereClause.Contains("JobingDate"))
             {
-                string jobingDateStringAll = whereClause.Substring(whereClause.IndexOf("JobingDateEnd"));
+                string jobingDateStringAll = whereClause.Substring(whereClause.LastIndexOf("JobingDate"));
                 string jobingDateStringNoLeftBlacket = jobingDateStringAll.Substring(jobingDateStringAll.IndexOf("'") + 1);
                 string jobingDateString = jobingDateStringNoLeftBlacket.Substring(0, jobingDateStringNoLeftBlacket.IndexOf("'"));
                 jobingDateEnd = Converter.ChangeType<DateTime>(jobingDateString, DateTimeHelper.Min);
@@ -846,13 +846,9 @@ namespace XQYC.Web.Controllers
 
             if (jobingDateStart != DateTimeHelper.Min && jobingDateEnd != DateTimeHelper.Min)
             {
-                whereClause = whereClause.Substring(0, whereClause.IndexOf("JobingDateStart"));
-                if (whereClause.IndexOf("JobingDateEnd") >= 0)
-                {
-                    whereClause = whereClause.Substring(0, whereClause.IndexOf("JobingDateEnd"));
-                }
+                whereClause = whereClause.Substring(0, whereClause.IndexOf("JobingDate"));
 
-                whereClause= whereClause.TrimEnd().ToLower();
+                whereClause= whereClause.TrimEnd(' ','(').ToLower();
 
                 if (whereClause.EndsWith("and") || whereClause.EndsWith("or"))
                 {

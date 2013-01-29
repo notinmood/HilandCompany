@@ -29,8 +29,7 @@
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业名称", ConditionFieldName = "EnterpriseInfo", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合同状态", ConditionFieldName = "ContractStatus", ConditionType = typeof(Logics) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合同开始时间,合同结束时间,录入时间", ConditionFieldName = "ContractStartDate,ContractStopDate,ContractCreateDate", ConditionType = typeof(DateTime) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合同开始时间,合同结束时间,录入时间", ConditionFieldName = "ContractStartDate,ContractStopDate,ContractCreateDate", ConditionType = typeof(DateTime) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合同开始时间,合同结束时间,录入时间", ConditionFieldName = "ContractStartDate,ContractStopDate,ContractCreateDate", ConditionType = typeof(DateTime), AddonData = "isRegionSelector:true" });
 }
 <h2>企业客户合同查询</h2>
 <div id="ItemListDIV">

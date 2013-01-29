@@ -30,8 +30,7 @@
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业名称", ConditionFieldName = "OwnerName", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "付费状态,餐补领取状态", ConditionFieldName = "ForeOrderPaid,CommissionIsDrawed", ConditionType = typeof(Logics) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "履行状态", ConditionFieldName = "ForeOrderStatus", ConditionType = typeof(ForeOrderStatuses) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "预定时间,录入时间", ConditionFieldName = "ForeOrderDate,CreateTime", ConditionType = typeof(DateTime) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "预定时间,录入时间", ConditionFieldName = "ForeOrderDate,CreateTime", ConditionType = typeof(DateTime) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "预定时间,录入时间", ConditionFieldName = "ForeOrderDate,CreateTime", ConditionType = typeof(DateTime), AddonData = "isRegionSelector:true" });
 
     decimal totalForeOrderAmount = 0M;
     decimal totalCommissionFee = 0M;
