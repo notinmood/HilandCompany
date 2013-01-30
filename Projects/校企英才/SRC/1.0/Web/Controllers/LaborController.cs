@@ -1440,6 +1440,30 @@ namespace XQYC.Web.Controllers
             DateTime salaryDate = DateTimeHelper.Min;
             HttpPostedFile postedFile = RequestHelper.CurrentRequest.Files["fileSelector"];
 
+            string SettlementStartDateString = RequestHelper.GetValue("SettlementStartDate");
+            DateTime SettlementStartDate = Converter.ChangeType(SettlementStartDateString, DateTime.Today);
+
+            string SettlementEndDateString = RequestHelper.GetValue("SettlementEndDate");
+            DateTime SettlementEndDate = Converter.ChangeType(SettlementEndDateString, DateTime.Today);
+
+            string SalaryCashDateString = RequestHelper.GetValue("SalaryCashDate");
+            DateTime SalaryCashDate = Converter.ChangeType(SalaryCashDateString, DateTime.Today);
+
+            string ManageFeeCashDateString = RequestHelper.GetValue("ManageFeeCashDate");
+            DateTime ManageFeeCashDate = Converter.ChangeType(ManageFeeCashDateString, DateTime.Today);
+
+            string InsuranceCashDateString = RequestHelper.GetValue("InsuranceCashDate");
+            DateTime InsuranceCashDate = Converter.ChangeType(InsuranceCashDateString, DateTime.Today);
+
+            string ReserveFundDateString = RequestHelper.GetValue("ReserveFundDate");
+            DateTime ReserveFundDate = Converter.ChangeType(ReserveFundDateString, DateTime.Today);
+
+            string GeneralRecruitDateString = RequestHelper.GetValue("GeneralRecruitDate");
+            DateTime GeneralRecruitDate = Converter.ChangeType(GeneralRecruitDateString, DateTime.Today);
+
+            string OnceRecruitDateString = RequestHelper.GetValue("OnceRecruitDate");
+            DateTime OnceRecruitDate = Converter.ChangeType(OnceRecruitDateString, DateTime.Today);
+
             #region 条件判定（如果不满足基本条件直接跳出并提示）
             if (string.IsNullOrWhiteSpace(salaryDateString))
             {
@@ -1519,6 +1543,8 @@ namespace XQYC.Web.Controllers
                         salarySummaryEntity.CreateUserKey = BusinessUserBLL.CurrentUserGuid.ToString();
                         salarySummaryEntity.EnterpriseKey = enterpriseGuid.ToString();
                         salarySummaryEntity.SalaryPayStatus = SalaryPayStatuses.PaidToOrgnization;
+                        salarySummaryEntity.SalarySettlementStartDate = SettlementStartDate;
+                        salarySummaryEntity.SalarySettlementEndDate = SettlementEndDate;
 
                         foreach (string columnName in columnNameList)
                         {
@@ -1584,15 +1610,33 @@ namespace XQYC.Web.Controllers
                                         break;
                                     case "EnterpriseInsurance":
                                         salarySummaryEntity.EnterpriseInsuranceReal = salaryItemValue;
+                                        salarySummaryEntity.InsuranceCashDate = InsuranceCashDate;
+                                        salaryDetailsEntity.SalaryItemCashDate = InsuranceCashDate;
                                         SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.EnterpriseInsurance);
                                         break;
                                     case "EnterpriseReserveFund":
                                         salarySummaryEntity.EnterpriseReserveFundReal = salaryItemValue;
+                                        salarySummaryEntity.ReserveFundCashDate = ReserveFundDate;
+                                        salaryDetailsEntity.SalaryItemCashDate = ReserveFundDate;
                                         SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.EnterpriseReserveFund);
                                         break;
                                     case "EnterpriseManageFee":
                                         salarySummaryEntity.EnterpriseManageFeeReal = salaryItemValue;
+                                        salarySummaryEntity.EnterpriseManageFeeCashDate = ManageFeeCashDate;
+                                        salaryDetailsEntity.SalaryItemCashDate = ManageFeeCashDate;
                                         SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.EnterpriseManageFee);
+                                        break;
+                                    case "EnterpriseGeneralRecruitFee":
+                                        salarySummaryEntity.EnterpriseGeneralRecruitFeeReal = salaryItemValue;
+                                        salarySummaryEntity.EnterpriseGeneralRecruitFeeCashDate = GeneralRecruitDate;
+                                        salaryDetailsEntity.SalaryItemCashDate = GeneralRecruitDate;
+                                        SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.EnterpriseGeneralRecruitFee);
+                                        break;
+                                    case "EnterpriseOnceRecruitFee":
+                                        salarySummaryEntity.EnterpriseOnceRecruitFeeReal = salaryItemValue;
+                                        salarySummaryEntity.EnterpriseOnceRecruitFeeCashDate = OnceRecruitDate;
+                                        salaryDetailsEntity.SalaryItemCashDate = OnceRecruitDate;
+                                        SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.EnterpriseOnceRecruitFee);
                                         break;
                                     case "PersonMixCost":
                                         salarySummaryEntity.PersonMixCostReal = salaryItemValue;

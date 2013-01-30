@@ -71,6 +71,8 @@
                         </th>
                         <th style="width: 60px">账期
                         </th>
+                        <th style="width: 60px">首次回款
+                        </th>
                         <th style="width: 80px">校验状态
                         </th>
                         <th style="width: 120px">银行账号
@@ -179,6 +181,9 @@
                             </td>
                             <td>
                                 @entity.SalaryDate.ToString("yyyyMM")
+                            </td>
+                            <td>
+                                @EnumHelper.GetDisplayValue(entity.IsFirstCash)
                             </td>
                             <td>
                                 @if (isCheckOk == true)

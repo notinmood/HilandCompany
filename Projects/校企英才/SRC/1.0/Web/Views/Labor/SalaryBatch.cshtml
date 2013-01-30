@@ -32,18 +32,62 @@
             padding: 0;
         }
 </style>
-@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data",name="myForm",id="myForm" }))
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", name = "myForm", id = "myForm" }))
 { 
     <table>
         <tr>
             <td>企业名称:<i class="icon-comment" title="自动完成功能：当在输入框中输入2个字符后，系统就会查询符合条件的数据。请从下拉列表中选择目标信息。"></i>
             </td>
             <td class="fixClass">
-                @HtmlHelperEx.XQYCAutoCompleteEnterprise(Html, "EnterpriseName") 
+                @HtmlHelperEx.XQYCAutoCompleteEnterprise(Html, "EnterpriseName")
             </td>
-            <td>薪资月份</td>
+            <td>薪资月份:</td>
             <td class="fixClass">
                 @HtmlHelperEx.DateInput(Html, "SalaryMonth", string.Empty, "yyyy/mm")
+            </td>
+        </tr>
+        <tr>
+            <td>结算开始日期:
+            </td>
+            <td class="fixClass">
+                @HtmlHelperEx.DateInput(Html, "SettlementStartDate", "")
+            </td>
+            <td>结算结束日期:</td>
+            <td class="fixClass">
+                @HtmlHelperEx.DateInput(Html, "SettlementEndDate", "")
+            </td>
+        </tr>
+        <tr>
+            <td>工资回款日期:
+            </td>
+            <td class="fixClass">
+                @HtmlHelperEx.DateInput(Html, "SalaryCashDate", "")
+            </td>
+            <td>管理费回款日期:</td>
+            <td class="fixClass">
+                @HtmlHelperEx.DateInput(Html, "ManageFeeCashDate", "")
+            </td>
+        </tr>
+        <tr>
+            <td>保险回款日期:
+            </td>
+            <td class="fixClass">
+                @HtmlHelperEx.DateInput(Html, "InsuranceCashDate", "")
+            </td>
+            <td>公积金回款日期:</td>
+            <td class="fixClass">
+                @HtmlHelperEx.DateInput(Html, "ReserveFundDate", "")
+            </td>
+        </tr>
+        <tr>
+            <td>招工费回款日期:
+            </td>
+            <td class="fixClass">
+                @HtmlHelperEx.DateInput(Html, "GeneralRecruitDate", "")
+            </td>
+            <td>一次性招工费回款日期:</td>
+            <td class="fixClass">
+                @HtmlHelperEx.DateInput(Html, "OnceRecruitDate", "")
             </td>
         </tr>
         <tr>
@@ -52,7 +96,7 @@
             <td class="fixClass">
                 <input type="text" name="headerRowNumber" value="1" />
             </td>
-            <td>请选择Excel文件</td>
+            <td>请选择Excel文件:</td>
             <td class="fixClass">
                 <input type="file" name="fileSelector" /></td>
         </tr>
@@ -60,7 +104,8 @@
     <input type="submit" name="submitButton" id="submitButton" rel="#EditDIV" class="modalInput btn btn-warning" value="导入" />
 }
 <div class="modal modalFix" id="EditDIV">
-    <img src="@Url.Content("~/Content/Images/Loading.gif")" /> 数据导入中请等待...
+    <img src="@Url.Content("~/Content/Images/Loading.gif")" />
+    数据导入中请等待...
 </div>
 <p>（说明：导入数据的Excel模板，请到“设置/模板下载”内获取）</p>
 <script type="text/javascript">
@@ -68,6 +113,7 @@
         $("#aLaborSalarySection").click();
         $("#aLaborSalarySection").addClass("current");
         $("#aSalaryBatch").addClass("current");
+        var operateResult = false;
 
         $(".modalInput").overlay({
             mask: {
@@ -77,12 +123,15 @@
             },
             closeOnClick: false,
             onBeforeLoad: function () {
-                return confirm("是否将该工资表导入系统（一旦导入无法撤回）?");
+                operateResult = confirm("是否将该工资表导入系统（一旦导入无法撤回）?");
+                return operateResult;
             }
         });
 
         $("#submitButton").click(function () {
-            $("#myForm").submit();
+            if (operateResult == true) {
+                $("#myForm").submit();
+            }
         })
     });
 </script>
