@@ -1187,6 +1187,10 @@ namespace XQYC.Web.Controllers
             string salaryMonth = RequestHelper.GetValue(PassingParamValueSourceTypes.Form, "salaryMonth", "");
             DateTime salaryMonthDate = DateTimeHelper.Min;
             LaborEntity labor = LaborEntity.Empty;
+            string salarySettlementStart = RequestHelper.GetValue(PassingParamValueSourceTypes.Form, "SettlementStartDate", "");
+            string salarySettlementEnd = RequestHelper.GetValue(PassingParamValueSourceTypes.Form, "SettlementEndDate", "");
+            DateTime salarySettlementStartDate = Converter.ChangeType(salarySettlementStart,DateTimeHelper.Min);
+            DateTime salarySettlementEndDate = Converter.ChangeType(salarySettlementEnd,DateTimeHelper.Min);;
 
             #region 数据验证
             if (enterpriseKey == String.Empty)
@@ -1194,6 +1198,28 @@ namespace XQYC.Web.Controllers
                 SystemStatusInfo itemError = new SystemStatusInfo();
                 itemError.SystemStatus = SystemStatuses.Failuer;
                 itemError.Message = "无法确定企业信息";
+                infoList.Add(itemError);
+
+                this.TempData.Add("OperationResultData", infoList);
+                return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+            }
+
+            if (salarySettlementStartDate == DateTimeHelper.Min)
+            {
+                SystemStatusInfo itemError = new SystemStatusInfo();
+                itemError.SystemStatus = SystemStatuses.Failuer;
+                itemError.Message = "请选择结算开始日期信息";
+                infoList.Add(itemError);
+
+                this.TempData.Add("OperationResultData", infoList);
+                return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+            }
+
+            if (salarySettlementEndDate == DateTimeHelper.Min)
+            {
+                SystemStatusInfo itemError = new SystemStatusInfo();
+                itemError.SystemStatus = SystemStatuses.Failuer;
+                itemError.Message = "请选择结算结束日期信息";
                 infoList.Add(itemError);
 
                 this.TempData.Add("OperationResultData", infoList);
@@ -1250,6 +1276,11 @@ namespace XQYC.Web.Controllers
                 salarySummaryEntity.LaborCode = labor.LaborCode;
                 salarySummaryEntity.LaborKey = labor.UserGuid.ToString();
                 salarySummaryEntity.LaborName = labor.UserNameCN;
+                salarySummaryEntity.SalarySettlementStartDate = salarySettlementStartDate;
+                salarySummaryEntity.SalarySettlementEndDate = salarySettlementEndDate;
+
+                Logics isFirstCash = SalarySummaryBLL.Instance.IsFirstCash(enterpriseKey, labor.UserGuid.ToString());
+                salarySummaryEntity.IsFirstCash = isFirstCash;
 
                 isSuccessful = SalarySummaryBLL.Instance.Create(salarySummaryEntity);
             }
@@ -1328,6 +1359,9 @@ namespace XQYC.Web.Controllers
                 switch (entity.SalaryItemKind)
                 {
                     case SalaryItemKinds.BasicSalary:
+                        salarySummaryEntity.SalaryGrossPay += itemValueDelta;
+                        salarySummaryEntity.SalaryCashDate = entity.SalaryItemCashDate;
+                        break;
                     case SalaryItemKinds.Rewards:
                         salarySummaryEntity.SalaryGrossPay += itemValueDelta;
                         break;
@@ -1337,12 +1371,15 @@ namespace XQYC.Web.Controllers
                         break;
                     case SalaryItemKinds.EnterpriseInsurance:
                         salarySummaryEntity.EnterpriseInsuranceReal += itemValueDelta;
+                        salarySummaryEntity.InsuranceCashDate = entity.SalaryItemCashDate;
                         break;
                     case SalaryItemKinds.EnterpriseReserveFund:
                         salarySummaryEntity.EnterpriseReserveFundReal += itemValueDelta;
+                        salarySummaryEntity.ReserveFundCashDate = entity.SalaryItemCashDate;
                         break;
                     case SalaryItemKinds.EnterpriseManageFee:
                         salarySummaryEntity.EnterpriseManageFeeReal += itemValueDelta;
+                        salarySummaryEntity.EnterpriseManageFeeCashDate = entity.SalaryItemCashDate;
                         break;
                     case SalaryItemKinds.EnterpriseOtherFee:
                         salarySummaryEntity.EnterpriseOtherCostReal += itemValueDelta;
@@ -1355,6 +1392,14 @@ namespace XQYC.Web.Controllers
                         break;
                     case SalaryItemKinds.PersonalOtherFee:
                         salarySummaryEntity.PersonOtherCostReal += itemValueDelta;
+                        break;
+                    case SalaryItemKinds.EnterpriseGeneralRecruitFee:
+                        salarySummaryEntity.EnterpriseGeneralRecruitFeeReal += itemValueDelta;
+                        salarySummaryEntity.EnterpriseGeneralRecruitFeeCashDate = entity.SalaryItemCashDate;
+                        break;
+                    case SalaryItemKinds.EnterpriseOnceRecruitFee:
+                        salarySummaryEntity.EnterpriseOnceRecruitFeeReal += itemValueDelta;
+                        salarySummaryEntity.EnterpriseOnceRecruitFeeCashDate = entity.SalaryItemCashDate;
                         break;
                     case SalaryItemKinds.SalaryTax:
                         //do nothing.(工资税系统自动计算，不能录入)

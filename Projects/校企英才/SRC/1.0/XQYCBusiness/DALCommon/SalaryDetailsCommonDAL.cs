@@ -61,6 +61,7 @@ namespace XQYC.Business.DALCommon
 			    [SalaryItemKey],
 			    [SalaryItemValue],
 			    [SalaryItemKind],
+                [SalaryItemCashDate],
 			    [PropertyNames],
 			    [PropertyValues]
             ) 
@@ -70,6 +71,7 @@ namespace XQYC.Business.DALCommon
 			    {0}SalaryItemKey,
 			    {0}SalaryItemValue,
 			    {0}SalaryItemKind,
+                {0}SalaryItemCashDate,
 			    {0}PropertyNames,
 			    {0}PropertyValues
             )", ParameterNamePrefix);
@@ -88,6 +90,7 @@ namespace XQYC.Business.DALCommon
 				    [SalaryItemKey] = {0}SalaryItemKey,
 				    [SalaryItemValue] = {0}SalaryItemValue,
 				    [SalaryItemKind] = {0}SalaryItemKind,
+                    [SalaryItemCashDate] = {0}SalaryItemCashDate,
 				    [PropertyNames] = {0}PropertyNames,
 				    [PropertyValues] = {0}PropertyValues
             Where [SalaryDetailsID] = {0}SalaryDetailsID", ParameterNamePrefix);
@@ -110,6 +113,7 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("SalaryDetailsGuid",entity.SalaryDetailsGuid),
 			    GenerateParameter("SalarySummaryKey",entity.SalarySummaryKey?? String.Empty),
 			    GenerateParameter("SalaryItemKey",entity.SalaryItemKey?? String.Empty),
+                GenerateParameter("SalaryItemCashDate",entity.SalaryItemCashDate),
 			    GenerateParameter("SalaryItemValue",entity.SalaryItemValue),
 			    GenerateParameter("SalaryItemKind",entity.SalaryItemKind)
             };
@@ -149,6 +153,11 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SalaryItemKind"))
                 {
                     entity.SalaryItemKind = (SalaryItemKinds)reader.GetInt32(reader.GetOrdinal("SalaryItemKind"));
+                }
+
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SalaryItemCashDate"))
+                {
+                    entity.SalaryItemCashDate = reader.GetDateTime(reader.GetOrdinal("SalaryItemCashDate"));
                 }
             }
         }

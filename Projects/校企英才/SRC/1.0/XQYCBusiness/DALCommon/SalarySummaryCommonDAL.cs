@@ -65,15 +65,27 @@ namespace XQYC.Business.DALCommon
 			    [EnterpriseContractKey],
 			    [CreateUserKey],
 			    [CreateDate],
+			    [SalaryPayStatus],
 			    [SalaryGrossPay],
 			    [SalaryRebate],
-                [SalaryRebateBeforeTax],
-                [PersonBorrow],
+			    [SalaryRebateBeforeTax],
+			    [PersonBorrow],
 			    [IsCostCalculated],
-			    [SalaryPayStatus],
+			    [SalaryCashDate],
+			    [InsuranceCashDate],
+			    [ReserveFundCashDate],
 			    [EnterpriseManageFeeReal],
 			    [EnterpriseManageFeeCalculated],
 			    [EnterpriseManageFeeCalculatedFix],
+			    [EnterpriseManageFeeCashDate],
+			    [EnterpriseGeneralRecruitFeeReal],
+			    [EnterpriseGeneralRecruitFeeCalculated],
+			    [EnterpriseGeneralRecruitFeeCalculatedFix],
+			    [EnterpriseGeneralRecruitFeeCashDate],
+			    [EnterpriseOnceRecruitFeeReal],
+			    [EnterpriseOnceRecruitFeeCalculated],
+			    [EnterpriseOnceRecruitFeeCalculatedFix],
+			    [EnterpriseOnceRecruitFeeCashDate],
 			    [EnterpriseInsuranceReal],
 			    [EnterpriseInsuranceCalculated],
 			    [EnterpriseInsuranceCalculatedFix],
@@ -102,10 +114,14 @@ namespace XQYC.Business.DALCommon
 			    [PersonOtherCostCalculated],
 			    [PersonOtherCostCalculatedFix],
 			    [SalaryTaxReal],
-			    [SalaryTaxCalculated],			    
-                [SalaryMemo],
+			    [SalaryTaxCalculated],
+			    [SalaryMemo],
 			    [IsCheckPast],
 			    [CheckMemo],
+			    [IsLocked],
+			    [SalarySettlementStartDate],
+			    [SalarySettlementEndDate],
+			    [IsFirstCash],
 			    [PropertyNames],
 			    [PropertyValues]
             ) 
@@ -119,15 +135,27 @@ namespace XQYC.Business.DALCommon
 			    {0}EnterpriseContractKey,
 			    {0}CreateUserKey,
 			    {0}CreateDate,
+			    {0}SalaryPayStatus,
 			    {0}SalaryGrossPay,
 			    {0}SalaryRebate,
-                {0}SalaryRebateBeforeTax,
-                {0}PersonBorrow,
+			    {0}SalaryRebateBeforeTax,
+			    {0}PersonBorrow,
 			    {0}IsCostCalculated,
-			    {0}SalaryPayStatus,
+			    {0}SalaryCashDate,
+			    {0}InsuranceCashDate,
+			    {0}ReserveFundCashDate,
 			    {0}EnterpriseManageFeeReal,
 			    {0}EnterpriseManageFeeCalculated,
 			    {0}EnterpriseManageFeeCalculatedFix,
+			    {0}EnterpriseManageFeeCashDate,
+			    {0}EnterpriseGeneralRecruitFeeReal,
+			    {0}EnterpriseGeneralRecruitFeeCalculated,
+			    {0}EnterpriseGeneralRecruitFeeCalculatedFix,
+			    {0}EnterpriseGeneralRecruitFeeCashDate,
+			    {0}EnterpriseOnceRecruitFeeReal,
+			    {0}EnterpriseOnceRecruitFeeCalculated,
+			    {0}EnterpriseOnceRecruitFeeCalculatedFix,
+			    {0}EnterpriseOnceRecruitFeeCashDate,
 			    {0}EnterpriseInsuranceReal,
 			    {0}EnterpriseInsuranceCalculated,
 			    {0}EnterpriseInsuranceCalculatedFix,
@@ -160,6 +188,10 @@ namespace XQYC.Business.DALCommon
 			    {0}SalaryMemo,
 			    {0}IsCheckPast,
 			    {0}CheckMemo,
+			    {0}IsLocked,
+			    {0}SalarySettlementStartDate,
+			    {0}SalarySettlementEndDate,
+			    {0}IsFirstCash,
 			    {0}PropertyNames,
 			    {0}PropertyValues
             )", ParameterNamePrefix);
@@ -182,15 +214,27 @@ namespace XQYC.Business.DALCommon
 				[EnterpriseContractKey] = {0}EnterpriseContractKey,
 				[CreateUserKey] = {0}CreateUserKey,
 				[CreateDate] = {0}CreateDate,
+				[SalaryPayStatus] = {0}SalaryPayStatus,
 				[SalaryGrossPay] = {0}SalaryGrossPay,
 				[SalaryRebate] = {0}SalaryRebate,
-                [SalaryRebateBeforeTax]= {0}SalaryRebateBeforeTax,
-                [PersonBorrow] = {0}PersonBorrow,
+				[SalaryRebateBeforeTax] = {0}SalaryRebateBeforeTax,
+				[PersonBorrow] = {0}PersonBorrow,
 				[IsCostCalculated] = {0}IsCostCalculated,
-				[SalaryPayStatus] = {0}SalaryPayStatus,
+				[SalaryCashDate] = {0}SalaryCashDate,
+				[InsuranceCashDate] = {0}InsuranceCashDate,
+				[ReserveFundCashDate] = {0}ReserveFundCashDate,
 				[EnterpriseManageFeeReal] = {0}EnterpriseManageFeeReal,
 				[EnterpriseManageFeeCalculated] = {0}EnterpriseManageFeeCalculated,
 				[EnterpriseManageFeeCalculatedFix] = {0}EnterpriseManageFeeCalculatedFix,
+				[EnterpriseManageFeeCashDate] = {0}EnterpriseManageFeeCashDate,
+				[EnterpriseGeneralRecruitFeeReal] = {0}EnterpriseGeneralRecruitFeeReal,
+				[EnterpriseGeneralRecruitFeeCalculated] = {0}EnterpriseGeneralRecruitFeeCalculated,
+				[EnterpriseGeneralRecruitFeeCalculatedFix] = {0}EnterpriseGeneralRecruitFeeCalculatedFix,
+				[EnterpriseGeneralRecruitFeeCashDate] = {0}EnterpriseGeneralRecruitFeeCashDate,
+				[EnterpriseOnceRecruitFeeReal] = {0}EnterpriseOnceRecruitFeeReal,
+				[EnterpriseOnceRecruitFeeCalculated] = {0}EnterpriseOnceRecruitFeeCalculated,
+				[EnterpriseOnceRecruitFeeCalculatedFix] = {0}EnterpriseOnceRecruitFeeCalculatedFix,
+				[EnterpriseOnceRecruitFeeCashDate] = {0}EnterpriseOnceRecruitFeeCashDate,
 				[EnterpriseInsuranceReal] = {0}EnterpriseInsuranceReal,
 				[EnterpriseInsuranceCalculated] = {0}EnterpriseInsuranceCalculated,
 				[EnterpriseInsuranceCalculatedFix] = {0}EnterpriseInsuranceCalculatedFix,
@@ -223,6 +267,10 @@ namespace XQYC.Business.DALCommon
 				[SalaryMemo] = {0}SalaryMemo,
 				[IsCheckPast] = {0}IsCheckPast,
 				[CheckMemo] = {0}CheckMemo,
+				[IsLocked] = {0}IsLocked,
+				[SalarySettlementStartDate] = {0}SalarySettlementStartDate,
+				[SalarySettlementEndDate] = {0}SalarySettlementEndDate,
+				[IsFirstCash] = {0}IsFirstCash,
 				[PropertyNames] = {0}PropertyNames,
 				[PropertyValues] = {0}PropertyValues
         Where [SalarySummaryID] = {0}SalarySummaryID", ParameterNamePrefix);
@@ -242,56 +290,72 @@ namespace XQYC.Business.DALCommon
             List<TParameter> list = new List<TParameter>()
             {
                 GenerateParameter("SalarySummaryID",entity.SalarySummaryID),
-			    GenerateParameter("SalarySummaryGuid",entity.SalarySummaryGuid),
-			    GenerateParameter("SalaryDate",entity.SalaryDate),
-			    GenerateParameter("LaborKey",entity.LaborKey?? String.Empty),
-			    GenerateParameter("LaborName",entity.LaborName?? String.Empty),
-			    GenerateParameter("LaborCode",entity.LaborCode?? String.Empty),
-			    GenerateParameter("EnterpriseKey",entity.EnterpriseKey?? String.Empty),
-			    GenerateParameter("EnterpriseContractKey",entity.EnterpriseContractKey?? String.Empty),
-			    GenerateParameter("CreateUserKey",entity.CreateUserKey?? String.Empty),
-			    GenerateParameter("CreateDate",entity.CreateDate),
-			    GenerateParameter("SalaryGrossPay",entity.SalaryGrossPay),
-			    GenerateParameter("SalaryRebate",entity.SalaryRebate),
-                GenerateParameter("SalaryRebateBeforeTax",entity.SalaryRebateBeforeTax),
-                GenerateParameter("PersonBorrow",entity.PersonBorrow),
-			    GenerateParameter("IsCostCalculated",entity.IsCostCalculated),
-			    GenerateParameter("SalaryPayStatus",entity.SalaryPayStatus),
-			    GenerateParameter("EnterpriseManageFeeReal",entity.EnterpriseManageFeeReal),
-			    GenerateParameter("EnterpriseManageFeeCalculated",entity.EnterpriseManageFeeCalculated),
-			    GenerateParameter("EnterpriseManageFeeCalculatedFix",entity.EnterpriseManageFeeCalculatedFix),
-			    GenerateParameter("EnterpriseInsuranceReal",entity.EnterpriseInsuranceReal),
-			    GenerateParameter("EnterpriseInsuranceCalculated",entity.EnterpriseInsuranceCalculated),
-			    GenerateParameter("EnterpriseInsuranceCalculatedFix",entity.EnterpriseInsuranceCalculatedFix),
-			    GenerateParameter("EnterpriseReserveFundReal",entity.EnterpriseReserveFundReal),
-			    GenerateParameter("EnterpriseReserveFundCalculated",entity.EnterpriseReserveFundCalculated),
-			    GenerateParameter("EnterpriseReserveFundCalculatedFix",entity.EnterpriseReserveFundCalculatedFix),
-			    GenerateParameter("PersonManageFeeReal",entity.PersonManageFeeReal),
-			    GenerateParameter("PersonManageFeeCalculated",entity.PersonManageFeeCalculated),
-			    GenerateParameter("PersonManageFeeCalculatedFix",entity.PersonManageFeeCalculatedFix),
-			    GenerateParameter("PersonInsuranceReal",entity.PersonInsuranceReal),
-			    GenerateParameter("PersonInsuranceCalculated",entity.PersonInsuranceCalculated),
-			    GenerateParameter("PersonInsuranceCalculatedFix",entity.PersonInsuranceCalculatedFix),
-			    GenerateParameter("PersonReserveFundReal",entity.PersonReserveFundReal),
-			    GenerateParameter("PersonReserveFundCalculated",entity.PersonReserveFundCalculated),
-			    GenerateParameter("PersonReserveFundCalculatedFix",entity.PersonReserveFundCalculatedFix),
-			    GenerateParameter("EnterpriseMixCostReal",entity.EnterpriseMixCostReal),
-			    GenerateParameter("EnterpriseMixCostCalculated",entity.EnterpriseMixCostCalculated),
-			    GenerateParameter("EnterpriseMixCostCalculatedFix",entity.EnterpriseMixCostCalculatedFix),
-			    GenerateParameter("PersonMixCostReal",entity.PersonMixCostReal),
-			    GenerateParameter("PersonMixCostCalculated",entity.PersonMixCostCalculated),
-			    GenerateParameter("PersonMixCostCalculatedFix",entity.PersonMixCostCalculatedFix),
-			    GenerateParameter("EnterpriseOtherCostReal",entity.EnterpriseOtherCostReal),
-			    GenerateParameter("EnterpriseOtherCostCalculated",entity.EnterpriseOtherCostCalculated),
-			    GenerateParameter("EnterpriseOtherCostCalculatedFix",entity.EnterpriseOtherCostCalculatedFix),
-			    GenerateParameter("PersonOtherCostReal",entity.PersonOtherCostReal),
-			    GenerateParameter("PersonOtherCostCalculated",entity.PersonOtherCostCalculated),
-			    GenerateParameter("PersonOtherCostCalculatedFix",entity.PersonOtherCostCalculatedFix),
-                GenerateParameter("SalaryTaxReal",entity.SalaryTaxReal),
-			    GenerateParameter("SalaryTaxCalculated",entity.SalaryTaxCalculated),
-			    GenerateParameter("SalaryMemo",entity.SalaryMemo?? String.Empty),
-			    GenerateParameter("IsCheckPast",entity.IsCheckPast),
-			    GenerateParameter("CheckMemo",entity.CheckMemo?? String.Empty)
+			GenerateParameter("SalarySummaryGuid",entity.SalarySummaryGuid),
+			GenerateParameter("SalaryDate",entity.SalaryDate),
+			GenerateParameter("LaborKey",entity.LaborKey?? String.Empty),
+			GenerateParameter("LaborName",entity.LaborName?? String.Empty),
+			GenerateParameter("LaborCode",entity.LaborCode?? String.Empty),
+			GenerateParameter("EnterpriseKey",entity.EnterpriseKey?? String.Empty),
+			GenerateParameter("EnterpriseContractKey",entity.EnterpriseContractKey?? String.Empty),
+			GenerateParameter("CreateUserKey",entity.CreateUserKey?? String.Empty),
+			GenerateParameter("CreateDate",entity.CreateDate),
+			GenerateParameter("SalaryPayStatus",entity.SalaryPayStatus),
+			GenerateParameter("SalaryGrossPay",entity.SalaryGrossPay),
+			GenerateParameter("SalaryRebate",entity.SalaryRebate),
+			GenerateParameter("SalaryRebateBeforeTax",entity.SalaryRebateBeforeTax),
+			GenerateParameter("PersonBorrow",entity.PersonBorrow),
+			GenerateParameter("IsCostCalculated",entity.IsCostCalculated),
+			GenerateParameter("SalaryCashDate",entity.SalaryCashDate),
+			GenerateParameter("InsuranceCashDate",entity.InsuranceCashDate),
+			GenerateParameter("ReserveFundCashDate",entity.ReserveFundCashDate),
+			GenerateParameter("EnterpriseManageFeeReal",entity.EnterpriseManageFeeReal),
+			GenerateParameter("EnterpriseManageFeeCalculated",entity.EnterpriseManageFeeCalculated),
+			GenerateParameter("EnterpriseManageFeeCalculatedFix",entity.EnterpriseManageFeeCalculatedFix),
+			GenerateParameter("EnterpriseManageFeeCashDate",entity.EnterpriseManageFeeCashDate),
+			GenerateParameter("EnterpriseGeneralRecruitFeeReal",entity.EnterpriseGeneralRecruitFeeReal),
+			GenerateParameter("EnterpriseGeneralRecruitFeeCalculated",entity.EnterpriseGeneralRecruitFeeCalculated),
+			GenerateParameter("EnterpriseGeneralRecruitFeeCalculatedFix",entity.EnterpriseGeneralRecruitFeeCalculatedFix),
+			GenerateParameter("EnterpriseGeneralRecruitFeeCashDate",entity.EnterpriseGeneralRecruitFeeCashDate),
+			GenerateParameter("EnterpriseOnceRecruitFeeReal",entity.EnterpriseOnceRecruitFeeReal),
+			GenerateParameter("EnterpriseOnceRecruitFeeCalculated",entity.EnterpriseOnceRecruitFeeCalculated),
+			GenerateParameter("EnterpriseOnceRecruitFeeCalculatedFix",entity.EnterpriseOnceRecruitFeeCalculatedFix),
+			GenerateParameter("EnterpriseOnceRecruitFeeCashDate",entity.EnterpriseOnceRecruitFeeCashDate),
+			GenerateParameter("EnterpriseInsuranceReal",entity.EnterpriseInsuranceReal),
+			GenerateParameter("EnterpriseInsuranceCalculated",entity.EnterpriseInsuranceCalculated),
+			GenerateParameter("EnterpriseInsuranceCalculatedFix",entity.EnterpriseInsuranceCalculatedFix),
+			GenerateParameter("EnterpriseReserveFundReal",entity.EnterpriseReserveFundReal),
+			GenerateParameter("EnterpriseReserveFundCalculated",entity.EnterpriseReserveFundCalculated),
+			GenerateParameter("EnterpriseReserveFundCalculatedFix",entity.EnterpriseReserveFundCalculatedFix),
+			GenerateParameter("PersonManageFeeReal",entity.PersonManageFeeReal),
+			GenerateParameter("PersonManageFeeCalculated",entity.PersonManageFeeCalculated),
+			GenerateParameter("PersonManageFeeCalculatedFix",entity.PersonManageFeeCalculatedFix),
+			GenerateParameter("PersonInsuranceReal",entity.PersonInsuranceReal),
+			GenerateParameter("PersonInsuranceCalculated",entity.PersonInsuranceCalculated),
+			GenerateParameter("PersonInsuranceCalculatedFix",entity.PersonInsuranceCalculatedFix),
+			GenerateParameter("PersonReserveFundReal",entity.PersonReserveFundReal),
+			GenerateParameter("PersonReserveFundCalculated",entity.PersonReserveFundCalculated),
+			GenerateParameter("PersonReserveFundCalculatedFix",entity.PersonReserveFundCalculatedFix),
+			GenerateParameter("EnterpriseMixCostReal",entity.EnterpriseMixCostReal),
+			GenerateParameter("EnterpriseMixCostCalculated",entity.EnterpriseMixCostCalculated),
+			GenerateParameter("EnterpriseMixCostCalculatedFix",entity.EnterpriseMixCostCalculatedFix),
+			GenerateParameter("PersonMixCostReal",entity.PersonMixCostReal),
+			GenerateParameter("PersonMixCostCalculated",entity.PersonMixCostCalculated),
+			GenerateParameter("PersonMixCostCalculatedFix",entity.PersonMixCostCalculatedFix),
+			GenerateParameter("EnterpriseOtherCostReal",entity.EnterpriseOtherCostReal),
+			GenerateParameter("EnterpriseOtherCostCalculated",entity.EnterpriseOtherCostCalculated),
+			GenerateParameter("EnterpriseOtherCostCalculatedFix",entity.EnterpriseOtherCostCalculatedFix),
+			GenerateParameter("PersonOtherCostReal",entity.PersonOtherCostReal),
+			GenerateParameter("PersonOtherCostCalculated",entity.PersonOtherCostCalculated),
+			GenerateParameter("PersonOtherCostCalculatedFix",entity.PersonOtherCostCalculatedFix),
+			GenerateParameter("SalaryTaxReal",entity.SalaryTaxReal),
+			GenerateParameter("SalaryTaxCalculated",entity.SalaryTaxCalculated),
+			GenerateParameter("SalaryMemo",entity.SalaryMemo?? String.Empty),
+			GenerateParameter("IsCheckPast",entity.IsCheckPast),
+			GenerateParameter("CheckMemo",entity.CheckMemo?? String.Empty),
+			GenerateParameter("IsLocked",entity.IsLocked),
+			GenerateParameter("SalarySettlementStartDate",entity.SalarySettlementStartDate),
+			GenerateParameter("SalarySettlementEndDate",entity.SalarySettlementEndDate),
+			GenerateParameter("IsFirstCash",entity.IsFirstCash)
             };
 
             paraList.AddRange(list);
@@ -346,6 +410,10 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.CreateDate = reader.GetDateTime(reader.GetOrdinal("CreateDate"));
                 }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SalaryPayStatus"))
+                {
+                    entity.SalaryPayStatus = (SalaryPayStatuses)reader.GetInt32(reader.GetOrdinal("SalaryPayStatus"));
+                }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SalaryGrossPay"))
                 {
                     entity.SalaryGrossPay = reader.GetDecimal(reader.GetOrdinal("SalaryGrossPay"));
@@ -358,19 +426,25 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.SalaryRebateBeforeTax = reader.GetDecimal(reader.GetOrdinal("SalaryRebateBeforeTax"));
                 }
-
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "PersonBorrow"))
                 {
                     entity.PersonBorrow = reader.GetDecimal(reader.GetOrdinal("PersonBorrow"));
                 }
-
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "IsCostCalculated"))
                 {
                     entity.IsCostCalculated = (Logics)reader.GetInt32(reader.GetOrdinal("IsCostCalculated"));
                 }
-                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SalaryPayStatus"))
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SalaryCashDate"))
                 {
-                    entity.SalaryPayStatus = (SalaryPayStatuses)reader.GetInt32(reader.GetOrdinal("SalaryPayStatus"));
+                    entity.SalaryCashDate = reader.GetDateTime(reader.GetOrdinal("SalaryCashDate"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "InsuranceCashDate"))
+                {
+                    entity.InsuranceCashDate = reader.GetDateTime(reader.GetOrdinal("InsuranceCashDate"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "ReserveFundCashDate"))
+                {
+                    entity.ReserveFundCashDate = reader.GetDateTime(reader.GetOrdinal("ReserveFundCashDate"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseManageFeeReal"))
                 {
@@ -383,6 +457,42 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseManageFeeCalculatedFix"))
                 {
                     entity.EnterpriseManageFeeCalculatedFix = reader.GetDecimal(reader.GetOrdinal("EnterpriseManageFeeCalculatedFix"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseManageFeeCashDate"))
+                {
+                    entity.EnterpriseManageFeeCashDate = reader.GetDateTime(reader.GetOrdinal("EnterpriseManageFeeCashDate"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseGeneralRecruitFeeReal"))
+                {
+                    entity.EnterpriseGeneralRecruitFeeReal = reader.GetDecimal(reader.GetOrdinal("EnterpriseGeneralRecruitFeeReal"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseGeneralRecruitFeeCalculated"))
+                {
+                    entity.EnterpriseGeneralRecruitFeeCalculated = reader.GetDecimal(reader.GetOrdinal("EnterpriseGeneralRecruitFeeCalculated"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseGeneralRecruitFeeCalculatedFix"))
+                {
+                    entity.EnterpriseGeneralRecruitFeeCalculatedFix = reader.GetDecimal(reader.GetOrdinal("EnterpriseGeneralRecruitFeeCalculatedFix"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseGeneralRecruitFeeCashDate"))
+                {
+                    entity.EnterpriseGeneralRecruitFeeCashDate = reader.GetDateTime(reader.GetOrdinal("EnterpriseGeneralRecruitFeeCashDate"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseOnceRecruitFeeReal"))
+                {
+                    entity.EnterpriseOnceRecruitFeeReal = reader.GetDecimal(reader.GetOrdinal("EnterpriseOnceRecruitFeeReal"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseOnceRecruitFeeCalculated"))
+                {
+                    entity.EnterpriseOnceRecruitFeeCalculated = reader.GetDecimal(reader.GetOrdinal("EnterpriseOnceRecruitFeeCalculated"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseOnceRecruitFeeCalculatedFix"))
+                {
+                    entity.EnterpriseOnceRecruitFeeCalculatedFix = reader.GetDecimal(reader.GetOrdinal("EnterpriseOnceRecruitFeeCalculatedFix"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseOnceRecruitFeeCashDate"))
+                {
+                    entity.EnterpriseOnceRecruitFeeCashDate = reader.GetDateTime(reader.GetOrdinal("EnterpriseOnceRecruitFeeCashDate"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseInsuranceReal"))
                 {
@@ -511,6 +621,22 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CheckMemo"))
                 {
                     entity.CheckMemo = reader.GetString(reader.GetOrdinal("CheckMemo"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "IsLocked"))
+                {
+                    entity.IsLocked = (Logics)reader.GetInt32(reader.GetOrdinal("IsLocked"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SalarySettlementStartDate"))
+                {
+                    entity.SalarySettlementStartDate = reader.GetDateTime(reader.GetOrdinal("SalarySettlementStartDate"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "SalarySettlementEndDate"))
+                {
+                    entity.SalarySettlementEndDate = reader.GetDateTime(reader.GetOrdinal("SalarySettlementEndDate"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "IsFirstCash"))
+                {
+                    entity.IsFirstCash = (Logics)reader.GetInt32(reader.GetOrdinal("IsFirstCash"));
                 }
             }
         }

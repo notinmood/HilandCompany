@@ -54,9 +54,9 @@
             </th>
             <th style="width: 180px">工资项名称
             </th>
-            <th style="width: 80px">数值
+            <th style="width: 180px">金额
             </th>
-            <th>状态
+            <th>回款时间
             </th>
         </tr>
         @foreach (SalaryDetailsEntity entity in Model)
@@ -80,7 +80,7 @@
                 </td>
                 <td>@salaryValue.ToString("0.00")
                 </td>
-                <td>
+                <td>@DateTimeHelper.ToSaftString(entity.SalaryItemCashDate)
                 </td>
             </tr>   
         }

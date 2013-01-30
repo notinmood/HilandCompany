@@ -50,6 +50,13 @@ namespace XQYC.Business.Entity
 			set {salaryItemValue = value;}
 		}
 
+        private DateTime salaryItemCashDate = DateTimeHelper.Min;
+        public DateTime SalaryItemCashDate
+        {
+            get { return salaryItemCashDate; }
+            set { salaryItemCashDate = value; }
+        }
+
         private SalaryItemKinds salaryItemKind;
         /// <summary>
         /// 

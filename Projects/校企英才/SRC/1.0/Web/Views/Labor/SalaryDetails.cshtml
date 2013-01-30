@@ -39,6 +39,12 @@
                 <td>@Html.TextBoxFor(entity => entity.SalaryItemValue)
                 </td>
             </tr>
+            <tr>
+                <td>回款日期:
+                </td>
+                <td>@HtmlHelperEx.DateInput(Html,"SalaryItemCashDate", HiLand.Utility.Data.DateTimeHelper.ToSaftString( Model.SalaryItemCashDate))
+                </td>
+            </tr>
         </table>
         <input type="hidden" id="ItemKey" name="ItemKey" value="@Model.SalaryDetailsGuid" />
         @Html.HiddenFor(entity=>entity.SalaryDetailsID)
@@ -50,6 +56,17 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#submitButton").click(function () {
+            var userGuid = $("#SalaryItemKey").val();
+            if (userGuid == "") {
+                alert("请先输入费用项名称，谢谢！");
+                return false;
+            }
+            var userGuid = $("#SalaryItemCashDate").val();
+            if (userGuid == "") {
+                alert("请先选择回款日期，谢谢！");
+                return false;
+            }
+
             submitAndRedirect("#formContainer form", '@Url.Action("SalaryDetailsList", new { itemKey = Model.SalarySummaryKey })');
         });
     });

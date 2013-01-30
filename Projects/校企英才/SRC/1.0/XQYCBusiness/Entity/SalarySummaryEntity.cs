@@ -232,6 +232,27 @@ namespace XQYC.Business.Entity
             set { isCostCalculated = value; }
         }
 
+        private DateTime salaryCashDate = DateTimeHelper.Min;
+        public DateTime SalaryCashDate
+        {
+            get { return salaryCashDate; }
+            set { salaryCashDate = value; }
+        }
+
+        private DateTime insuranceCashDate = DateTimeHelper.Min;
+        public DateTime InsuranceCashDate
+        {
+            get { return insuranceCashDate; }
+            set { insuranceCashDate = value; }
+        }
+
+        private DateTime reserveFundCashDate = DateTimeHelper.Min;
+        public DateTime ReserveFundCashDate
+        {
+            get { return reserveFundCashDate; }
+            set { reserveFundCashDate = value; }
+        }
+
         private SalaryPayStatuses salaryPayStatus = SalaryPayStatuses.PaidToOrgnization;
         public SalaryPayStatuses SalaryPayStatus
         {
@@ -278,6 +299,89 @@ namespace XQYC.Business.Entity
         {
             get { return enterpriseManageFeeCalculatedFix; }
             set { enterpriseManageFeeCalculatedFix = value; }
+        }
+
+        private DateTime enterpriseManageFeeCashDate = DateTimeHelper.Min;
+        public DateTime EnterpriseManageFeeCashDate
+        {
+            get { return enterpriseManageFeeCashDate; }
+            set { enterpriseManageFeeCashDate = value; }
+        }
+
+        private decimal enterpriseGeneralRecruitFeeReal;
+        public decimal EnterpriseGeneralRecruitFeeReal
+        {
+            get { return enterpriseGeneralRecruitFeeReal; }
+            set { enterpriseGeneralRecruitFeeReal = value; }
+        }
+
+        private decimal enterpriseGeneralRecruitFeeCalculated;
+        public decimal EnterpriseGeneralRecruitFeeCalculated
+        {
+            get 
+            {
+                if (enterpriseGeneralRecruitFeeCalculatedFix.HasValue == true)
+                {
+                    return enterpriseGeneralRecruitFeeCalculatedFix.Value;
+                }
+                else
+                {
+                    return enterpriseGeneralRecruitFeeCalculated;
+                }
+            }
+            set { enterpriseGeneralRecruitFeeCalculated = value; }
+        }
+
+        private decimal? enterpriseGeneralRecruitFeeCalculatedFix= null;
+        public decimal? EnterpriseGeneralRecruitFeeCalculatedFix
+        {
+            get { return enterpriseGeneralRecruitFeeCalculatedFix; }
+            set { enterpriseGeneralRecruitFeeCalculatedFix = value; }
+        }
+
+        private DateTime enterpriseGeneralRecruitFeeCashDate = DateTimeHelper.Min;
+        public DateTime EnterpriseGeneralRecruitFeeCashDate
+        {
+            get { return enterpriseGeneralRecruitFeeCashDate; }
+            set { enterpriseGeneralRecruitFeeCashDate = value; }
+        }
+
+        private decimal enterpriseOnceRecruitFeeReal;
+        public decimal EnterpriseOnceRecruitFeeReal
+        {
+            get { return enterpriseOnceRecruitFeeReal; }
+            set { enterpriseOnceRecruitFeeReal = value; }
+        }
+
+        private decimal enterpriseOnceRecruitFeeCalculated;
+        public decimal EnterpriseOnceRecruitFeeCalculated
+        {
+            get 
+            {
+                if (enterpriseOnceRecruitFeeCalculatedFix.HasValue == true)
+                {
+                    return enterpriseOnceRecruitFeeCalculatedFix.Value;
+                }
+                else
+                {
+                    return enterpriseOnceRecruitFeeCalculated;
+                }
+            }
+            set { enterpriseOnceRecruitFeeCalculated = value; }
+        }
+
+        private decimal? enterpriseOnceRecruitFeeCalculatedFix= null;
+        public decimal? EnterpriseOnceRecruitFeeCalculatedFix
+        {
+            get { return enterpriseOnceRecruitFeeCalculatedFix; }
+            set { enterpriseOnceRecruitFeeCalculatedFix = value; }
+        }
+
+        private DateTime enterpriseOnceRecruitFeeCashDate = DateTimeHelper.Min;
+        public DateTime EnterpriseOnceRecruitFeeCashDate
+        {
+            get { return enterpriseOnceRecruitFeeCashDate; }
+            set { enterpriseOnceRecruitFeeCashDate = value; }
         }
 
         private decimal enterpriseInsuranceReal;
@@ -620,6 +724,39 @@ namespace XQYC.Business.Entity
             set { checkMemo = value; }
         }
 
+        private DateTime salarySettlementStartDate = DateTimeHelper.Min;
+        public DateTime SalarySettlementStartDate
+        {
+            get { return salarySettlementStartDate; }
+            set { salarySettlementStartDate = value; }
+        }
+
+        private DateTime salarySettlementEndDate = DateTimeHelper.Min;
+        public DateTime SalarySettlementEndDate
+        {
+            get { return salarySettlementEndDate; }
+            set { salarySettlementEndDate = value; }
+        }
+
+        private Logics isLocked= Logics.False;
+        /// <summary>
+        /// 是否为锁定状态
+        /// </summary>
+        public Logics IsLocked
+        {
+            get { return isLocked; }
+            set { isLocked = value; }
+        }
+
+        private Logics isFirstCash= Logics.False;
+        /// <summary>
+        /// 是否为首次回款
+        /// </summary>
+        public Logics IsFirstCash
+        {
+            get { return isFirstCash; }
+            set { isFirstCash = value; }
+        }
         #endregion
 
         #region 延迟属性

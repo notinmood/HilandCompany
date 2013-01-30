@@ -64,6 +64,18 @@ namespace XQYC.Business.Enums
         EnterpriseMixCost = 35,
 
         /// <summary>
+        /// 招工费(企业部分)
+        /// </summary>
+        [EnumItemDescription("zh-CN", "招工费(企业部分)")]
+        EnterpriseGeneralRecruitFee= 36,
+
+        /// <summary>
+        /// 一次性招工费(企业部分)
+        /// </summary>
+        [EnumItemDescription("zh-CN", "一次性招工费(企业部分)")]
+        EnterpriseOnceRecruitFee=37,
+
+        /// <summary>
         /// 保险(个人部分)
         /// </summary>
         [EnumItemDescription("zh-CN", "保险(个人部分)")]

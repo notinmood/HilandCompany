@@ -5,6 +5,7 @@ using HiLand.General.BLL;
 using HiLand.General.Entity;
 using HiLand.Utility.Data;
 using HiLand.Utility.Entity;
+using HiLand.Utility.Enums;
 using HiLand.Utility.Mathes.StringParse;
 using XQYC.Business.DAL;
 using XQYC.Business.Entity;
@@ -59,7 +60,7 @@ namespace XQYC.Business.BLL
         }
 
         /// <summary>
-        /// 获取某人某个月的薪资数据
+        /// 获取某人某个月在某企业的薪资数据
         /// </summary>
         /// <param name="enterpriseKey"></param>
         /// <param name="laborKey"></param>
@@ -98,6 +99,35 @@ namespace XQYC.Business.BLL
             DateTime salaryDateLastDay = DateTimeHelper.GetFirstDateOfMonth(salaryMonth.AddMonths(1));
             whereClause += string.Format(" AND SalaryDate>='{0}' AND SalaryDate<'{1}' ", salaryDateFirstDay, salaryDateLastDay);
             return base.GetList(whereClause);
+        }
+
+        /// <summary>
+        /// 判断某人员在某企业是否为首次回款
+        /// </summary>
+        /// <param name="enterpriseKey"></param>
+        /// <param name="laborKey"></param>
+        /// <param name="excudeSalarySummaryKey">排除在外的工资摘要Key</param>
+        /// <returns></returns>
+        public Logics IsFirstCash(string enterpriseKey, string laborKey, string excudeSalarySummaryKey = "")
+        {
+            Logics result = Logics.False;
+            string sqlClause = string.Format("select count(*) from XQYCSalarySummary where EnterpriseKey='{0}' AND LaborKey='{1}' ", enterpriseKey, laborKey);
+            if (string.IsNullOrWhiteSpace(excudeSalarySummaryKey) == false)
+            {
+                sqlClause += string.Format(" AND SalarySummaryGuid !='{0}' ", excudeSalarySummaryKey);
+            }
+
+            int valueCount = Convert.ToInt32(base.GetScalar(sqlClause));
+            if (valueCount > 0)
+            {
+                result = Logics.False;
+            }
+            else
+            {
+                result = Logics.True;
+            }
+
+            return result;
         }
 
         #region 私有方法

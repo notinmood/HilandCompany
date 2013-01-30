@@ -60,7 +60,7 @@
             <table id="MyTable_tableColumnClone" border="1" cellspacing="0" cellpadding="0"></table>
         </div>
         <div id="MyTable_tableData">
-            <table id="MyTable" style="width: 3500px" class="grid" border="1" cellspacing="0" cellpadding="0">
+            <table id="MyTable" style="width: 4600px" class="grid" border="1" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
                         <th style="width: 120px">操作
@@ -85,13 +85,27 @@
                         </th>
                         <th style="width: 140px">企业保险(计算)
                         </th>
+                        <th style="width: 140px">企业保险回款日期
+                        </th>
                         <th style="width: 140px">企业公积金(实收)
                         </th>
                         <th style="width: 140px">企业公积金(计算)
                         </th>
+                        <th style="width: 150px">企业公积金回款日期
+                        </th>
                         <th style="width: 140px">企业管理费(实收)
                         </th>
                         <th style="width: 140px">企业管理费(计算)
+                        </th>
+                        <th style="width: 150px">企业管理费回款日期
+                        </th>
+                        <th style="width: 140px">企业招工费(实收)
+                        </th>
+                        <th style="width: 150px">企业招工费回款日期
+                        </th>
+                        <th style="width: 140px">企业一次性招工费(实收)
+                        </th>
+                        <th style="width: 150px">企业一次性招工费回款日期
                         </th>
                         <th style="width: 140px">个人保险费用(实扣)
                         </th>
@@ -169,11 +183,11 @@
                             <td>
                                 @if (isCheckOk == true)
                                 { 
-                                <span class="checkSpan">通过</span>
+                                    <span class="checkSpan">通过</span>
                                 }
                                 else
                                 {
-                                <span class="checkSpan">未通过</span>
+                                    <span class="checkSpan">未通过</span>
                                 }
                             </td>
                             <td>@entity.Labor.CurrentBankAccountNumber
@@ -188,13 +202,32 @@
                             </td>
                             <td>@entity.EnterpriseInsuranceCalculated.ToString("0.00")
                             </td>
+                            <td>
+                                @DateTimeHelper.ToSaftString(entity.InsuranceCashDate)
+                            </td>
                             <td>@entity.EnterpriseReserveFundReal.ToString("0.00")
                             </td>
                             <td>@entity.EnterpriseReserveFundCalculated.ToString("0.00")
                             </td>
+                            <td>
+                                @DateTimeHelper.ToSaftString(entity.ReserveFundCashDate)
+                            </td>
                             <td>@entity.EnterpriseManageFeeReal.ToString("0.00")
                             </td>
                             <td>@entity.EnterpriseManageFeeCalculated.ToString("0.00")
+                            </td>
+                            <td>
+                                @DateTimeHelper.ToSaftString(entity.EnterpriseManageFeeCashDate)
+                            </td>
+                            <td>@entity.EnterpriseGeneralRecruitFeeReal.ToString("0.00")
+                            </td>
+                            <td>
+                                @DateTimeHelper.ToSaftString(entity.EnterpriseGeneralRecruitFeeCashDate)
+                            </td>
+                            <td>@entity.EnterpriseOnceRecruitFeeReal.ToString("0.00")
+                            </td>
+                            <td>
+                                @DateTimeHelper.ToSaftString(entity.EnterpriseOnceRecruitFeeCashDate)
                             </td>
                             <td>@entity.PersonInsuranceReal.ToString("0.00")
                             </td>
@@ -275,10 +308,9 @@
                 $("#EditDIV").load(url);
             });
 
-            $(".checkSpan").each(function (i,element) {
-                if ($(this).text() == "未通过")
-                {
-                    $(this).parents("tr").css({"backgroundColor":"#c00"});
+            $(".checkSpan").each(function (i, element) {
+                if ($(this).text() == "未通过") {
+                    $(this).parents("tr").css({ "backgroundColor": "#c00" });
                 }
             });
         });
