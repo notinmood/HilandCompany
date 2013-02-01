@@ -847,8 +847,7 @@ namespace XQYC.Web.Controllers
             if (jobingDateStart != DateTimeHelper.Min && jobingDateEnd != DateTimeHelper.Min)
             {
                 whereClause = whereClause.Substring(0, whereClause.IndexOf("JobingDate"));
-
-                whereClause= whereClause.TrimEnd(' ','(').ToLower();
+                whereClause = whereClause.TrimEnd(' ', '(').ToLower();
 
                 if (whereClause.EndsWith("and") || whereClause.EndsWith("or"))
                 {
@@ -1189,8 +1188,8 @@ namespace XQYC.Web.Controllers
             LaborEntity labor = LaborEntity.Empty;
             string salarySettlementStart = RequestHelper.GetValue(PassingParamValueSourceTypes.Form, "SettlementStartDate", "");
             string salarySettlementEnd = RequestHelper.GetValue(PassingParamValueSourceTypes.Form, "SettlementEndDate", "");
-            DateTime salarySettlementStartDate = Converter.ChangeType(salarySettlementStart,DateTimeHelper.Min);
-            DateTime salarySettlementEndDate = Converter.ChangeType(salarySettlementEnd,DateTimeHelper.Min);;
+            DateTime salarySettlementStartDate = Converter.ChangeType(salarySettlementStart, DateTimeHelper.Min);
+            DateTime salarySettlementEndDate = Converter.ChangeType(salarySettlementEnd, DateTimeHelper.Min); ;
 
             #region 数据验证
             if (enterpriseKey == String.Empty)
@@ -1412,6 +1411,124 @@ namespace XQYC.Web.Controllers
             }
 
             return RedirectToAction("SalaryDetailsList", new { itemKey = entity.SalarySummaryKey });
+        }
+
+
+        public ActionResult SalaryDeleteByEnterprise()
+        {
+            List<SystemStatusInfo> infoList = new List<SystemStatusInfo>();
+            string returnUrl = Url.Action("SalaryListPreSelector");
+
+            string enterpriseKey = RequestHelper.GetValue("EnterpriseName_Value");
+            string enterpriseName = RequestHelper.GetValue("EnterpriseName");
+            string salaryMonth = RequestHelper.GetValue("SalaryMonth");
+            salaryMonth = HttpUtility.UrlDecode(salaryMonth);
+            string salaryDateString = salaryMonth + "/1";
+
+            SalarySummaryBLL.Instance.DeleteList(enterpriseKey, Converter.ChangeType(salaryDateString,DateTimeHelper.Min));
+
+            SystemStatusInfo itemError = new SystemStatusInfo();
+            itemError.SystemStatus = SystemStatuses.Success;
+            itemError.Message = string.Format("企业【{0}】【{1}】月份的薪资数据已经被成功删除。", enterpriseName, salaryMonth);
+            infoList.Add(itemError);
+            this.TempData.Add("OperationResultData", infoList);
+            return RedirectToAction("OperationResults", "System", new { returnUrl = returnUrl });
+        }
+
+        /// <summary>
+        /// 删除工资
+        /// </summary>
+        /// <param name="itemKey"></param>
+        /// <returns></returns>
+        public ActionResult SalaryDelete(string itemKey)
+        {
+            //1.删除Summary内的信息
+            bool isSuccessful= SalarySummaryBLL.Instance.Delete(itemKey);
+
+            //2.删除Details内的信息
+            if (isSuccessful == true)
+            {
+                Guid summaryGuid = GuidHelper.TryConvert(itemKey);
+                if (summaryGuid != Guid.Empty)
+                {
+                    SalaryDetailsBLL.Instance.DeleteList(summaryGuid);
+                }
+            }
+
+            string url = RequestHelper.GetValue("returnUrl");
+            bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
+            if (isUsingCompress == true)
+            {
+                url = CompressHelper.Decompress(url);
+            }
+            return Redirect(url);
+        }
+
+        /// <summary>
+        /// 删除工资
+        /// </summary>
+        /// <param name="itemKeys"></param>
+        /// <returns></returns>
+        public ActionResult SalaryDeleteBatch(string itemKeys)
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 删除工资
+        /// </summary>
+        /// <param name="itemKeys"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SalaryDeleteBatch(string itemKeys,bool isOnlyPlaceHolder= true)
+        {
+            bool isSuccessful = false;
+            string displayMessage = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(itemKeys) == true)
+            {
+                isSuccessful = false;
+                displayMessage = "请先选择至少一条数据，谢谢！";
+            }
+            else
+            {
+                List<string> salarySummaryGuidList = JsonHelper.DeSerialize<List<string>>(itemKeys);
+                if (salarySummaryGuidList.Count == 1 && salarySummaryGuidList[0].ToLower() == "on")
+                {
+                    isSuccessful = false;
+                    displayMessage = "请先选择至少一条数据，谢谢！";
+                }
+                else
+                {
+                    foreach (string item in salarySummaryGuidList)
+                    {
+                        //1.删除Summary内的信息
+                        isSuccessful = SalarySummaryBLL.Instance.Delete(item);
+
+                        //2.删除Details内的信息
+                        if (isSuccessful == true)
+                        {
+                            Guid summaryGuid = GuidHelper.TryConvert(item);
+                            if (summaryGuid != Guid.Empty)
+                            {
+                                SalaryDetailsBLL.Instance.DeleteList(summaryGuid);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+
+            //string url = RequestHelper.GetValue("returnUrl");
+            //bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
+            //if (isUsingCompress == true)
+            //{
+            //    url = CompressHelper.Decompress(url);
+            //}
+
+            //url = RequestHelper.DecodeUrl(url);
+            //return Redirect(url);
         }
 
         /// <summary>
@@ -1952,6 +2069,27 @@ namespace XQYC.Web.Controllers
             string whereClause = " 1=1 ";
 
             whereClause += " AND " + QueryControlHelper.GetQueryCondition("QueryControl");
+
+            //SalaryDate
+            DateTime salaryDate = DateTimeHelper.Min;
+            if (whereClause.Contains("SalaryDate"))
+            {
+                string salaryDateStringAll = whereClause.Substring(whereClause.IndexOf("SalaryDate"));
+                string salaryDateStringNoLeftBlacket = salaryDateStringAll.Substring(salaryDateStringAll.IndexOf("'") + 1);
+                string salaryDateString = salaryDateStringNoLeftBlacket.Substring(0, salaryDateStringNoLeftBlacket.IndexOf("'"));
+                salaryDate = Converter.ChangeType<DateTime>(salaryDateString, DateTimeHelper.Min);
+            }
+
+            if (salaryDate != DateTimeHelper.Min)
+            {
+                whereClause = whereClause.Substring(0, whereClause.IndexOf("SalaryDate"));
+                whereClause = whereClause.TrimEnd(' ', '(').ToLower();
+
+                if (whereClause.EndsWith("and") || whereClause.EndsWith("or"))
+                {
+                    whereClause += string.Format(" SalaryDate='{0}' ", salaryDate.ToShortDateString());
+                }
+            }
 
             string orderClause = "SalarySummaryID DESC";
 

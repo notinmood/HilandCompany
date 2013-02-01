@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "SalaryDeleteBatch";
+    Layout = null;
+}
+
+请稍候，数据删除中...
+<div id="formContainer">
+    @using (Html.BeginForm())
+    {
+
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        submitAndRedirect("#formContainer form");
+    });
+</script>

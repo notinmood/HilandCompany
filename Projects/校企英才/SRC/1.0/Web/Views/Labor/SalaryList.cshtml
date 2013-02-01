@@ -17,6 +17,14 @@
 @{
     ViewBag.Title = "Index";
     string currentUrl = RequestHelper.CurrentFullUrl;
+
+    bool isUsingCompress = false;
+    if (currentUrl.Length > 512)
+    {
+        isUsingCompress = true;
+        currentUrl = CompressHelper.Compress(currentUrl);
+    }
+    
     string enterpriseKey = RequestHelper.GetValue("enterpriseKey");
     string salaryMonth = RequestHelper.GetValue("SalaryMonth");
 
@@ -46,6 +54,7 @@
         <div class="btn-group">
             @Html.HiA("newDisplayA").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("SalaryItem", "Labor").Render(new { rel = "#EditDIV" })
             @Html.HiA("salaryListCheck").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-refresh icon-white\"></i>应付薪资人员校验").ACA("SalaryListCheck", "Labor").RouteValue(new { enterpriseKey = enterpriseKey, salaryMonth = salaryMonth }).Render(new { rel = "#EditDIV" })
+            @Html.HiA("salaryDeleteBatch").CssClassName("modalInput btn btn-warning salaryDeleteBatch").Value("<i class=\"icon-remove icon-white\"></i>删除").ACA("SalaryDeleteBatch", "Labor").Render(new { rel = "#EditDIV" })
             @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)
         </div>
     </div>
@@ -63,7 +72,7 @@
             <table id="MyTable" style="width: 4600px" class="grid" border="1" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
-                        <th style="width: 120px">操作
+                        <th style="width: 150px"><input type="checkbox" class="allCheckboxSelector" />操作
                         </th>
                         <th style="width: 60px">姓名
                         </th>
@@ -171,8 +180,10 @@
                         
                         <tr>
                             <td>
+                                <input type="checkbox" name="itemCheckboxSelector" class="checkboxSelector" value="@entityGuid"/>
                                 @Html.HiA().CssClassName("salaryDetailsList").Value("<i class=\"icon-align-justify\"></i>详情").ACA("SalaryDetailsList", "Labor").RouteValue(new { itemKey = entity.SalarySummaryGuid, returnUrl = currentUrl }).Render()
                                 @Html.HiA().CssClassName("modalInput salaryCalculateFix " + @entityGuid).Value("<i class=\"icon-pencil\"></i>修正").ACA("SalaryCalculateFix", "Labor").Render(new { rel = "#EditDIV", itemKey = entity.SalarySummaryGuid })
+                                @Html.HiA().CssClassName("modalInput delete " + @entityGuid).Value("<i class=\"icon-remove\"></i>删除").ACA("SalaryDelete", "Labor").RouteValue(new { itemKey = entity.SalarySummaryGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()
                             </td>
                             <td>@entity.LaborName
                             </td>
@@ -317,6 +328,30 @@
                 if ($(this).text() == "未通过") {
                     $(this).parents("tr").css({ "backgroundColor": "#c00" });
                 }
+            });
+
+            $(".allCheckboxSelector").click(function () {
+                var selectedStatus = $(this).attr("checked");
+                if (selectedStatus == "checked") {
+                    $(":checkbox", $("#MyTable_tableColumnClone")).attr("checked", true);
+                }
+                else {
+                    $(":checkbox", $("#MyTable_tableColumnClone")).attr("checked", false);
+                }
+            });
+
+            $(".delete").click(function () {
+                return confirm("是否要删除选中的数据？");
+            });
+
+            $(".salaryDeleteBatch").click(function () {
+                return confirm("是否要删除选中的数据？");
+            });
+
+            $("#salaryDeleteBatch").click(function () {
+                var itemKeys = JSON.stringify($("input:checked").map(function () { return $(this).val(); }).get(), null, null);
+                var url = '@Url.Action("SalaryDeleteBatch")?r=' + Math.random() + '&itemKeys=' + itemKeys + '&returnUrl='+ encodeURIComponent('@currentUrl') +'&isUsingCompress=@isUsingCompress';
+                $("#EditDIV").load(url);
             });
         });
     </script>

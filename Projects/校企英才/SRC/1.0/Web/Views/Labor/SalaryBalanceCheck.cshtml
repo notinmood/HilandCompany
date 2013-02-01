@@ -25,7 +25,8 @@
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业,人员名称,身份证号,企业信息提供人,企业开发人员,劳务人员服务人员,劳务人员业务人员,劳务人员安置人员", ConditionFieldName = "CompanyName,UserNameCN,UserCardID,ES.ProviderUserName,GE.ManageUserName,LA.ServiceUserName,LA.BusinessUserName,LA.SettleUserName", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业,人员名称,身份证号,企业信息提供人,企业开发人员,劳务人员服务人员,劳务人员业务人员,劳务人员安置人员", ConditionFieldName = "CompanyName,UserNameCN,UserCardID,ES.ProviderUserName,GE.ManageUserName,LA.ServiceUserName,LA.BusinessUserName,LA.SettleUserName", ConditionType = typeof(string) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "结算月份", ConditionFieldName = "SalaryDate", ConditionType = typeof(DateTime), AddonData = "dateFormat:yyyy/mm/01" });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "管理费回款时间,招工费回款时间,一次性招工费回款时间", ConditionFieldName = "EnterpriseManageFeeCashDate,EnterpriseGeneralRecruitFeeCashDate,EnterpriseOnceRecruitFeeCashDate", ConditionType = typeof(DateTime), AddonData = "isRegionSelector:true" });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "结算月份", ConditionFieldName = "SalaryDate", ConditionType = typeof(DateTime), AddonData = "dateFormat:yyyy/mm" });
 
     int rowNumber = 0;
 }
@@ -65,13 +66,21 @@
                         </th>
                         <th style="width: 80px">结算月份
                         </th>
-                        <th style="width: 100px">合同开始时间
+                        <th style="width: 100px">入职时间
                         </th>
-                        <th style="width: 100px">合同结束时间
-                        </th>
-                        <th style="width: 100px">合同解除时间
+                        <th style="width: 100px">离职时间
                         </th>
                         <th style="width: 80px">管理费
+                        </th>
+                        <th style="width: 120px">管理费回款时间
+                        </th>
+                        <th style="width: 80px">招工费
+                        </th>
+                        <th style="width: 120px">招工费回款时间
+                        </th>
+                        <th style="width: 110px">一次性招工费
+                        </th>
+                        <th style="width: 140px">一次性回款时间
                         </th>
                         <th style="width: 120px">企业信息提供人
                         </th>
@@ -113,11 +122,19 @@
                             </td>
                             <td>@DateTimeHelper.ToSaftShortDateString(entity.Labor.CurrentContractStartDate)
                             </td>
-                            <td>@DateTimeHelper.ToSaftShortDateString(entity.Labor.CurrentContractStopDate)
-                            </td>
                             <td>@DateTimeHelper.ToSaftShortDateString(entity.Labor.CurrentContractDiscontinueDate)
                             </td>
                             <td>@entity.EnterpriseManageFeeReal
+                            </td>
+                            <td>@DateTimeHelper.ToSaftString(entity.EnterpriseManageFeeCashDate)
+                            </td>
+                            <td>@entity.EnterpriseGeneralRecruitFeeReal
+                            </td>
+                            <td>@DateTimeHelper.ToSaftString(entity.EnterpriseGeneralRecruitFeeCashDate)
+                            </td>
+                            <td>@entity.EnterpriseOnceRecruitFeeReal
+                            </td>
+                            <td>@DateTimeHelper.ToSaftString(entity.EnterpriseOnceRecruitFeeCashDate)
                             </td>
                             <td>@laborDispatchService.ProviderUserName
                             </td>

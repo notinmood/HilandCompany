@@ -130,6 +130,18 @@ namespace XQYC.Business.BLL
             return result;
         }
 
+        /// <summary>
+        /// 按照企业和月份删除工资信息
+        /// </summary>
+        /// <param name="enterpriseKey"></param>
+        /// <param name="salaryMonth"></param>
+        /// <returns></returns>
+        public bool DeleteList(string enterpriseKey,DateTime salaryMonth)
+        {
+            string whereClause = string.Format(" EnterpriseKey='{0}' AND SalaryDate='{1}' ",enterpriseKey,salaryMonth.ToShortDateString());
+            return base.DeleteList(whereClause);
+        }
+
         #region 私有方法
         /// <summary>
         /// 计算某劳务人员各种应付费用（保险，公积金，管理费等）
