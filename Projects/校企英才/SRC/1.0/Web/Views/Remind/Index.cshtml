@@ -26,8 +26,7 @@
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "提醒标题", ConditionFieldName = "RemindTitle", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "是否已读", ConditionFieldName = "ReadStatus", ConditionType = typeof(Logics) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "类别", ConditionFieldName = "RemindCategory", ConditionType = typeof(RemindCategories) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "创建时间", ConditionFieldName = "CreateDate", ConditionType = typeof(DateTime) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "创建时间", ConditionFieldName = "CreateDate", ConditionType = typeof(DateTime) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "创建时间", ConditionFieldName = "CreateDate", ConditionType = typeof(DateTime), AddonData = "isRegionSelector:true" });
 }
 
 <h2>提醒列表</h2>

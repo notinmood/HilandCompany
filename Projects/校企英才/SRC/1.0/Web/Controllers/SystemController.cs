@@ -237,14 +237,19 @@ namespace XQYC.Web.Controllers
 
             Guid targetUserGuid = ControlHelper.GetRealValue<Guid>("TargetUser");
             string targetUserName = RequestHelper.GetValue("TargetUser");
+            if (targetUserGuid == Guid.Empty)
+            {
+                targetUserName = "共享";
+            }
 
             Guid enterpriseGuid = ControlHelper.GetRealValue<Guid>("EnterpriseName");
 
-            if (sourceUserGuid == Guid.Empty || targetUserGuid == Guid.Empty)
+            //被移交人如果为空，那么表示将源移交人的数据释放到共享库中
+            if (sourceUserGuid == Guid.Empty)
             {
                 SystemStatusInfo itemError = new SystemStatusInfo();
                 itemError.SystemStatus = SystemStatuses.Failuer;
-                itemError.Message = string.Format("请先选择移交人和被移交人信息，谢谢。");
+                itemError.Message = string.Format("请先选择移交人信息，谢谢。");
                 infoList.Add(itemError);
             }
             else

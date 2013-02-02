@@ -7,7 +7,7 @@ using HiLand.Utility.Enums.OP;
 namespace XQYC.Business.Enums
 {
     /// <summary>
-    /// 劳务派遣类型
+    /// 用工方式类型
     /// </summary>
     public enum DispatchTypes
     {
@@ -28,5 +28,11 @@ namespace XQYC.Business.Enums
         /// </summary>
         [EnumItemDescription("zh-CN", "转派遣")]
         ShiftDispatch = 20,
+
+        /// <summary>
+        /// 代理招聘
+        /// </summary>
+        [EnumItemDescription("zh-CN", "代理招聘")]
+        HireBroke=30,
     }
 }
