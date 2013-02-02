@@ -61,14 +61,14 @@ namespace XQYC.Business.Entity
             set { enterpriseContractGuid = value; }
         }
 
-        private LaborWorkStatuses laborContractStatus= LaborWorkStatuses.Worked;
+        private LaborWorkStatuses laborContractStatus = LaborWorkStatuses.Worked;
         public LaborWorkStatuses LaborContractStatus
         {
             get { return laborContractStatus; }
             set { laborContractStatus = value; }
         }
 
-        private Logics laborContractIsCurrent= Logics.True;
+        private Logics laborContractIsCurrent = Logics.True;
         public Logics LaborContractIsCurrent
         {
             get { return laborContractIsCurrent; }
@@ -130,7 +130,14 @@ namespace XQYC.Business.Entity
         /// </summary>
         public string EnterpriseInsuranceFormularKey
         {
-            get { return enterpriseInsuranceFormularKey; }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(this.enterpriseInsuranceFormularKey))
+                {
+                    this.enterpriseInsuranceFormularKey = Enterprise.DefaultEnterpriseInsuranceFormularKey;
+                }
+                return enterpriseInsuranceFormularKey;
+            }
             set { enterpriseInsuranceFormularKey = value; }
         }
 
@@ -140,7 +147,14 @@ namespace XQYC.Business.Entity
         /// </summary>
         public string EnterpriseReserveFundFormularKey
         {
-            get { return enterpriseReserveFundFormularKey; }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(this.enterpriseReserveFundFormularKey))
+                {
+                    this.enterpriseReserveFundFormularKey = Enterprise.DefaultEnterpriseReserveFundFormularKey;
+                }
+                return enterpriseReserveFundFormularKey;
+            }
             set { enterpriseReserveFundFormularKey = value; }
         }
 
@@ -150,7 +164,14 @@ namespace XQYC.Business.Entity
         /// </summary>
         public string EnterpriseManageFeeFormularKey
         {
-            get { return enterpriseManageFeeFormularKey; }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(this.enterpriseManageFeeFormularKey))
+                {
+                    this.enterpriseManageFeeFormularKey = Enterprise.DefaultEnterpriseManageFeeFormularKey;
+                }
+                return enterpriseManageFeeFormularKey;
+            }
             set { enterpriseManageFeeFormularKey = value; }
         }
 
@@ -160,7 +181,14 @@ namespace XQYC.Business.Entity
         /// </summary>
         public string EnterpriseMixCostFormularKey
         {
-            get { return enterpriseMixCostFormularKey; }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(this.enterpriseMixCostFormularKey))
+                {
+                    this.enterpriseMixCostFormularKey = Enterprise.DefaultEnterpriseMixCostFormularKey;
+                }
+                return enterpriseMixCostFormularKey;
+            }
             set { enterpriseMixCostFormularKey = value; }
         }
 
@@ -170,7 +198,14 @@ namespace XQYC.Business.Entity
         /// </summary>
         public string EnterpriseOtherCostFormularKey
         {
-            get { return enterpriseOtherCostFormularKey; }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(this.enterpriseOtherCostFormularKey))
+                {
+                    this.enterpriseOtherCostFormularKey = Enterprise.DefaultEnterpriseOtherCostFormularKey;
+                }
+                return enterpriseOtherCostFormularKey;
+            }
             set { enterpriseOtherCostFormularKey = value; }
         }
 
@@ -180,7 +215,14 @@ namespace XQYC.Business.Entity
         /// </summary>
         public string PersonInsuranceFormularKey
         {
-            get { return personInsuranceFormularKey; }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(this.personInsuranceFormularKey))
+                {
+                    this.personInsuranceFormularKey = Enterprise.DefaultPersonInsuranceFormularKey;
+                }
+                return personInsuranceFormularKey;
+            }
             set { personInsuranceFormularKey = value; }
         }
 
@@ -190,7 +232,14 @@ namespace XQYC.Business.Entity
         /// </summary>
         public string PersonReserveFundFormularKey
         {
-            get { return personReserveFundFormularKey; }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(this.personReserveFundFormularKey))
+                {
+                    this.personReserveFundFormularKey = Enterprise.DefaultPersonReserveFundFormularKey;
+                }
+                return personReserveFundFormularKey;
+            }
             set { personReserveFundFormularKey = value; }
         }
 
@@ -200,7 +249,14 @@ namespace XQYC.Business.Entity
         /// </summary>
         public string PersonManageFeeFormularKey
         {
-            get { return personManageFeeFormularKey; }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(this.personManageFeeFormularKey))
+                {
+                    this.personManageFeeFormularKey = Enterprise.DefaultPersonManageFeeFormularKey;
+                }
+                return personManageFeeFormularKey;
+            }
             set { personManageFeeFormularKey = value; }
         }
 
@@ -210,7 +266,14 @@ namespace XQYC.Business.Entity
         /// </summary>
         public string PersonMixCostFormularKey
         {
-            get { return personMixCostFormularKey; }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(this.personMixCostFormularKey))
+                {
+                    this.personMixCostFormularKey = Enterprise.DefaultPersonMixCostFormularKey;
+                }
+                return personMixCostFormularKey;
+            }
             set { personMixCostFormularKey = value; }
         }
 
@@ -220,7 +283,14 @@ namespace XQYC.Business.Entity
         /// </summary>
         public string PersonOtherCostFormularKey
         {
-            get { return personOtherCostFormularKey; }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(this.personOtherCostFormularKey))
+                {
+                    this.personOtherCostFormularKey = Enterprise.DefaultPersonOtherCostFormularKey;
+                }
+                return personOtherCostFormularKey;
+            }
             set { personOtherCostFormularKey = value; }
         }
 
@@ -237,13 +307,13 @@ namespace XQYC.Business.Entity
             get { return operateDate; }
             set { operateDate = value; }
         }
-        #endregion        
-        
+        #endregion
+
         #region 延迟属性
         private EnterpriseEntity enterprise = null;
         public EnterpriseEntity Enterprise
         {
-            get 
+            get
             {
                 if (this.enterprise == null)
                 {

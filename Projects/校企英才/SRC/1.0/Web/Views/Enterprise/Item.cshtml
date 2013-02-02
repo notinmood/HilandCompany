@@ -8,6 +8,7 @@
 @using XQYC.Business.Entity;
 @using XQYC.Web.Control;
 @using HiLand.General;
+@using XQYC.Business.Enums;
 
 @model EnterpriseEntity
 @{
@@ -154,6 +155,36 @@
                 <td>@HtmlHelperEx.XQYCEmployeeChooser(Html, "ManageUser", Model.ManageUserName, Model.ManageUserKey.ToString())
                 </td>
                 <td>
+                </td>
+            </tr>
+            <tr>
+                <td>缺省企业综合费用类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.MixCost, CostTypes.Enterprise, "DefaultEnterpriseMixCostFormularKey", Model.DefaultEnterpriseMixCostFormularKey)
+                </td>
+                <td>缺省企业管理费类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.ManageFee, CostTypes.Enterprise, "DefaultEnterpriseManageFeeFormularKey", Model.DefaultEnterpriseManageFeeFormularKey)
+                </td>
+            </tr>
+            <tr>
+                <td>缺省企业保险类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.Insurance, CostTypes.Enterprise, "DefaultEnterpriseInsuranceFormularKey", Model.DefaultEnterpriseInsuranceFormularKey)
+                </td>
+                <td>缺省企业公积金类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.ReserveFund, CostTypes.Enterprise, "DefaultEnterpriseReserveFundFormularKey", Model.DefaultEnterpriseReserveFundFormularKey)
+                </td>
+            </tr>
+            <tr>
+                <td>缺省个人保险类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.Insurance, CostTypes.Person, "DefaultPersonInsuranceFormularKey", Model.DefaultPersonInsuranceFormularKey)
+                </td>
+                <td>缺省个人公积金类型:
+                </td>
+                <td>@HtmlHelperEx.XQYCDDLCostFormular(Html, CostKinds.ReserveFund, CostTypes.Person, "DefaultPersonReserveFundFormularKey", Model.DefaultPersonReserveFundFormularKey)
                 </td>
             </tr>
             <tr>

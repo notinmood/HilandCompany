@@ -712,7 +712,7 @@ namespace XQYC.Web.Controllers
                     return Json(new LogicStatusInfo(false, "合同结束时间不能早于合同开始时间，谢谢！"));
                 }
 
-                if (targetEntity.LaborContractDiscontinueDate < targetEntity.LaborContractStartDate)
+                if (targetEntity.LaborContractDiscontinueDate != DateTimeHelper.Min && targetEntity.LaborContractDiscontinueDate < targetEntity.LaborContractStartDate)
                 {
                     return Json(new LogicStatusInfo(false, "合同终止时间不能早于合同开始时间，谢谢！"));
                 }

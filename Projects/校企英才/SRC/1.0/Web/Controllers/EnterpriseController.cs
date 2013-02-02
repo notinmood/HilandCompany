@@ -292,6 +292,17 @@ namespace XQYC.Web.Controllers
             {
                 targetEntity.ManageUserKey = BusinessUserBLL.CurrentUserGuid.ToString();
             }
+
+            targetEntity.DefaultEnterpriseInsuranceFormularKey = originalEntity.DefaultEnterpriseInsuranceFormularKey;
+            targetEntity.DefaultEnterpriseManageFeeFormularKey = originalEntity.DefaultEnterpriseManageFeeFormularKey;
+            targetEntity.DefaultEnterpriseMixCostFormularKey = originalEntity.DefaultEnterpriseMixCostFormularKey;
+            targetEntity.DefaultEnterpriseOtherCostFormularKey = originalEntity.DefaultEnterpriseOtherCostFormularKey;
+            targetEntity.DefaultEnterpriseReserveFundFormularKey = originalEntity.DefaultEnterpriseReserveFundFormularKey;
+            targetEntity.DefaultPersonInsuranceFormularKey = originalEntity.DefaultPersonInsuranceFormularKey;
+            targetEntity.DefaultPersonManageFeeFormularKey = originalEntity.DefaultPersonManageFeeFormularKey;
+            targetEntity.DefaultPersonMixCostFormularKey = originalEntity.DefaultPersonMixCostFormularKey;
+            targetEntity.DefaultPersonOtherCostFormularKey = originalEntity.DefaultPersonOtherCostFormularKey;
+            targetEntity.DefaultPersonReserveFundFormularKey = originalEntity.DefaultPersonReserveFundFormularKey;
         }
 
         /// <summary>
