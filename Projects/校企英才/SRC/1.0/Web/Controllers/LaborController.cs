@@ -2096,7 +2096,40 @@ namespace XQYC.Web.Controllers
             PagedEntityCollection<SalarySummaryEntity> entityList = SalarySummaryBLL.Instance.GetPagedCollection(startIndex, pageSize, whereClause, orderClause);
             PagedList<SalarySummaryEntity> pagedExList = new PagedList<SalarySummaryEntity>(entityList.Records, entityList.PageIndex, entityList.PageSize, entityList.TotalCount);
 
-            return View(pagedExList);
+            bool isExportExcel = RequestHelper.GetValue("exportExcel", false);
+            if (isExportExcel == true)
+            {
+                return SalaryBalanceToExcelFile(entityList.Records);
+            }
+            else
+            {
+                return View(pagedExList);
+            }
+        }
+
+        private ActionResult SalaryBalanceToExcelFile(IList<SalarySummaryEntity> salarySummaryList)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic["Labor.UserNameCN"] = "人员名称";
+            dic["Labor.UserCardID"] = "身份证号码";
+            dic["Enterprise.CompanyName"] = "务工企业";
+            dic["SalaryDate"] = "结算月份";
+            dic["Labor.CurrentContractStartDate"] = "入职时间";
+            dic["Labor.CurrentContractDiscontinueDate"] = "离职时间";
+            dic["EnterpriseManageFeeReal"] = "管理费";
+            dic["EnterpriseManageFeeCashDate"] = "管理费回款时间";
+            dic["EnterpriseGeneralRecruitFeeReal"] = "招工费";
+            dic["EnterpriseGeneralRecruitFeeCashDate"] = "招工费回款时间";
+            dic["EnterpriseOnceRecruitFeeReal"] = "一次性招工费";
+            dic["EnterpriseOnceRecruitFeeCashDate"] = "一次性回款时间";
+            //dic["UserEducationalBackground"] = "企业信息提供人";
+            dic["Enterprise.ManageUserName"] = "企业开发人员";
+            dic["Labor.ServiceUserName"] = "劳务人员客服人员";
+            dic["Labor.SettleUserName"] = "劳务人员安置人员";
+            dic["Labor.BusinessUserName"] = "劳务人员业务人员";
+
+            Stream excelStream = ExcelHelper.WriteExcel(salarySummaryList, dic);
+            return File(excelStream, ContentTypes.GetContentType("xls"), string.Format("劳务人员结算信息({0}).xls",GuidHelper.NewGuidString()));
         }
         #endregion
 

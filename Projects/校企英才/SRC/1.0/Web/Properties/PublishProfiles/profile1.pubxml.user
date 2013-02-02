@@ -176,10 +176,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/10/2012 21:53:02</publishTime>
     </File>
     <File Include="bin/XQYC.Business.dll">
-      <publishTime>02/01/2013 21:56:56</publishTime>
+      <publishTime>02/02/2013 10:00:33</publishTime>
     </File>
     <File Include="bin/XQYC.Web.dll">
-      <publishTime>02/01/2013 21:57:02</publishTime>
+      <publishTime>02/02/2013 10:00:35</publishTime>
     </File>
     <File Include="Content/adminStyle.css">
       <publishTime>01/12/2013 16:15:19</publishTime>
@@ -1181,10 +1181,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/29/2013 19:34:26</publishTime>
     </File>
     <File Include="Views/Labor/Item.cshtml">
-      <publishTime>01/28/2013 18:57:41</publishTime>
+      <publishTime>02/01/2013 22:31:24</publishTime>
     </File>
     <File Include="Views/Labor/SalaryBalanceCheck.cshtml">
-      <publishTime>02/01/2013 11:29:56</publishTime>
+      <publishTime>02/02/2013 09:40:54</publishTime>
     </File>
     <File Include="Views/Labor/SalaryBatch.cshtml">
       <publishTime>01/30/2013 21:21:10</publishTime>
@@ -1223,7 +1223,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/24/2013 15:10:04</publishTime>
     </File>
     <File Include="Views/Remind/Index.cshtml">
-      <publishTime>11/15/2012 11:38:23</publishTime>
+      <publishTime>02/02/2013 08:51:12</publishTime>
     </File>
     <File Include="Views/Role/Index.cshtml">
       <publishTime>11/16/2012 14:33:04</publishTime>
@@ -1274,7 +1274,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/23/2012 14:35:22</publishTime>
     </File>
     <File Include="Views/System/TransferJobs.cshtml">
-      <publishTime>01/11/2013 20:43:43</publishTime>
+      <publishTime>02/02/2013 09:17:15</publishTime>
     </File>
     <File Include="Views/Test/BootstrapDropDownTest.cshtml">
       <publishTime>12/20/2012 09:37:22</publishTime>
@@ -1301,7 +1301,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>02/01/2013 21:57:20</publishTime>
+      <publishTime>02/02/2013 10:00:45</publishTime>
     </File>
   </ItemGroup>
 </Project>
