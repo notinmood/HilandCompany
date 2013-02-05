@@ -29,7 +29,7 @@
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业,人员名称,身份证号", ConditionFieldName = "CompanyName,UserNameCN,UserCardID", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合同状态", ConditionFieldName = "LaborContractStatus", ConditionType = typeof(LaborWorkStatuses) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "离职时间,合同开始时间,合同结束时间,在职时间", ConditionFieldName = "LaborContractDiscontinueDate,LaborContractStartDate,LaborContractStopDate,JobingDate", ConditionType = typeof(DateTime), AddonData = "isRegionSelector:true" });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "离职时间,入职时间,合同结束时间,在职时间", ConditionFieldName = "LaborContractDiscontinueDate,LaborContractStartDate,LaborContractStopDate,JobingDate", ConditionType = typeof(DateTime), AddonData = "isRegionSelector:true" });
 }
 <h2>劳务人员合同查询</h2>
 <div id="ItemListDIV">
@@ -53,7 +53,7 @@
             <table id="MyTable_tableColumnClone" border="1" cellspacing="0" cellpadding="0"></table>
         </div>
         <div id="MyTable_tableData">
-            <table id="MyTable" style="width: 4000px" class="grid" border="1" cellspacing="0" cellpadding="0">
+            <table id="MyTable" style="width: 2000px" class="grid" border="1" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
                         <th style="width: 80px">人员姓名
@@ -72,12 +72,19 @@
                         </th>
                         <th style="width: 50px">状态
                         </th>
-                        <th style="width: 80px">合同开始时间
+                        <th style="width: 80px">入职时间
                         </th>
                         <th style="width: 80px">合同结束时间
                         </th>
-                        <th>离职时间
+                        <th style="width: 80px">离职时间
                         </th>
+                        <th style="width: 80px">信息员
+                        </th>
+                        <th style="width: 80px">客服人员
+                        </th>
+                        <th style="width: 80px">业务人员
+                        </th>
+                        <th>安置人员</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -106,6 +113,18 @@
                             <td>@DateTimeHelper.ToSaftShortDateString(entity.LaborContractStopDate)
                             </td>
                             <td>@DateTimeHelper.ToSaftShortDateString(entity.LaborContractDiscontinueDate)
+                            </td>
+                            <td>
+                                @entity.Labor.InformationBrokerUserName
+                            </td>
+                            <td>
+                                @entity.Labor.ServiceUserName
+                            </td>
+                            <td>
+                                @entity.Labor.BusinessUserName
+                            </td>
+                            <td>
+                                @entity.Labor.SettleUserName
                             </td>
                         </tr>   
                     }

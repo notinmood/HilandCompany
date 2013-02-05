@@ -884,10 +884,15 @@ namespace XQYC.Web.Controllers
             dic["Enterprise.CompanyNameShort"] = "企业名称";
             dic["LaborDepartment"] = "所在部门";
             dic["LaborWorkShop"] = "所在车间";
-            dic["LaborContractStartDate"] = "合同开始时间";
+            dic["LaborContractStartDate"] = "入职时间";
             dic["LaborContractStopDate"] = "合同到期时间";
-            dic["LaborContractDiscontinueDate"] = "合同终止时间";
-            dic["LaborContractDiscontinueDesc"] = "合同终止原因";
+            dic["LaborContractDiscontinueDate"] = "离职时间";
+            dic["LaborContractDiscontinueDesc"] = "离职原因";
+
+            dic["Labor.InformationBrokerUserName"] = "信息员";
+            dic["Labor.ServiceUserName"] = "客服人员";
+            dic["Labor.BusinessUserName"] = "业务人员";
+            dic["Labor.SettleUserName"] = "安置人员";
 
             Stream excelStream = ExcelHelper.WriteExcel(laborList, dic);
             return File(excelStream, ContentTypes.GetContentType("xls"), string.Format("劳务人员合同信息-{0}.xls", DateTime.Today.ToShortDateString()));
