@@ -1,39 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Mvc;
+using HiLand.Framework.BusinessCore.Enum;
+using HiLand.Utility.Data;
+using HiLand.Utility.Enums;
+using HiLand.Utility.Web;
+using XQYC.Business.BLL;
+using XQYC.Business.Entity;
+using XQYC.Business.Enums;
 
 namespace XQYC.Web.Areas.APIs.Controllers
 {
-    public class MemberController : ApiController
+    public class MemberController : Controller
     {
-        // GET api/member
-        public IEnumerable<string> Get()
+        public ActionResult WebCreate()
         {
-            return new string[] { "value1", "value2" };
+            ComeFromTypes comeFromType = ComeFromTypes.WebRegister;
+            return Create(comeFromType);
         }
 
-        // GET api/member/5
-        public string Get(int id)
+        public ActionResult Create(ComeFromTypes comeFromType)
         {
-            return "value";
-        }
+            LaborEntity labor = new LaborEntity();
+            labor.ComeFromType = comeFromType;
 
-        // POST api/member
-        public void Post([FromBody]string value)
-        {
-        }
+            labor.UserNameCN = RequestHelper.GetValue("UserNameCN");
+            labor.UserGuid = GuidHelper.NewGuid();
+            labor.UserName = labor.UserGuid.ToString();
+            labor.UserSex = (Sexes)RequestHelper.GetValue("UserSex", (int)Sexes.UnSet);
+            labor.UserBirthDay = RequestHelper.GetValue("UserBirthday",DateTimeHelper.Min);
+            labor.NativePlace = RequestHelper.GetValue("NativePlace");
+            labor.UserMobileNO = RequestHelper.GetValue("UserMobileNO");
 
-        // PUT api/member/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+            labor.UserMobileNO = RequestHelper.GetValue("UserMobileNO");
+            labor.HomeTelephone = RequestHelper.GetValue("HomeTelephone");
+            labor.HopeWorkSalary = RequestHelper.GetValue("HopeWorkSalary");
+            labor.UserEducationalBackground = (EducationalBackgrounds)RequestHelper.GetValue("UserEducationalBackground", (int)EducationalBackgrounds.NoSetting);
+            labor.WorkSkill = RequestHelper.GetValue("WorkSkill");
 
-        // DELETE api/member/5
-        public void Delete(int id)
-        {
+            CreateUserRoleStatuses status= LaborBLL.Instance.Create(labor);
+            if (status == CreateUserRoleStatuses.Successful)
+            {
+                return Json(true,JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

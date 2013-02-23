@@ -2119,6 +2119,8 @@ namespace XQYC.Web.Controllers
             dic["Labor.UserCardID"] = "身份证号码";
             dic["Enterprise.CompanyName"] = "务工企业";
             dic["SalaryDate"] = "结算月份";
+            dic["SalarySettlementStartDate"] = "结算开始时间";
+            dic["SalarySettlementEndDate"] = "结算结束时间";
             dic["Labor.CurrentContractStartDate"] = "入职时间";
             dic["Labor.CurrentContractDiscontinueDate"] = "离职时间";
             dic["EnterpriseManageFeeReal"] = "管理费";

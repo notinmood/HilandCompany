@@ -55,7 +55,7 @@
             <table id="MyTable_tableColumnClone" border="1" cellspacing="0" cellpadding="0"></table>
         </div>
         <div id="MyTable_tableData">
-            <table id="MyTable" style="width: 3000px" class="grid" border="1" cellspacing="0" cellpadding="0">
+            <table id="MyTable" style="width: 2500px" class="grid" border="1" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
                         <th style="width: 80px">人员名称
@@ -65,6 +65,10 @@
                         <th style="width: 180px">务工企业
                         </th>
                         <th style="width: 80px">结算月份
+                        </th>
+                        <th style="width: 100px">结算开始时间
+                        </th>
+                        <th style="width: 100px">结算结束时间
                         </th>
                         <th style="width: 100px">入职时间
                         </th>
@@ -119,6 +123,10 @@
                             </td>
                             <td>
                                 @entity.SalaryDate.ToString("yyyy/MM")
+                            </td>
+                            <td>@DateTimeHelper.ToSaftShortDateString(entity.SalarySettlementStartDate)
+                            </td>
+                            <td>@DateTimeHelper.ToSaftShortDateString(entity.SalarySettlementEndDate)
                             </td>
                             <td>@DateTimeHelper.ToSaftShortDateString(entity.Labor.CurrentContractStartDate)
                             </td>

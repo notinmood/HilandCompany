@@ -24,9 +24,15 @@ namespace XQYC.Business.Enums
         ManageWrite = 1,
 
         /// <summary>
-        /// 用户注册
+        /// 网站注册
         /// </summary>
-        [EnumItemDescription("zh-CN", "用户注册")]
-        SefRegister = 5,
+        [EnumItemDescription("zh-CN", "网站注册")]
+        WebRegister = 5,
+
+        /// <summary>
+        /// 手机注册
+        /// </summary>
+        [EnumItemDescription("zh-CN", "手机注册")]
+        MobileRegister = 6,
     }
 }
