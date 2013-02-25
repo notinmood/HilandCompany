@@ -741,6 +741,7 @@
     <Content Include="Views\Labor\SalaryBalanceCheck.cshtml" />
     <Content Include="Views\Test\DateControlTest.cshtml" />
     <Content Include="Views\Labor\SalaryDeleteBatch.cshtml" />
+    <Content Include="Views\Enterprise\JobItemDisplay.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

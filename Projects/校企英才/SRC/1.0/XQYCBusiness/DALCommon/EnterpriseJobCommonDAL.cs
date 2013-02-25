@@ -268,7 +268,7 @@ namespace XQYC.Business.DALCommon
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseJobType"))
                 {
-                    entity.EnterpriseJobType = reader.GetInt32(reader.GetOrdinal("EnterpriseJobType"));
+                    entity.EnterpriseJobType = (Logics)reader.GetInt32(reader.GetOrdinal("EnterpriseJobType"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseJobStation"))
                 {

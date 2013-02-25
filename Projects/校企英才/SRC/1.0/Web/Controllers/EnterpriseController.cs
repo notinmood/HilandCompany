@@ -653,6 +653,17 @@ namespace XQYC.Web.Controllers
             return View(entityList);
         }
 
+        /// <summary>
+        /// 企业招聘简章展示
+        /// </summary>
+        /// <param name="itemKey">招聘简章Key</param>
+        /// <returns></returns>
+        public ActionResult JobItemDisplay(string itemKey)
+        {
+            EnterpriseJobEntity targetEntity = EnterpriseJobBLL.Instance.Get(itemKey);
+            return View(targetEntity);
+        }
+
         public ActionResult JobItem(string enterpriseKey, string itemKey = StringHelper.Empty)
         {
             EnterpriseJobEntity entity = EnterpriseJobEntity.Empty;

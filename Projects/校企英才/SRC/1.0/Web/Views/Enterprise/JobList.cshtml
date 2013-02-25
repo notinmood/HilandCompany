@@ -55,6 +55,10 @@
             </th>
             <th style="width: 80px">简章状态
             </th>
+            <th style="width: 80px">招聘人数
+            </th>
+            <th style="width: 80px">是否热门
+            </th>
             <th style="width: 150px">简章标题
             </th>
             <th>岗位说明
@@ -67,11 +71,15 @@
                 <td>
                     @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>编辑").ACA("JobItem", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseJobGuid }) | 
                     @Html.HiA().CssClassName("modalInput picture "+ @entityGuid).Value("<i class=\"icon-picture\"></i>图片").ACA("JobPictureList", "Enterprise").RouteValue(new {itemKey = @entity.EnterpriseJobGuid , returnUrl = currentUrl, isUsingCompress = isUsingCompress2 }).Render() | 
-                    @Html.HiA().CssClassName("modalInput export " + @entityGuid).Value("<i class=\"icon-download-alt\"></i>导出打印").ACA("JobExport", "Enterprise").RouteValue(new {itemKey = @entity.EnterpriseJobGuid }).Render()
+                    @Html.HiA().CssClassName("modalInput export " + @entityGuid).Value("<i class=\"icon-download-alt\"></i>下载打印").ACA("JobExport", "Enterprise").RouteValue(new {itemKey = @entity.EnterpriseJobGuid }).Render()
                 </td>
                 <td>@entity.CreateTime.ToShortDateString()
                 </td>
                 <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
+                </td>
+                <td>@entity.EnterpriseJobLaborCount
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.EnterpriseJobType)
                 </td>
                 <td>@entity.EnterpriseJobTitle
                 </td>

@@ -46,6 +46,8 @@
     <div class="dataContainer">
         <table style="width: 100%" class="grid">
             <tr>
+                <th style="width: 120px">操作
+                </th>
                 <th style="width: 180px">企业名称
                 </th>
                 <th style="width: 50px">创建时间
@@ -53,6 +55,8 @@
                 <th style="width: 50px">状态
                 </th>
                  <th style="width: 50px">招工人数
+                </th>
+                <th style="width: 50px">是否热门
                 </th>
                 <th style="width: 100px">面试时间
                 </th>
@@ -63,6 +67,10 @@
             {
                 string entityGuid = entity.EnterpriseJobGuid.ToString();
                 <tr>
+                    <td>
+                        @Html.HiA().CssClassName("modalInput edit "+ @entityGuid).Value("<i class=\"icon-edit\"></i>详细").ACA("JobItemDisplay", "Enterprise").Render(new { rel = "#EditDIV", itemKey = @entity.EnterpriseJobGuid }) 
+                        @Html.HiA().CssClassName("modalInput export " + @entityGuid).Value("<i class=\"icon-download-alt\"></i>下载打印").ACA("JobExport", "Enterprise").RouteValue(new {itemKey = @entity.EnterpriseJobGuid }).Render()
+                    </td>
                     <td>@Html.Raw(ControlUtil.TitledAndTrimedSpan(entity.EnterpriseName,15))
                     </td>
                     <td>@entity.CreateTime.ToShortDateString()
@@ -70,6 +78,8 @@
                     <td>@EnumHelper.GetDisplayValue(entity.CanUsable)
                     </td>
                     <td>@entity.EnterpriseJobLaborCount
+                    </td>
+                    <td>@EnumHelper.GetDisplayValue(entity.EnterpriseJobType)
                     </td>
                     <td>@entity.InterviewDateInfo
                     </td>
@@ -106,6 +116,14 @@
                 var currentItemGuid = $("#currentPopupItemGuid").val();
                 $(".modalInput").overlay().close();
                 $(".modalInput.edit." + currentItemGuid).overlay().close();
+            });
+
+            $("a.edit").click(function () {
+                $(".modal").width("650px");
+                var itemKey = $(this).attr("itemKey");
+                $("#currentPopupItemGuid").val(itemKey);
+                var url = '@Url.Action("JobItemDisplay")?r=' + Math.random() + '&itemKey=' + itemKey;
+                $("#EditDIV").load(url);
             });
         });
     </script>

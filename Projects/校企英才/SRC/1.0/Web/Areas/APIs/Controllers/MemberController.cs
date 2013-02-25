@@ -11,40 +11,66 @@ namespace XQYC.Web.Areas.APIs.Controllers
 {
     public class MemberController : Controller
     {
+        /// <summary>
+        /// 为校企英才官方网站提供人员注册功能
+        /// </summary>
+        /// <returns></returns>
         public ActionResult WebCreate()
         {
             ComeFromTypes comeFromType = ComeFromTypes.WebRegister;
-            return Create(comeFromType);
+            return Create(comeFromType,"ctl00$ContentPlaceHolder1$");
         }
 
-        public ActionResult Create(ComeFromTypes comeFromType)
+        public ActionResult Create(ComeFromTypes comeFromType, string controlNamePrefix = "")
         {
             LaborEntity labor = new LaborEntity();
             labor.ComeFromType = comeFromType;
 
-            labor.UserNameCN = RequestHelper.GetValue("UserNameCN");
+            labor.UserNameCN = RequestHelper.GetValue(controlNamePrefix + "txbUserName");
             labor.UserGuid = GuidHelper.NewGuid();
             labor.UserName = labor.UserGuid.ToString();
-            labor.UserSex = (Sexes)RequestHelper.GetValue("UserSex", (int)Sexes.UnSet);
-            labor.UserBirthDay = RequestHelper.GetValue("UserBirthday",DateTimeHelper.Min);
-            labor.NativePlace = RequestHelper.GetValue("NativePlace");
-            labor.UserMobileNO = RequestHelper.GetValue("UserMobileNO");
+            labor.UserSex = (Sexes)RequestHelper.GetValue(controlNamePrefix + "drpSex", (int)Sexes.UnSet);
+            labor.UserBirthDay = RequestHelper.GetValue(controlNamePrefix + "txbBirthday", DateTimeHelper.Min);
+            labor.NativePlace = RequestHelper.GetValue(controlNamePrefix + "txbUserCountry");
+            labor.UserEmail = RequestHelper.GetValue(controlNamePrefix + "txbEmail");
 
-            labor.UserMobileNO = RequestHelper.GetValue("UserMobileNO");
-            labor.HomeTelephone = RequestHelper.GetValue("HomeTelephone");
-            labor.HopeWorkSalary = RequestHelper.GetValue("HopeWorkSalary");
-            labor.UserEducationalBackground = (EducationalBackgrounds)RequestHelper.GetValue("UserEducationalBackground", (int)EducationalBackgrounds.NoSetting);
-            labor.WorkSkill = RequestHelper.GetValue("WorkSkill");
+            labor.UserMobileNO = RequestHelper.GetValue(controlNamePrefix + "txbUserMobiNumber");
+            labor.HomeTelephone = RequestHelper.GetValue(controlNamePrefix + "txbHomeTelephone");
+            labor.HopeWorkSalary = RequestHelper.GetValue(controlNamePrefix + "txbHopeWorkSalary");
+            labor.UserEducationalSchool = RequestHelper.GetValue(controlNamePrefix + "txbUserEducationalBackground");
+            labor.WorkSkill = RequestHelper.GetValue(controlNamePrefix + "txbWorkSkill");
 
-            CreateUserRoleStatuses status= LaborBLL.Instance.Create(labor);
-            if (status == CreateUserRoleStatuses.Successful)
+            CreateUserRoleStatuses status = LaborBLL.Instance.Create(labor);
+            string requestUrl = RequestHelper.GetValue(controlNamePrefix + "txbPostBackURL");//"http://192.168.10.15:8001/DispatchServices/OnlineJobHunting.aspx";
+
+            if (requestUrl.Contains("?"))
             {
-                return Json(true,JsonRequestBehavior.AllowGet);
+                requestUrl += "&regStatus=";
             }
             else
             {
-                return Json(false, JsonRequestBehavior.AllowGet);
+                requestUrl += "?regStatus=";
             }
+
+            if (status == CreateUserRoleStatuses.Successful)
+            {
+                return RedirectPermanent(requestUrl + "true");
+            }
+            else
+            {
+                return RedirectPermanent(requestUrl + "false");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userAccount">其可以是用户的UserName,也可以是其EMail</param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public ActionResult Login(string userAccount, string password)
+        {
+            return Json(true);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Web.Mvc;
 using System.Web.Security;
 using HiLand.Framework.BusinessCore;
@@ -81,6 +82,28 @@ namespace XQYC.Web.Areas.UserCenter.Controllers
 
             return View(logicStatusInfo);
         }
+
+        /// <summary>
+        /// 网站等第三方登录系统
+        /// </summary>
+        /// <param name="u"></param>
+        /// <param name="p"></param>
+        /// <param name="isBase64">账号口令是否经过了base64转码</param>
+        /// <returns></returns>
+        public ActionResult WebIndex(string u, string p, bool isBase64 = true)
+        {
+            if (isBase64 == true && string.IsNullOrWhiteSpace(u) == false && string.IsNullOrWhiteSpace(p) == false)
+            {
+                byte[] uArray = Convert.FromBase64String(u);
+                u = Encoding.UTF8.GetString(uArray);
+
+                byte[] pArray = Convert.FromBase64String(p);
+                p = Encoding.UTF8.GetString(pArray);
+            }
+
+            return Index(u, p);
+        }
+
 
         /// <summary>
         /// 用户登出

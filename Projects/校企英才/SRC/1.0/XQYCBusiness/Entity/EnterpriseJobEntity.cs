@@ -130,8 +130,11 @@ namespace XQYC.Business.Entity
             set { enterpriseJobStatus = value; }
         }
 
-        private int enterpriseJobType;
-        public int EnterpriseJobType
+        private Logics enterpriseJobType= Logics.False;
+        /// <summary>
+        /// 简章类型（是否为热门简章）
+        /// </summary>
+        public Logics EnterpriseJobType
         {
             get { return enterpriseJobType; }
             set { enterpriseJobType = value; }

@@ -2125,8 +2125,8 @@ namespace XQYC.Web.Controllers
             dic["Labor.CurrentContractDiscontinueDate"] = "离职时间";
             dic["EnterpriseManageFeeReal"] = "管理费";
             dic["EnterpriseManageFeeCashDate"] = "管理费回款时间";
-            dic["EnterpriseGeneralRecruitFeeReal"] = "招工费";
-            dic["EnterpriseGeneralRecruitFeeCashDate"] = "招工费回款时间";
+            dic["EnterpriseGeneralRecruitFeeReal"] = "分次性招工费";
+            dic["EnterpriseGeneralRecruitFeeCashDate"] = "分次性招工费回款时间";
             dic["EnterpriseOnceRecruitFeeReal"] = "一次性招工费";
             dic["EnterpriseOnceRecruitFeeCashDate"] = "一次性回款时间";
             //dic["UserEducationalBackground"] = "企业信息提供人";

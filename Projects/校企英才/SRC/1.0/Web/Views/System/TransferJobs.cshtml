@@ -87,15 +87,19 @@
         $("#aTransferJobs").addClass("current");
 
         $("#submit").click(function () {
-            var userCardIDValue = $("#SourceUser_Value").val();
-            if (userCardIDValue == "") {
+            var sourceUserValue = $("#SourceUser_Value").val();
+            if (sourceUserValue == "") {
                 alert("请首先选择指定移交人！");
                 return false;
             }
 
-            if (confirm("目标人尚未选择，所有的数据将会被释放到共享库中，你确认吗？") == false) {
-                return false;
+            var targetUserValue = $("#TargetUser_Value").val();
+            if (targetUserValue == "") {
+                if (confirm("目标人尚未选择，所有的数据将会被释放到共享库中，你确认吗？") == false) {
+                    return false;
+                }
             }
+
             if (confirm("工作移交对系统内数据的影响是不可恢复的，您确认要移交数据吗？") == false) {
                 return false;
             }

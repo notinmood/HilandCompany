@@ -48,10 +48,17 @@
         industryTypeItemList.Add(listItem);
     }
 
+    List<ListItem> cooperateItemList = new List<ListItem>();
+    cooperateItemList.Add(new ListItem("Please Choose", "0"));
+    cooperateItemList.Add(new ListItem("劳务派遣", "1"));
+    cooperateItemList.Add(new ListItem("代理招聘", "2"));
+    cooperateItemList.Add(new ListItem("人才市场", "4"));
+    cooperateItemList.Add(new ListItem("百伯网用户", "8"));
+
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业名称,地区范围,负责人,录入人员,最后修改人", ConditionFieldName = "CompanyName,AreaOther,ManageUserName,CreateUserName,LastUpdateUserName", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "综合意向,招工意向,招聘会意向,简章意向,张贴意向,网络意向", ConditionFieldName = "EnterpriseLevel,EnterpriseLevel1,EnterpriseLevel2,EnterpriseLevel3,EnterpriseLevel4,EnterpriseLevel5", ConditionType = typeof(CommonLevels), AddonData = "enumDisplayCategory:star" });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业性质", ConditionFieldName = "BusinessType", ConditionType = typeof(EnterpriseTypes) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合作状态", ConditionFieldName = "CooperateStatus", ConditionType = typeof(int), ConditionValueItems = cooperateItemList });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "企业状态", ConditionFieldName = "CanUsable", ConditionType = typeof(Logics) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "行业类型", ConditionFieldName = "IndustryKey", ConditionType = typeof(string), ConditionValueItems = industryTypeItemList });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所在地区", ConditionFieldName = "AreaCode", ConditionType = typeof(string), ConditionValueItems = areaItemList });
@@ -166,6 +173,11 @@
                         if (FlagHelper.ContainsFlag(entity.CooperateStatus, 8))
                         {
                             cooperateString += "百伯网用户;";
+                        }
+
+                        if (cooperateString == string.Empty)
+                        {
+                            cooperateString = "无";
                         }
                         
                         <tr>

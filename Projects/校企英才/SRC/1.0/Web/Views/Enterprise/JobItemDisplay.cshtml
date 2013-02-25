@@ -30,57 +30,57 @@
             <tr>
                 <td style="width: 150px;">简章标题:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.EnterpriseJobTitle)
+                <td>@Html.TextBoxFor(entity => entity.EnterpriseJobTitle, new {@readonly=true})
                 </td>
                 <td>简章状态:
                 </td>
-                <td>@Html.DropDownListFor(entity => entity.CanUsable, EnumEx.BuildSelectItemList<Logics>())
+                <td>@Html.DropDownListFor(entity => entity.CanUsable, EnumEx.BuildSelectItemList<Logics>(), new {@readonly=true})
                 </td>
             </tr>
             <tr>
                 <td>联系方式:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.EnterpriseContackInfo)
+                <td>@Html.TextBoxFor(entity => entity.EnterpriseContackInfo, new {@readonly=true})
                 </td>
                 <td>面试时间:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.InterviewDateInfo)
+                <td>@Html.TextBoxFor(entity => entity.InterviewDateInfo, new {@readonly=true})
                 </td>
             </tr>
             <tr>
                 <td>招聘人数:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.EnterpriseJobLaborCount)
+                <td>@Html.TextBoxFor(entity => entity.EnterpriseJobLaborCount, new {@readonly=true})
                 </td>
                 <td>是否热门:
                 </td>
-                <td>@Html.DropDownListFor(entity => entity.EnterpriseJobType, EnumEx.BuildSelectItemList<Logics>())
+                <td>@Html.DropDownListFor(entity => entity.EnterpriseJobType, EnumEx.BuildSelectItemList<Logics>(), new {@readonly=true})
                 </td>
             </tr>
             <tr>
                 <td>岗位说明:
                 </td>
-                <td>@Html.TextAreaFor(entity => entity.EnterpriseJobStation)
+                <td>@Html.TextAreaFor(entity => entity.EnterpriseJobStation, new {@readonly=true})
                 </td>
                 <td>企业简介:
                 </td>
-                <td>@Html.TextAreaFor(entity => entity.EnterpriseDesc)
+                <td>@Html.TextAreaFor(entity => entity.EnterpriseDesc, new {@readonly=true})
                 </td>
             </tr>
             <tr>
                 <td>岗位要求:
                 </td>
-                <td>@Html.TextAreaFor(entity => entity.EnterpriseJobDemand)
+                <td>@Html.TextAreaFor(entity => entity.EnterpriseJobDemand, new {@readonly=true})
                 </td>
                 <td>待遇说明:
                 </td>
-                <td>@Html.TextAreaFor(entity => entity.EnterpriseJobTreadment)
+                <td>@Html.TextAreaFor(entity => entity.EnterpriseJobTreadment, new {@readonly=true})
                 </td>
             </tr>
         </table>
         <input type="hidden" id="EnterpriseKey" name="EnterpriseKey" value="@enterpriseKey" />
         <input type="hidden" id="ItemKey" name="ItemKey" value="@Model.EnterpriseJobGuid" />
-        <input type="button" id="submitButton" value="保存" class="btn btn-warning" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+        <input type="button" id="submitButton" value="关闭" class="btn btn-warning" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
     }
 </div>
 <script type="text/javascript">
