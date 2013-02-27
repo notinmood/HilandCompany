@@ -189,6 +189,7 @@ namespace XQYC.Web.Controllers
                 targetEntity.UserType = UserTypes.CommonUser;
                 targetEntity.Password = SystemConst.InitialUserPassword;
                 targetEntity.LaborWorkStatus = LaborWorkStatuses.NewWorker;
+                targetEntity.ComeFromType = ComeFromTypes.ManageWrite;
                 createStatus = LaborBLL.Instance.Create(targetEntity);
                 if (createStatus == CreateUserRoleStatuses.Successful)
                 {
@@ -468,6 +469,7 @@ namespace XQYC.Web.Controllers
                             }
                             else
                             {
+                                laborEntity.ComeFromType = ComeFromTypes.ManageBatch;
                                 CreateUserRoleStatuses createStatus = LaborBLL.Instance.Create(laborEntity);
 
                                 if (createStatus == CreateUserRoleStatuses.Successful)
