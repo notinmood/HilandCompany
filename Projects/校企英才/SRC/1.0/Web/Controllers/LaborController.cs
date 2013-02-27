@@ -1597,6 +1597,11 @@ namespace XQYC.Web.Controllers
             string OnceRecruitDateString = RequestHelper.GetValue("OnceRecruitDate");
             DateTime OnceRecruitDate = Converter.ChangeType(OnceRecruitDateString, DateTime.Today);
 
+            string OtherInsuranceCashDateString = RequestHelper.GetValue("OtherInsuranceCashDate");
+            DateTime OtherInsuranceCashDate = Converter.ChangeType(OtherInsuranceCashDateString, DateTime.Today);
+
+            string TaxFeeCashDateString = RequestHelper.GetValue("TaxFeeCashDate");
+            DateTime TaxFeeCashDate = Converter.ChangeType(TaxFeeCashDateString, DateTime.Today);
             #region 条件判定（如果不满足基本条件直接跳出并提示）
             if (string.IsNullOrWhiteSpace(salaryDateString))
             {
@@ -1794,6 +1799,18 @@ namespace XQYC.Web.Controllers
                                     case "PersonBorrow":
                                         salarySummaryEntity.PersonBorrow = salaryItemValue;
                                         SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.PersonBorrow);
+                                        break;
+                                    case "EnterpriseOtherInsurance":
+                                        salarySummaryEntity.EnterpriseOtherInsuranceReal += salaryItemValue;
+                                        salarySummaryEntity.EnterpriseOtherInsuranceCashDate = OtherInsuranceCashDate;
+                                        salaryDetailsEntity.SalaryItemCashDate = OtherInsuranceCashDate;
+                                        SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.EnterpriseOtherInsurance);
+                                        break;
+                                    case "EnterpriseTaxFee":
+                                        salarySummaryEntity.EnterpriseTaxFeeReal += salaryItemValue;
+                                        salarySummaryEntity.EnterpriseTaxFeeCashDate = TaxFeeCashDate;
+                                        salaryDetailsEntity.SalaryItemCashDate = TaxFeeCashDate;
+                                        SetAndSaveSalaryDetailsItem(salaryItemValue, salaryDetailsEntity, SalaryItemKinds.EnterpriseTaxFee);
                                         break;
                                     default:
                                         if (salaryItemValue >= 0)
