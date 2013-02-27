@@ -1286,8 +1286,8 @@ namespace XQYC.Web.Controllers
                 salarySummaryEntity.SalarySettlementStartDate = salarySettlementStartDate;
                 salarySummaryEntity.SalarySettlementEndDate = salarySettlementEndDate;
 
-                Logics isFirstCash = SalarySummaryBLL.Instance.IsFirstCash(enterpriseKey, labor.UserGuid.ToString());
-                salarySummaryEntity.IsFirstCash = isFirstCash;
+                //Logics isFirstCash = SalarySummaryBLL.Instance.IsFirstCash(enterpriseKey, labor.UserGuid.ToString());
+                //salarySummaryEntity.IsFirstCash = isFirstCash;
 
                 isSuccessful = SalarySummaryBLL.Instance.Create(salarySummaryEntity);
             }
@@ -1867,6 +1867,8 @@ namespace XQYC.Web.Controllers
                                     salarySummaryEntity.LaborCode = LaborUserCodeForSalarySummary;
                                     salarySummaryEntity.LaborName = LaborUserNameCNForSalarySummary;
 
+                                    //Logics isFirstCash = SalarySummaryBLL.Instance.IsFirstCash(enterpriseGuid.ToString(), laborEntity.UserGuid.ToString());
+                                    //salarySummaryEntity.IsFirstCash = isFirstCash;
                                     isSuccessful = SalarySummaryBLL.Instance.Create(salarySummaryEntity);
                                 }
                                 else

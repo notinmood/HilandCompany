@@ -50,6 +50,8 @@ namespace XQYC.Business.BLL
         public override bool Create(SalarySummaryEntity model)
         {
             CalculateNeedCost(model);
+            Logics isFirstCash = SalarySummaryBLL.Instance.IsFirstCash(model.EnterpriseKey, model.LaborKey);
+            model.IsFirstCash = isFirstCash;
             return base.Create(model);
         }
 
