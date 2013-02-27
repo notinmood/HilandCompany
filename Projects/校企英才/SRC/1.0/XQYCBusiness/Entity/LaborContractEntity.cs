@@ -294,6 +294,40 @@ namespace XQYC.Business.Entity
             set { personOtherCostFormularKey = value; }
         }
 
+        private string enterpriseOtherInsuranceFormularKey = String.Empty;
+        /// <summary>
+        /// 劳务合同中的其他保险企业应该担负部分的计算公式Key
+        /// </summary>
+        public string EnterpriseOtherInsuranceFormularKey
+        {
+            get 
+            {
+                if (string.IsNullOrWhiteSpace(this.enterpriseOtherInsuranceFormularKey))
+                {
+                    this.enterpriseOtherInsuranceFormularKey = Enterprise.DefaultEnterpriseOtherInsuranceFormularKey;
+                }
+                return enterpriseOtherInsuranceFormularKey; 
+            }
+            set { enterpriseOtherInsuranceFormularKey = value; }
+        }
+
+        private string enterpriseTaxFeeFormularKey = String.Empty;
+        /// <summary>
+        /// 劳务合同中的各种税费企业应该担负部分的计算公式Key
+        /// </summary>
+        public string EnterpriseTaxFeeFormularKey
+        {
+            get 
+            {
+                if (string.IsNullOrWhiteSpace(this.enterpriseTaxFeeFormularKey))
+                {
+                    this.enterpriseTaxFeeFormularKey = Enterprise.DefaultEnterpriseTaxFeeFormularKey;
+                }
+                return enterpriseTaxFeeFormularKey;
+            }
+            set { enterpriseTaxFeeFormularKey = value; }
+        }
+
         private Guid operateUserGuid = Guid.Empty;
         public Guid OperateUserGuid
         {

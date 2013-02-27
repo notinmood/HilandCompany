@@ -303,6 +303,8 @@ namespace XQYC.Web.Controllers
             targetEntity.DefaultPersonMixCostFormularKey = originalEntity.DefaultPersonMixCostFormularKey;
             targetEntity.DefaultPersonOtherCostFormularKey = originalEntity.DefaultPersonOtherCostFormularKey;
             targetEntity.DefaultPersonReserveFundFormularKey = originalEntity.DefaultPersonReserveFundFormularKey;
+            targetEntity.DefaultEnterpriseOtherInsuranceFormularKey = originalEntity.DefaultEnterpriseOtherInsuranceFormularKey;
+            targetEntity.DefaultEnterpriseTaxFeeFormularKey = originalEntity.DefaultEnterpriseTaxFeeFormularKey;
         }
 
         /// <summary>

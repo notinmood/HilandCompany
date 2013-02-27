@@ -11,10 +11,10 @@
 
 @model List<CostFormularEntity>
 @{
-    ViewBag.Title = "保险公积金管理费公式信息";
+    ViewBag.Title = "费用公式配置信息";
 }
 
-<h2>保险公积金信息</h2>
+<h2>费用公式配置信息</h2>
 <div id="ItemListDIV">
     <div class="OperateArea" id="OperateAreaContainer">
         <div class="btn-group">@Html.HiA("newDisplayA").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("Item","CostFormular").Render(new { rel = "#EditDIV" })</div>
@@ -60,9 +60,8 @@
         2、各参与运算的数据项（除常数外）必须放入大括号内（“{}”）
         3、目前支持的数据项为：（如果添加新的数据项，需要在表中GeneralBasicSetting设置）
             {NeedPaySalary}：应付工资
-           @* {RealPaySalary}：实付工资*@
+            {RealPaySalary}：实付工资
             --（其他费用项目定义在GeneralBasicSetting中，如果要添加新的费用项，请联系管理员）--------
-           
     </pre>
     <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
     <div class="modal modalFix" id="EditDIV">

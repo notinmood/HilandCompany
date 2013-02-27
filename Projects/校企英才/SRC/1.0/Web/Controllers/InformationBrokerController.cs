@@ -87,7 +87,7 @@ namespace XQYC.Web.Controllers
             }
 
             InformationBrokerEntity targetEntity = null;
-            if (string.IsNullOrWhiteSpace(itemKey))
+            if (GuidHelper.IsInvalidOrEmpty(itemKey))
             {
                 targetEntity = new InformationBrokerEntity();
                 SetTargetEntityValue(entity, ref targetEntity);

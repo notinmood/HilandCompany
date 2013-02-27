@@ -791,6 +791,9 @@ namespace XQYC.Web.Controllers
             targetEntity.PersonMixCostFormularKey = originalEntity.PersonMixCostFormularKey;
             targetEntity.PersonOtherCostFormularKey = originalEntity.PersonOtherCostFormularKey;
             targetEntity.PersonReserveFundFormularKey = originalEntity.PersonReserveFundFormularKey;
+
+            targetEntity.EnterpriseOtherInsuranceFormularKey = originalEntity.EnterpriseOtherInsuranceFormularKey;
+            targetEntity.EnterpriseTaxFeeFormularKey = originalEntity.EnterpriseTaxFeeFormularKey;
         }
         #endregion
 
@@ -1407,6 +1410,14 @@ namespace XQYC.Web.Controllers
                         break;
                     case SalaryItemKinds.SalaryTax:
                         //do nothing.(工资税系统自动计算，不能录入)
+                        break;
+                    case SalaryItemKinds.EnterpriseOtherInsurance:
+                        salarySummaryEntity.EnterpriseOtherInsuranceReal += itemValueDelta;
+                        salarySummaryEntity.EnterpriseOtherInsuranceCashDate = entity.SalaryItemCashDate;
+                        break;
+                    case SalaryItemKinds.EnterpriseTaxFee:
+                        salarySummaryEntity.EnterpriseTaxFeeReal += itemValueDelta;
+                        salarySummaryEntity.EnterpriseTaxFeeCashDate = entity.SalaryItemCashDate;
                         break;
                     default:
                         break;
@@ -2131,6 +2142,7 @@ namespace XQYC.Web.Controllers
             dic["EnterpriseOnceRecruitFeeCashDate"] = "一次性回款时间";
             //dic["UserEducationalBackground"] = "企业信息提供人";
             dic["Enterprise.ManageUserName"] = "企业开发人员";
+            dic["Labor.InformationBrokerUserName"] = "劳务人员信息员";
             dic["Labor.ServiceUserName"] = "劳务人员客服人员";
             dic["Labor.SettleUserName"] = "劳务人员安置人员";
             dic["Labor.BusinessUserName"] = "劳务人员业务人员";

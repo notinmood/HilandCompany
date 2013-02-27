@@ -27,11 +27,11 @@ namespace XQYC.Business.Enums
         [EnumItemDescription("zh-CN", "扣费")]
         Rebate= 11,
 
-        ///// <summary>
-        ///// 保险
-        ///// </summary>
-        //[EnumItemDescription("zh-CN", "保险")]
-        //Insurance= 30,
+        /// <summary>
+        /// 其他保险(企业部分)
+        /// </summary>
+        [EnumItemDescription("zh-CN", "其他保险(企业部分)")]
+        EnterpriseOtherInsurance = 30,
 
         /// <summary>
         /// 保险(企业部分)
@@ -66,7 +66,7 @@ namespace XQYC.Business.Enums
         /// <summary>
         /// 招工费(企业部分)
         /// </summary>
-        [EnumItemDescription("zh-CN", "招工费(企业部分)")]
+        [EnumItemDescription("zh-CN", "分次性招工费(企业部分)")]
         EnterpriseGeneralRecruitFee= 36,
 
         /// <summary>
@@ -74,6 +74,12 @@ namespace XQYC.Business.Enums
         /// </summary>
         [EnumItemDescription("zh-CN", "一次性招工费(企业部分)")]
         EnterpriseOnceRecruitFee=37,
+
+        /// <summary>
+        /// 企业税费
+        /// </summary>
+        [EnumItemDescription("zh-CN", "企业税费")]
+        EnterpriseTaxFee= 40,
 
         /// <summary>
         /// 保险(个人部分)

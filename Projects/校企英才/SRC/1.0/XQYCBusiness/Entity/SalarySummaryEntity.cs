@@ -168,7 +168,7 @@ namespace XQYC.Business.Entity
         }
 
         /// <summary>
-        /// 最后到劳务人员手中的应付费用
+        /// 最后到劳务人员手中的实付费用
         /// </summary>
         /// <remarks>
         /// 因为SalaryRebate已经用负值表示表示了，所以其相加即可
@@ -664,6 +664,98 @@ namespace XQYC.Business.Entity
         {
             get { return personOtherCostCalculatedFix; }
             set { personOtherCostCalculatedFix = value; }
+        }
+
+        private decimal enterpriseTaxFeeReal;
+        /// <summary>
+        /// 企业应该缴付的税费
+        /// </summary>
+        public decimal EnterpriseTaxFeeReal
+        {
+            get { return enterpriseTaxFeeReal; }
+            set { enterpriseTaxFeeReal = value; }
+        }
+
+        private decimal enterpriseTaxFeeCalculated;
+        public decimal EnterpriseTaxFeeCalculated
+        {
+            get 
+            {
+                if (enterpriseTaxFeeCalculatedFix.HasValue == true)
+                {
+                    return enterpriseTaxFeeCalculatedFix.Value;
+                }
+                else
+                {
+                    return enterpriseTaxFeeCalculated;
+                }
+            }
+            set { enterpriseTaxFeeCalculated = value; }
+        }
+
+        private decimal? enterpriseTaxFeeCalculatedFix= null;
+        public decimal? EnterpriseTaxFeeCalculatedFix
+        {
+            get { return enterpriseTaxFeeCalculatedFix; }
+            set { enterpriseTaxFeeCalculatedFix = value; }
+        }
+
+        private DateTime enterpriseTaxFeeCashDate = DateTimeHelper.Min;
+        public DateTime EnterpriseTaxFeeCashDate
+        {
+            get { return enterpriseTaxFeeCashDate; }
+            set { enterpriseTaxFeeCashDate = value; }
+        }
+
+        private decimal enterpriseOtherInsuranceReal;
+        /// <summary>
+        /// 企业缴付的其他保险
+        /// </summary>
+        public decimal EnterpriseOtherInsuranceReal
+        {
+            get { return enterpriseOtherInsuranceReal; }
+            set { enterpriseOtherInsuranceReal = value; }
+        }
+
+        private decimal enterpriseOtherInsuranceCalculated;
+        public decimal EnterpriseOtherInsuranceCalculated
+        {
+            get
+            {
+                if (enterpriseOtherInsuranceCalculatedFix.HasValue == true)
+                {
+                    return enterpriseOtherInsuranceCalculatedFix.Value;
+                }
+                else
+                {
+                    return enterpriseOtherInsuranceCalculated;
+                }
+            }
+            set { enterpriseOtherInsuranceCalculated = value; }
+        }
+
+        private decimal? enterpriseOtherInsuranceCalculatedFix= null;
+        public decimal? EnterpriseOtherInsuranceCalculatedFix
+        {
+            get { return enterpriseOtherInsuranceCalculatedFix; }
+            set { enterpriseOtherInsuranceCalculatedFix = value; }
+        }
+
+        private DateTime enterpriseOtherInsuranceCashDate = DateTimeHelper.Min;
+        public DateTime EnterpriseOtherInsuranceCashDate
+        {
+            get { return enterpriseOtherInsuranceCashDate; }
+            set { enterpriseOtherInsuranceCashDate = value; }
+        }
+
+        private Logics isAdvanceCash= Logics.False;
+        /// <summary>
+        /// 是否代为企业垫付工资
+        /// </summary>
+        public Logics IsAdvanceCash
+        {
+            get { return isAdvanceCash; }
+            set { isAdvanceCash = value; }
         }
 
         /// <summary>

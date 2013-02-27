@@ -24,15 +24,21 @@ namespace XQYC.Business.Enums
         ManageWrite = 1,
 
         /// <summary>
+        /// 批量导入
+        /// </summary>
+        [EnumItemDescription("zh-CN", "批量导入")]
+        ManageBatch=2,
+
+        /// <summary>
         /// 网站注册
         /// </summary>
         [EnumItemDescription("zh-CN", "网站注册")]
         WebRegister = 5,
 
         /// <summary>
-        /// 手机注册
+        /// 客户端注册
         /// </summary>
-        [EnumItemDescription("zh-CN", "手机注册")]
+        [EnumItemDescription("zh-CN", "客户端注册")]
         MobileRegister = 6,
     }
 }

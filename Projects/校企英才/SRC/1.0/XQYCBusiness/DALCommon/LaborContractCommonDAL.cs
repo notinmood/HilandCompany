@@ -80,6 +80,8 @@ namespace XQYC.Business.DALCommon
 			    [PersonManageFeeFormularKey],
 			    [PersonMixCostFormularKey],
 			    [PersonOtherCostFormularKey],
+			    [EnterpriseOtherInsuranceFormularKey],
+			    [EnterpriseTaxFeeFormularKey],
 			    [OperateUserGuid],
 			    [OperateDate],
 			    [PropertyNames],
@@ -110,6 +112,8 @@ namespace XQYC.Business.DALCommon
 			    {0}PersonManageFeeFormularKey,
 			    {0}PersonMixCostFormularKey,
 			    {0}PersonOtherCostFormularKey,
+			    {0}EnterpriseOtherInsuranceFormularKey,
+			    {0}EnterpriseTaxFeeFormularKey,
 			    {0}OperateUserGuid,
 			    {0}OperateDate,
 			    {0}PropertyNames,
@@ -149,6 +153,8 @@ namespace XQYC.Business.DALCommon
 				    [PersonManageFeeFormularKey] = {0}PersonManageFeeFormularKey,
 				    [PersonMixCostFormularKey] = {0}PersonMixCostFormularKey,
 				    [PersonOtherCostFormularKey] = {0}PersonOtherCostFormularKey,
+				    [EnterpriseOtherInsuranceFormularKey] = {0}EnterpriseOtherInsuranceFormularKey,
+				    [EnterpriseTaxFeeFormularKey] = {0}EnterpriseTaxFeeFormularKey,
 				    [OperateUserGuid] = {0}OperateUserGuid,
 				    [OperateDate] = {0}OperateDate,
 				    [PropertyNames] = {0}PropertyNames,
@@ -199,7 +205,7 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("EnterpriseGuid",entity.EnterpriseGuid),
 			    GenerateParameter("EnterpriseContractGuid",entity.EnterpriseContractGuid),
 			    GenerateParameter("LaborContractStatus",entity.LaborContractStatus),
-                GenerateParameter("LaborDepartment",entity.LaborDepartment?? String.Empty),
+			    GenerateParameter("LaborDepartment",entity.LaborDepartment?? String.Empty),
 			    GenerateParameter("LaborWorkShop",entity.LaborWorkShop?? String.Empty),
 			    GenerateParameter("LaborContractStartDate",entity.LaborContractStartDate),
 			    GenerateParameter("LaborContractStopDate",entity.LaborContractStopDate),
@@ -217,6 +223,8 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("PersonManageFeeFormularKey",entity.PersonManageFeeFormularKey?? String.Empty),
 			    GenerateParameter("PersonMixCostFormularKey",entity.PersonMixCostFormularKey?? String.Empty),
 			    GenerateParameter("PersonOtherCostFormularKey",entity.PersonOtherCostFormularKey?? String.Empty),
+			    GenerateParameter("EnterpriseOtherInsuranceFormularKey",entity.EnterpriseOtherInsuranceFormularKey?? String.Empty),
+			    GenerateParameter("EnterpriseTaxFeeFormularKey",entity.EnterpriseTaxFeeFormularKey?? String.Empty),
 			    GenerateParameter("OperateUserGuid",entity.OperateUserGuid),
 			    GenerateParameter("OperateDate",entity.OperateDate)
             };
@@ -245,12 +253,10 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.LaborUserGuid = reader.GetGuid(reader.GetOrdinal("LaborUserGuid"));
                 }
-
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "LaborCode"))
                 {
                     entity.LaborCode = reader.GetString(reader.GetOrdinal("LaborCode"));
                 }
-
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseGuid"))
                 {
                     entity.EnterpriseGuid = reader.GetGuid(reader.GetOrdinal("EnterpriseGuid"));
@@ -263,11 +269,6 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.LaborContractStatus = (LaborWorkStatuses)reader.GetInt32(reader.GetOrdinal("LaborContractStatus"));
                 }
-                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "LaborContractIsCurrent"))
-                {
-                    entity.LaborContractIsCurrent = (Logics)reader.GetInt32(reader.GetOrdinal("LaborContractIsCurrent"));
-                }
-
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "LaborDepartment"))
                 {
                     entity.LaborDepartment = reader.GetString(reader.GetOrdinal("LaborDepartment"));
@@ -276,7 +277,6 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.LaborWorkShop = reader.GetString(reader.GetOrdinal("LaborWorkShop"));
                 }
-
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "LaborContractStartDate"))
                 {
                     entity.LaborContractStartDate = reader.GetDateTime(reader.GetOrdinal("LaborContractStartDate"));
@@ -297,7 +297,10 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.LaborContractDiscontinueDesc = reader.GetString(reader.GetOrdinal("LaborContractDiscontinueDesc"));
                 }
-
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "LaborContractIsCurrent"))
+                {
+                    entity.LaborContractIsCurrent = (Logics)reader.GetInt32(reader.GetOrdinal("LaborContractIsCurrent"));
+                }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseInsuranceFormularKey"))
                 {
                     entity.EnterpriseInsuranceFormularKey = reader.GetString(reader.GetOrdinal("EnterpriseInsuranceFormularKey"));
@@ -338,7 +341,14 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.PersonOtherCostFormularKey = reader.GetString(reader.GetOrdinal("PersonOtherCostFormularKey"));
                 }
-
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseOtherInsuranceFormularKey"))
+                {
+                    entity.EnterpriseOtherInsuranceFormularKey = reader.GetString(reader.GetOrdinal("EnterpriseOtherInsuranceFormularKey"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "EnterpriseTaxFeeFormularKey"))
+                {
+                    entity.EnterpriseTaxFeeFormularKey = reader.GetString(reader.GetOrdinal("EnterpriseTaxFeeFormularKey"));
+                }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "OperateUserGuid"))
                 {
                     entity.OperateUserGuid = reader.GetGuid(reader.GetOrdinal("OperateUserGuid"));

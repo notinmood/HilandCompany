@@ -24,7 +24,19 @@ namespace XQYC.Business.Enums
         /// 管理费
         /// </summary>
         [EnumItemDescription("zh-CN", "管理费")]
-        ManageFee=3,
+        ManageFee = 3,
+
+        /// <summary>
+        /// 其他保险
+        /// </summary>
+        [EnumItemDescription("zh-CN", "其他保险")]
+        OtherInstrance = 6,
+
+        /// <summary>
+        /// 税费
+        /// </summary>
+        [EnumItemDescription("zh-CN", "税费")]
+        TaxFee = 8,
 
         /// <summary>
         /// 混合费用
@@ -33,6 +45,6 @@ namespace XQYC.Business.Enums
         /// （企业付给的混合的费用，其内可以包括保险，公积金，管理费等）
         /// </remarks>
         [EnumItemDescription("zh-CN", "混合费用")]
-        MixCost=10,
+        MixCost = 10,
     }
 }

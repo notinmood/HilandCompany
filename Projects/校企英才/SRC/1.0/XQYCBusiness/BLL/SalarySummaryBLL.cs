@@ -203,6 +203,16 @@ namespace XQYC.Business.BLL
                 salarySummary.PersonMixCostCalculated = CalculateCostDetails(new Guid(labor.CurrentLaborContract.PersonMixCostFormularKey), salarySummary);
             }
 
+            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentLaborContract.EnterpriseOtherInsuranceFormularKey) == false)
+            {
+                salarySummary.EnterpriseOtherInsuranceCalculated = CalculateCostDetails(new Guid(labor.CurrentLaborContract.EnterpriseOtherInsuranceFormularKey),salarySummary);
+            }
+
+            if (GuidHelper.IsInvalidOrEmpty(labor.CurrentLaborContract.EnterpriseTaxFeeFormularKey) == false)
+            {
+                salarySummary.EnterpriseTaxFeeCalculated = CalculateCostDetails(new Guid(labor.CurrentLaborContract.EnterpriseTaxFeeFormularKey), salarySummary);
+            }
+
             if (isUpdateSalaryTaxDetails == true)
             {
                 SalaryDetailsBLL.Instance.CreateOrUpdateSalaryTax(salarySummary.SalarySummaryGuid, salarySummary.SalaryTax);
@@ -239,7 +249,7 @@ namespace XQYC.Business.BLL
                             placeHolderContent = salarySummary.SalaryNeedPayBeforeCost.ToString();
                             break;
                         case "RealPaySalary":
-                            //TODO:xieran20121019暂时未考虑实付工资的情形
+                            placeHolderContent = salarySummary.SalaryNeedPayToLabor.ToString();
                             break;
                         default:
                             {

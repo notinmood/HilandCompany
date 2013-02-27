@@ -69,7 +69,7 @@
             <table id="MyTable_tableColumnClone" border="1" cellspacing="0" cellpadding="0"></table>
         </div>
         <div id="MyTable_tableData">
-            <table id="MyTable" style="width: 4600px" class="grid" border="1" cellspacing="0" cellpadding="0">
+            <table id="MyTable" style="width: 5200px" class="grid" border="1" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
                         <th style="width: 150px"><input type="checkbox" class="allCheckboxSelector" />操作
@@ -98,6 +98,12 @@
                         </th>
                         <th style="width: 140px">企业保险回款日期
                         </th>
+                        <th style="width: 140px">企业其他保险(实收)
+                        </th>
+                        <th style="width: 140px">企业其他保险(计算)
+                        </th>
+                        <th style="width: 140px">企业其他保险回款日期
+                        </th>
                         <th style="width: 140px">企业公积金(实收)
                         </th>
                         <th style="width: 140px">企业公积金(计算)
@@ -117,6 +123,12 @@
                         <th style="width: 140px">企业一次性招工费(实收)
                         </th>
                         <th style="width: 150px">企业一次性招工费回款日期
+                        </th>
+                        <th style="width: 140px">企业税费(实收)
+                        </th>
+                        <th style="width: 140px">企业税费(计算)
+                        </th>
+                        <th style="width: 150px">企业税费回款日期
                         </th>
                         <th style="width: 140px">个人保险费用(实扣)
                         </th>
@@ -221,6 +233,13 @@
                             <td>
                                 @DateTimeHelper.ToSaftString(entity.InsuranceCashDate)
                             </td>
+                            <td>@entity.EnterpriseOtherInsuranceReal.ToString("0.00")
+                            </td>
+                            <td>@entity.EnterpriseOtherInsuranceCalculated.ToString("0.00")
+                            </td>
+                            <td>
+                                @DateTimeHelper.ToSaftString(entity.EnterpriseOtherInsuranceCashDate)
+                            </td>
                             <td>@entity.EnterpriseReserveFundReal.ToString("0.00")
                             </td>
                             <td>@entity.EnterpriseReserveFundCalculated.ToString("0.00")
@@ -244,6 +263,13 @@
                             </td>
                             <td>
                                 @DateTimeHelper.ToSaftString(entity.EnterpriseOnceRecruitFeeCashDate)
+                            </td>
+                            <td>@entity.EnterpriseTaxFeeReal.ToString("0.00")
+                            </td>
+                            <td>@entity.EnterpriseTaxFeeCalculated.ToString("0.00")
+                            </td>
+                            <td>
+                                @DateTimeHelper.ToSaftString(entity.EnterpriseTaxFeeCashDate)
                             </td>
                             <td>@entity.PersonInsuranceReal.ToString("0.00")
                             </td>
