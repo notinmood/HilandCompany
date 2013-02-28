@@ -1146,6 +1146,8 @@ namespace XQYC.Web.Controllers
             originalEntity.PersonMixCostCalculatedFix = salarySummaryEntity.PersonMixCostCalculatedFix;
             originalEntity.PersonOtherCostCalculatedFix = salarySummaryEntity.PersonOtherCostCalculatedFix;
             originalEntity.PersonReserveFundCalculatedFix = salarySummaryEntity.PersonReserveFundCalculatedFix;
+            originalEntity.EnterpriseOtherInsuranceCalculatedFix = salarySummaryEntity.EnterpriseOtherInsuranceCalculatedFix;
+            originalEntity.EnterpriseTaxFeeCalculatedFix = salarySummaryEntity.EnterpriseTaxFeeCalculatedFix;
 
             string displayMessage = string.Empty;
             bool isSuccessful = SalarySummaryBLL.Instance.Update(originalEntity);

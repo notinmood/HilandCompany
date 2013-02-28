@@ -189,7 +189,16 @@
                         {
                             isCheckOk = false;
                         }
-                        
+
+                        if (entity.EnterpriseOtherInsuranceCalculated != entity.EnterpriseOtherInsuranceReal)
+                        {
+                            isCheckOk = false;
+                        }
+
+                        if (entity.EnterpriseTaxFeeCalculated != entity.EnterpriseTaxFeeReal)
+                        {
+                            isCheckOk = false;
+                        }
                         <tr>
                             <td>
                                 <input type="checkbox" name="itemCheckboxSelector" class="checkboxSelector" value="@entityGuid"/>
