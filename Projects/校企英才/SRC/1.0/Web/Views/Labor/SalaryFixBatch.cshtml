@@ -1,0 +1,74 @@
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility4.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Control;
+@using XQYC.Business.Enums;
+
+@{
+    ViewBag.Title = "劳务人员合同信息";
+    this.Layout = null;
+}
+<div id="formContainer">
+    <style type="text/css">
+        #formContainer table td {
+        }
+    </style>
+    @using (Html.BeginForm())
+    { 
+        <table>
+            <tr>
+                <td>企业综合费用修正:
+                </td>
+                <td>@Html.TextBox("EnterpriseMixCostCalculatedFix")
+                </td>
+                <td>企业保险费用修正:
+                </td>
+                <td>@Html.TextBox("EnterpriseInsuranceCalculatedFix")
+                </td>
+            </tr>
+            <tr>
+                <td>企业管理费用修正:
+                </td>
+                <td>@Html.TextBox("EnterpriseManageFeeCalculatedFix")
+                </td>
+                <td>企业公积金修正:
+                </td>
+                <td>@Html.TextBox("EnterpriseReserveFundCalculatedFix")
+                </td>
+            </tr>
+            <tr>
+                <td>企业其他保险费用修正:
+                </td>
+                <td>@Html.TextBox("EnterpriseOtherInsuranceCalculatedFix")
+                </td>
+                <td>企业税费修正:
+                </td>
+                <td>@Html.TextBox("EnterpriseTaxFeeCalculatedFix")
+                </td>
+            </tr>
+            <tr>
+                <td>个人保险费用修正:
+                </td>
+                <td>@Html.TextBox("PersonInsuranceCalculatedFix")
+                </td>
+                <td>个人公积金修正:
+                </td>
+                <td>@Html.TextBox("PersonReserveFundCalculatedFix")
+                </td>
+            </tr>
+        </table>
+        <input type="button" id="submitButton" value="保存" class="btn btn-warning" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            submitAndRedirect("#formContainer form");
+        });
+    });
+</script>
+

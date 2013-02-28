@@ -55,6 +55,7 @@
             @Html.HiA("newDisplayA").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-check icon-white\"></i>新建").ACA("SalaryItem", "Labor").Render(new { rel = "#EditDIV" })
             @Html.HiA("salaryListCheck").CssClassName("modalInput btn btn-warning").Value("<i class=\"icon-refresh icon-white\"></i>应付薪资人员校验").ACA("SalaryListCheck", "Labor").RouteValue(new { enterpriseKey = enterpriseKey, salaryMonth = salaryMonth }).Render(new { rel = "#EditDIV" })
             @Html.HiA("salaryDeleteBatch").CssClassName("modalInput btn btn-warning salaryDeleteBatch").Value("<i class=\"icon-remove icon-white\"></i>删除").ACA("SalaryDeleteBatch", "Labor").Render(new { rel = "#EditDIV" })
+            @Html.HiA("salaryFixBatch").CssClassName("modalInput btn btn-warning salaryFixBatch").Value("<i class=\"icon-pencil icon-white\"></i>费用修正").ACA("SalaryFixBatch", "Labor").Render(new { rel = "#EditDIV" })
             @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)
         </div>
     </div>
@@ -379,13 +380,26 @@
                 return confirm("是否要删除选中的数据？");
             });
 
-            $(".salaryDeleteBatch").click(function () {
-                return confirm("是否要删除选中的数据？");
-            });
+            //$(".salaryDeleteBatch").click(function () {
+            //    return confirm("是否要删除选中的数据？");
+            //});
 
             $("#salaryDeleteBatch").click(function () {
+                var result = confirm("是否要删除选中的数据？");
+                if (result == true) {
+                    var itemKeys = JSON.stringify($("input:checked").map(function () { return $(this).val(); }).get(), null, null);
+                    var url = '@Url.Action("SalaryDeleteBatch")?r=' + Math.random() + '&itemKeys=' + itemKeys + '&returnUrl=' + encodeURIComponent('@currentUrl') + '&isUsingCompress=@isUsingCompress';
+                    $("#EditDIV").load(url);
+                }
+                else {
+                    window.location.reload();
+                }
+            });
+
+            $("#salaryFixBatch").click(function () {
                 var itemKeys = JSON.stringify($("input:checked").map(function () { return $(this).val(); }).get(), null, null);
-                var url = '@Url.Action("SalaryDeleteBatch")?r=' + Math.random() + '&itemKeys=' + itemKeys + '&returnUrl='+ encodeURIComponent('@currentUrl') +'&isUsingCompress=@isUsingCompress';
+                var url = '@Url.Action("SalaryFixBatch")?r=' + Math.random() + '&itemKeys=' + itemKeys + '&returnUrl=' + encodeURIComponent('@currentUrl') + '&isUsingCompress=@isUsingCompress';
+                $(".modal").width("650px");
                 $("#EditDIV").load(url);
             });
         });

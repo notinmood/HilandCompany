@@ -1164,6 +1164,85 @@ namespace XQYC.Web.Controllers
             return Json(new LogicStatusInfo(isSuccessful, displayMessage));
         }
 
+        /// <summary>
+        /// 费用批量修正
+        /// </summary>
+        /// <param name="itemKeys"></param>
+        /// <returns></returns>
+        public ActionResult SalaryFixBatch(string itemKeys)
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 费用批量修正
+        /// </summary>
+        /// <param name="itemKeys"></param>
+        /// <param name="isOnlyPlaceHolder"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SalaryFixBatch(string itemKeys, bool isOnlyPlaceHolder = true)
+        {
+            bool isSuccessful = false;
+            string displayMessage = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(itemKeys) == true)
+            {
+                isSuccessful = false;
+                displayMessage = "请先选择至少一条数据，谢谢！";
+            }
+            else
+            {
+                List<string> salarySummaryGuidList = JsonHelper.DeSerialize<List<string>>(itemKeys);
+                if (salarySummaryGuidList.Count == 1 && salarySummaryGuidList[0].ToLower() == "on")
+                {
+                    isSuccessful = false;
+                    displayMessage = "请先选择至少一条数据，谢谢！";
+                }
+                else
+                {
+                    decimal? EnterpriseInsuranceCalculatedFix = RequestHelper.GetValue<decimal?>("EnterpriseInsuranceCalculatedFix", null);
+                    decimal? EnterpriseManageFeeCalculatedFix = RequestHelper.GetValue<decimal?>("EnterpriseManageFeeCalculatedFix", null);
+                    decimal? EnterpriseMixCostCalculatedFix = RequestHelper.GetValue<decimal?>("EnterpriseMixCostCalculatedFix", null);
+                    decimal? EnterpriseOtherCostCalculatedFix = RequestHelper.GetValue<decimal?>("EnterpriseOtherCostCalculatedFix", null);
+                    decimal? EnterpriseReserveFundCalculatedFix = RequestHelper.GetValue<decimal?>("EnterpriseReserveFundCalculatedFix", null);
+                    decimal? PersonInsuranceCalculatedFix = RequestHelper.GetValue<decimal?>("PersonInsuranceCalculatedFix", null);
+                    decimal? PersonManageFeeCalculatedFix = RequestHelper.GetValue<decimal?>("PersonManageFeeCalculatedFix", null);
+                    decimal? PersonMixCostCalculatedFix = RequestHelper.GetValue<decimal?>("PersonMixCostCalculatedFix", null);
+                    decimal? PersonOtherCostCalculatedFix = RequestHelper.GetValue<decimal?>("PersonOtherCostCalculatedFix", null);
+                    decimal? PersonReserveFundCalculatedFix = RequestHelper.GetValue<decimal?>("PersonReserveFundCalculatedFix", null);
+                    decimal? EnterpriseOtherInsuranceCalculatedFix = RequestHelper.GetValue<decimal?>("EnterpriseOtherInsuranceCalculatedFix", null);
+                    decimal? EnterpriseTaxFeeCalculatedFix = RequestHelper.GetValue<decimal?>("EnterpriseTaxFeeCalculatedFix", null);
+
+                    foreach (string item in salarySummaryGuidList)
+                    {
+                        SalarySummaryEntity originalEntity = SalarySummaryBLL.Instance.Get(item);
+                        if (originalEntity.IsEmpty == false)
+                        { 
+                            originalEntity.EnterpriseInsuranceCalculatedFix = EnterpriseInsuranceCalculatedFix;
+                            originalEntity.EnterpriseManageFeeCalculatedFix = EnterpriseManageFeeCalculatedFix;
+                            originalEntity.EnterpriseMixCostCalculatedFix = EnterpriseMixCostCalculatedFix;
+                            originalEntity.EnterpriseOtherCostCalculatedFix = EnterpriseOtherCostCalculatedFix;
+                            originalEntity.EnterpriseReserveFundCalculatedFix = EnterpriseReserveFundCalculatedFix;
+                            originalEntity.PersonInsuranceCalculatedFix = PersonInsuranceCalculatedFix;
+                            originalEntity.PersonManageFeeCalculatedFix = PersonManageFeeCalculatedFix;
+                            originalEntity.PersonMixCostCalculatedFix = PersonMixCostCalculatedFix;
+                            originalEntity.PersonOtherCostCalculatedFix = PersonOtherCostCalculatedFix;
+                            originalEntity.PersonReserveFundCalculatedFix = PersonReserveFundCalculatedFix;
+                            originalEntity.EnterpriseOtherInsuranceCalculatedFix =EnterpriseOtherInsuranceCalculatedFix;
+                            originalEntity.EnterpriseTaxFeeCalculatedFix = EnterpriseTaxFeeCalculatedFix;
+
+                            displayMessage = string.Empty;
+                            SalarySummaryBLL.Instance.Update(originalEntity);
+                        }
+                    }
+
+                    isSuccessful = true;
+                }
+            }
+
+            return Json(new LogicStatusInfo(isSuccessful, displayMessage));
+        }
 
         /// <summary>
         /// 添加某人的工资Summary
@@ -1445,7 +1524,7 @@ namespace XQYC.Web.Controllers
             salaryMonth = HttpUtility.UrlDecode(salaryMonth);
             string salaryDateString = salaryMonth + "/1";
 
-            SalarySummaryBLL.Instance.DeleteList(enterpriseKey, Converter.ChangeType(salaryDateString,DateTimeHelper.Min));
+            SalarySummaryBLL.Instance.DeleteList(enterpriseKey, Converter.ChangeType(salaryDateString, DateTimeHelper.Min));
 
             SystemStatusInfo itemError = new SystemStatusInfo();
             itemError.SystemStatus = SystemStatuses.Success;
@@ -1463,7 +1542,7 @@ namespace XQYC.Web.Controllers
         public ActionResult SalaryDelete(string itemKey)
         {
             //1.删除Summary内的信息
-            bool isSuccessful= SalarySummaryBLL.Instance.Delete(itemKey);
+            bool isSuccessful = SalarySummaryBLL.Instance.Delete(itemKey);
 
             //2.删除Details内的信息
             if (isSuccessful == true)
@@ -1500,7 +1579,7 @@ namespace XQYC.Web.Controllers
         /// <param name="itemKeys"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult SalaryDeleteBatch(string itemKeys,bool isOnlyPlaceHolder= true)
+        public ActionResult SalaryDeleteBatch(string itemKeys, bool isOnlyPlaceHolder = true)
         {
             bool isSuccessful = false;
             string displayMessage = string.Empty;
@@ -2171,7 +2250,7 @@ namespace XQYC.Web.Controllers
             dic["Labor.BusinessUserName"] = "劳务人员业务人员";
 
             Stream excelStream = ExcelHelper.WriteExcel(salarySummaryList, dic);
-            return File(excelStream, ContentTypes.GetContentType("xls"), string.Format("劳务人员结算信息({0}).xls",GuidHelper.NewGuidString()));
+            return File(excelStream, ContentTypes.GetContentType("xls"), string.Format("劳务人员结算信息({0}).xls", GuidHelper.NewGuidString()));
         }
         #endregion
 
