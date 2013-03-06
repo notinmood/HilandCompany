@@ -692,6 +692,7 @@
     <Content Include="Areas\LaborConsole\Views\Home\ContractList.cshtml" />
     <Content Include="Areas\LaborConsole\Views\Home\SalaryList.cshtml" />
     <Content Include="Areas\LaborConsole\Views\Home\SalaryDetailsList.cshtml" />
+    <Content Include="Areas\LaborConsole\Views\Account\MyBasicInfoEdit.cshtml" />
     <None Include="Properties\PublishProfiles\profile1.pubxml" />
     <Content Include="Views\Permission\Data.cshtml" />
     <Content Include="Views\FreePermission\RoleSelector.cshtml" />
