@@ -1,0 +1,94 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using HiLand.Utility.Web;
+@using XQYC.Business.BLL;
+
+@model List<SalaryDetailsEntity>
+@{
+    ViewBag.Title = "Index";
+    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+    string returnUrl = RequestHelper.GetValue("returnUrl");
+    string salarySummaryKey = RequestHelper.GetValue("itemKey");
+
+    string enterpriseName = string.Empty;
+    string laborName = string.Empty;
+    string salaryMonth= string.Empty;
+    if(GuidHelper.IsInvalidOrEmpty(salarySummaryKey)==false)
+    {
+        SalarySummaryEntity salarySummaryEntity= SalarySummaryBLL.Instance.Get(salarySummaryKey);
+        enterpriseName = salarySummaryEntity.Enterprise.CompanyNameShort;
+
+        laborName = salarySummaryEntity.LaborName;
+        salaryMonth= salarySummaryEntity.SalaryDate.ToString("yyyy/MM");
+    }
+    
+    if(string.IsNullOrWhiteSpace(returnUrl))
+    {
+        SalarySummaryEntity salarySummaryEntity= SalarySummaryBLL.Instance.Get(salarySummaryKey);
+       
+        string enterpriseKey=    salarySummaryEntity.EnterpriseKey;
+        //string salaryMonth = salarySummaryEntity.SalaryDate.ToString("yyyy/MM");
+
+        returnUrl = Url.Action("SalaryList", new { enterpriseKey = enterpriseKey, salaryMonth = salaryMonth });
+    }
+
+    int indexNumber = 0;
+}
+
+<h2>@string.Format("劳务人员薪资项列表({0}在{1}-{2})",laborName,enterpriseName,salaryMonth)</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+        <div class="btn-group"><a href="@returnUrl" class="btn btn-warning" title="返回列表页"><i class="icon-share icon-white"></i>返回</a></div>
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 60px">序号
+            </th>
+            <th style="width: 80px">工资项类型
+            </th>
+            <th style="width: 180px">工资项名称
+            </th>
+            <th style="width: 180px">金额
+            </th>
+            <th>回款时间
+            </th>
+        </tr>
+        @foreach (SalaryDetailsEntity entity in Model)
+        {
+            string entityGuid = entity.SalaryDetailsGuid.ToString();
+            decimal salaryValue = entity.SalaryItemValue;
+            indexNumber++;
+            <tr>
+                <td>
+                    @indexNumber
+                </td>
+                <td>@EnumHelper.GetDisplayValue(entity.SalaryItemKind)
+                </td>
+                <td>@entity.SalaryItemKey
+                </td>
+                <td>@salaryValue.ToString("0.00")
+                </td>
+                <td>@DateTimeHelper.ToSaftString(entity.SalaryItemCashDate)
+                </td>
+            </tr>   
+        }
+    </table>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aSalarySection").click();
+            $("#aSalarySection").addClass("current");
+            $("#aSalaryList").addClass("current");
+        });
+    </script>
+</div>

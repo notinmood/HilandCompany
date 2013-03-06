@@ -1,0 +1,146 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Models;
+@using HiLand.Utility.Web;
+@using HiLand.General.BLL;
+@using System.Web.UI.WebControls;
+
+@model PagedList<SalarySummaryEntity>
+@{
+    ViewBag.Title = "Index";
+    string currentUrl = RequestHelper.CurrentFullUrl;
+
+    bool isUsingCompress = false;
+    if (currentUrl.Length > 512)
+    {
+        isUsingCompress = true;
+        currentUrl = CompressHelper.Compress(currentUrl);
+    }
+}
+
+<h2>劳务薪资列表</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+        <div class="btn-group">
+        </div>
+    </div>
+    <div id="MyTable_tableLayout">
+        <div id="MyTable_tableFix">
+            <table id="MyTable_tableFixClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableHead">
+            <table id="MyTable_tableHeadClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableColumn">
+            <table id="MyTable_tableColumnClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableData">
+            <table id="MyTable" style="width: 5200px" class="grid" border="1" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th style="width: 150px"><input type="checkbox" class="allCheckboxSelector" />操作
+                        </th>
+                        <th style="width: 60px">姓名
+                        </th>
+                        <th style="width: 80px">工号
+                        </th>
+                        <th style="width:120px;">企业名称</th>
+                        <th style="width: 60px">账期
+                        </th>
+                        <th style="width: 120px">银行账号
+                        </th>
+                        <th style="width: 80px">应付工资
+                        </th>
+                        <th style="width: 140px">个人保险费用
+                        </th>
+                        <th style="width: 140px">个人公积金
+                        </th>
+                        <th style="width: 120px">补扣个人保险
+                        </th>
+                        <th style="width: 80px">应税工资
+                        </th>
+                        <th style="width: 80px">工资税
+                        </th>
+                        <th style="width: 80px">各种扣费
+                        </th>
+                        <th style="width: 140px">扣其他(借款等)
+                        </th>
+                        <th>实付工资
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (SalarySummaryEntity entity in Model)
+                    {
+                        string entityGuid = entity.SalarySummaryGuid.ToString();
+                        decimal salaryGrossPay = entity.SalaryGrossPay;
+                        decimal salaryrebate = entity.SalaryRebate;
+
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="itemCheckboxSelector" class="checkboxSelector" value="@entityGuid"/>
+                                @Html.HiA().CssClassName("salaryDetailsList").Value("<i class=\"icon-align-justify\"></i>详情").ACA("SalaryDetailsList", "Home").RouteValue(new { itemKey = entity.SalarySummaryGuid, returnUrl = currentUrl }).Render()
+                            </td>
+                            <td>@entity.LaborName
+                            </td>
+                            <td>
+                                @entity.LaborCode
+                            </td>
+                            <td>@entity.Enterprise.CompanyNameShort</td>
+                            <td>
+                                @entity.SalaryDate.ToString("yyyyMM")
+                            </td>
+                            <td>@entity.Labor.CurrentBankAccountNumber
+                            </td>
+                            <td>@entity.SalaryNeedPayBeforeCost.ToString("0.00")
+                            </td>
+                            <td>@entity.PersonInsuranceReal.ToString("0.00")
+                            </td>
+                            <td>@entity.PersonReserveFundReal.ToString("0.00")
+                            </td>
+                            <td>@entity.PersonOtherCostReal.ToString("0.00")
+                            </td>
+                            <td>@entity.SalaryNeedPayBeforeTax.ToString("0.00")
+                            </td>
+                            <td>@entity.SalaryTax.ToString("0.00")
+                            </td>
+                            <td>@salaryrebate.ToString("0.00")
+                            </td>
+                            <td>@entity.PersonBorrow.ToString("0.00")
+                            </td>
+                            <td>@entity.SalaryNeedPayToLabor.ToString("0.00")
+                            </td>
+                        </tr>   
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="myPager">
+        <span style="float: left;">@Html.Pager(Model, new PagerOptions() { PageIndexParameterName = "id", ShowDisabledPagerItems = false, AlwaysShowFirstLastPageNumber = true }) </span>
+        &nbsp;(共<span>@Model.TotalItemCount</span>条/每页<span>@SystemConst.CountPerPage</span>条 当前第<span>@Model.CurrentPageIndex</span> 页/共<span>@Model.TotalPageCount</span>页)
+    </div>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aSalarySection").click();
+            $("#aSalarySection").addClass("current");
+            $("#aSalaryList").addClass("current");
+        });
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/fixTable.js")" ></script>
+    <script type="text/javascript">
+        fixTable("MyTable", 2, "100%", 400);
+    </script>
+</div>

@@ -16,19 +16,20 @@
             <!-- Add the class "no-submenu" to menu items with no sub menu -->
             仪表盘 </a>
         </li>
-        <li><a id="aEnterpriseSection" href="#" class="nav-top-item">企业信息管理</a>
+        <li><a id="aContractSection" href="#" class="nav-top-item">劳务合同信息</a>
             <ul>
-                <li><a id="aEnterpriseList" href="@Url.Action("Index", "Enterprise")">企业客户基本信息</a></li>
+                <li><a id="aContractList" href="@Url.Action("ContractList", "Home")">合同列表</a></li>
             </ul>
         </li>
-        <li><a id="aUnSecuredLoanSection" href="#" class="nav-top-item">劳务人员管理</a>
+        <li><a id="aSalarySection" href="#" class="nav-top-item">劳务薪资数据</a>
             <ul>
-                <li><a id="aUnSecuredLoanList" href="@Url.Action("UnSecuredLoanList", "UnSecured")">劳务人员基本信息</a></li>
+                <li><a id="aSalaryList" href="@Url.Action("SalaryList", "Home")">薪资列表</a></li>
             </ul>
         </li>
         <li><a id="aSettingSection" href="#" class="nav-top-item">设置</a>
             <ul>
-                <li><a id="aMyProfile" href="@Url.Action("MyProfile", "Account")">个人基本信息</a></li>
+                <li><a id="aMyProfile" href="@Url.Action("MyProfile", "Account")">个人登录信息</a></li>
+                <li><a id="aMyBasicInfo" href="@Url.Action("MyBasicInfo", "Account")">个人基本信息</a></li>
                 <li><a id="aChangePassword" href="@Url.Action("ChangePassword", "Account")">修改口令</a></li>
             </ul>
         </li>

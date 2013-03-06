@@ -688,6 +688,10 @@
     <Content Include="Content\twitter-bootstrap\js\README.md" />
     <Content Include="DownFiles\Templet\企业招聘简章模板.docx" />
     <Content Include="Areas\APIs\Views\Home\Help.cshtml" />
+    <Content Include="Areas\LaborConsole\Views\Account\MyBasicInfo.cshtml" />
+    <Content Include="Areas\LaborConsole\Views\Home\ContractList.cshtml" />
+    <Content Include="Areas\LaborConsole\Views\Home\SalaryList.cshtml" />
+    <Content Include="Areas\LaborConsole\Views\Home\SalaryDetailsList.cshtml" />
     <None Include="Properties\PublishProfiles\profile1.pubxml" />
     <Content Include="Views\Permission\Data.cshtml" />
     <Content Include="Views\FreePermission\RoleSelector.cshtml" />
