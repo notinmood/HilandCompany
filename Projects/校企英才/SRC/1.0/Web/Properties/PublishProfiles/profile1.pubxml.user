@@ -94,6 +94,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Areas/LaborConsole/Views/_ViewStart.cshtml">
       <publishTime>09/15/2012 11:52:00</publishTime>
     </File>
+    <File Include="Areas/UserCenter/Views/Home/Active.cshtml">
+      <publishTime>03/08/2013 16:04:12</publishTime>
+    </File>
     <File Include="Areas/UserCenter/Views/Home/Index.cshtml">
       <publishTime>12/04/2012 13:33:41</publishTime>
     </File>
@@ -119,19 +122,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/24/2009 16:44:54</publishTime>
     </File>
     <File Include="bin/HiLand.Framework.dll">
-      <publishTime>03/06/2013 18:56:24</publishTime>
+      <publishTime>03/08/2013 16:17:02</publishTime>
     </File>
     <File Include="bin/HiLand.Framework4.dll">
-      <publishTime>03/02/2013 09:10:23</publishTime>
+      <publishTime>03/08/2013 16:35:07</publishTime>
     </File>
     <File Include="bin/HiLand.General.dll">
-      <publishTime>03/06/2013 18:56:26</publishTime>
+      <publishTime>03/08/2013 16:35:07</publishTime>
     </File>
     <File Include="bin/HiLand.Utility.dll">
-      <publishTime>03/06/2013 18:56:18</publishTime>
+      <publishTime>03/08/2013 10:35:56</publishTime>
     </File>
     <File Include="bin/HiLand.Utility4.dll">
-      <publishTime>03/06/2013 18:56:24</publishTime>
+      <publishTime>03/08/2013 10:41:51</publishTime>
     </File>
     <File Include="bin/Ionic.Zip.dll">
       <publishTime>02/15/2012 21:59:34</publishTime>
@@ -191,10 +194,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/10/2012 21:53:02</publishTime>
     </File>
     <File Include="bin/XQYC.Business.dll">
-      <publishTime>03/07/2013 08:53:55</publishTime>
+      <publishTime>03/08/2013 18:14:00</publishTime>
     </File>
     <File Include="bin/XQYC.Web.dll">
-      <publishTime>03/07/2013 08:54:02</publishTime>
+      <publishTime>03/08/2013 18:14:02</publishTime>
     </File>
     <File Include="Content/adminStyle.css">
       <publishTime>01/12/2013 16:15:19</publishTime>
@@ -1322,7 +1325,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>03/07/2013 08:54:11</publishTime>
+      <publishTime>03/08/2013 18:14:08</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -56,14 +56,6 @@ namespace XQYC.Web.Areas.UserCenter.Controllers
                         logicStatusInfo.IsSuccessful = false;
                         break;
                 }
-                //if (loginStatus == LoginStatuses.Successful)
-                //{
-                //    logicStatusInfo.IsSuccessful = true;
-                //}
-                //else
-                //{
-                //    logicStatusInfo.IsSuccessful = false;
-                //}
 
                 logicStatusInfo.Message = EnumHelper.GetDisplayValue(loginStatus);
             }
@@ -179,6 +171,72 @@ namespace XQYC.Web.Areas.UserCenter.Controllers
         public ActionResult Active()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Active(string userName,string userNameCN, string password)
+        {
+            LogicStatusInfo logicStatusInfo = new LogicStatusInfo();
+            LoginStatuses loginStatus = LoginStatuses.Successful;
+            BusinessUser businessUser = null;
+
+            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
+            {
+                logicStatusInfo.IsSuccessful = false;
+                logicStatusInfo.Message = "请必须输入账号和口令，谢谢！";
+            }
+            else
+            {
+                businessUser = BusinessUserBLL.Login(userName, password, out loginStatus);
+
+                switch (loginStatus)
+                {
+                    case LoginStatuses.Successful:
+                        logicStatusInfo.IsSuccessful = true;
+                        break;
+                    case LoginStatuses.FailureUnactive:
+                        logicStatusInfo.IsSuccessful = false;
+
+                        if (businessUser.UserNameCN == userNameCN)
+                        {
+                            businessUser.UserStatus = UserStatuses.Normal;
+                            BusinessUserBLL.SetUserStatus(businessUser.UserGuid, UserStatuses.Normal);
+                            return Index(userName, password);
+                        }
+                        break;
+                    default:
+                        logicStatusInfo.IsSuccessful = false;
+                        break;
+                }
+
+                logicStatusInfo.Message = EnumHelper.GetDisplayValue(loginStatus);
+            }
+
+            if (logicStatusInfo.IsSuccessful == true)
+            {
+                if (FormsAuthentication.GetRedirectUrl(userName, false) == FormsAuthentication.DefaultUrl)
+                {
+                    switch (businessUser.UserType)
+                    {
+                        case UserTypes.EnterpriseUser:
+                            return RedirectToAction("Index", "Home", new { area = "EnterpriseConsole" });
+                        case UserTypes.Broker:
+                            return RedirectToAction("Index", "Home", new { area = "InformationBrokerConsole" });
+                        case UserTypes.Manager:
+                        case UserTypes.SuperAdmin:
+                            return RedirectToAction("Index", "Home", new { area = "" });
+                        case UserTypes.CommonUser:
+                        default:
+                            return RedirectToAction("Index", "Home", new { area = "LaborConsole" });
+                    }
+                }
+                else
+                {
+                    FormsAuthentication.RedirectFromLoginPage(userName, false);
+                }
+            }
+
+            return View(logicStatusInfo);
         }
 
         #region 辅助方法
