@@ -187,6 +187,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Attribute\LaborAuthorizeAttribute.cs" />
     <Compile Include="Models\JobContainer.cs" />
     <Compile Include="Models\Jobs\BirthdayRemindJob.cs" />
     <Compile Include="Models\Jobs\BirthdayRemindJobOfEmployee.cs" />
@@ -693,6 +694,7 @@
     <Content Include="Areas\LaborConsole\Views\Home\SalaryList.cshtml" />
     <Content Include="Areas\LaborConsole\Views\Home\SalaryDetailsList.cshtml" />
     <Content Include="Areas\LaborConsole\Views\Account\MyBasicInfoEdit.cshtml" />
+    <Content Include="Areas\UserCenter\Views\Home\Active.cshtml" />
     <None Include="Properties\PublishProfiles\profile1.pubxml" />
     <Content Include="Views\Permission\Data.cshtml" />
     <Content Include="Views\FreePermission\RoleSelector.cshtml" />

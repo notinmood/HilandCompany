@@ -44,14 +44,26 @@ namespace XQYC.Web.Areas.UserCenter.Controllers
             {
                 businessUser = BusinessUserBLL.Login(userName, password, out loginStatus);
 
-                if (loginStatus == LoginStatuses.Successful)
+                switch (loginStatus)
                 {
-                    logicStatusInfo.IsSuccessful = true;
+                    case LoginStatuses.Successful:
+                        logicStatusInfo.IsSuccessful = true;
+                        break;
+                    case LoginStatuses.FailureUnactive:
+                        logicStatusInfo.IsSuccessful = false;
+                        return RedirectToAction("Active", "Home", new { area = "UserCenter" });
+                    default:
+                        logicStatusInfo.IsSuccessful = false;
+                        break;
                 }
-                else
-                {
-                    logicStatusInfo.IsSuccessful = false;
-                }
+                //if (loginStatus == LoginStatuses.Successful)
+                //{
+                //    logicStatusInfo.IsSuccessful = true;
+                //}
+                //else
+                //{
+                //    logicStatusInfo.IsSuccessful = false;
+                //}
 
                 logicStatusInfo.Message = EnumHelper.GetDisplayValue(loginStatus);
             }
@@ -160,6 +172,11 @@ namespace XQYC.Web.Areas.UserCenter.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult _MyProfile()
+        {
+            return View();
+        }
+
+        public ActionResult Active()
         {
             return View();
         }

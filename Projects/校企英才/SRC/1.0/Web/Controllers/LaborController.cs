@@ -190,6 +190,8 @@ namespace XQYC.Web.Controllers
                 targetEntity.Password = SystemConst.InitialUserPassword;
                 targetEntity.LaborWorkStatus = LaborWorkStatuses.NewWorker;
                 targetEntity.ComeFromType = ComeFromTypes.ManageWrite;
+                //首次录入系统，劳务人员的状态为未激活
+                targetEntity.UserStatus = UserStatuses.Unactivated;
                 createStatus = LaborBLL.Instance.Create(targetEntity);
                 if (createStatus == CreateUserRoleStatuses.Successful)
                 {
@@ -470,6 +472,8 @@ namespace XQYC.Web.Controllers
                             else
                             {
                                 laborEntity.ComeFromType = ComeFromTypes.ManageBatch;
+                                //首次录入系统，劳务人员的状态为未激活
+                                laborEntity.UserStatus = UserStatuses.Unactivated;
                                 CreateUserRoleStatuses createStatus = LaborBLL.Instance.Create(laborEntity);
 
                                 if (createStatus == CreateUserRoleStatuses.Successful)
