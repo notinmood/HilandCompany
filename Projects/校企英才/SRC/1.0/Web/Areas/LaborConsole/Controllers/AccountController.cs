@@ -36,15 +36,46 @@ namespace XQYC.Web.Areas.LaborConsole.Controllers
         public ActionResult MyBasicInfo()
         {
             LaborEntity entity = LaborEntity.Empty;
-
             entity = LaborBLL.Instance.Get(BusinessUserBLL.CurrentUserGuid);
-
             return View(entity);
         }
 
         public ActionResult MyBasicInfoEdit()
         {
-            return View();
+            LaborEntity entity = LaborEntity.Empty;
+            entity = LaborBLL.Instance.Get(BusinessUserBLL.CurrentUserGuid);
+            return View(entity);
+        }
+
+        [HttpPost]
+        public ActionResult MyBasicInfoEdit(LaborEntity editedEntity)
+        {
+            LaborEntity entity = LaborEntity.Empty;
+            entity = LaborBLL.Instance.Get(BusinessUserBLL.CurrentUserGuid);
+
+            entity.UserSex = editedEntity.UserSex;
+            entity.UserBirthDay = editedEntity.UserBirthDay;
+            entity.UserHeight = editedEntity.UserHeight;
+            entity.UserWeight = editedEntity.UserWeight;
+            entity.UserEducationalBackground = editedEntity.UserEducationalBackground;
+            entity.UserEducationalSchool = editedEntity.UserEducationalSchool;
+            entity.UserNation = editedEntity.UserNation;
+            entity.NativePlace = editedEntity.NativePlace;
+            entity.UserMobileNO = editedEntity.UserMobileNO;
+            entity.HomeTelephone = editedEntity.HomeTelephone;
+            entity.WorkSkill = editedEntity.WorkSkill;
+            entity.WorkSkillPaper = editedEntity.WorkSkillPaper;
+            entity.WorkSituation = editedEntity.WorkSituation;
+            entity.PreWorkSituation = editedEntity.PreWorkSituation;
+            entity.HopeWorkSituation = editedEntity.HopeWorkSituation;
+            entity.HopeWorkSalary = editedEntity.HopeWorkSalary;
+            entity.MaritalStatus = editedEntity.MaritalStatus;
+            entity.UrgentLinkMan = editedEntity.UrgentLinkMan;
+            entity.UrgentRelationship = editedEntity.UrgentRelationship;
+            entity.UrgentTelephone = editedEntity.UrgentTelephone;
+            LaborBLL.Instance.Update(entity);
+
+            return RedirectToActionPermanent("MyBasicInfo");
         }
     }
 }

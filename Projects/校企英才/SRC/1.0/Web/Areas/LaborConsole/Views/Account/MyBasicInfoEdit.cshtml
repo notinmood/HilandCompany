@@ -1,5 +1,165 @@
-﻿@{
-    ViewBag.Title = "MyBasicInfoEdit";
-}
+﻿@using HiLand.Utility.Enums;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework.BusinessCore.Enum;
+@using HiLand.Framework.BusinessCore.BLL;
+@using HiLand.Utility4.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Control;
+@using XQYC.Business.BLL;
+@using XQYC.Business.Enums;
+@using HiLand.Utility.Web;
 
-<h2>MyBasicInfoEdit</h2>
+@model LaborEntity
+@{
+    ViewBag.Title = "Index";
+
+    string returnUrl = RequestHelper.GetValue("returnUrl");
+    bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
+    if (isUsingCompress == true && string.IsNullOrWhiteSpace(returnUrl) == false)
+    {
+        returnUrl = HiLand.Utility.Data.CompressHelper.Decompress(returnUrl);
+    }
+
+    if (string.IsNullOrWhiteSpace(returnUrl))
+    {
+        returnUrl = Url.Action("Index");
+    }
+
+    string userBirthday = string.Empty;
+    if (Model.UserBirthDay > HiLand.Utility.Data.DateTimeHelper.Min)
+    {
+        userBirthday = Model.UserBirthDay.ToShortDateString();
+    }
+
+    InformationBrokerEntity informationBrokerEntity = InformationBrokerBLL.Instance.Get(Model.InformationBrokerUserGuid);
+    if (informationBrokerEntity == null)
+    {
+        informationBrokerEntity = InformationBrokerEntity.Empty;
+    }
+}
+<h2>个人基本信息</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+    </div>
+    @using (Html.BeginForm())
+    { 
+        <table>
+            <tr>
+                <td>性别:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.UserSex, EnumEx.BuildSelectItemList<Sexes>())
+                </td>
+                <td>出生日期:
+                </td>
+                <td>@HtmlHelperEx.DateInput(Html, "UserBirthDay", userBirthday)
+                </td>
+            </tr>
+            <tr>
+                <td>身高:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserHeight)
+                </td>
+                <td>体重:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserWeight)
+                </td>
+            </tr>
+            <tr>
+                <td>学历:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.UserEducationalBackground, EnumEx.BuildSelectItemList<EducationalBackgrounds>())
+                </td>
+                <td>毕业学校:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserEducationalSchool)
+                </td>
+            </tr>
+            <tr>
+                <td>民族:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserNation)
+                </td>
+                <td>籍贯:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.NativePlace)
+                </td>
+            </tr>
+            <tr>
+                <td>联系电话:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UserMobileNO)
+                </td>
+                <td>家庭电话:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.HomeTelephone)
+                </td>
+            </tr>
+            <tr>
+                <td>工作技能:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.WorkSkill)
+                </td>
+                <td>所持证件:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.WorkSkillPaper)
+                </td>
+            </tr>
+            <tr>
+                <td>工作状况:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.WorkSituation)
+                </td>
+                <td>上份工作:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.PreWorkSituation)
+                </td>
+            </tr>
+            <tr>
+                <td>希望从事工作:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.HopeWorkSituation)
+                </td>
+                <td>希望工资待遇:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.HopeWorkSalary)
+                </td>
+            </tr>
+            <tr>
+                <td>婚姻状况:
+                </td>
+                <td>@Html.DropDownListFor(entity => entity.MaritalStatus, EnumEx.BuildSelectItemList<MaritalStatuses>())
+                </td>
+                <td>紧急联系人:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UrgentLinkMan)
+                </td>
+            </tr>
+            <tr>
+                <td>紧急联系人电话:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UrgentTelephone)
+                </td>
+                <td>紧急联系人关系:
+                </td>
+                <td>@Html.TextBoxFor(entity => entity.UrgentRelationship)
+                </td>
+            </tr>
+        </table>
+        <div style="text-align:center"> <input type="submit" value="保存" /></div>
+    }
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aSettingSection").click();
+            $("#aSettingSection").addClass("current");
+            $("#aMyBasicInfo").addClass("current");
+        });
+    </script>
+</div>
+
+
+

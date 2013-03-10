@@ -22,7 +22,7 @@ namespace XQYC.Web.Areas.LaborConsole.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return RedirectToActionPermanent("MyProfile", "Account");
         }
 
         /// <summary>

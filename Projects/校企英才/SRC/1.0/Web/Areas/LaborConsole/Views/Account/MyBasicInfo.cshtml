@@ -46,153 +46,151 @@
             <tr>
                 <td style="width: 120px;">姓名:
                 </td>
-                <td>@Html.HiTextBox("UserNameCN").Value(Model.UserNameCN).Render(new { @readonly=true})
+                <td>@Html.HiTextBox("UserNameCN").Value(Model.UserNameCN).Render(new { disabled=true})
                 </td>
                 <td style="width: 120px;">用户状态:
                 </td>
-                <td>@Html.DropDownListFor(entity => entity.UserStatus, HiLand.Utility4.Data.EnumEx.BuildSelectItemList<UserStatuses>(),new { @readonly=true})
+                <td>@Html.DropDownListFor(entity => entity.UserStatus, HiLand.Utility4.Data.EnumEx.BuildSelectItemList<UserStatuses>(),new { disabled=true})
                 </td>
             </tr>
             <tr>
                 <td>性别:
                 </td>
-                <td>@Html.DropDownListFor(entity => entity.UserSex, EnumEx.BuildSelectItemList<Sexes>(),new { @readonly=true})
+                <td>@Html.DropDownListFor(entity => entity.UserSex, EnumEx.BuildSelectItemList<Sexes>(),new { disabled=true})
                 </td>
                 <td>出生日期:
                 </td>
-                <td>@HtmlHelperEx.DateInput(Html, "UserBirthDay", userBirthday)
+                <td>@Html.HiTextBox("UserBirthDay").Value(Model.UserBirthDay).Render(new { disabled=true})
                 </td>
             </tr>
             <tr>
                 <td>来源:
                 </td>
-                <td>@Html.DropDownListFor(entity => entity.ComeFromType, EnumEx.BuildSelectItemList<ComeFromTypes>(),new { @readonly=true})
+                <td>@Html.DropDownListFor(entity => entity.ComeFromType, EnumEx.BuildSelectItemList<ComeFromTypes>(),new { disabled=true})
                 </td>
                 <td>用工方式:
                 </td>
-                <td>@Html.DropDownListFor(entity => entity.DispatchType, EnumEx.BuildSelectItemList<DispatchTypes>())
+                <td>@Html.DropDownListFor(entity => entity.DispatchType, EnumEx.BuildSelectItemList<DispatchTypes>(),new { disabled=true})
                 </td>
             </tr>
             <tr>
                 <td>身份证号:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.UserCardID,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.UserCardID,new { disabled=true})
                 </td>
                 <td>身份证地址:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.IDCardPlace,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.IDCardPlace,new { disabled=true})
                 </td>
             </tr>
             <tr>
                 <td>身高:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.UserHeight,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.UserHeight,new { disabled=true})
                 </td>
                 <td>体重:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.UserWeight,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.UserWeight,new { disabled=true})
                 </td>
             </tr>
             <tr>
                 <td>社保卡号:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.SocialSecurityNumber,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.SocialSecurityNumber,new { disabled=true})
                 </td>
                 <td>户口性质:
                 </td>
-                <td>@Html.DropDownListFor(entity => entity.HouseHoldType, EnumEx.BuildSelectItemList<HouseHoldTypes>(),new { @readonly=true})
+                <td>@Html.DropDownListFor(entity => entity.HouseHoldType, EnumEx.BuildSelectItemList<HouseHoldTypes>(),new { disabled=true})
                 </td>
             </tr>
             <tr>
                 <td>学历:
                 </td>
-                <td>@Html.DropDownListFor(entity => entity.UserEducationalBackground, EnumEx.BuildSelectItemList<EducationalBackgrounds>(),new { @readonly=true})
+                <td>@Html.DropDownListFor(entity => entity.UserEducationalBackground, EnumEx.BuildSelectItemList<EducationalBackgrounds>(),new { disabled=true})
                 </td>
                 <td>毕业学校:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.UserEducationalSchool,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.UserEducationalSchool,new { disabled=true})
                 </td>
             </tr>
             <tr>
                 <td>民族:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.UserNation,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.UserNation,new { disabled=true})
                 </td>
                 <td>籍贯:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.NativePlace,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.NativePlace,new { disabled=true})
                 </td>
             </tr>
             <tr>
                 <td>联系电话:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.UserMobileNO,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.UserMobileNO,new { disabled=true})
                 </td>
                 <td>家庭电话:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.HomeTelephone,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.HomeTelephone,new { disabled=true})
                 </td>
             </tr>
             <tr>
                 <td>工作技能:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.WorkSkill,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.WorkSkill,new { disabled=true})
                 </td>
                 <td>所持证件:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.WorkSkillPaper,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.WorkSkillPaper,new { disabled=true})
                 </td>
             </tr>
             <tr>
                 <td>工作状况:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.WorkSituation,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.WorkSituation,new { disabled=true})
                 </td>
                 <td>上份工作:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.PreWorkSituation,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.PreWorkSituation,new { disabled=true})
                 </td>
             </tr>
             <tr>
                 <td>希望从事工作:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.HopeWorkSituation,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.HopeWorkSituation,new { disabled=true})
                 </td>
                 <td>希望工资待遇:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.HopeWorkSalary,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.HopeWorkSalary,new { disabled=true})
                 </td>
             </tr>
             <tr>
                 <td>婚姻状况:
                 </td>
-                <td>@Html.DropDownListFor(entity => entity.MaritalStatus, EnumEx.BuildSelectItemList<MaritalStatuses>(),new { @readonly=true})
+                <td>@Html.DropDownListFor(entity => entity.MaritalStatus, EnumEx.BuildSelectItemList<MaritalStatuses>(),new { disabled=true})
                 </td>
                 <td>紧急联系人:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.UrgentLinkMan,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.UrgentLinkMan,new { disabled=true})
                 </td>
             </tr>
             <tr>
                 <td>紧急联系人电话:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.UrgentTelephone,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.UrgentTelephone,new { disabled=true})
                 </td>
                 <td>紧急联系人关系:
                 </td>
-                <td>@Html.TextBoxFor(entity => entity.UrgentRelationship,new { @readonly=true})
+                <td>@Html.TextBoxFor(entity => entity.UrgentRelationship,new { disabled=true})
                 </td>
             </tr>
         </table>
     <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
-    <div class="modal modalFix" id="EditDIV">
-    </div>
-
+    <div style="text-align:center"> <a href="@Url.Action("MyBasicInfoEdit")">修改</a></div>
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#aContractSection").click();
-            $("#aContractSection").addClass("current");
-            $("#aContractList").addClass("current");
+            $("#aSettingSection").click();
+            $("#aSettingSection").addClass("current");
+            $("#aMyBasicInfo").addClass("current");
         });
     </script>
 </div>
