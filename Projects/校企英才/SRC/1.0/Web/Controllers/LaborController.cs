@@ -2684,5 +2684,18 @@ namespace XQYC.Web.Controllers
             return Json(new LogicStatusInfo(isSuccessful, displayMessage));
         }
         #endregion
+
+        #region 统计汇总
+        /// <summary>
+        /// 统计汇总选择器
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult StatisticalSummarySelector()
+        {
+            return View();
+        }
+
+
+        #endregion
     }
 }

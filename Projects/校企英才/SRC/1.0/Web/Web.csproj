@@ -184,6 +184,7 @@
     <Compile Include="Controllers\TestAsyncController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Control\HtmlHelperEx.cs" />
+    <Compile Include="Control\XQYCTreeNodeSelectModes.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -750,6 +751,7 @@
     <Content Include="Views\Labor\SalaryDeleteBatch.cshtml" />
     <Content Include="Views\Enterprise\JobItemDisplay.cshtml" />
     <Content Include="Views\Labor\SalaryFixBatch.cshtml" />
+    <Content Include="Views\Labor\StatisticalSummarySelector.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

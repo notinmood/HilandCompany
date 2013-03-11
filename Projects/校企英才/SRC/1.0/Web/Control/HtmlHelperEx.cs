@@ -29,7 +29,7 @@ namespace XQYC.Web.Control
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static IHtmlString DateInput(System.Web.Mvc.HtmlHelper html, string name, string value, string datetimeFormat = "yyyy/mm/dd")
+        public static IHtmlString DateInput(System.Web.Mvc.HtmlHelper html, string name, string value, string datetimeFormat = "yyyy/mm/dd", bool isUseSelfContainer = true)
         {
             List<string> cssFiles = new List<string>() { UrlHelperEx.UrlHelper.Content("~/Content/jQuery.tools.dateinput.css") };
             List<string> javaScriptFiles = new List<string>() { /*UrlHelperEx.UrlHelper.Content("~/Scripts/jQuery.tools.min.js")*/ };
@@ -39,7 +39,7 @@ namespace XQYC.Web.Control
             {
                 value = string.Empty;
             }
-            return html.HiDateTime(name).Value(value).StyleSheetFiles(cssFiles).JavaScriptFiles(javaScriptFiles).DateInputOptions(dateTimeOptions).Render();
+            return html.HiDateTime(name).Value(value).StyleSheetFiles(cssFiles).IsUseSelfContainer(isUseSelfContainer).JavaScriptFiles(javaScriptFiles).DateInputOptions(dateTimeOptions).Render();
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace XQYC.Web.Control
 
         #region 部门人员控件
         /// <summary>
-        /// 部门下拉列表
+        /// 部门下拉列表(单级的组织机构，目前使用多级的组织机构树)
         /// </summary>
         /// <param name="html"></param>
         /// <param name="controlName"></param>
@@ -122,9 +122,9 @@ namespace XQYC.Web.Control
             cssList.Add(UrlHelperEx.UrlHelper.Content("~/Content/ztree/css/zTreeStyle/zTreeStyle.css"));
             string employeeJson = GetDepartmentEmployeeNodesJson();
             bool allowSelect = true;
-            if (BusinessUserBLL.CurrentUser.UserType == UserTypes.SuperAdmin 
-                || value == string.Empty 
-                || value == GuidHelper.EmptyString 
+            if (BusinessUserBLL.CurrentUser.UserType == UserTypes.SuperAdmin
+                || value == string.Empty
+                || value == GuidHelper.EmptyString
                 || BusinessUserBLL.CurrentUserGuid.ToString().ToLower() == value.ToLower())
             {
                 allowSelect = true;
@@ -138,10 +138,32 @@ namespace XQYC.Web.Control
         }
 
         /// <summary>
+        /// 部门选择器
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static IHtmlString XQYCDepartmentChooser(System.Web.Mvc.HtmlHelper html, string name, string text, string value)
+        {
+            List<string> scriptList = new List<string>();
+            scriptList.Add(UrlHelperEx.UrlHelper.Content("~/Scripts/jquery-1.4.4.min.js"));
+            scriptList.Add(UrlHelperEx.UrlHelper.Content("~/Content/ztree/js/jquery.ztree.all-3.3.min.js"));
+
+            List<string> cssList = new List<string>();
+            cssList.Add(UrlHelperEx.UrlHelper.Content("~/Content/ztree/css/zTreeStyle/zTreeStyle.css"));
+            string employeeJson = GetDepartmentEmployeeNodesJson(XQYCTreeNodeSelectModes.Department);
+            bool allowSelect = true;
+
+            return html.HiTreeSelect(name).JavaScriptFiles(scriptList).IsAllowSelect(allowSelect).StyleSheetFiles(cssList).Text(text).Value(value).IsInPopupWindow(true).DataSelectType(DataSelectTypes.Radio).StaticDataNodes(employeeJson).Render();
+        }
+
+        /// <summary>
         /// 获取部门人员节点的json数据
         /// </summary>
         /// <returns></returns>
-        private static string GetDepartmentEmployeeNodesJson()
+        private static string GetDepartmentEmployeeNodesJson(XQYCTreeNodeSelectModes selectMode = XQYCTreeNodeSelectModes.Employee)
         {
             string result = string.Empty;
 
@@ -155,29 +177,41 @@ namespace XQYC.Web.Control
                 node.pId = item.DepartmentParentGuid.ToString();
                 node.name = item.DepartmentNameShort;
                 node.open = false;
-                node.nocheck = true;
+
+                if (FlagHelper.ContainsFlag(selectMode, XQYCTreeNodeSelectModes.Department))
+                {
+                    node.nocheck = false;
+                }
+                else
+                {
+                    node.nocheck = true;
+                }
 
                 nodeList.Add(node);
             }
 
-            string sqlClause = string.Format("SELECT 	EMP.*,CU.* FROM XQYCEmployee EMP LEFT JOIN CoreUser CU ON EMP.UserGuid= CU.UserGuid WHERE CU.UserStatus={0}", (int)UserStatuses.Normal);
-            List<EmployeeEntity> employeeList = EmployeeBLL.Instance.GetListBySQL(sqlClause);
-            foreach (EmployeeEntity item in employeeList)
+            if (FlagHelper.ContainsFlag(selectMode, XQYCTreeNodeSelectModes.Employee))
             {
-                ZTreeNodeEntity node = new ZTreeNodeEntity();
-                node.id = item.UserGuid.ToString();
-                node.pId = item.DepartmentGuid.ToString();
-                node.name = item.UserNameCN;
-                node.open = false;
-                node.nocheck = false;
+                string sqlClause = string.Format("SELECT 	EMP.*,CU.* FROM XQYCEmployee EMP LEFT JOIN CoreUser CU ON EMP.UserGuid= CU.UserGuid WHERE CU.UserStatus={0}", (int)UserStatuses.Normal);
+                List<EmployeeEntity> employeeList = EmployeeBLL.Instance.GetListBySQL(sqlClause);
+                foreach (EmployeeEntity item in employeeList)
+                {
+                    ZTreeNodeEntity node = new ZTreeNodeEntity();
+                    node.id = item.UserGuid.ToString();
+                    node.pId = item.DepartmentGuid.ToString();
+                    node.name = item.UserNameCN;
+                    node.open = false;
+                    node.nocheck = false;
 
-                nodeList.Add(node);
+                    nodeList.Add(node);
+                }
             }
 
             result = JsonHelper.Serialize(nodeList);
 
             return result;
         }
+
         #endregion
 
         #region 企业、企业合同控件
@@ -377,7 +411,7 @@ namespace XQYC.Web.Control
         public static IHtmlString XQYCDDLCostFormular(System.Web.Mvc.HtmlHelper html, CostKinds costKind, CostTypes costType, string name, string value)
         {
             List<SelectListItem> itemList = new List<SelectListItem>();
-            List<CostFormularEntity> entityList = CostFormularBLL.Instance.GetList(costKind,costType, Logics.True, string.Empty);
+            List<CostFormularEntity> entityList = CostFormularBLL.Instance.GetList(costKind, costType, Logics.True, string.Empty);
             foreach (CostFormularEntity currentItem in entityList)
             {
                 SelectListItem listItem = new SelectListItem();
