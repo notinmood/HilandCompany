@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
@@ -13,6 +14,7 @@ using HiLand.Framework4.Permission.Attributes;
 using HiLand.General.BLL;
 using HiLand.General.Entity;
 using HiLand.Utility.Data;
+using HiLand.Utility.DataBase;
 using HiLand.Utility.Entity;
 using HiLand.Utility.Entity.Status;
 using HiLand.Utility.Enums;
@@ -269,7 +271,7 @@ namespace XQYC.Web.Controllers
             targetEntity.Memo4 = originalEntity.Memo4;
             targetEntity.Memo5 = originalEntity.Memo5;
 
-            targetEntity.DispatchType = originalEntity.DispatchType;
+            //targetEntity.CurrentDispatchType = originalEntity.CurrentDispatchType;
             targetEntity.ComeFromType = originalEntity.ComeFromType;
 
             targetEntity.SocialSecurityNumber = originalEntity.SocialSecurityNumber;
@@ -777,6 +779,7 @@ namespace XQYC.Web.Controllers
 
             targetEntity.LaborWorkShop = originalEntity.LaborWorkShop;
             targetEntity.LaborDepartment = originalEntity.LaborDepartment;
+            targetEntity.DispatchType = originalEntity.DispatchType;
         }
 
         /// <summary>
@@ -1222,7 +1225,7 @@ namespace XQYC.Web.Controllers
                     {
                         SalarySummaryEntity originalEntity = SalarySummaryBLL.Instance.Get(item);
                         if (originalEntity.IsEmpty == false)
-                        { 
+                        {
                             originalEntity.EnterpriseInsuranceCalculatedFix = EnterpriseInsuranceCalculatedFix;
                             originalEntity.EnterpriseManageFeeCalculatedFix = EnterpriseManageFeeCalculatedFix;
                             originalEntity.EnterpriseMixCostCalculatedFix = EnterpriseMixCostCalculatedFix;
@@ -1233,7 +1236,7 @@ namespace XQYC.Web.Controllers
                             originalEntity.PersonMixCostCalculatedFix = PersonMixCostCalculatedFix;
                             originalEntity.PersonOtherCostCalculatedFix = PersonOtherCostCalculatedFix;
                             originalEntity.PersonReserveFundCalculatedFix = PersonReserveFundCalculatedFix;
-                            originalEntity.EnterpriseOtherInsuranceCalculatedFix =EnterpriseOtherInsuranceCalculatedFix;
+                            originalEntity.EnterpriseOtherInsuranceCalculatedFix = EnterpriseOtherInsuranceCalculatedFix;
                             originalEntity.EnterpriseTaxFeeCalculatedFix = EnterpriseTaxFeeCalculatedFix;
 
                             displayMessage = string.Empty;
@@ -2693,6 +2696,210 @@ namespace XQYC.Web.Controllers
         public ActionResult StatisticalSummarySelector()
         {
             return View();
+        }
+
+        public ActionResult StatisticalSummaryList()
+        {
+            string resourceName = RequestHelper.GetValue("ResourceName");
+            string resourceValue = RequestHelper.GetValue("ResourceName_Value");
+            string resourceType = RequestHelper.GetValue("ResourceName_AddonData");
+
+            string enterpriseKey = ControlHelper.GetRealValue("EnterpriseName", string.Empty);
+
+            string dispatchTypeString = RequestHelper.GetValue("DispatchType");
+            DispatchTypes dispatchType = DispatchTypes.UnSet;
+            dispatchType = EnumHelper.GetItem<DispatchTypes>(dispatchTypeString, DispatchTypes.UnSet);
+
+            string queryTimeSpanName = RequestHelper.GetValue("queryTimeSpanName");
+
+            DateTime queryTimeSpanValueStart = RequestHelper.GetValue("queryTimeSpanValueStart", DateTimeHelper.Min);
+            DateTime queryTimeSpanValueEnd = RequestHelper.GetValue("queryTimeSpanValueEnd", DateTimeHelper.Min);
+
+            //1.0获取部分（或者所有）部门内人员的集合
+            List<BusinessUser> employeeList = new List<BusinessUser>();
+            if (GuidHelper.IsInvalidOrEmpty(resourceValue) == false)
+            {
+                switch (resourceType.ToLower())
+                {
+                    case "e":
+                        BusinessUser employee = BusinessUserBLL.Get(new Guid(resourceValue));
+                        if (employee != null && employee.IsEmpty == false)
+                        {
+                            employeeList.Add(employee);
+                        }
+                        break;
+                    case "d":
+                    default:
+                        string departmentFullPath = BusinessDepartmentBLL.Instance.Get(new Guid(resourceValue)).DepartmentFullPath;
+                        employeeList = BusinessUserBLL.GetUsersByDepartment(departmentFullPath, true);
+                        break;
+                }
+            }
+            else
+            {
+                employeeList = BusinessUserBLL.GetList(UserTypes.Manager);
+            }
+
+            //1.1对获取的后的人员信息进行整理
+            employeeList.Sort((x, y) =>
+            {
+                return x.DepartmentFullPath.CompareTo(y.DepartmentFullPath);
+            });
+
+            for (int i=employeeList.Count-1;i>=0;i--)
+            {
+                var item = employeeList[i];
+                if (item.UserStatus != UserStatuses.Normal)
+                {
+                    employeeList.RemoveAt(i);
+                }
+            }
+
+            //2.基于人员集合构建展示数据的存储结构
+            Dictionary<Guid, EmployeeScoreStatisticalEntity> employeeDictionary = new Dictionary<Guid, EmployeeScoreStatisticalEntity>();
+            for (int i = 0; i < employeeList.Count; i++)
+            {
+                BusinessUser employee = employeeList[i];
+                EmployeeScoreStatisticalEntity employeeScoreStatisticalEntity = new EmployeeScoreStatisticalEntity();
+                employeeScoreStatisticalEntity.EmployeeGuid = employee.UserGuid;
+                employeeScoreStatisticalEntity.EmployeeName = employee.UserNameCN;
+                employeeScoreStatisticalEntity.DepartmentGuid = employee.DepartmentGuid;
+                employeeScoreStatisticalEntity.DepartmentFullName = employee.DepartmentFullPath;
+                employeeScoreStatisticalEntity.DepartmentName = employee.DepartmentName;
+
+                employeeDictionary[employee.UserGuid] = employeeScoreStatisticalEntity;
+            }
+
+            //3.获取限定条件内劳务人员的数据
+            string sqlClause = String.Empty;
+            switch (queryTimeSpanName)
+            {
+
+                case "jobStartingTime":
+                    break;
+                case "jobLeavingTime":
+                    break;
+                case "balanceTime":
+                default:
+                    sqlClause = @" select  Biz.SalarySummaryGuid as BizGuid,
+		                                Biz.EnterpriseKey as EnterpriseKey, 
+		                                GE.CompanyName as EnterpriseName,
+		                                CU.UserGuid as LaborGuid,
+		                                CU.UserNameCN as LaborName,
+		                                LB.BusinessUserGuid as LBBusinessUserGuid,
+		                                LB.BusinessUserName as LBBusinessUserName,
+		                                LB.ServiceUserGuid as LBServiceUserGuid,
+		                                LB.ServiceUserName as LBServiceUserName,
+		                                ES.ProviderUserGuid as ESProviderUserGuid,
+		                                ES.ProviderUserName as ESProviderUserName,
+		                                ES.BusinessUserGuid as ESBusinessUserGuid,
+		                                ES.BusinessUserName as ESBusinessUserName
+                                from XQYCSalarySummary Biz Left Join CoreUser CU ON Biz.LaborKey= CU.UserGuid 
+						                                   Left Join XQYCLabor LB ON Biz.LaborKey=LB.UserGuid  
+						                                   Left Join GeneralEnterprise GE On Biz.EnterpriseKey = GE.EnterpriseGuid
+						                                   Left Join XQYCEnterpriseService ES ON GE.EnterpriseGuid = ES.EnterpriseGuid
+                                where ES.EnterpriseServiceType= 1 "; //--1表示劳务派遣合作关系
+                    if (queryTimeSpanValueStart != DateTimeHelper.Min)
+                    {
+                        sqlClause += string.Format(" AND EnterpriseManageFeeCashDate >= '{0}' ", queryTimeSpanValueStart);
+                    }
+
+                    if (queryTimeSpanValueEnd != DateTimeHelper.Min)
+                    {
+                        sqlClause += string.Format(" AND EnterpriseManageFeeCashDate <= '{0}' ", queryTimeSpanValueEnd);
+                    }
+
+                    if (dispatchType != DispatchTypes.UnSet)
+                    {
+                        sqlClause += string.Format(" AND LB.CurrentDispatchType = {0} ", (int)dispatchType);
+                    }
+
+                    if (GuidHelper.IsInvalidOrEmpty(enterpriseKey) == false)
+                    {
+                        sqlClause += string.Format(" AND AND Biz.EnterpriseKey = '{0}' ", enterpriseKey);
+                    }
+
+                    break;
+            }
+
+            //4.对获取出来的劳务人员信息进行分类计数
+            CalculateLaborCount(sqlClause, employeeDictionary);
+
+            bool isExportExcel = RequestHelper.GetValue("exportExcel", false);
+            if (isExportExcel == true)
+            {
+                List<EmployeeScoreStatisticalEntity> list = new List<EmployeeScoreStatisticalEntity>();
+                foreach (KeyValuePair<Guid, EmployeeScoreStatisticalEntity> kvp in employeeDictionary)
+                {
+                   list.Add( kvp.Value);
+                }
+                return StatisticalSummaryToExcelFile(list);
+            }
+            else
+            {
+                return View(employeeDictionary);
+            }
+        }
+
+        private ActionResult StatisticalSummaryToExcelFile(IList<EmployeeScoreStatisticalEntity> laborList)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic["DepartmentFullName"] = "部门";
+            dic["EmployeeName"] = "人员姓名";
+            dic["LaborCountOfLaborBusiness"] = "招聘数";
+            dic["LaborCountOfEnterpriseProvide"] = "信息提供数";
+            dic["LaborCountOfEnterpriseBusiness"] = "开发数";
+            dic["LaborCountOfLaborService"] = "客服数";
+
+            Stream excelStream = ExcelHelper.WriteExcel(laborList, dic);
+            return File(excelStream, ContentTypes.GetContentType("xls"), string.Format("劳务人员统计汇总-{0}.xls", DateTime.Now.ToShortDateString()));
+        }
+
+        private void CalculateLaborCount(string sqlClause, Dictionary<Guid, EmployeeScoreStatisticalEntity> employeeDictionary)
+        {
+            using (SqlDataReader reader = CommanHelperInstance.ExecuteReader(sqlClause))
+            {
+                while (reader.Read())
+                {
+                    Guid laborGuid = DataReaderHelper.GetFiledValue<Guid>(reader, "LaborGuid");
+                    Guid LBBusinessUserGuid = DataReaderHelper.GetFiledValue<Guid>(reader, "LBBusinessUserGuid");
+                    Guid LBServiceUserGuid = DataReaderHelper.GetFiledValue<Guid>(reader, "LBServiceUserGuid");
+                    Guid ESProviderUserGuid = DataReaderHelper.GetFiledValue<Guid>(reader, "ESProviderUserGuid");
+                    Guid ESBusinessUserGuid = DataReaderHelper.GetFiledValue<Guid>(reader, "ESBusinessUserGuid");
+
+                    if (employeeDictionary.ContainsKey(LBBusinessUserGuid))
+                    {
+                        employeeDictionary[LBBusinessUserGuid].LaborCountOfLaborBusiness++;
+                    }
+
+                    if (employeeDictionary.ContainsKey(LBServiceUserGuid))
+                    {
+                        employeeDictionary[LBServiceUserGuid].LaborCountOfLaborService++;
+                    }
+
+                    if (employeeDictionary.ContainsKey(ESProviderUserGuid))
+                    {
+                        employeeDictionary[ESProviderUserGuid].LaborCountOfEnterpriseProvide++;
+                    }
+
+                    if (employeeDictionary.ContainsKey(ESBusinessUserGuid))
+                    {
+                        employeeDictionary[ESBusinessUserGuid].LaborCountOfEnterpriseBusiness++;
+                    }
+                }
+            }
+        }
+
+
+        #endregion
+
+        #region 辅助方法
+        private CommonHelperEx<SqlTransaction, SqlConnection, SqlCommand, SqlDataReader, SqlParameter> CommanHelperInstance
+        {
+            get
+            {
+                return CommonHelperEx<SqlTransaction, SqlConnection, SqlCommand, SqlDataReader, SqlParameter>.Instance;
+            }
         }
 
 

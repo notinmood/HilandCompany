@@ -43,11 +43,13 @@
             </th>
             <th style="width: 150px">企业名称
             </th>
-            <th style="width: 80px">所在部门
+            <th style="width: 60px">所在部门
             </th>
-            <th style="width: 80px">所在车间
+            <th style="width: 60px">所在车间
             </th>
-            <th style="width: 150px">合同名称
+            <th style="width: 50px">用工方式
+            </th>
+            <th style="width: 140px">合同名称
             </th>
             <th style="width: 50px">当前合同
             </th>
@@ -73,6 +75,9 @@
                 </td>
                 <td>@entity.LaborWorkShop
                 </td>
+                 <td>
+                     @EnumHelper.GetDisplayValue(entity.DispatchType)
+                 </td>
                 <td>@entity.LaborContractDetails
                 </td>
                 <td>@EnumHelper.GetDisplayValue(entity.LaborContractIsCurrent)

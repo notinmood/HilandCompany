@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using HiLand.Framework.BusinessCore;
 using HiLand.Framework.BusinessCore.BLL;
+using HiLand.Framework4.Permission;
 using HiLand.General.BLL;
 using HiLand.General.Entity;
 using HiLand.Utility.Data;
@@ -33,6 +34,10 @@ namespace XQYC.Web.Control
         {
             List<string> cssFiles = new List<string>() { UrlHelperEx.UrlHelper.Content("~/Content/jQuery.tools.dateinput.css") };
             List<string> javaScriptFiles = new List<string>() { /*UrlHelperEx.UrlHelper.Content("~/Scripts/jQuery.tools.min.js")*/ };
+            if (string.IsNullOrWhiteSpace(datetimeFormat))
+            {
+                datetimeFormat = "yyyy/mm/dd";
+            }
             string dateTimeOptions = string.Format("format:'{0}',selectors:true,yearRange:[-70,10]", datetimeFormat);
             dateTimeOptions = "{" + dateTimeOptions + "}";
             if (DateTimeHelper.Parse(value, DateFormats.YMD) == DateTimeHelper.Min)
@@ -105,14 +110,14 @@ namespace XQYC.Web.Control
         }
 
         /// <summary>
-        /// 部门下的人员选择器
+        /// 部门下的人员选择器(建议使用XQYCResourceChooser)
         /// </summary>
         /// <param name="html"></param>
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        public static IHtmlString XQYCEmployeeChooser(System.Web.Mvc.HtmlHelper html, string name, string text, string value)
+        public static IHtmlString XQYCEmployeeChooser(System.Web.Mvc.HtmlHelper html, string name, string text, string value, UserStatuses userStatus = UserStatuses.Normal)
         {
             List<string> scriptList = new List<string>();
             scriptList.Add(UrlHelperEx.UrlHelper.Content("~/Scripts/jquery-1.4.4.min.js"));
@@ -120,12 +125,15 @@ namespace XQYC.Web.Control
 
             List<string> cssList = new List<string>();
             cssList.Add(UrlHelperEx.UrlHelper.Content("~/Content/ztree/css/zTreeStyle/zTreeStyle.css"));
-            string employeeJson = GetDepartmentEmployeeNodesJson();
+            string employeeJson = GetDepartmentEmployeeNodesJson(XQYCTreeNodeSelectModes.Employee, userStatus);
             bool allowSelect = true;
             if (BusinessUserBLL.CurrentUser.UserType == UserTypes.SuperAdmin
                 || value == string.Empty
                 || value == GuidHelper.EmptyString
-                || BusinessUserBLL.CurrentUserGuid.ToString().ToLower() == value.ToLower())
+                || BusinessUserBLL.CurrentUserGuid.ToString().ToLower() == value.ToLower()
+                //TODO:xieran20130311 考虑加入 数据权限的控制（部门领导可以管理部门内人员的数据） 
+                //|| PermissionDataHelper.IsOwning() 
+                )
             {
                 allowSelect = true;
             }
@@ -138,7 +146,7 @@ namespace XQYC.Web.Control
         }
 
         /// <summary>
-        /// 部门选择器
+        /// 部门选择器(建议使用XQYCResourceChooser)
         /// </summary>
         /// <param name="html"></param>
         /// <param name="name"></param>
@@ -160,10 +168,32 @@ namespace XQYC.Web.Control
         }
 
         /// <summary>
+        /// 部门人员综合选择器
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static IHtmlString XQYCResourceChooser(System.Web.Mvc.HtmlHelper html, XQYCTreeNodeSelectModes selectMode, string name, string text, string value, UserStatuses userStatus = UserStatuses.Normal)
+        {
+            List<string> scriptList = new List<string>();
+            scriptList.Add(UrlHelperEx.UrlHelper.Content("~/Scripts/jquery-1.4.4.min.js"));
+            scriptList.Add(UrlHelperEx.UrlHelper.Content("~/Content/ztree/js/jquery.ztree.all-3.3.min.js"));
+
+            List<string> cssList = new List<string>();
+            cssList.Add(UrlHelperEx.UrlHelper.Content("~/Content/ztree/css/zTreeStyle/zTreeStyle.css"));
+            string employeeJson = GetDepartmentEmployeeNodesJson(selectMode, userStatus);
+            bool allowSelect = true;
+
+            return html.HiTreeSelect(name).JavaScriptFiles(scriptList).IsAllowSelect(allowSelect).StyleSheetFiles(cssList).Text(text).Value(value).IsInPopupWindow(true).DataSelectType(DataSelectTypes.Radio).StaticDataNodes(employeeJson).Render();
+        }
+
+        /// <summary>
         /// 获取部门人员节点的json数据
         /// </summary>
         /// <returns></returns>
-        private static string GetDepartmentEmployeeNodesJson(XQYCTreeNodeSelectModes selectMode = XQYCTreeNodeSelectModes.Employee)
+        private static string GetDepartmentEmployeeNodesJson(XQYCTreeNodeSelectModes selectMode = XQYCTreeNodeSelectModes.Employee, UserStatuses userStatus = UserStatuses.UnSet)
         {
             string result = string.Empty;
 
@@ -177,6 +207,7 @@ namespace XQYC.Web.Control
                 node.pId = item.DepartmentParentGuid.ToString();
                 node.name = item.DepartmentNameShort;
                 node.open = false;
+                node.addonData = "D";
 
                 if (FlagHelper.ContainsFlag(selectMode, XQYCTreeNodeSelectModes.Department))
                 {
@@ -192,7 +223,12 @@ namespace XQYC.Web.Control
 
             if (FlagHelper.ContainsFlag(selectMode, XQYCTreeNodeSelectModes.Employee))
             {
-                string sqlClause = string.Format("SELECT 	EMP.*,CU.* FROM XQYCEmployee EMP LEFT JOIN CoreUser CU ON EMP.UserGuid= CU.UserGuid WHERE CU.UserStatus={0}", (int)UserStatuses.Normal);
+                string sqlClause = "SELECT EMP.*,CU.* FROM XQYCEmployee EMP LEFT JOIN CoreUser CU ON EMP.UserGuid= CU.UserGuid WHERE 1=1 ";
+                if (userStatus != UserStatuses.UnSet)
+                {
+                    sqlClause += string.Format(" AND CU.UserStatus={0} ", (int)userStatus);
+                }
+
                 List<EmployeeEntity> employeeList = EmployeeBLL.Instance.GetListBySQL(sqlClause);
                 foreach (EmployeeEntity item in employeeList)
                 {
@@ -202,6 +238,7 @@ namespace XQYC.Web.Control
                     node.name = item.UserNameCN;
                     node.open = false;
                     node.nocheck = false;
+                    node.addonData = "E";
 
                     nodeList.Add(node);
                 }

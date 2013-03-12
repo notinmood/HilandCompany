@@ -467,14 +467,14 @@ namespace XQYC.Business.Entity
             set { memo5 = value; }
         }
 
-        private DispatchTypes dispatchType= DispatchTypes.UnSet;
+        private DispatchTypes currentDispatchType= DispatchTypes.UnSet;
         /// <summary>
         /// 劳务派遣类型
         /// </summary>
-        public DispatchTypes DispatchType
+        public DispatchTypes CurrentDispatchType
         {
-            get { return dispatchType; }
-            set { dispatchType = value; }
+            get { return currentDispatchType; }
+            set { currentDispatchType = value; }
         }
 
         private ComeFromTypes comeFromType= ComeFromTypes.ManageWrite;

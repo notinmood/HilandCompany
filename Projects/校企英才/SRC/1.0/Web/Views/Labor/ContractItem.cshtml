@@ -75,8 +75,10 @@
                 </td>
                 <td>@Html.TextBoxFor(entity => entity.LaborContractDetails)
                 </td>
-                <td></td>
-                <td></td>
+                <td>用工方式</td>
+                <td>
+                    @Html.DropDownListFor(entity => entity.DispatchType,EnumEx.BuildSelectItemList<DispatchTypes>())
+                </td>
             </tr>
             <tr>
                 <td>企业综合费用类型:
@@ -131,6 +133,7 @@
         </table>
         <input type="hidden" id="UserKey" name="UserKey" value="@userKey" />
         <input type="hidden" id="ItemKey" name="ItemKey" value="@Model.LaborContractGuid" />
+        <input type="hidden" id="UserIDCard" name="UserIDCard" value="@Model.Labor.UserCardID" />
         <input type="button" id="submitButton" value="保存" class="btn btn-warning" /><a class="overlayClose" title="亦可敲击'ESC'键关闭本弹窗"></a>
     }
 </div>
@@ -150,6 +153,16 @@
             {
                 if (laborContractDiscontinueDateValue == "") {
                     alert("请选择合同终止时间！");
+                    return false;
+                }
+            }
+
+            //如果为非代理招聘的用工类型均需要回去输入身份证信息
+            var userCardIDValue = $("#UserIDCard").val();
+            var DispatchType = $("#DispatchType").val();
+            if (DispatchType != "HireBroke") {
+                if (userCardIDValue == "") {
+                    alert("请回到劳务人员基本信息中输入其完整的身份证号！");
                     return false;
                 }
             }

@@ -96,6 +96,7 @@ namespace XQYC.Business.BLL
 
             laborEntity.CurrentLaborDepartment = contractEntity.LaborDepartment;
             laborEntity.CurrentLaborWorkShop = contractEntity.LaborWorkShop;
+            laborEntity.CurrentDispatchType = contractEntity.DispatchType;
 
             return LaborBLL.Instance.Update(laborEntity);
         }

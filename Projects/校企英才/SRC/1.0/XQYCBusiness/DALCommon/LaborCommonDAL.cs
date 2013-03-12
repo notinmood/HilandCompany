@@ -115,7 +115,7 @@ namespace XQYC.Business.DALCommon
                     [LastUpdateUserName],
 			        [LastUpdateDate],
                     [IsProtectedByOwner],
-                    [DispatchType],
+                    [CurrentDispatchType],
 			        [ComeFromType],
 			        [PropertyNames],
 			        [PropertyValues]
@@ -175,7 +175,7 @@ namespace XQYC.Business.DALCommon
                     {0}LastUpdateUserName,
 			        {0}LastUpdateDate,
                     {0}IsProtectedByOwner,
-                    {0}DispatchType,
+                    {0}CurrentDispatchType,
 			        {0}ComeFromType,
 			        {0}PropertyNames,
 			        {0}PropertyValues
@@ -248,7 +248,7 @@ namespace XQYC.Business.DALCommon
                     [LastUpdateUserName] = {0}LastUpdateUserName,
 				    [LastUpdateDate] = {0}LastUpdateDate,
                     [IsProtectedByOwner] = {0}IsProtectedByOwner,
-                    [DispatchType] = {0}DispatchType,
+                    [CurrentDispatchType] = {0}CurrentDispatchType,
 				    [ComeFromType] = {0}ComeFromType,
 					[PropertyNames] = {0}PropertyNames,
 					[PropertyValues] = {0}PropertyValues
@@ -322,7 +322,7 @@ namespace XQYC.Business.DALCommon
                 GenerateParameter("LastUpdateUserName",entity.LastUpdateUserName?? String.Empty),
 			    GenerateParameter("LastUpdateDate",entity.LastUpdateDate),
                 GenerateParameter("IsProtectedByOwner",entity.IsProtectedByOwner),
-                GenerateParameter("DispatchType",entity.DispatchType),
+                GenerateParameter("CurrentDispatchType",entity.CurrentDispatchType),
 			    GenerateParameter("ComeFromType",entity.ComeFromType),
 			    GenerateParameter("PropertyNames",entity.PropertyNames?? String.Empty),
 			    GenerateParameter("PropertyValues",entity.PropertyValues?? String.Empty)
@@ -566,9 +566,9 @@ namespace XQYC.Business.DALCommon
                 {
                     entity.IsProtectedByOwner = (Logics)reader.GetInt32(reader.GetOrdinal("IsProtectedByOwner"));
                 }
-                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "DispatchType"))
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "CurrentDispatchType"))
                 {
-                    entity.DispatchType = (DispatchTypes)reader.GetInt32(reader.GetOrdinal("DispatchType"));
+                    entity.CurrentDispatchType = (DispatchTypes)reader.GetInt32(reader.GetOrdinal("CurrentDispatchType"));
                 }
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "ComeFromType"))
                 {

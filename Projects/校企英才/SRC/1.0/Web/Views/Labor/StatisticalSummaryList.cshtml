@@ -1,0 +1,110 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using XQYC.Web.Models;
+@using HiLand.Utility.Web;
+@using HiLand.General.BLL;
+@using System.Web.UI.WebControls;
+
+@model Dictionary<Guid, EmployeeScoreStatisticalEntity>
+@{
+    ViewBag.Title = "Index";
+    string currentUrl = RequestHelper.CurrentFullUrl;
+
+    bool isUsingCompress = false;
+    if (currentUrl.Length > 512)
+    {
+        isUsingCompress = true;
+        currentUrl = CompressHelper.Compress(currentUrl);
+    }
+}
+
+<h2>@string.Format("劳务人员统计汇总")</h2>
+<div id="ItemListDIV">
+    <div>
+    </div>
+    <div class="OperateArea" id="OperateAreaContainer">
+        <div class="btn-group">
+            @XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)
+        </div>
+    </div>
+    <div id="MyTable_tableLayout">
+        <div id="MyTable_tableFix">
+            <table id="MyTable_tableFixClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableHead">
+            <table id="MyTable_tableHeadClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableColumn">
+            <table id="MyTable_tableColumnClone" border="1" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="MyTable_tableData">
+            <table id="MyTable" style="width: 1000px" class="grid" border="1" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th style="width: 180px">部门
+                        </th>
+                        <th style="width: 80px">人员姓名
+                        </th>
+                        <th style="width: 80px">招聘数
+                        </th>
+                        <th style="width: 80px">信息提供数
+                        </th>
+                        <th style="width: 80px">开发数
+                        </th>
+                        <th>客服数
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (KeyValuePair<Guid, EmployeeScoreStatisticalEntity> kvp in Model)
+                    {
+                        EmployeeScoreStatisticalEntity entity = kvp.Value;
+                        <tr>
+                            <td>
+                                @entity.DepartmentFullName
+                            </td>
+                            <td>@entity.EmployeeName
+                            </td>
+                            <td>
+                                @entity.LaborCountOfLaborBusiness
+                            </td>
+                            <td>
+                                @entity.LaborCountOfEnterpriseProvide
+                            </td>
+                            <td>
+                                @entity.LaborCountOfEnterpriseBusiness
+                            </td>
+                            <td>@entity.LaborCountOfLaborService
+                            </td>
+                        </tr>   
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="myPager">
+    </div>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aLaborSalarySection").click();
+            $("#aLaborSalarySection").addClass("current");
+            $("#aSalaryList").addClass("current");
+        });
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/fixTable.js")" ></script>
+    <script type="text/javascript">
+        fixTable("MyTable", 2, "100%", 400);
+    </script>
+</div>

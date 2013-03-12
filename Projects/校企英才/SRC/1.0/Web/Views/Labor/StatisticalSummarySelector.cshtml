@@ -36,6 +36,26 @@
     { 
         <table>
             <tr>
+                <td>部门（人员）名称</td>
+                 <td  class="fixClass">
+                     @HtmlHelperEx.XQYCResourceChooser(Html, XQYCTreeNodeSelectModes.All, "ResourceName","","")
+                 </td>
+            </tr>
+            <tr>
+                <td>合作企业名称:<i class="icon-comment" title="自动完成功能：当在输入框中输入2个字符后，系统就会查询符合条件的数据。请从下拉列表中选择目标信息。"></i>
+                </td>
+                <td class="fixClass">
+                    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.17.custom.min.js")"></script>
+                    @HtmlHelperEx.XQYCAutoCompleteEnterprise(Html, "EnterpriseName")
+                </td>
+            </tr>
+            <tr>
+                <td>用工方式</td>
+                 <td  class="fixClass">
+                     @Html.DropDownList("DispatchType", EnumEx.BuildSelectItemList<XQYC.Business.Enums.DispatchTypes>())
+                 </td>
+            </tr>
+            <tr>
                 <td style="width:30%;">
                     <select name="queryTimeSpanName" id="queryTimeSpanName">
                         <option value="balanceTime" selected="selected">结算时间</option>
@@ -44,24 +64,10 @@
                     </select>
                 </td>
                 <td class="fixClass"  style="width:70%;">
-                    @HtmlHelperEx.DateInput(Html, "queryTimeSpanValueStart", string.Empty, "",false) - @HtmlHelperEx.DateInput(Html, "queryTimeSpanValueEnd", string.Empty, "",false)
+                    <script type="text/javascript" src="@Url.Content("~/Scripts/jQuery.tools.min.js")"></script>
+                    @HtmlHelperEx.DateInput(Html, "queryTimeSpanValueStart", string.Empty, "yyyy/mm/dd",false) - @HtmlHelperEx.DateInput(Html, "queryTimeSpanValueEnd", string.Empty, "yyyy/mm/dd",false)
                 </td>
             </tr>
-            <tr>
-                <td>部门名称</td>
-                 <td  class="fixClass">
-                     @HtmlHelperEx.XQYCDepartmentChooser(Html, "DepartmentName","","")
-                     <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.17.custom.min.js")"></script>
-                 </td>
-            </tr>
-            <tr>
-                <td>合作企业名称:<i class="icon-comment" title="自动完成功能：当在输入框中输入2个字符后，系统就会查询符合条件的数据。请从下拉列表中选择目标信息。"></i>
-                </td>
-                <td class="fixClass">
-                    @HtmlHelperEx.XQYCAutoCompleteEnterprise(Html, "EnterpriseName")
-                </td>
-            </tr>
-            
         </table>
         <input type="submit" id="submitButton" class="btn btn-warning submitFunction" value="查询" />
     }
@@ -71,22 +77,10 @@
     $(document).ready(function () {
         $("#aLaborSalarySection").click();
         $("#aLaborSalarySection").addClass("current");
-        $("#aSalaryList").addClass("current");
+        $("#aStatisticalSummary").addClass("current");
 
         $("#submitButton").click(function () {
-            var enterpriseGuid = $("#EnterpriseName_Value").val();
-            if (enterpriseGuid == "") {
-                alert("请先通过企业名称输入企业部分信息，然后在下拉列表中选择具体企业，谢谢！");
-                return false;
-            }
-
-            var salaryMonth = $("#SalaryMonth").val();
-            if (salaryMonth == "") {
-                alert("请先选定薪资月份，谢谢！");
-                return false;
-            }
-
-            $("form", "#formContainer").attr("action", "@Url.Action("SalaryListPreSelector")");
+            $("form", "#formContainer").attr("action", "@Url.Action("StatisticalSummaryList")");
         });
     });
 </script>

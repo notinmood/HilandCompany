@@ -84,6 +84,7 @@ namespace XQYC.Business.DALCommon
 			    [EnterpriseTaxFeeFormularKey],
 			    [OperateUserGuid],
 			    [OperateDate],
+                [DispatchType],
 			    [PropertyNames],
 			    [PropertyValues]
             ) 
@@ -116,6 +117,7 @@ namespace XQYC.Business.DALCommon
 			    {0}EnterpriseTaxFeeFormularKey,
 			    {0}OperateUserGuid,
 			    {0}OperateDate,
+                {0}DispatchType,
 			    {0}PropertyNames,
 			    {0}PropertyValues
             )", ParameterNamePrefix);
@@ -157,6 +159,7 @@ namespace XQYC.Business.DALCommon
 				    [EnterpriseTaxFeeFormularKey] = {0}EnterpriseTaxFeeFormularKey,
 				    [OperateUserGuid] = {0}OperateUserGuid,
 				    [OperateDate] = {0}OperateDate,
+                    [DispatchType] = {0}DispatchType,
 				    [PropertyNames] = {0}PropertyNames,
 				    [PropertyValues] = {0}PropertyValues
             Where [LaborContractID] = {0}LaborContractID", ParameterNamePrefix);
@@ -226,7 +229,8 @@ namespace XQYC.Business.DALCommon
 			    GenerateParameter("EnterpriseOtherInsuranceFormularKey",entity.EnterpriseOtherInsuranceFormularKey?? String.Empty),
 			    GenerateParameter("EnterpriseTaxFeeFormularKey",entity.EnterpriseTaxFeeFormularKey?? String.Empty),
 			    GenerateParameter("OperateUserGuid",entity.OperateUserGuid),
-			    GenerateParameter("OperateDate",entity.OperateDate)
+			    GenerateParameter("OperateDate",entity.OperateDate),
+                GenerateParameter("DispatchType",entity.DispatchType)
             };
 
             paraList.AddRange(list);
@@ -356,6 +360,10 @@ namespace XQYC.Business.DALCommon
                 if (DataReaderHelper.IsExistFieldAndNotNull(reader, "OperateDate"))
                 {
                     entity.OperateDate = reader.GetDateTime(reader.GetOrdinal("OperateDate"));
+                }
+                if (DataReaderHelper.IsExistFieldAndNotNull(reader, "DispatchType"))
+                {
+                    entity.DispatchType = (DispatchTypes)reader.GetInt32(reader.GetOrdinal("DispatchType"));
                 }
             }
         }

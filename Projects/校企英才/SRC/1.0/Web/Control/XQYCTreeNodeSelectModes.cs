@@ -21,6 +21,6 @@ namespace XQYC.Web.Control
         /// <summary>
         /// 部门和人员都可以选择
         /// </summary>
-        All=16,
+        All=3,
     }
 }

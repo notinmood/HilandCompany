@@ -124,6 +124,16 @@ namespace XQYC.Business.Entity
             set { laborContractDiscontinueDesc = value; }
         }
 
+        private DispatchTypes dispatchType = DispatchTypes.UnSet;
+        /// <summary>
+        /// 劳务派遣类型
+        /// </summary>
+        public DispatchTypes DispatchType
+        {
+            get { return dispatchType; }
+            set { dispatchType = value; }
+        }
+
         private string enterpriseInsuranceFormularKey = String.Empty;
         /// <summary>
         /// 劳务合同中的保险企业应该担负部分的计算公式Key

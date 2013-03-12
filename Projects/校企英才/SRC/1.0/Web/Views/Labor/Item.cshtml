@@ -85,9 +85,9 @@
                 </td>
                 <td>@Html.DropDownListFor(entity => entity.ComeFromType, EnumEx.BuildSelectItemList<ComeFromTypes>())
                 </td>
-                <td>用工方式:
+                <td>
                 </td>
-                <td>@Html.DropDownListFor(entity => entity.DispatchType, EnumEx.BuildSelectItemList<DispatchTypes>())
+                <td>
                 </td>
             </tr>
             <tr>
@@ -283,18 +283,27 @@
                     return false;
                 }
 
-                if (DispatchType != "HireBroke") {
-                    if (userCardIDValue == "") {
-                        alert("请输入人员身份证号！");
-                        return false;
-                    }
-
+                if (userCardIDValue != "")
+                {
                     var idCardRegex = /^(\d{15}|\d{18}|\d{17}(\d|X|x))$/;
                     if (idCardRegex.test(userCardIDValue) == false) {
                         alert("输入人员身份证号码格式错误！");
                         return false;
                     }
                 }
+
+                //if (DispatchType != "HireBroke") {
+                //    if (userCardIDValue == "") {
+                //        alert("请输入人员身份证号！");
+                //        return false;
+                //    }
+
+                //    var idCardRegex = /^(\d{15}|\d{18}|\d{17}(\d|X|x))$/;
+                //    if (idCardRegex.test(userCardIDValue) == false) {
+                //        alert("输入人员身份证号码格式错误！");
+                //        return false;
+                //    }
+                //}
             });
         });
 

@@ -189,6 +189,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Attribute\LaborAuthorizeAttribute.cs" />
+    <Compile Include="Models\EmployeeScoreStatisticalEntity.cs" />
     <Compile Include="Models\JobContainer.cs" />
     <Compile Include="Models\Jobs\BirthdayRemindJob.cs" />
     <Compile Include="Models\Jobs\BirthdayRemindJobOfEmployee.cs" />
@@ -752,6 +753,7 @@
     <Content Include="Views\Enterprise\JobItemDisplay.cshtml" />
     <Content Include="Views\Labor\SalaryFixBatch.cshtml" />
     <Content Include="Views\Labor\StatisticalSummarySelector.cshtml" />
+    <Content Include="Views\Labor\StatisticalSummaryList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
