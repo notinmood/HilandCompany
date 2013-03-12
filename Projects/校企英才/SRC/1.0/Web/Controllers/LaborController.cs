@@ -2697,8 +2697,9 @@ namespace XQYC.Web.Controllers
         {
             return View();
         }
-
-        public ActionResult StatisticalSummaryList()
+        
+        [HttpPost]
+        public ActionResult StatisticalSummarySelector(bool isOnlyPlaceHolder= true)
         {
             string resourceName = RequestHelper.GetValue("ResourceName");
             string resourceValue = RequestHelper.GetValue("ResourceName_Value");
@@ -2707,6 +2708,34 @@ namespace XQYC.Web.Controllers
             string enterpriseKey = ControlHelper.GetRealValue("EnterpriseName", string.Empty);
 
             string dispatchTypeString = RequestHelper.GetValue("DispatchType");
+            DispatchTypes dispatchType = DispatchTypes.UnSet;
+            dispatchType = EnumHelper.GetItem<DispatchTypes>(dispatchTypeString, DispatchTypes.UnSet);
+
+            string queryTimeSpanName = RequestHelper.GetValue("queryTimeSpanName");
+
+            DateTime queryTimeSpanValueStart = RequestHelper.GetValue("queryTimeSpanValueStart", DateTimeHelper.Min);
+            DateTime queryTimeSpanValueEnd = RequestHelper.GetValue("queryTimeSpanValueEnd", DateTimeHelper.Min);
+
+            return RedirectToAction("StatisticalSummaryList", new { resourceValue = resourceValue, 
+                                                                    resourceName = resourceName,
+                                                                    resourceType = resourceType,
+                                                                    enterpriseKey = enterpriseKey,
+                                                                    dispatchType = dispatchTypeString,
+                                                                    queryTimeSpanName = queryTimeSpanName,
+                                                                    queryTimeSpanValueStart = queryTimeSpanValueStart,
+                                                                    queryTimeSpanValueEnd = queryTimeSpanValueEnd
+            });
+        }
+
+        public ActionResult StatisticalSummaryList()
+        {
+            string resourceName = RequestHelper.GetValue("resourceName");
+            string resourceValue = RequestHelper.GetValue("resourceValue");
+            string resourceType = RequestHelper.GetValue("resourceType");
+
+            string enterpriseKey = ControlHelper.GetRealValue("enterpriseKey", string.Empty);
+
+            string dispatchTypeString = RequestHelper.GetValue("dispatchType");
             DispatchTypes dispatchType = DispatchTypes.UnSet;
             dispatchType = EnumHelper.GetItem<DispatchTypes>(dispatchTypeString, DispatchTypes.UnSet);
 
@@ -2825,19 +2854,21 @@ namespace XQYC.Web.Controllers
             //4.对获取出来的劳务人员信息进行分类计数
             CalculateLaborCount(sqlClause, employeeDictionary);
 
+            //5.统计的后期处理
+            List<EmployeeScoreStatisticalEntity> list = new List<EmployeeScoreStatisticalEntity>();
+            foreach (KeyValuePair<Guid, EmployeeScoreStatisticalEntity> kvp in employeeDictionary)
+            {
+                list.Add(kvp.Value);
+            }
+
             bool isExportExcel = RequestHelper.GetValue("exportExcel", false);
             if (isExportExcel == true)
             {
-                List<EmployeeScoreStatisticalEntity> list = new List<EmployeeScoreStatisticalEntity>();
-                foreach (KeyValuePair<Guid, EmployeeScoreStatisticalEntity> kvp in employeeDictionary)
-                {
-                   list.Add( kvp.Value);
-                }
                 return StatisticalSummaryToExcelFile(list);
             }
             else
             {
-                return View(employeeDictionary);
+                return View(list);
             }
         }
 

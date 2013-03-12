@@ -13,7 +13,7 @@
 @using HiLand.General.BLL;
 @using System.Web.UI.WebControls;
 
-@model Dictionary<Guid, EmployeeScoreStatisticalEntity>
+@model List<EmployeeScoreStatisticalEntity>
 @{
     ViewBag.Title = "Index";
     string currentUrl = RequestHelper.CurrentFullUrl;
@@ -64,9 +64,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (KeyValuePair<Guid, EmployeeScoreStatisticalEntity> kvp in Model)
+                    @foreach (EmployeeScoreStatisticalEntity entity in Model)
                     {
-                        EmployeeScoreStatisticalEntity entity = kvp.Value;
                         <tr>
                             <td>
                                 @entity.DepartmentFullName
@@ -100,7 +99,7 @@
         $(document).ready(function () {
             $("#aLaborSalarySection").click();
             $("#aLaborSalarySection").addClass("current");
-            $("#aSalaryList").addClass("current");
+            $("#aStatisticalSummary").addClass("current");
         });
     </script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/fixTable.js")" ></script>

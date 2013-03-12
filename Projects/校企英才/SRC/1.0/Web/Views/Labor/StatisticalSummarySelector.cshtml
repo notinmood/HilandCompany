@@ -80,7 +80,25 @@
         $("#aStatisticalSummary").addClass("current");
 
         $("#submitButton").click(function () {
-            $("form", "#formContainer").attr("action", "@Url.Action("StatisticalSummaryList")");
+            //$("form", "#formContainer").attr("action", "@Url.Action("StatisticalSummaryList")");
+            var queryTimeSpanValueStartValue= $("#queryTimeSpanValueStart").val();
+            var queryTimeSpanValueEndValue = $("#queryTimeSpanValueEnd").val();
+
+            if (queryTimeSpanValueStartValue == "" || queryTimeSpanValueEndValue == "") {
+                alert("请必须选择时间跨度的开始和结束日期，谢谢。");
+                return false;
+            }
+            else {
+                var strDateS = new Date(queryTimeSpanValueStartValue);
+                var strDateE = new Date(queryTimeSpanValueEndValue);
+                       
+                var intDay = (strDateE - strDateS) / (1000 * 3600 * 24);
+                if (intDay > 93)
+                {
+                    alert("选择时间跨度必须在一个季度之内，谢谢。");
+                    return false;
+                }
+            }
         });
     });
 </script>
