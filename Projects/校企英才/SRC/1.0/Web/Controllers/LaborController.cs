@@ -1807,16 +1807,17 @@ namespace XQYC.Web.Controllers
                                 {
                                     salaryItemValue = 0 - Math.Abs(salaryItemValue);
                                     columnNameEdited = columnName.Remove(columnName.IndexOf(nagetiveString), nagetiveString.Length);
-                                    if (columnName.Contains(rebateBeforTaxString))
-                                    {
-                                        columnNameEdited = columnNameEdited.Remove(columnNameEdited.IndexOf(rebateBeforTaxString), rebateBeforTaxString.Length);
-                                        isRebateBeforeTax = true;
-                                    }
+                                }
 
-                                    if (columnName.Contains(rebaseString))
-                                    {
-                                        columnNameEdited = columnNameEdited.Remove(columnNameEdited.IndexOf(rebaseString), rebaseString.Length);
-                                    }
+                                if (columnName.Contains(rebateBeforTaxString))
+                                {
+                                    columnNameEdited = columnNameEdited.Remove(columnNameEdited.IndexOf(rebateBeforTaxString), rebateBeforTaxString.Length);
+                                    isRebateBeforeTax = true;
+                                }
+
+                                if (columnName.Contains(rebaseString))
+                                {
+                                    columnNameEdited = columnNameEdited.Remove(columnNameEdited.IndexOf(rebaseString), rebaseString.Length);
                                 }
 
                                 salaryDetailsEntity.SalaryItemKey = columnNameEdited;
