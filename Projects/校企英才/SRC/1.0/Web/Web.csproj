@@ -203,6 +203,7 @@
     <Compile Include="Models\Jobs\ResourceControlJobForLabor.cs" />
     <Compile Include="Models\Jobs\ResourceControlJob.cs" />
     <Compile Include="Models\Jobs\SystemJob.cs" />
+    <Compile Include="Models\LaborStaticstialEntity.cs" />
     <Compile Include="Models\SystemConst.cs" />
     <Compile Include="Models\Test\Contact.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -754,6 +755,7 @@
     <Content Include="Views\Labor\SalaryFixBatch.cshtml" />
     <Content Include="Views\Labor\StatisticalSummarySelector.cshtml" />
     <Content Include="Views\Labor\StatisticalSummaryList.cshtml" />
+    <Content Include="Views\Labor\StatisticalSummaryDetails.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,66 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@using HiLand.General.Entity;
+@using HiLand.Utility4.MVC;
+@using HiLand.General;
+@using HiLand.Utility4.MVC.Data;
+@using HiLand.Utility4.MVC.Controls;
+@using HiLand.Framework.BusinessCore;
+@using HiLand.Framework4.Permission.Controls;
+@using HiLand.Utility.Data;
+@using XQYC.Business.Entity;
+@using HiLand.Utility.Web;
+@using XQYC.Business.BLL;
+@using XQYC.Web.Models;
+
+@model List<LaborStaticstialEntity>
+@{
+    ViewBag.Title = "Index";
+    string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
+    string returnUrl = RequestHelper.GetValue("returnUrl");
+}
+
+<h2>@string.Format("劳务人员统计结果明细列表")</h2>
+<div id="ItemListDIV">
+    <div class="OperateArea" id="OperateAreaContainer">
+        <div class="btn-group"><a href="@returnUrl" class="btn btn-warning" title="返回列表页"><i class="icon-share icon-white"></i>返回</a></div>
+    </div>
+    <table width="98%" class="grid">
+        <tr>
+            <th style="width: 100px">劳务人员姓名
+            </th>
+            <th style="width: 180px">招聘人员姓名
+            </th>
+            <th style="width: 180px">信息提供人员姓名
+            </th>
+            <th style="width: 180px">企业开发人员姓名
+            </th>
+            <th>客服人员姓名
+            </th>
+        </tr>
+        @foreach (LaborStaticstialEntity entity in Model)
+        {
+            <tr>
+                <td>@entity.LaborName
+                </td>
+                <td>@entity.LBBusinessName
+                </td>
+                <td>@entity.ETProvideName
+                </td>
+                <td>@entity.ETBusinessName
+                </td>
+                <td>@entity.LBServiceName
+                </td>
+            </tr>   
+        }
+    </table>
+    <input type="hidden" id="currentPopupItemGuid" name="currentPopupItemGuid" value="" />
+    <div class="modal modalFix" id="EditDIV">
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#aLaborSalarySection").click();
+            $("#aLaborSalarySection").addClass("current");
+            $("#aStatisticalSummary").addClass("current");
+        });
+    </script>
+</div>

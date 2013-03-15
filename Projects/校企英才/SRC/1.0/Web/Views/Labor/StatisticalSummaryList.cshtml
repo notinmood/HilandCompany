@@ -12,6 +12,7 @@
 @using HiLand.Utility.Web;
 @using HiLand.General.BLL;
 @using System.Web.UI.WebControls;
+@using XQYC.Business.Enums;
 
 @model List<EmployeeScoreStatisticalEntity>
 @{
@@ -24,6 +25,21 @@
         isUsingCompress = true;
         currentUrl = CompressHelper.Compress(currentUrl);
     }
+
+    string resourceName = RequestHelper.GetValue("resourceName");
+    string resourceValue = RequestHelper.GetValue("resourceValue");
+    string resourceType = RequestHelper.GetValue("resourceType");
+
+    string enterpriseKey = ControlHelper.GetRealValue("enterpriseKey", string.Empty);
+
+    string dispatchTypeString = RequestHelper.GetValue("dispatchType");
+    DispatchTypes dispatchType = DispatchTypes.UnSet;
+    dispatchType = EnumHelper.GetItem<DispatchTypes>(dispatchTypeString, DispatchTypes.UnSet);
+
+    string queryTimeSpanName = RequestHelper.GetValue("queryTimeSpanName");
+
+    DateTime queryTimeSpanValueStart = RequestHelper.GetValue("queryTimeSpanValueStart", DateTimeHelper.Min);
+    DateTime queryTimeSpanValueEnd = RequestHelper.GetValue("queryTimeSpanValueEnd", DateTimeHelper.Min);
 }
 
 <h2>@string.Format("劳务人员统计汇总")</h2>
@@ -73,15 +89,16 @@
                             <td>@entity.EmployeeName
                             </td>
                             <td>
-                                @entity.LaborCountOfLaborBusiness
+                                <a target="_self" href="@Url.Action("StatisticalSummaryDetails", new {enterpriseKey=enterpriseKey,dispatchType=dispatchType,queryTimeSpanName=queryTimeSpanName,queryTimeSpanValueStart=queryTimeSpanValueStart,queryTimeSpanValueEnd=queryTimeSpanValueEnd,serviceUserGuid=entity.EmployeeGuid,serviceRoleName="LBBusiness" ,returnUrl=currentUrl })" >@entity.LaborCountOfLaborBusiness</a>
                             </td>
                             <td>
-                                @entity.LaborCountOfEnterpriseProvide
+                                <a target="_self" href="@Url.Action("StatisticalSummaryDetails", new {enterpriseKey=enterpriseKey,dispatchType=dispatchType,queryTimeSpanName=queryTimeSpanName,queryTimeSpanValueStart=queryTimeSpanValueStart,queryTimeSpanValueEnd=queryTimeSpanValueEnd,serviceUserGuid=entity.EmployeeGuid,serviceRoleName="ETProvide" ,returnUrl=currentUrl })" >@entity.LaborCountOfEnterpriseProvide</a>
                             </td>
                             <td>
-                                @entity.LaborCountOfEnterpriseBusiness
+                                <a target="_self" href="@Url.Action("StatisticalSummaryDetails", new {enterpriseKey=enterpriseKey,dispatchType=dispatchType,queryTimeSpanName=queryTimeSpanName,queryTimeSpanValueStart=queryTimeSpanValueStart,queryTimeSpanValueEnd=queryTimeSpanValueEnd,serviceUserGuid=entity.EmployeeGuid,serviceRoleName="ETBusiness",returnUrl=currentUrl  })" >@entity.LaborCountOfEnterpriseBusiness</a>
                             </td>
-                            <td>@entity.LaborCountOfLaborService
+                            <td>
+                                <a target="_self" href="@Url.Action("StatisticalSummaryDetails", new {enterpriseKey=enterpriseKey,dispatchType=dispatchType,queryTimeSpanName=queryTimeSpanName,queryTimeSpanValueStart=queryTimeSpanValueStart,queryTimeSpanValueEnd=queryTimeSpanValueEnd,serviceUserGuid=entity.EmployeeGuid,serviceRoleName="LBService" ,returnUrl=currentUrl })" >@entity.LaborCountOfLaborService</a>
                             </td>
                         </tr>   
                     }

@@ -2698,9 +2698,9 @@ namespace XQYC.Web.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
-        public ActionResult StatisticalSummarySelector(bool isOnlyPlaceHolder= true)
+        public ActionResult StatisticalSummarySelector(bool isOnlyPlaceHolder = true)
         {
             string resourceName = RequestHelper.GetValue("ResourceName");
             string resourceValue = RequestHelper.GetValue("ResourceName_Value");
@@ -2717,14 +2717,16 @@ namespace XQYC.Web.Controllers
             DateTime queryTimeSpanValueStart = RequestHelper.GetValue("queryTimeSpanValueStart", DateTimeHelper.Min);
             DateTime queryTimeSpanValueEnd = RequestHelper.GetValue("queryTimeSpanValueEnd", DateTimeHelper.Min);
 
-            return RedirectToAction("StatisticalSummaryList", new { resourceValue = resourceValue, 
-                                                                    resourceName = resourceName,
-                                                                    resourceType = resourceType,
-                                                                    enterpriseKey = enterpriseKey,
-                                                                    dispatchType = dispatchTypeString,
-                                                                    queryTimeSpanName = queryTimeSpanName,
-                                                                    queryTimeSpanValueStart = queryTimeSpanValueStart,
-                                                                    queryTimeSpanValueEnd = queryTimeSpanValueEnd
+            return RedirectToAction("StatisticalSummaryList", new
+            {
+                resourceValue = resourceValue,
+                resourceName = resourceName,
+                resourceType = resourceType,
+                enterpriseKey = enterpriseKey,
+                dispatchType = dispatchTypeString,
+                queryTimeSpanName = queryTimeSpanName,
+                queryTimeSpanValueStart = queryTimeSpanValueStart,
+                queryTimeSpanValueEnd = queryTimeSpanValueEnd
             });
         }
 
@@ -2734,7 +2736,7 @@ namespace XQYC.Web.Controllers
             string resourceValue = RequestHelper.GetValue("resourceValue");
             string resourceType = RequestHelper.GetValue("resourceType");
 
-            string enterpriseKey = ControlHelper.GetRealValue("enterpriseKey", string.Empty);
+            string enterpriseKey = RequestHelper.GetValue("enterpriseKey", string.Empty);
 
             string dispatchTypeString = RequestHelper.GetValue("dispatchType");
             DispatchTypes dispatchType = DispatchTypes.UnSet;
@@ -2776,7 +2778,7 @@ namespace XQYC.Web.Controllers
                 return x.DepartmentFullPath.CompareTo(y.DepartmentFullPath);
             });
 
-            for (int i=employeeList.Count-1;i>=0;i--)
+            for (int i = employeeList.Count - 1; i >= 0; i--)
             {
                 var item = employeeList[i];
                 if (item.UserStatus != UserStatuses.Normal)
@@ -2801,10 +2803,40 @@ namespace XQYC.Web.Controllers
             }
 
             //3.获取限定条件内劳务人员的数据
+            string sqlClause = GetSatisticalSqlClause(enterpriseKey, dispatchType, queryTimeSpanName, queryTimeSpanValueStart, queryTimeSpanValueEnd);
+
+            //4.对获取出来的劳务人员信息进行分类计数
+            CalculateLaborDetails(sqlClause, employeeDictionary);
+
+            //5.统计的后期处理
+            List<EmployeeScoreStatisticalEntity> list = new List<EmployeeScoreStatisticalEntity>();
+            foreach (KeyValuePair<Guid, EmployeeScoreStatisticalEntity> kvp in employeeDictionary)
+            {
+                list.Add(kvp.Value);
+            }
+
+            bool isExportExcel = RequestHelper.GetValue("exportExcel", false);
+            if (isExportExcel == true)
+            {
+                return StatisticalSummaryToExcelFile(list);
+            }
+            else
+            {
+                return View(list);
+            }
+        }
+
+        /// <summary>
+        /// 获取限定条件内劳务人员的数据
+        /// </summary>
+        /// <returns></returns>
+        private string GetSatisticalSqlClause(string enterpriseKey, DispatchTypes dispatchType, 
+            string queryTimeSpanName, DateTime queryTimeSpanValueStart, DateTime queryTimeSpanValueEnd,
+            string serviceRoleName=StringHelper.Empty,Guid? serviceUserGuid= null)
+        {
             string sqlClause = String.Empty;
             switch (queryTimeSpanName)
             {
-
                 case "jobStartingTime":
                     break;
                 case "jobLeavingTime":
@@ -2849,28 +2881,29 @@ namespace XQYC.Web.Controllers
                         sqlClause += string.Format(" AND AND Biz.EnterpriseKey = '{0}' ", enterpriseKey);
                     }
 
+                    if (string.IsNullOrWhiteSpace(serviceRoleName) == false && serviceUserGuid!= null)
+                    {
+                        switch (serviceRoleName.ToLower())
+                        {
+                            case "lbbusiness":
+                                sqlClause += string.Format(" AND LB.BusinessUserGuid='{0}' ",serviceUserGuid);
+                                break;
+                            case "lbservice":
+                                sqlClause += string.Format(" AND LB.ServiceUserGuid='{0}' ", serviceUserGuid);
+                                break;
+                            case "etprovide":
+                                sqlClause += string.Format(" AND LB.ProviderUserGuid='{0}' ", serviceUserGuid);
+                                break;
+                            case "etbusiness":
+                            default:
+                                sqlClause += string.Format(" AND ES.BusinessUserGuid='{0}' ", serviceUserGuid);
+                                break;
+                        }
+                    }
                     break;
             }
 
-            //4.对获取出来的劳务人员信息进行分类计数
-            CalculateLaborCount(sqlClause, employeeDictionary);
-
-            //5.统计的后期处理
-            List<EmployeeScoreStatisticalEntity> list = new List<EmployeeScoreStatisticalEntity>();
-            foreach (KeyValuePair<Guid, EmployeeScoreStatisticalEntity> kvp in employeeDictionary)
-            {
-                list.Add(kvp.Value);
-            }
-
-            bool isExportExcel = RequestHelper.GetValue("exportExcel", false);
-            if (isExportExcel == true)
-            {
-                return StatisticalSummaryToExcelFile(list);
-            }
-            else
-            {
-                return View(list);
-            }
+            return sqlClause;
         }
 
         private ActionResult StatisticalSummaryToExcelFile(IList<EmployeeScoreStatisticalEntity> laborList)
@@ -2887,7 +2920,7 @@ namespace XQYC.Web.Controllers
             return File(excelStream, ContentTypes.GetContentType("xls"), string.Format("劳务人员统计汇总-{0}.xls", DateTime.Now.ToShortDateString()));
         }
 
-        private void CalculateLaborCount(string sqlClause, Dictionary<Guid, EmployeeScoreStatisticalEntity> employeeDictionary)
+        private void CalculateLaborDetails(string sqlClause, Dictionary<Guid, EmployeeScoreStatisticalEntity> employeeDictionary)
         {
             using (SqlDataReader reader = CommanHelperInstance.ExecuteReader(sqlClause))
             {
@@ -2922,6 +2955,77 @@ namespace XQYC.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sqlClause"></param>
+        private List<LaborStaticstialEntity> GetLaborDetailsDisplayed(string sqlClause)
+        {
+            List<LaborStaticstialEntity> list = new List<LaborStaticstialEntity>();
+            using (SqlDataReader reader = CommanHelperInstance.ExecuteReader(sqlClause))
+            {
+                while (reader.Read())
+                {
+                    Guid laborGuid = DataReaderHelper.GetFiledValue<Guid>(reader, "LaborGuid");
+                    string LaborName = DataReaderHelper.GetFiledValue<string>(reader, "LaborName");
+                    Guid LBBusinessUserGuid = DataReaderHelper.GetFiledValue<Guid>(reader, "LBBusinessUserGuid");
+                    Guid LBServiceUserGuid = DataReaderHelper.GetFiledValue<Guid>(reader, "LBServiceUserGuid");
+                    Guid ESProviderUserGuid = DataReaderHelper.GetFiledValue<Guid>(reader, "ESProviderUserGuid");
+                    Guid ESBusinessUserGuid = DataReaderHelper.GetFiledValue<Guid>(reader, "ESBusinessUserGuid");
+
+                    string LBBusinessUserName = DataReaderHelper.GetFiledValue<string>(reader, "LBBusinessUserName");
+                    string LBServiceUserName = DataReaderHelper.GetFiledValue<string>(reader, "LBServiceUserName");
+                    string ESProviderUserName = DataReaderHelper.GetFiledValue<string>(reader, "ESProviderUserName");
+                    string ESBusinessUserName = DataReaderHelper.GetFiledValue<string>(reader, "ESBusinessUserName");
+
+                    LaborStaticstialEntity entity = new LaborStaticstialEntity()
+                    {
+                        LaborGuid = laborGuid,
+                        LaborName = LaborName,
+                        LBBusinessGuid = LBBusinessUserGuid,
+                        LBBusinessName = LBBusinessUserName,
+                        LBServiceGuid = LBServiceUserGuid,
+                        LBServiceName = LBServiceUserName,
+                        ETBusinessGuid = ESBusinessUserGuid,
+                        ETBusinessName = ESBusinessUserName,
+                        ETProvideGuid = ESProviderUserGuid,
+                        ETProvideName = ESProviderUserName
+                    };
+
+                    list.Add(entity);
+                }
+
+                return list;
+            }
+        }
+
+        /// <summary>
+        /// 统计出来的某种条件的人员明细
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult StatisticalSummaryDetails()
+        {
+            string enterpriseKey = RequestHelper.GetValue("enterpriseKey", string.Empty);
+
+            string dispatchTypeString = RequestHelper.GetValue("dispatchType");
+            DispatchTypes dispatchType = DispatchTypes.UnSet;
+            dispatchType = EnumHelper.GetItem<DispatchTypes>(dispatchTypeString, DispatchTypes.UnSet);
+
+            string queryTimeSpanName = RequestHelper.GetValue("queryTimeSpanName");
+
+            DateTime queryTimeSpanValueStart = RequestHelper.GetValue("queryTimeSpanValueStart", DateTimeHelper.Min);
+            DateTime queryTimeSpanValueEnd = RequestHelper.GetValue("queryTimeSpanValueEnd", DateTimeHelper.Min);
+
+            string serviceRoleName = RequestHelper.GetValue("serviceRoleName");
+            Guid serviceUserGuid = RequestHelper.GetValue<Guid>("serviceUserGuid");
+
+            string sqlClause = GetSatisticalSqlClause(enterpriseKey, dispatchType,
+             queryTimeSpanName, queryTimeSpanValueStart, queryTimeSpanValueEnd,
+             serviceRoleName, serviceUserGuid);
+            List<LaborStaticstialEntity> list= GetLaborDetailsDisplayed(sqlClause);
+
+            return View(list);
+        }
 
         #endregion
 
@@ -2933,8 +3037,6 @@ namespace XQYC.Web.Controllers
                 return CommonHelperEx<SqlTransaction, SqlConnection, SqlCommand, SqlDataReader, SqlParameter>.Instance;
             }
         }
-
-
         #endregion
     }
 }
