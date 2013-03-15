@@ -14,7 +14,7 @@ namespace XQYC.Web.Models
         public string  LaborName { get; set; }
 
         public Guid EnterpriseGuid { get; set; }
-        public string EnterpriserName { get; set; }
+        public string EnterpriseName { get; set; }
         /// <summary>
         /// 薪资月份
         /// </summary>

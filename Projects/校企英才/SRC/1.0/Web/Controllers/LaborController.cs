@@ -3039,7 +3039,7 @@ namespace XQYC.Web.Controllers
                     DateTime SalaryDate = DataReaderHelper.GetFiledValue<DateTime>(reader, "SalaryDate");
 
                     Guid EnterpriseKey = DataReaderHelper.GetFiledValue<Guid>(reader, "EnterpriseKey");
-                    string EnterpriserName = DataReaderHelper.GetFiledValue<string>(reader, "EnterpriserName");
+                    string EnterpriseName = DataReaderHelper.GetFiledValue<string>(reader, "EnterpriseName");
 
                     LaborStaticstialEntity entity = new LaborStaticstialEntity()
                     {
@@ -3055,7 +3055,7 @@ namespace XQYC.Web.Controllers
                         ETProvideName = ESProviderUserName,
                         SalaryDate = SalaryDate,
                         EnterpriseGuid = EnterpriseKey,
-                        EnterpriserName = EnterpriserName
+                        EnterpriseName = EnterpriseName
                     };
 
                     list.Add(entity);
