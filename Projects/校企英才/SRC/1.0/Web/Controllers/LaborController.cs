@@ -2830,20 +2830,79 @@ namespace XQYC.Web.Controllers
         /// 获取限定条件内劳务人员的数据
         /// </summary>
         /// <returns></returns>
-        private string GetSatisticalSqlClause(string enterpriseKey, DispatchTypes dispatchType, 
+        private string GetSatisticalSqlClause(string enterpriseKey, DispatchTypes dispatchType,
             string queryTimeSpanName, DateTime queryTimeSpanValueStart, DateTime queryTimeSpanValueEnd,
-            string serviceRoleName=StringHelper.Empty,Guid? serviceUserGuid= null)
+            string serviceRoleName = StringHelper.Empty, Guid? serviceUserGuid = null)
         {
             string sqlClause = String.Empty;
             switch (queryTimeSpanName)
             {
                 case "jobStartingTime":
+                    sqlClause = @" select  Biz.LaborContractGuid as BizGuid,
+		                                '' as SalaryDate,
+		                                Biz.EnterpriseGuid as EnterpriseKey, 
+		                                GE.CompanyName as EnterpriseName,
+		                                CU.UserGuid as LaborGuid,
+		                                CU.UserNameCN as LaborName,
+		                                LB.BusinessUserGuid as LBBusinessUserGuid,
+		                                LB.BusinessUserName as LBBusinessUserName,
+		                                LB.ServiceUserGuid as LBServiceUserGuid,
+		                                LB.ServiceUserName as LBServiceUserName,
+		                                ES.ProviderUserGuid as ESProviderUserGuid,
+		                                ES.ProviderUserName as ESProviderUserName,
+		                                ES.BusinessUserGuid as ESBusinessUserGuid,
+		                                ES.BusinessUserName as ESBusinessUserName
+
+                                from XQYCLaborContract Biz Left Join CoreUser CU ON Biz.LaborUserGuid= CU.UserGuid 
+						                                   Left Join XQYCLabor LB ON Biz.LaborUserGuid=LB.UserGuid  
+						                                   Left Join GeneralEnterprise GE On Biz.EnterpriseGuid = GE.EnterpriseGuid
+						                                   Left Join XQYCEnterpriseService ES ON GE.EnterpriseGuid = ES.EnterpriseGuid
+                                where ES.EnterpriseServiceType= 1 "; //--1表示劳务派遣合作关系
+                    if (queryTimeSpanValueStart != DateTimeHelper.Min)
+                    {
+                        sqlClause += string.Format(" AND LaborContractStartDate >= '{0}' ", queryTimeSpanValueStart);
+                    }
+
+                    if (queryTimeSpanValueEnd != DateTimeHelper.Min)
+                    {
+                        sqlClause += string.Format(" AND LaborContractStartDate <= '{0}' ", queryTimeSpanValueEnd);
+                    }
                     break;
                 case "jobLeavingTime":
+                    sqlClause = @" select  Biz.LaborContractGuid as BizGuid,
+		                                '' as SalaryDate,
+		                                Biz.EnterpriseGuid as EnterpriseKey, 
+		                                GE.CompanyName as EnterpriseName,
+		                                CU.UserGuid as LaborGuid,
+		                                CU.UserNameCN as LaborName,
+		                                LB.BusinessUserGuid as LBBusinessUserGuid,
+		                                LB.BusinessUserName as LBBusinessUserName,
+		                                LB.ServiceUserGuid as LBServiceUserGuid,
+		                                LB.ServiceUserName as LBServiceUserName,
+		                                ES.ProviderUserGuid as ESProviderUserGuid,
+		                                ES.ProviderUserName as ESProviderUserName,
+		                                ES.BusinessUserGuid as ESBusinessUserGuid,
+		                                ES.BusinessUserName as ESBusinessUserName
+
+                                from XQYCLaborContract Biz Left Join CoreUser CU ON Biz.LaborUserGuid= CU.UserGuid 
+						                                   Left Join XQYCLabor LB ON Biz.LaborUserGuid=LB.UserGuid  
+						                                   Left Join GeneralEnterprise GE On Biz.EnterpriseGuid = GE.EnterpriseGuid
+						                                   Left Join XQYCEnterpriseService ES ON GE.EnterpriseGuid = ES.EnterpriseGuid
+                                where ES.EnterpriseServiceType= 1 "; //--1表示劳务派遣合作关系
+                    if (queryTimeSpanValueStart != DateTimeHelper.Min)
+                    {
+                        sqlClause += string.Format(" AND LaborContractDiscontinueDate >= '{0}' ", queryTimeSpanValueStart);
+                    }
+
+                    if (queryTimeSpanValueEnd != DateTimeHelper.Min)
+                    {
+                        sqlClause += string.Format(" AND LaborContractDiscontinueDate <= '{0}' ", queryTimeSpanValueEnd);
+                    }
                     break;
                 case "balanceTime":
                 default:
                     sqlClause = @" select  Biz.SalarySummaryGuid as BizGuid,
+                                        Biz.SalaryDate as SalaryDate,
 		                                Biz.EnterpriseKey as EnterpriseKey, 
 		                                GE.CompanyName as EnterpriseName,
 		                                CU.UserGuid as LaborGuid,
@@ -2870,39 +2929,38 @@ namespace XQYC.Web.Controllers
                     {
                         sqlClause += string.Format(" AND EnterpriseManageFeeCashDate <= '{0}' ", queryTimeSpanValueEnd);
                     }
-
-                    if (dispatchType != DispatchTypes.UnSet)
-                    {
-                        sqlClause += string.Format(" AND LB.CurrentDispatchType = {0} ", (int)dispatchType);
-                    }
-
-                    if (GuidHelper.IsInvalidOrEmpty(enterpriseKey) == false)
-                    {
-                        sqlClause += string.Format(" AND AND Biz.EnterpriseKey = '{0}' ", enterpriseKey);
-                    }
-
-                    if (string.IsNullOrWhiteSpace(serviceRoleName) == false && serviceUserGuid!= null)
-                    {
-                        switch (serviceRoleName.ToLower())
-                        {
-                            case "lbbusiness":
-                                sqlClause += string.Format(" AND LB.BusinessUserGuid='{0}' ",serviceUserGuid);
-                                break;
-                            case "lbservice":
-                                sqlClause += string.Format(" AND LB.ServiceUserGuid='{0}' ", serviceUserGuid);
-                                break;
-                            case "etprovide":
-                                sqlClause += string.Format(" AND LB.ProviderUserGuid='{0}' ", serviceUserGuid);
-                                break;
-                            case "etbusiness":
-                            default:
-                                sqlClause += string.Format(" AND ES.BusinessUserGuid='{0}' ", serviceUserGuid);
-                                break;
-                        }
-                    }
                     break;
             }
 
+            if (dispatchType != DispatchTypes.UnSet)
+            {
+                sqlClause += string.Format(" AND LB.CurrentDispatchType = {0} ", (int)dispatchType);
+            }
+
+            if (GuidHelper.IsInvalidOrEmpty(enterpriseKey) == false)
+            {
+                sqlClause += string.Format(" AND AND Biz.EnterpriseKey = '{0}' ", enterpriseKey);
+            }
+
+            if (string.IsNullOrWhiteSpace(serviceRoleName) == false && serviceUserGuid != null)
+            {
+                switch (serviceRoleName.ToLower())
+                {
+                    case "lbbusiness":
+                        sqlClause += string.Format(" AND LB.BusinessUserGuid='{0}' ", serviceUserGuid);
+                        break;
+                    case "lbservice":
+                        sqlClause += string.Format(" AND LB.ServiceUserGuid='{0}' ", serviceUserGuid);
+                        break;
+                    case "etprovide":
+                        sqlClause += string.Format(" AND ES.ProviderUserGuid='{0}' ", serviceUserGuid);
+                        break;
+                    case "etbusiness":
+                    default:
+                        sqlClause += string.Format(" AND ES.BusinessUserGuid='{0}' ", serviceUserGuid);
+                        break;
+                }
+            }
             return sqlClause;
         }
 
@@ -2978,6 +3036,11 @@ namespace XQYC.Web.Controllers
                     string ESProviderUserName = DataReaderHelper.GetFiledValue<string>(reader, "ESProviderUserName");
                     string ESBusinessUserName = DataReaderHelper.GetFiledValue<string>(reader, "ESBusinessUserName");
 
+                    DateTime SalaryDate = DataReaderHelper.GetFiledValue<DateTime>(reader, "SalaryDate");
+
+                    Guid EnterpriseKey = DataReaderHelper.GetFiledValue<Guid>(reader, "EnterpriseKey");
+                    string EnterpriserName = DataReaderHelper.GetFiledValue<string>(reader, "EnterpriserName");
+
                     LaborStaticstialEntity entity = new LaborStaticstialEntity()
                     {
                         LaborGuid = laborGuid,
@@ -2989,7 +3052,10 @@ namespace XQYC.Web.Controllers
                         ETBusinessGuid = ESBusinessUserGuid,
                         ETBusinessName = ESBusinessUserName,
                         ETProvideGuid = ESProviderUserGuid,
-                        ETProvideName = ESProviderUserName
+                        ETProvideName = ESProviderUserName,
+                        SalaryDate = SalaryDate,
+                        EnterpriseGuid = EnterpriseKey,
+                        EnterpriserName = EnterpriserName
                     };
 
                     list.Add(entity);
@@ -3022,7 +3088,7 @@ namespace XQYC.Web.Controllers
             string sqlClause = GetSatisticalSqlClause(enterpriseKey, dispatchType,
              queryTimeSpanName, queryTimeSpanValueStart, queryTimeSpanValueEnd,
              serviceRoleName, serviceUserGuid);
-            List<LaborStaticstialEntity> list= GetLaborDetailsDisplayed(sqlClause);
+            List<LaborStaticstialEntity> list = GetLaborDetailsDisplayed(sqlClause);
 
             return View(list);
         }

@@ -12,6 +12,13 @@ namespace XQYC.Web.Models
     {
         public Guid LaborGuid { get; set; }
         public string  LaborName { get; set; }
+
+        public Guid EnterpriseGuid { get; set; }
+        public string EnterpriserName { get; set; }
+        /// <summary>
+        /// 薪资月份
+        /// </summary>
+        public DateTime SalaryDate { get; set; }
         public Guid  ETProvideGuid { get; set; }
         public string ETProvideName { get; set; }
         public Guid ETBusinessGuid { get; set; }
