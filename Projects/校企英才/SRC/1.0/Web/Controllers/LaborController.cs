@@ -2939,7 +2939,7 @@ namespace XQYC.Web.Controllers
 
             if (GuidHelper.IsInvalidOrEmpty(enterpriseKey) == false)
             {
-                sqlClause += string.Format(" AND AND Biz.EnterpriseKey = '{0}' ", enterpriseKey);
+                sqlClause += string.Format(" AND Biz.EnterpriseKey = '{0}' ", enterpriseKey);
             }
 
             if (string.IsNullOrWhiteSpace(serviceRoleName) == false && serviceUserGuid != null)
