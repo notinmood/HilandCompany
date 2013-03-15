@@ -23,8 +23,8 @@
     }
 
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业,人员名称,身份证号,企业信息提供人,企业开发人员,劳务人员服务人员,劳务人员业务人员,劳务人员安置人员", ConditionFieldName = "CompanyName,UserNameCN,UserCardID,ES.ProviderUserName,GE.ManageUserName,LA.ServiceUserName,LA.BusinessUserName,LA.SettleUserName", ConditionType = typeof(string) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业,人员名称,身份证号,企业信息提供人,企业开发人员,劳务人员服务人员,劳务人员业务人员,劳务人员安置人员", ConditionFieldName = "CompanyName,UserNameCN,UserCardID,ES.ProviderUserName,GE.ManageUserName,LA.ServiceUserName,LA.BusinessUserName,LA.SettleUserName", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业,人员名称,身份证号,企业信息提供人,企业开发人员,劳务人员服务人员,劳务人员业务人员,劳务人员安置人员", ConditionFieldName = "CompanyName,CU.UserNameCN,CU.UserCardID,ES.ProviderUserName,GE.ManageUserName,LA.ServiceUserName,LA.BusinessUserName,LA.SettleUserName", ConditionType = typeof(string) });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业,人员名称,身份证号,企业信息提供人,企业开发人员,劳务人员服务人员,劳务人员业务人员,劳务人员安置人员", ConditionFieldName = "CompanyName,CU.UserNameCN,CU.UserCardID,ES.ProviderUserName,GE.ManageUserName,LA.ServiceUserName,LA.BusinessUserName,LA.SettleUserName", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "管理费回款时间,招工费回款时间,一次性招工费回款时间", ConditionFieldName = "EnterpriseManageFeeCashDate,EnterpriseGeneralRecruitFeeCashDate,EnterpriseOnceRecruitFeeCashDate", ConditionType = typeof(DateTime), AddonData = "isRegionSelector:true" });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "结算月份", ConditionFieldName = "SalaryDate", ConditionType = typeof(DateTime), AddonData = "dateFormat:yyyy/mm" });
 

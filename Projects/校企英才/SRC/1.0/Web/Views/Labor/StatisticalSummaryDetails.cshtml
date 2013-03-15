@@ -17,12 +17,17 @@
     ViewBag.Title = "Index";
     string currentUrl = HiLand.Utility.Web.RequestHelper.CurrentFullUrl;
     string returnUrl = RequestHelper.GetValue("returnUrl");
+    
+    if (string.IsNullOrWhiteSpace(returnUrl) == false)
+    {
+        returnUrl = CompressHelper.Decompress(returnUrl);
+    }
 }
 
 <h2>@string.Format("劳务人员统计结果明细列表")</h2>
 <div id="ItemListDIV">
     <div class="OperateArea" id="OperateAreaContainer">
-        <div class="btn-group"><a href="@returnUrl" class="btn btn-warning" title="返回列表页"><i class="icon-share icon-white"></i>返回</a></div>
+        <div class="btn-group"><a href="@returnUrl" class="btn btn-warning" title="返回列表页"><i class="icon-share icon-white"></i>返回</a>@XQYC.Web.Control.HtmlHelperEx.ExportExcel(Html)</div>
     </div>
     <table width="98%" class="grid">
         <tr>

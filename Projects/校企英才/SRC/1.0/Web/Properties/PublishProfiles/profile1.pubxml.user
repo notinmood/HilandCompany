@@ -197,7 +197,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/15/2013 11:17:54</publishTime>
     </File>
     <File Include="bin/XQYC.Web.dll">
-      <publishTime>03/15/2013 11:17:55</publishTime>
+      <publishTime>03/15/2013 15:39:42</publishTime>
     </File>
     <File Include="Content/adminStyle.css">
       <publishTime>01/12/2013 16:15:19</publishTime>
@@ -1205,7 +1205,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/11/2013 14:33:31</publishTime>
     </File>
     <File Include="Views/Labor/SalaryBalanceCheck.cshtml">
-      <publishTime>02/27/2013 14:24:36</publishTime>
+      <publishTime>03/15/2013 15:09:48</publishTime>
     </File>
     <File Include="Views/Labor/SalaryBatch.cshtml">
       <publishTime>02/27/2013 17:22:08</publishTime>
@@ -1241,10 +1241,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/17/2012 18:37:53</publishTime>
     </File>
     <File Include="Views/Labor/StatisticalSummaryDetails.cshtml">
-      <publishTime>03/15/2013 11:16:30</publishTime>
+      <publishTime>03/15/2013 15:01:22</publishTime>
     </File>
     <File Include="Views/Labor/StatisticalSummaryList.cshtml">
-      <publishTime>03/15/2013 10:09:12</publishTime>
+      <publishTime>03/15/2013 15:00:06</publishTime>
     </File>
     <File Include="Views/Labor/StatisticalSummarySelector.cshtml">
       <publishTime>03/12/2013 17:50:20</publishTime>
@@ -1334,7 +1334,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/06/2012 16:58:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>03/15/2013 11:17:59</publishTime>
+      <publishTime>03/15/2013 15:39:46</publishTime>
     </File>
   </ItemGroup>
 </Project>

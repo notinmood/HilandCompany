@@ -19,12 +19,9 @@
     ViewBag.Title = "Index";
     string currentUrl = RequestHelper.CurrentFullUrl;
 
-    bool isUsingCompress = false;
-    if (currentUrl.Length > 512)
-    {
-        isUsingCompress = true;
-        currentUrl = CompressHelper.Compress(currentUrl);
-    }
+    bool isUsingCompress = true;
+    currentUrl = CompressHelper.Compress(currentUrl);
+
 
     string resourceName = RequestHelper.GetValue("resourceName");
     string resourceValue = RequestHelper.GetValue("resourceValue");
@@ -89,16 +86,16 @@
                             <td>@entity.EmployeeName
                             </td>
                             <td>
-                                <a target="_self" href="@Url.Action("StatisticalSummaryDetails", new {enterpriseKey=enterpriseKey,dispatchType=dispatchType,queryTimeSpanName=queryTimeSpanName,queryTimeSpanValueStart=queryTimeSpanValueStart,queryTimeSpanValueEnd=queryTimeSpanValueEnd,serviceUserGuid=entity.EmployeeGuid,serviceRoleName="LBBusiness" ,returnUrl=currentUrl })" >@entity.LaborCountOfLaborBusiness</a>
+                                <a target="_self" href="@Url.Action("StatisticalSummaryDetails", new { enterpriseKey = enterpriseKey, dispatchType = dispatchType, queryTimeSpanName = queryTimeSpanName, queryTimeSpanValueStart = queryTimeSpanValueStart, queryTimeSpanValueEnd = queryTimeSpanValueEnd, serviceUserGuid = entity.EmployeeGuid, serviceRoleName = "LBBusiness", returnUrl = currentUrl, isUsingCompress = isUsingCompress })" >@entity.LaborCountOfLaborBusiness</a>
                             </td>
                             <td>
-                                <a target="_self" href="@Url.Action("StatisticalSummaryDetails", new {enterpriseKey=enterpriseKey,dispatchType=dispatchType,queryTimeSpanName=queryTimeSpanName,queryTimeSpanValueStart=queryTimeSpanValueStart,queryTimeSpanValueEnd=queryTimeSpanValueEnd,serviceUserGuid=entity.EmployeeGuid,serviceRoleName="ETProvide" ,returnUrl=currentUrl })" >@entity.LaborCountOfEnterpriseProvide</a>
+                                <a target="_self" href="@Url.Action("StatisticalSummaryDetails", new { enterpriseKey = enterpriseKey, dispatchType = dispatchType, queryTimeSpanName = queryTimeSpanName, queryTimeSpanValueStart = queryTimeSpanValueStart, queryTimeSpanValueEnd = queryTimeSpanValueEnd, serviceUserGuid = entity.EmployeeGuid, serviceRoleName = "ETProvide", returnUrl = currentUrl, isUsingCompress = isUsingCompress })" >@entity.LaborCountOfEnterpriseProvide</a>
                             </td>
                             <td>
-                                <a target="_self" href="@Url.Action("StatisticalSummaryDetails", new {enterpriseKey=enterpriseKey,dispatchType=dispatchType,queryTimeSpanName=queryTimeSpanName,queryTimeSpanValueStart=queryTimeSpanValueStart,queryTimeSpanValueEnd=queryTimeSpanValueEnd,serviceUserGuid=entity.EmployeeGuid,serviceRoleName="ETBusiness",returnUrl=currentUrl  })" >@entity.LaborCountOfEnterpriseBusiness</a>
+                                <a target="_self" href="@Url.Action("StatisticalSummaryDetails", new { enterpriseKey = enterpriseKey, dispatchType = dispatchType, queryTimeSpanName = queryTimeSpanName, queryTimeSpanValueStart = queryTimeSpanValueStart, queryTimeSpanValueEnd = queryTimeSpanValueEnd, serviceUserGuid = entity.EmployeeGuid, serviceRoleName = "ETBusiness", returnUrl = currentUrl, isUsingCompress = isUsingCompress })" >@entity.LaborCountOfEnterpriseBusiness</a>
                             </td>
                             <td>
-                                <a target="_self" href="@Url.Action("StatisticalSummaryDetails", new {enterpriseKey=enterpriseKey,dispatchType=dispatchType,queryTimeSpanName=queryTimeSpanName,queryTimeSpanValueStart=queryTimeSpanValueStart,queryTimeSpanValueEnd=queryTimeSpanValueEnd,serviceUserGuid=entity.EmployeeGuid,serviceRoleName="LBService" ,returnUrl=currentUrl })" >@entity.LaborCountOfLaborService</a>
+                                <a target="_self" href="@Url.Action("StatisticalSummaryDetails", new { enterpriseKey = enterpriseKey, dispatchType = dispatchType, queryTimeSpanName = queryTimeSpanName, queryTimeSpanValueStart = queryTimeSpanValueStart, queryTimeSpanValueEnd = queryTimeSpanValueEnd, serviceUserGuid = entity.EmployeeGuid, serviceRoleName = "LBService", returnUrl = currentUrl, isUsingCompress = isUsingCompress })" >@entity.LaborCountOfLaborService</a>
                             </td>
                         </tr>   
                     }

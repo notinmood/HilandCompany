@@ -1056,7 +1056,7 @@ namespace XQYC.Web.Controllers
             }
             else
             {
-                whereClause += string.Format(" AND EnterpriseKey='{0}' ", enterpriseKey);
+                whereClause += string.Format(" AND BIZ.EnterpriseKey='{0}' ", enterpriseKey);
             }
 
             if (string.IsNullOrWhiteSpace(salaryMonth))
@@ -2978,6 +2978,20 @@ namespace XQYC.Web.Controllers
             return File(excelStream, ContentTypes.GetContentType("xls"), string.Format("劳务人员统计汇总-{0}.xls", DateTime.Now.ToShortDateString()));
         }
 
+        private ActionResult StatisticalDetailToExcelFile(IList<LaborStaticstialEntity> laborList)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic["LaborName"] = "劳务人员姓名";
+            dic["EnterpriseName"] = "务工企业名称";
+            dic["LBBusinessName"] = "招聘人员姓名";
+            dic["ETProvideName"] = "信息提供人员姓名";
+            dic["ETBusinessName"] = "企业开发人员姓名";
+            dic["LBServiceName"] = "客服人员姓名";
+
+            Stream excelStream = ExcelHelper.WriteExcel(laborList, dic);
+            return File(excelStream, ContentTypes.GetContentType("xls"), string.Format("劳务人员统计明细-{0}.xls", DateTime.Now.ToShortDateString()));
+        }
+
         private void CalculateLaborDetails(string sqlClause, Dictionary<Guid, EmployeeScoreStatisticalEntity> employeeDictionary)
         {
             using (SqlDataReader reader = CommanHelperInstance.ExecuteReader(sqlClause))
@@ -3090,7 +3104,15 @@ namespace XQYC.Web.Controllers
              serviceRoleName, serviceUserGuid);
             List<LaborStaticstialEntity> list = GetLaborDetailsDisplayed(sqlClause);
 
-            return View(list);
+            bool isExportExcel = RequestHelper.GetValue("exportExcel", false);
+            if (isExportExcel == true)
+            {
+                return StatisticalDetailToExcelFile(list);
+            }
+            else
+            {
+                return View(list);
+            }
         }
 
         #endregion
