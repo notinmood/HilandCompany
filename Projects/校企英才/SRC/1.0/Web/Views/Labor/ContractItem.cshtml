@@ -157,15 +157,15 @@
                 }
             }
 
-            //如果为非代理招聘的用工类型均需要回去输入身份证信息
-            var userCardIDValue = $("#UserIDCard").val();
-            var DispatchType = $("#DispatchType").val();
-            if (DispatchType != "HireBroke") {
-                if (userCardIDValue == "") {
-                    alert("请回到劳务人员基本信息中输入其完整的身份证号！");
-                    return false;
-                }
-            }
+            ////如果为非代理招聘的用工类型均需要回去输入身份证信息
+            //var userCardIDValue = $("#UserIDCard").val();
+            //var DispatchType = $("#DispatchType").val();
+            //if (DispatchType != "HireBroke") {
+            //    if (userCardIDValue == "") {
+            //        alert("请回到劳务人员基本信息中输入其完整的身份证号！");
+            //        return false;
+            //    }
+            //}
 
             submitAndRedirect("#formContainer form");
         });
