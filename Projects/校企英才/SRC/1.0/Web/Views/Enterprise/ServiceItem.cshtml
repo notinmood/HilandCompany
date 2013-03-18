@@ -13,7 +13,7 @@
     this.Layout = null;
 
     string itemTypeName = this.ViewBag.ItemTypeName;
-    string returnUrl = this.ViewBag.ReturnUrl;
+    //string returnUrl = this.ViewBag.ReturnUrl;
 }
 <div id="formContainer">
     @* TODO:xieran 以下内容主要是为了修复弹出选择器的bug,有可能对页面其他的地方有影响 *@
@@ -108,7 +108,7 @@
             </tr>
         </table>
         <input type="hidden" id="ItemKey" name="ItemKey" value="@Model.EnterpriseServiceGuid" />
-        <input type="hidden" id="returnUrl" name="returnUrl" value="@returnUrl" />
+        @*<input type="hidden" id="returnUrl" name="returnUrl" value="@returnUrl" />*@
         @Html.HiddenFor(entity => entity.EnterpriseGuid)
         @Html.HiddenFor(entity => entity.EnterpriseInfo)
         @Html.HiddenFor(entity => entity.EnterpriseServiceType)

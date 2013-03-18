@@ -103,10 +103,10 @@ namespace XQYC.Business.BLL
         /// <param name="laborCardID">劳务人员身份证号</param>
         /// <param name="enterpriseKey">企业Guid信息</param>
         /// <returns></returns>
-        public LaborEntity Get(string laborName, string laborCode,string laborCardID, string enterpriseKey)
+        public LaborEntity Get(string laborName, string laborCode, string laborCardID, string enterpriseKey)
         {
             string whereClause = string.Format(" UserNameCN='{0}' AND CurrentEnterpriseKey='{1}' ", laborName, enterpriseKey);
-            
+
             if (string.IsNullOrWhiteSpace(laborCode) == false)
             {
                 whereClause += string.Format(" AND LaborCode='{0}'  ", laborCode);
@@ -120,13 +120,72 @@ namespace XQYC.Business.BLL
             List<LaborEntity> list = this.GetList(whereClause);
 
             //通过条件进行匹配的时候，没有人员或者多于1个人员都返回匹配失败。
-            if (list == null || list.Count == 0 || list.Count > 1)
+            if (list.Count > 1)
             {
                 return LaborEntity.Empty;
             }
             else
             {
-                return list[0];
+                if (list == null || list.Count == 0)
+                {
+                    //如果在当前企业找不到人员，那么查询历史合同
+                    LaborEntity temp = GetLaborFromContract(laborName, laborCode, laborCardID, enterpriseKey);
+                    return temp;
+                }
+                else
+                {
+                    return list[0];
+                }
+            }
+        }
+
+        /// <summary>
+        /// 从合同内获取劳务人员信息
+        /// </summary>
+        /// <param name="laborName"></param>
+        /// <param name="laborCode"></param>
+        /// <param name="laborCardID"></param>
+        /// <param name="enterpriseKey"></param>
+        /// <returns></returns>
+        private LaborEntity GetLaborFromContract(string laborName, string laborCode, string laborCardID, string enterpriseKey)
+        {
+            string whereClause = string.Format(" UserNameCN='{0}'", laborName);
+            
+            if (string.IsNullOrWhiteSpace(laborCardID) == false)
+            {
+                whereClause += string.Format(" AND UserCardID='{0}'  ", laborCardID);
+            }
+
+            List<LaborEntity> userList = LaborBLL.Instance.GetList(whereClause);
+            if (userList == null || userList.Count == 0)
+            {
+                return LaborEntity.Empty;
+            }
+            else
+            {
+                List<LaborEntity> userListMatched = new List<LaborEntity>();
+                for (int i = 0; i < userList.Count; i++)
+                {
+                    string whereClauseForContract = string.Format(" LaborUserGuid='{0}' AND EnterpriseGuid='{1}' ",userList[i].UserGuid,enterpriseKey);
+                    if (string.IsNullOrWhiteSpace(laborCode) == false)
+                    {
+                        whereClauseForContract += string.Format(" AND LaborCode='{0}'  ", laborCode);
+                    }
+
+                    if (LaborContractBLL.Instance.GetList(whereClauseForContract).Count > 0)
+                    {
+                        userListMatched.Add(userList[i]);
+                    }
+                }
+
+                if (userListMatched.Count == 1)
+                {
+                    return userListMatched[0];
+                }
+                else
+                {
+                    return LaborEntity.Empty;
+                }
             }
         }
 
@@ -220,7 +279,7 @@ namespace XQYC.Business.BLL
         {
             bool isSuccessful = base.Delete(modelID);
             if (isSuccessful == true)
-            { 
+            {
                 //TODO:xieran20130112 如果删除劳务人员成功，那么其对应的其他信息（工资等）均需要删除
                 if (GuidHelper.IsInvalidOrEmpty(modelID) == false)
                 {

@@ -1244,8 +1244,8 @@ namespace XQYC.Web.Controllers
         /// <returns></returns>
         public ActionResult ServiceItem(string itemKey, string enterpriseKey, string itemTypeNumber)
         {
-            string returnUrl = RequestHelper.GetValue("returnUrl");
-            this.ViewBag.ReturnUrl = returnUrl;
+            //string returnUrl = RequestHelper.GetValue("returnUrl");
+            //this.ViewBag.ReturnUrl = returnUrl;
 
             EnterpriseServiceEntity serviceEntity = EnterpriseServiceEntity.Empty;
             if (GuidHelper.IsInvalidOrEmpty(itemKey) == false)
