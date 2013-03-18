@@ -2904,6 +2904,9 @@ namespace XQYC.Web.Controllers
                     sqlClause = @" select  Biz.SalarySummaryGuid as BizGuid,
                                         Biz.SalaryDate as SalaryDate,
 		                                Biz.EnterpriseKey as EnterpriseKey, 
+                                        Biz.EnterpriseManageFeeReal as ManageFee,
+		                                Biz.EnterpriseGeneralRecruitFeeReal as GeneralRecruitFee,
+		                                Biz.EnterpriseOnceRecruitFeeReal as OnceRecruitFee,
 		                                GE.CompanyName as EnterpriseName,
 		                                CU.UserGuid as LaborGuid,
 		                                CU.UserNameCN as LaborName,
@@ -2983,6 +2986,7 @@ namespace XQYC.Web.Controllers
             Dictionary<string, string> dic = new Dictionary<string, string>();
             dic["LaborName"] = "劳务人员姓名";
             dic["EnterpriseName"] = "务工企业名称";
+
             dic["LBBusinessName"] = "招聘人员姓名";
             dic["ETProvideName"] = "信息提供人员姓名";
             dic["ETBusinessName"] = "企业开发人员姓名";
@@ -3055,6 +3059,10 @@ namespace XQYC.Web.Controllers
                     Guid EnterpriseKey = DataReaderHelper.GetFiledValue<Guid>(reader, "EnterpriseKey");
                     string EnterpriseName = DataReaderHelper.GetFiledValue<string>(reader, "EnterpriseName");
 
+                    decimal OnceRecruitFee= DataReaderHelper.GetFiledValue<decimal>(reader, "OnceRecruitFee");
+                    decimal ManageFee= DataReaderHelper.GetFiledValue<decimal>(reader,"ManageFee");
+                    decimal GeneralRecruitFee= DataReaderHelper.GetFiledValue<decimal>(reader,"GeneralRecruitFee");
+
                     LaborStaticstialEntity entity = new LaborStaticstialEntity()
                     {
                         LaborGuid = laborGuid,
@@ -3069,7 +3077,11 @@ namespace XQYC.Web.Controllers
                         ETProvideName = ESProviderUserName,
                         SalaryDate = SalaryDate,
                         EnterpriseGuid = EnterpriseKey,
-                        EnterpriseName = EnterpriseName
+                        EnterpriseName = EnterpriseName,
+
+                        ManageFee= ManageFee,
+                        GeneralRecruitFee= GeneralRecruitFee,
+                        OnceRecruitFee= OnceRecruitFee
                     };
 
                     list.Add(entity);

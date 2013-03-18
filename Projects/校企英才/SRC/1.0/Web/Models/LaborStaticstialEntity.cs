@@ -27,5 +27,9 @@ namespace XQYC.Web.Models
         public string LBBusinessName { get; set; }
         public Guid LBServiceGuid { get; set; }
         public string LBServiceName { get; set; }
+
+        public decimal ManageFee { get; set; }
+        public decimal GeneralRecruitFee { get; set; }
+        public decimal OnceRecruitFee { get; set; }
     }
 }
