@@ -29,7 +29,7 @@
     List<QueryConditionItem> queryItemList = new List<QueryConditionItem>();
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "所属企业,人员名称,身份证号", ConditionFieldName = "CompanyName,UserNameCN,UserCardID", ConditionType = typeof(string) });
     queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "合同状态", ConditionFieldName = "LaborContractStatus", ConditionType = typeof(LaborWorkStatuses) });
-    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "离职时间,入职时间,合同结束时间,在职时间", ConditionFieldName = "LaborContractDiscontinueDate,LaborContractStartDate,LaborContractStopDate,JobingDate", ConditionType = typeof(DateTime), AddonData = "isRegionSelector:true" });
+    queryItemList.Add(new QueryConditionItem() { ConditionDisplayName = "离职时间,入职时间,合同到期时间,在职时间", ConditionFieldName = "LaborContractDiscontinueDate,LaborContractStartDate,LaborContractStopDate,JobingDate", ConditionType = typeof(DateTime), AddonData = "isRegionSelector:true" });
 }
 <h2>劳务人员合同查询</h2>
 <div id="ItemListDIV">
@@ -74,7 +74,7 @@
                         </th>
                         <th style="width: 80px">入职时间
                         </th>
-                        <th style="width: 80px">合同结束时间
+                        <th style="width: 80px">合同到期时间
                         </th>
                         <th style="width: 80px">离职时间
                         </th>

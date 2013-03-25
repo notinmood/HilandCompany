@@ -208,11 +208,17 @@
         <input type="submit" id="submitButton" value="保存" class="btn btn-warning" /><a class="overlayClose" title="请暂时使用敲击键盘'ESC'键关闭本弹窗"></a>
     }
 </div>
-@*<script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function () {
         $("#submitButton").click(function () {
-            submitAndRedirect("#formContainer form");
+            var companyNameValue = $("#CompanyName").val();
+            if (companyNameValue == "")
+            {
+                alert("请必须输入企业名称，谢谢！")
+                return false;
+            }
+            //submitAndRedirect("#formContainer form");
         });
     });
-</script>*@
+</script>
 

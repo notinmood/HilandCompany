@@ -32,7 +32,7 @@ namespace XQYC.Web.Models.Jobs
             //int rowCountForCreateUpdateProtected = LaborBLL.Instance.ExcuteNonQuery(sqlClauseForSignProtected);
 
             //2.释放合同到期之后的一段时间内未能形成二次签约的劳务人员的保护
-            string sqlClauseForReSignProtected = string.Format("update [XQYCLabor] set IsProtectedByOwner ={0} where LaborWorkStatus !={1} AND CurrentContractDiscontinueDate<='{2}'  AND CurrentContractDiscontinueDate!='{3}' AND CurrentContractDiscontinueDate< '{4}' AND LastUpdateDate<'{5}' ",
+            string sqlClauseForReSignProtected = string.Format("update [XQYCLabor] set IsProtectedByOwner ={0} where LaborWorkStatus !={1} AND CurrentContractDiscontinueDate<='{2}'  AND CurrentContractDiscontinueDate!='{3}' AND LastUpdateDate<'{4}' ",
                 (int)Logics.False, (int)LaborWorkStatuses.Worked, DateTime.Today.AddDays(-fromContractEndToResignedProtectedDays), DateTimeHelper.Min, DateTime.Today.AddDays(fromUpdatedToSignedProtectedDays));
 
             LaborBLL.Instance.ExcuteNonQuery(sqlClauseForReSignProtected);
