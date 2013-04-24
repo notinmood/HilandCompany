@@ -203,7 +203,7 @@
                         <tr>
                             <td>
                                 <input type="checkbox" name="itemCheckboxSelector" class="checkboxSelector" value="@entityGuid"/>
-                                @Html.HiA().CssClassName("salaryDetailsList").Value("<i class=\"icon-align-justify\"></i>详情").ACA("SalaryDetailsList", "Labor").RouteValue(new { itemKey = entity.SalarySummaryGuid, returnUrl = currentUrl }).Render()
+                                @Html.HiA().CssClassName("salaryDetailsList").Value("<i class=\"icon-align-justify\"></i>详情").ACA("SalaryDetailsList", "Labor").RouteValue(new { itemKey = entity.SalarySummaryGuid, returnUrl = currentUrl,isUsingCompress= isUsingCompress }).Render()
                                 @Html.HiA().CssClassName("modalInput salaryCalculateFix " + @entityGuid).Value("<i class=\"icon-pencil\"></i>修正").ACA("SalaryCalculateFix", "Labor").Render(new { rel = "#EditDIV", itemKey = entity.SalarySummaryGuid })
                                 @Html.HiA().CssClassName("modalInput delete " + @entityGuid).Value("<i class=\"icon-remove\"></i>删除").ACA("SalaryDelete", "Labor").RouteValue(new { itemKey = entity.SalarySummaryGuid, returnUrl = currentUrl, isUsingCompress = isUsingCompress }).Render()
                             </td>

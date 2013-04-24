@@ -29,6 +29,12 @@
         laborName = salarySummaryEntity.LaborName;
         salaryMonth= salarySummaryEntity.SalaryDate.ToString("yyyy/MM");
     }
+
+    bool isUsingCompress = RequestHelper.GetValue<bool>("isUsingCompress");
+    if (isUsingCompress == true && string.IsNullOrWhiteSpace(returnUrl) == false)
+    {
+        returnUrl = CompressHelper.Decompress(returnUrl);
+    }
     
     if(string.IsNullOrWhiteSpace(returnUrl))
     {

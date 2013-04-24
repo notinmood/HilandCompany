@@ -57,13 +57,14 @@
                 padding: 0;
             }
     </style>
+    
     @using (Html.BeginForm())
     { 
         <table>
             <tr>
                 <td style="width: 120px;">姓名:
                 </td>
-                <td>@Html.HiTextBox("UserNameCN").Value(Model.UserNameCN).DynamicLoadDataUrl(laborAutoCompleteUrl).Render()
+                <td>@Html.HiTextBox("UserNameCN").Value(Model.UserNameCN).DynamicLoadDataUrl(laborAutoCompleteUrl).Render() <input type="button" name="btnReadCard" id="btnReadCard" value="读卡" onclick="return readCard()" />
                 </td>
                 <td style="width: 120px;">用户状态:
                 </td>
@@ -268,8 +269,12 @@
                 </td>
             </tr>
         </table>
+        
         <input type="hidden" id="ItemKey" name="ItemKey" value="@Model.UserGuid" />
+        
         <input type="submit" id="submitButton" value="保存" class="btn btn-warning" /><a class="overlayClose" title="请暂时使用敲击键盘'ESC'键关闭本弹窗"></a>
+        <object classid="clsid:10946843-7507-44FE-ACE8-2B3483D179B7"  id="CVR_IDCard" name="CVR_IDCard" width="0" height="0" >
+</object>
     }
     <script type="text/javascript">
         $(document).ready(function () {
@@ -311,6 +316,32 @@
             $("#currentPopupItemGuid").val(item.key);
             var url = '@Url.Action("Item")' + '?r=' + Math.random() + '&itemKey=' + item.key;
             $("#EditDIV").load(url);
+        }
+
+        function readCard() {
+                //alert("ssssssssssssss");
+                var CVR_IDCard = document.getElementById("CVR_IDCard");
+                if (CVR_IDCard == null) {
+                    alert("请先联系系统管理人员安装读卡器组件，并在IE类型的浏览器下调用此功能！");
+                } else {
+                    try {
+                        var strReadResult = CVR_IDCard.ReadCard();
+                        if (strReadResult == "0") {
+                            alert(CVR_IDCard.Name)
+                            document.all['UserNameCN'].value = CVR_IDCard.Name;
+                            document.all['UserSex'].value = CVR_IDCard.Sex;
+                            document.all['UserNation'].value = CVR_IDCard.Nation;
+                            document.all['UserBirthDay'].value = CVR_IDCard.Born;
+                            document.all['IDCardPlace'].value = CVR_IDCard.Address;
+                            document.all['UserCardID'].value = CVR_IDCard.CardNo;
+                        }
+                        else {
+                            alert("读卡失败，请手工输入相关信息。");
+                        }
+                    } catch (e) {
+                        alert("读卡控件出现问题，请重新安装。");
+                    }
+                }
         }
     </script>
 </div>
