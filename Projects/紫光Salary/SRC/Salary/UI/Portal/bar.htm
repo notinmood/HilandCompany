@@ -1,0 +1,123 @@
+<HTML>
+<HEAD>
+<TITLE>bar</TITLE>
+<SCRIPT>
+	var closed = false;
+	function onOff() {
+		if (closed ) {
+			top.document.all('mainFrame').cols='148,5,*';
+			
+			closed = false;
+			hide.style.visibility='hidden';
+			show.style.visibility='visible';
+			
+		}
+		else {
+			top.document.all('mainFrame').cols='0,5,*';
+			
+			closed = true;	
+			show.style.visibility='hidden';
+			hide.style.visibility='visible';
+
+		}
+	}
+</SCRIPT>
+
+<style type="text/css">
+
+body {
+	background-color: #E7E7E7;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+A.barshow:link {
+	BACKGROUND-IMAGE: url(../../Content/Default/Images/menu_show1.jpg);
+	MARGIN: 0px;
+	WIDTH: 6px;
+	BACKGROUND-REPEAT: no-repeat;
+	HEIGHT: 40px;
+	padding: 0px;
+}
+A.barshow:visited {
+	BACKGROUND-IMAGE: url(../../Content/Default/Images/menu_show1.jpg);
+	MARGIN: 0px;
+	WIDTH: 6px;
+	BACKGROUND-REPEAT: no-repeat;
+	HEIGHT: 40px;
+	padding: 0px;
+}
+A.barshow:hover {
+	BACKGROUND-IMAGE: url(../../Content/Default/Images/menu_show2.jpg);
+	MARGIN: 0px;
+	WIDTH: 6px;
+	BACKGROUND-REPEAT: no-repeat;
+	HEIGHT: 40px;
+	padding: 0px;
+	}
+A.barshow:active {
+	BACKGROUND-IMAGE: url(../../Content/Default/Images/menu_show2.jpg);
+	MARGIN: 0px;
+	WIDTH: 6px;
+	BACKGROUND-REPEAT: no-repeat;
+	HEIGHT: 40px;
+	padding: 0px;
+	}
+A.barhide:link {
+	BACKGROUND-IMAGE: url(../../Content/Default/Images/menu_hide1.jpg);
+	MARGIN: 0px;
+	WIDTH: 6px;
+	BACKGROUND-REPEAT: no-repeat;
+	HEIGHT: 40px;
+	padding: 0px;
+}
+A.barhide:visited {
+	BACKGROUND-IMAGE: url(../../Content/Default/Images/menu_hide1.jpg);
+	MARGIN: 0px;
+	WIDTH: 6px;
+	BACKGROUND-REPEAT: no-repeat;
+	HEIGHT: 40px;
+	padding: 0px;
+}
+A.barhide:hover {
+	BACKGROUND-IMAGE: url(../../Content/Default/Images/menu_hide2.jpg);
+	MARGIN: 0px;
+	WIDTH: 6px;
+	BACKGROUND-REPEAT: no-repeat;
+	HEIGHT: 40px;
+	padding: 0px;
+	}
+A.barhide:active {
+	BACKGROUND-IMAGE: url(../../Content/Default/Images/menu_hide2.jpg);
+	MARGIN: 0px;
+	WIDTH: 8px;
+	BACKGROUND-REPEAT: no-repeat;
+	HEIGHT: 40px;
+	padding: 0px;
+}
+
+</style>
+</HEAD>
+
+<BODY>
+
+<TABLE onclick=onOff(); height="100%" cellSpacing=0 cellPadding=0 width="100%" align=left  border=0 valign="top">
+  
+  <TR>
+    <TD>
+      <DIV id=hide style="Z-INDEX: 1; LEFT: 0px; WIDTH: 12px; POSITION: absolute; TOP: 200px; HEIGHT: 42px">
+	  <table  border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td  width="6" height="40"><a href="#" class="barshow"></a></td>
+  </tr>
+</table>
+ </DIV>
+      <DIV id=show 
+            style="Z-INDEX: 1; LEFT: 0px; WIDTH: 9px; POSITION: absolute; TOP: 200px; HEIGHT: 42px">	
+<table   border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td  width="6" height="40"><a href="#" class="barhide"></a></td>
+  </tr>
+</table> 
+</DIV></TD></TR></TBODY></TABLE></BODY></HTML>
