@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="加密测试.cs" Inherits="Test" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="加密测试.aspx.cs" Inherits="Test" %>
 
 <!DOCTYPE html>
 
